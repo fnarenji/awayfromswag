@@ -9,6 +9,7 @@
 namespace system\mvc;
 
 
-class Model {
+class Model
+{
 
 } 

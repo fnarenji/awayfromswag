@@ -9,6 +9,7 @@
 namespace system\mvc;
 
 
-class View {
+class View
+{
 
 } 

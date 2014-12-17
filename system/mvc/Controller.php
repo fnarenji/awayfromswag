@@ -9,6 +9,7 @@
 namespace system\mvc;
 
 
-class Controller {
+class Controller
+{
 
 } 
