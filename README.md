@@ -5,23 +5,24 @@ WHERE IS THE SWAG ?
 
 #TODO :
     - Framework :
-        - Serialisation XML
-        - Authentification avec niveaux accès + nb connectés
-        - Géneration formulaire
-        - Autoloader
-        - Couplage moteur de template
-        - Gestion modules
-        - Système POP-UP
-        - Gestion logs
-        - Input
-        - Gestion de routes
-        - Exceptions
-        - URL Rewriting
-        - Request helpers
-        - Gestion BD
-        - Flux RSS
-        - (Optionnel) PHP-Unit
-        - (Optionnel) Caching
+        - Serialisation XML (Thomas)
+        - Authentification avec niveaux accès + nb connectés (Thomas) 
+        - Géneration formulaire (Loick)
+        - Autoloader (Loick)
+        - Couplage moteur de template - Twig (Loick)
+        - Gestion modules (Optionnel)
+        - Système POP-UP (Thomas)
+        - Gestion logs (Très optionnel voir inutile)
+        - Input (Loick)
+        - Gestion de routes (Thomas)
+        - Exceptions (Everybody)
+        - URL Rewriting (Thomas)
+        - Request helpers (Loick)
+        - Gestion BD (Loick)
+        - Flux RSS (Thomas)
+        - PHP-Unit (Everybody) 
+        - Caching (Loick)
+
 
     - Base de données :
         - Modéle Merise
@@ -42,3 +43,8 @@ WHERE IS THE SWAG ?
             - Gestion membres
             - Ajout partenaire, défis, ...
         - ...
+      
+      
+      
+     ### Date finale 18 janvier 2015 ###
+        
