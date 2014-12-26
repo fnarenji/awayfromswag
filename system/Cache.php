@@ -6,7 +6,7 @@
  * Time: 08:54
  */
 
-namespace system;
+namespace SwagFramework;
 
 
 class Cache

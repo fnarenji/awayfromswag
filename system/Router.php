@@ -6,7 +6,7 @@
  * Time: 08:46
  */
 
-namespace system;
+namespace SwagFramework;
 
 
 class Router

@@ -6,7 +6,7 @@
  * Time: 09:18
  */
 
-namespace system;
+namespace SwagFramework;
 
 
 class Helper

@@ -6,7 +6,7 @@
  * Time: 11:24
  */
 
-namespace system\mvc;
+namespace SwagFramework\mvc;
 
 
 class Model
