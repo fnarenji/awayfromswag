@@ -6,7 +6,7 @@
  * Time: 00:22
  */
 
-namespace SwagFramework;
+namespace SwagFramework\Router;
 
 
 class Route

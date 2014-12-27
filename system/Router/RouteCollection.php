@@ -6,7 +6,7 @@
  * Time: 02:12
  */
 
-namespace SwagFramework;
+namespace SwagFramework\Router;
 
 
 class RouteCollection extends \SplObjectStorage{

@@ -6,7 +6,7 @@
  * Time: 08:46
  */
 
-namespace SwagFramework;
+namespace SwagFramework\Router;
 
 
 class Router
@@ -72,7 +72,7 @@ class Router
      */
     public function match($url, $method = 'GET')
     {
-        foreach($this->routes as $route)
+        foreach($this->routes->all() as $route)
         {
             // Check if the method for the route is in the allowed http methods
             if($route['method'] != $method)
