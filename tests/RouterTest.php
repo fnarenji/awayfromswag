@@ -19,17 +19,17 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     {
         $router = new Router();
 
-        $router->addRoute(array(
+        $router->addRoute(new Route('/', array(
                     'method' => 'GET',
-                'controller' =>'testcontroller/index'));
+                'controller' =>'tests\TestController/index')));
 
-        $router->addRoute(array(
+        $router->addRoute(new Route('/connection', array(
                     'method' => 'GET',
-                'controller' => 'testcontroller/connection'));
+                'controller' => 'tests\TestController/connection')));
 
-        $router->addRoute(array(
+        $router->addRoute(new Route('/action', array(
                     'method' => 'GET',
-                'controller' => 'testcontroller/useraction'));
+                'controller' => 'tests\TestController/useraction')));
 
         return $router;
     }
@@ -42,9 +42,9 @@ class RouterTest extends \PHPUnit_Framework_TestCase
             array($router, '/', true),
             array($router, '/pagequinexistepas', false),
             array($router, '/index', true),
-            array($router, '/useraction', true),
+            array($router, '/action', true),
             array($router, '/connection', true),
-            array($router, '/useraction/mdr', true);
+            array($router, '/action/mdr', true)
         );
     }
 
