@@ -6,32 +6,32 @@
  * Time: 19:06
  */
 
+
+
 namespace tests;
 
-require_once 'TestController.php';
+use SwagFramework;
 
-
-use SwagFramework\Router;
 
 class RouterTest extends \PHPUnit_Framework_TestCase
 {
     private function getRouter()
     {
-        $router = new Router();
+        $router = new RouteCollection();
 
-        $router->addRoute(new Route('/', array(
+        $router->attach(new Route('/', array(
                     'method' => 'GET',
                 'controller' =>'tests\TestController/index')));
 
-        $router->addRoute(new Route('/connection', array(
+        $router->attach(new Route('/connection', array(
                     'method' => 'GET',
                 'controller' => 'tests\TestController/connection')));
 
-        $router->addRoute(new Route('/action', array(
+        $router->attach(new Route('/action', array(
                     'method' => 'GET',
                 'controller' => 'tests\TestController/useraction')));
 
-        return $router;
+        return new Router($router);
     }
 
     public function matchProvider()
@@ -54,6 +54,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 
     public function testRoute($router, $path, $expected)
     {
+        $this->assertEquals(0, 0);
         $this->assertEquals($router->match($path), $expected);
     }
 

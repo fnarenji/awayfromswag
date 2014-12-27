@@ -30,6 +30,13 @@ class Router
      */
     private $namedRoutes = array();
 
+    /**
+     * @param RouteCollection $collection
+     */
+    public function __construct(RouteCollection $collection)
+    {
+        $this->routes = $collection;
+    }
     /*
      * Set the base REQUEST_URI
      * @param $basePath
