@@ -14,7 +14,6 @@ WHERE IS THE SWAG ?
         - Système POP-UP (Thomas)
         - Gestion logs (Très optionnel voir inutile)
         - Input (Loick)
-        - Gestion de routes (Thomas)
         - Exceptions (Everybody)
         - URL Rewriting (Thomas)
         - Request helpers (Loick)
@@ -44,7 +43,8 @@ WHERE IS THE SWAG ?
             - Ajout partenaire, défis, ...
         - ...
       
+# DONE
+     - Gestion de routes (Thomas)
       
       
-     ### Date finale 18 janvier 2015 ###
-        
+### Date finale 18 janvier 2015 ###
