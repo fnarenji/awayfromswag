@@ -58,7 +58,7 @@ class Route
             $path = explode('/', $path);
 
             $this->controller = $path[0];
-            $this->action = $path[1];
+            $this->action = isset($path[1]) ? $path[1] : '';
             $this->parameters = array_splice($path, 2, count($path) - 1);
         }
 

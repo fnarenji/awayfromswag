@@ -73,7 +73,7 @@ class Router
 
             // If the url doesn't begin with the url $route
             if(!preg_match('@^' . $route->getUrl() . '*@', $this->route->getUrl()))
-                contiunue;
+                continue;
 
             echo 'found !';
             echo $route->getUrl();
