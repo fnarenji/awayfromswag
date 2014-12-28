@@ -60,9 +60,8 @@ class Router
      * @return bool
      * @throws RoutingException
      */
-    public function match()
+    private function match()
     {
-        echo 'hello';
         if(empty($this->routes))
             throw RoutingException('There is no route saved !');
 
@@ -75,8 +74,6 @@ class Router
             if(!preg_match('@^' . $route->getUrl() . '*@', $this->route->getUrl()))
                 continue;
 
-            echo 'found !';
-            echo $route->getUrl();
             return $route;
         }
         return false;
@@ -103,16 +100,10 @@ class Router
      * targeted by the route with the parameters in the URI
      * @param Route $route
      */
-    public function dispatch($route)
+    private function dispatch($route)
     {
         $func = $route->getController() . '::' . $route->getAction();
-        echo '<br/>' . $func . '<br/>';
+        
         call_user_func_array($func, $this->route->getParameters());
     }
-
-    public function debug()
-    {
-        var_dump($this->routes);
-    }
-
 }
