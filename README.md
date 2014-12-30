@@ -5,7 +5,6 @@ WHERE IS THE SWAG ?
 
 #TODO :
     - Framework :
-        - Serialisation XML (Thomas)
         - Authentification avec niveaux accès + nb connectés (Thomas) 
         - Géneration formulaire (Loick)
         - Autoloader (Loick)
@@ -15,7 +14,6 @@ WHERE IS THE SWAG ?
         - Gestion logs (Très optionnel voir inutile)
         - Input (Loick)
         - Exceptions (Everybody)
-        - URL Rewriting (Thomas)
         - Request helpers (Loick)
         - Gestion BD (Loick)
         - Flux RSS (Thomas)
@@ -45,6 +43,7 @@ WHERE IS THE SWAG ?
       
 # DONE
      - Gestion de routes (Thomas)
-      
+     - Serialisation XML (Thomas)
+     - URL Rewriting (Thomas)
       
 ### Date finale 18 janvier 2015 ###
