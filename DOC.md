@@ -4,11 +4,11 @@
 simple et plus rapide (c'est donc pour cette raison qu'elle sera rédigée en français).*
 
 ## Sommaire
-- [Routeur](#Routeur)
-- [XML](#XML)
-  - [Balise simple](##Balise simple)
-  - [Balise orpheline](##Balise orpheline)
-  - [Balise complexe](##Balise complexe) 
+- [Routeur](#routeur)
+- [XML](#xml)
+  - [Balise simple](#balise-simple)
+  - [Balise orpheline](#balise-orpheline)
+  - [Balise complexe](#balise-complexe) 
 
 # Routeur
 
@@ -34,9 +34,9 @@ $router->matchCurrentRequest();
 **Important :** toujours faire en sorte d'ajouter la route par défaut (du controlleur, puis de l'application) en dernier
 
 # XML
-- [Balise simple](##Balise simple)
-- [Balise orpheline](##Balise orpheline)
-- [Balise complexe](##Balise complexe)
+- [Balise simple](#balise-simple)
+- [Balise orpheline](#balise-orpheline)
+- [Balise complexe](#balise-complexe) 
 
 *La classe XML permet de générer des fichiers XML de manière simple et permet une meilleure spécialisation (pour le RSS notamment)*
 
