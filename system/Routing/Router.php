@@ -103,7 +103,7 @@ class Router
     private function dispatch($route)
     {
         $func = $route->getController() . '::' . $route->getAction();
-        
+
         call_user_func_array($func, $this->route->getParameters());
     }
 }

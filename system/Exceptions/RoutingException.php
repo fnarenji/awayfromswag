@@ -9,7 +9,7 @@
 namespace SwagFramework\Routing;
 
 
-class RoutingException extends Exception
+class RoutingException extends \Exception
 {
     private $previous;
 
@@ -20,8 +20,5 @@ class RoutingException extends Exception
         if (!is_null($previous))
             $this->previous = $previous;
     }
-
-    public function getMessage(){ return parent::getMessage(); }
-    public function getPrevious(){ return $this->previous; }
 
 }
