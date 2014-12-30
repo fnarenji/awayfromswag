@@ -8,7 +8,6 @@
 
 namespace tests\Database;
 
-require 'vendor/autoload.php';
 
 use SwagFramework\Config\DatabaseConfig;
 use \SwagFramework\Database\Database;

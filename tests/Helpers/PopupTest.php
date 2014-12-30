@@ -10,8 +10,6 @@ namespace tests\Helpers;
 
 use SwagFramework\Helpers\Popup;
 
-require 'vendor/autoload.php';
-
 class PopupTest extends \PHPUnit_Framework_TestCase {
     private $popup;
 

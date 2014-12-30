@@ -8,8 +8,6 @@
 
 namespace tests;
 
-require 'vendor/autoload.php';
-
 use \SwagFramework\XML\XML;
 
 class XMLTest extends \PHPUnit_Framework_TestCase
@@ -18,7 +16,7 @@ class XMLTest extends \PHPUnit_Framework_TestCase
     {
         // Example taken on http://www.w3schools.com/xml/
         $header = 'xml version="1.0" encoding="UTF-8"';
-        $name = 'tests/XML/SimpleXML.xml';
+        $name = 'SimpleXML.xml';
         $file = new XML($name, $header);
 
         $content = array(
@@ -50,7 +48,7 @@ class XMLTest extends \PHPUnit_Framework_TestCase
     {
         // Example taken on http://www.w3schools.com/xml/
         $header = 'xml version="1.0" encoding="UTF-8" ';
-        $name = 'tests/XML/ComplexXML.xml';
+        $name = 'ComplexXML.xml';
         $file = new XML($name, $header);
 
         $content = array(
@@ -118,7 +116,7 @@ class XMLTest extends \PHPUnit_Framework_TestCase
         $file = new \SplFileObject($filename, "r");
         $contentToTest = $file->fread($file->getSize());
 
-        $filename = 'tests/XML/SimpleXML.xml';
+        $filename = 'SimpleXML.xml';
         $file = new \SplFileObject($filename, "r");
         $content = $file->fread($file->getSize());
 
@@ -130,7 +128,7 @@ class XMLTest extends \PHPUnit_Framework_TestCase
         $file = new \SplFileObject($filename, "r");
         $contentToTest = $file->fread($file->getSize());
 
-        $filename = 'tests/XML/ComplexXML.xml';
+        $filename = 'ComplexXML.xml';
         $file = new \SplFileObject($filename, "r");
         $content = $file->fread($file->getSize());
 
