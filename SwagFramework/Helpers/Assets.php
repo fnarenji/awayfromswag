@@ -32,7 +32,7 @@ class Assets {
      * @throws FileNotFoundException
      */
     public function css($name) {
-        $file = $this->file($name . '.css');
+        $file = $this->file('css' . DS . $name . '.css');
         return '<link rel="stylesheet" href="' . $file . '">';
     }
 
@@ -43,19 +43,19 @@ class Assets {
      * @throws FileNotFoundException
      */
     public function js($name) {
-        $file = $this->file($name . '.js');
+        $file = $this->file('js' . DS . $name . '.js');
         return '<script type="text/javascript" src="' . $file . '"></script>';
     }
 
     /**
      * generate img link
-     * @param $src
+     * @param $src src /public/img/src
      * @param string $alt
      * @return string img link
      * @throws FileNotFoundException
      */
     public function img($src, $alt = '') {
-        $file = $this->file($src);
+        $file = $this->file('img' . DS . $src);
         return '<img src="' . $file . '" alt="' . $alt . '" />';
     }
 }
