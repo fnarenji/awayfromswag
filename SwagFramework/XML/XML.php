@@ -7,6 +7,8 @@
  */
 
 namespace SwagFramework\XML;
+use SwagFramework\Exceptions\XMLArrayBadFormatException;
+use SwagFramework\Exceptions\XMLNotWritableException;
 
 /**
  * This class creates a XML file (or rewrites it)
@@ -20,7 +22,7 @@ class XML
      * This is the name of the file we want to create.
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * This is the name of the very first tag in your file
@@ -33,7 +35,7 @@ class XML
      * This is the file that we want to edit
      * @var SplFileObject
      */
-    private $file;
+    protected $file;
 
     public function __construct($name, $header)
     {
@@ -46,7 +48,7 @@ class XML
         $this->begin($this->header);
     }
 
-    public function begin($header)
+    private function begin($header)
     {
         $tag = '<?' . $header . '?>';
         $tag .= "\n";
@@ -54,7 +56,7 @@ class XML
         $this->file->fwrite($tag);
     }
 
-    public function writeTag($content = array())
+    private function writeTag($content = array())
     {
         $size = count($content);
 
@@ -74,7 +76,7 @@ class XML
         $this->file->fwrite($tag);
     }
 
-    public function writeOrphanTag($content)
+    private function writeOrphanTag($content)
     {
         $tag = '<' . $content;
         $tag .= isset($content['option']) ? ' ' . $content['option'] : '';
@@ -128,4 +130,7 @@ class XML
                   $this->writeTag($content);
           }
     }
+
+    protected function getFile(){ return $this->file; }
+    public function getFileName(){ return $this->name; }
 }
