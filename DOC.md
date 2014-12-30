@@ -4,7 +4,11 @@
 simple et plus rapide (c'est donc pour cette raison qu'elle sera rédigée en français).*
 
 ## Sommaire
-- [Routeur](#Routeur)
+- [Routeur](#routeur)
+- [XML](#xml)
+  - [Balise simple](#balise-simple)
+  - [Balise orpheline](#balise-orpheline)
+  - [Balise complexe](#balise-complexe) 
 
 # Routeur
 
@@ -28,3 +32,63 @@ $router->add('/', '\App\HomeController', 'index', 'GET');
 $router->matchCurrentRequest();
 ```
 **Important :** toujours faire en sorte d'ajouter la route par défaut (du controlleur, puis de l'application) en dernier
+
+# XML
+- [Balise simple](#balise-simple)
+- [Balise orpheline](#balise-orpheline)
+- [Balise complexe](#balise-complexe) 
+
+*La classe XML permet de générer des fichiers XML de manière simple et permet une meilleure spécialisation (pour le RSS notamment)*
+
+La contruction d'un document XML générique (mais peut correspondre tout à faire à la génération d'un fichier HTML ou RSS) commence par la définition de la balise d'en-tête (en html c'est le <!DOCTYPE HTML> pour HTML5), cela ce fait comme ceci : 
+
+```php
+$header = 'xml version="1.0" encoding="UTF-8"';
+$name = 'foo.xml';
+$file = new XML($name, $header);
+```
+Ensuite, pour que l'écriture dans le fichier se déroule correctement, il faudra respecter la forme suivante : 
+
+## Balise simple
+```php
+$tag = array(
+            'title' => 'foo',
+            ['option' => 'optionsForFoo',]
+            'content' => 'bar'
+            );
+```
+Donnera ainsi : 
+```xml
+<foo optionsForFoo>bar</foo>
+```
+
+## Balise orpheline
+```php
+$tag = array(
+            'title' => 'foo',
+            ['option' => 'optionsForFoo']
+            );
+```
+Donnera : 
+```xml
+<foo optionsForFoo \>
+```
+## Balise complexe
+
+```php
+$tag = array(
+            'title' => 'foo', 
+            ['option => 'optionsForFoo',]
+            'content' => array(
+                              'title' => 'bar', 
+                              ['option' => 'optionsForBar',]
+                              'content' => 'Hello World !'
+                              )
+            );
+```
+Donnera : 
+```xml
+<foo>
+  <bar>Hello World !</bar>
+</foo>
+```

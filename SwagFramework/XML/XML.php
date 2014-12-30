@@ -83,21 +83,41 @@ class XML
         $this->file->fwrite($tag);
     }
 
-    public function write($content = array())
+    private function addTab($number)
     {
-          if(is_array($content['content']))
+        for($i = 0; $i < $number; ++$i)
+            $this->file->fwrite("\t");
+    }
+
+    public function write($content = array(), $level = 1)
+    {
+
+          // faster than is_array()
+          if((array) $content['content'] == $content['content'] && isset($content['content']))
           {
-              $tag = '<' . $content['title'] . '>';
+              $tag = '<' . $content['title'];
+              $tag .= isset($content['option']) ? ' ' . $content['option'] : '';
+              $tag .= '>';
               $tag .= "\n";
               $this->file->fwrite($tag);
 
-              foreach($content['content'] as $item)
+              if(count($content['content']) > 2)
               {
-                  $this->file->fwrite("\t");
-                  $this->write($item);
+                  foreach($content['content'] as $item)
+                  {
+                      $this->addTab($level);
+                      $this->write($item, $level + 1);
+                  }
+              }
+              else
+              {
+                  $this->addTab($level);
+                  $this->write($content['content'], $level + 1);
               }
 
+              $this->addTab($level - 1);
               $tag = '</' . $content['title'] . '>';
+              $tag .= "\n";
               $this->file->fwrite($tag);
           }
           else
