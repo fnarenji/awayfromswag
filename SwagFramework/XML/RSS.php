@@ -78,7 +78,6 @@ class RSS extends XML
                                 'option' => 'xmlns="http://www.w3.org/2005/Atom" xml:lang="fr"',
                                 'content' => $this->entries
                                 );
-        print_r($this->document);
         $this->generate();
     }
 
