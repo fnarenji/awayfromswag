@@ -16,7 +16,7 @@ class XMLTest extends \PHPUnit_Framework_TestCase
     {
         // Example taken on http://www.w3schools.com/xml/
         $header = 'xml version="1.0" encoding="UTF-8"';
-        $name = 'SimpleXML.xml';
+        $name = 'SimpleXMLTest.xml';
         $file = new XML($name, $header);
 
         $content = array(
@@ -48,7 +48,7 @@ class XMLTest extends \PHPUnit_Framework_TestCase
     {
         // Example taken on http://www.w3schools.com/xml/
         $header = 'xml version="1.0" encoding="UTF-8" ';
-        $name = 'ComplexXML.xml';
+        $name = 'ComplexXMLTest.xml';
         $file = new XML($name, $header);
 
         $content = array(

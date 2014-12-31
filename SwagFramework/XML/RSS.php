@@ -67,6 +67,7 @@ class RSS extends XML
         $date = new \DateTime();
         $this->date = $date->format('Y-m-d\TH:i:s\Z');
 
+        $this->initEntries();
         parent::__construct($name, 'xml version="1.0" encoding="utf-8"');
     }
 
@@ -75,32 +76,36 @@ class RSS extends XML
         $this->document = array(
                                 'title' => 'feed',
                                 'option' => 'xmlns="http://www.w3.org/2005/Atom" xml:lang="fr"',
-                                'content' => array(
-                                                    array(
-                                                          'title' => 'title',
-                                                          'content' => $this->title
-                                                          ),
-                                                    array(
-                                                           'title' => 'link',
-                                                           'option' => 'href="' . $this->url . '"'
-                                                         ),
-                                                    array(
-                                                            'title' => 'updated',
-                                                            'content' => $this->date
-                                                         ),
-                                                    array(
-                                                            'title' => 'author',
-                                                            'content' => array(
-                                                                                'title' => 'name',
-                                                                                'content' => $this->author
-                                                                              )
-                                                         ),
-                                                    $this->entries
-                                                   )
+                                'content' => $this->entries
                                 );
+        print_r($this->document);
         $this->generate();
     }
 
+    public function initEntries()
+    {
+        $this->entries = array(
+                                array(
+                                    'title' => 'title',
+                                    'content' => $this->title
+                                     ),
+                                array(
+                                    'title' => 'link',
+                                    'option' => 'href="' . $this->url . '"'
+                                     ),
+                                array(
+                                    'title' => 'updated',
+                                    'content' => $this->date
+                                     ),
+                                array(
+                                    'title' => 'author',
+                                    'content' => array(
+                                        'title' => 'name',
+                                        'content' => $this->author
+                                    )
+                                )
+                            );
+    }
     public function addEntry($title, $link, $summary, $date)
     {
         $this->entries [] = array(
@@ -121,9 +126,11 @@ class RSS extends XML
                                                         array(
                                                                 'title' => 'summary',
                                                                 'content' => $summary
-                                                             )
+                                                             ),
                                                       )
                                  );
+
+
     }
 
     private function generate()

@@ -78,7 +78,7 @@ class XML
 
     private function writeOrphanTag($content)
     {
-        $tag = '<' . $content;
+        $tag = '<' . $content['title'];
         $tag .= isset($content['option']) ? ' ' . $content['option'] : '';
         $tag .= '/>';
         $tag .= "\n";
@@ -95,7 +95,7 @@ class XML
     {
 
           // faster than is_array()
-          if((array) $content['content'] == $content['content'] && isset($content['content']))
+          if(isset($content['content']) && (array) $content['content'] == $content['content'] )
           {
               $tag = '<' . $content['title'];
               $tag .= isset($content['option']) ? ' ' . $content['option'] : '';
@@ -126,8 +126,11 @@ class XML
           {
               if(!isset($content['content']))
                   $this->writeOrphanTag($content);
+
+
               else
                   $this->writeTag($content);
+
           }
     }
 
