@@ -89,8 +89,8 @@ class RSS extends XML
                                     'content' => $this->title
                                      ),
                                 array(
-                                    'title' => 'link',
-                                    'option' => 'href="' . $this->url . '"'
+                                    'title' => 'atom:link',
+                                    'option' => 'href="' . $this->url . '" rel="self" type="application/rss+xml"'
                                      ),
                                 array(
                                     'title' => 'updated',
