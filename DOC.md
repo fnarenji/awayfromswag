@@ -9,6 +9,10 @@ simple et plus rapide (c'est donc pour cette raison qu'elle sera rédigée en fr
   - [Balise simple](#balise-simple)
   - [Balise orpheline](#balise-orpheline)
   - [Balise complexe](#balise-complexe) 
+- [RSS](#rss)
+  - [Création d'un flux RSS](#création-dun-flux-rss)
+  - [Ajout d'une entrée](#ajout-dune-entrée)
+  - [Génération du flux](#génération-du-flux)
 
 # Routeur
 
@@ -92,3 +96,72 @@ Donnera :
   <bar>Hello World !</bar>
 </foo>
 ```
+
+#RSS
+
+- [Création d'un flux RSS](#création-dun-flux-rss)
+- [Ajout d'une entrée](#ajout-dune-entrée)
+- [Génération du flux](#génération-du-flux)
+
+*La classe RSS permet de générer simplement un flux RSS de type Atom (permettant ainsi une plus grande souplesse et d'être compatible avec tous les nouveaux agrégateurs RSS, même si la syntaxe est globalement identique à celle de RSS 2.0), elle hérite de la classe [XML](#xml) expliquée précédemment puisqu'elle génère un document XML particulier.*
+
+L'intégralité de l'implémentation a été fait en respectant au mieux et toujours de la manière la plus simplifiée possible les spécifications Atom (disponible [ici](http://atomenabled.org/developers/syndication/)), le but principal étant de pouvoir ajouter rapidement de nouvelles fonctionnalités si le besoin s'en fait sentir (de nouvelles balises par exemple)
+
+## Création d'un flux RSS
+
+Le constructeur va initialiser l'en-tête du document avec toutes les informations fournies *(le choix d'utiliser une liste de paramètre au lieu d'un tableau se justifie par une utilisation plus simple avec un IDE et une documentation plus précise par la suite)*.
+
+Exemple (disponible dans le fichier *tests/RSS/RSSTest.php*) : 
+```php
+/* Nom du fichier de destination (peut contenir le chemin relatif (ex : ../feed/ComplexRSSTest.rss) */
+$name = 'ComplexRSSTest.rss'; 
+
+/* Url du site de provenance du flux */
+$url = 'http://unicorn.ovh';
+
+/* Titre du flux */
+$title = 'Articles about Unicorn - Unicorn are real!'; 
+
+/* Image (utilisée par la majorité des agrégateurs en tant qu'icône du flux) */
+$img = 'http://upload.wikimedia.org/wikipedia/commons/8/8f/Historiae_animalium_1551_De_Monocerote.jpg'; 
+
+/* Auteur du flux (certains agrégateurs s'en servent pour trier les flux, mais c'est plutôt rare, 
+*  ça fait partie des recommandations d'Atom, donc on le met */
+$author = 'AFS';
+
+$feed = new RSS($name, $url, $title, $img, $author);
+```
+
+## Ajout d'une entrée 
+
+Les entrées permettent de séparer chaque nouveau contenu dans un flux RSS, ils doivent avoir un titre, un lien (vers la page web correspondante), un bref résumé du contenu et une date au format "Zulu" (c'est à dire en respectant la norme [ISO 8601](http://fr.wikipedia.org/wiki/ISO_8601) utilisée par tous les flux RSS et dans l'informatique en général)
+
+Exemple (toujours tiré de *tests/RSS/RSSTest.php*) :
+```php
+/* Titre de l'entrée */
+$title = 'Proof that unicorn exists';
+
+/* Lien vers la page web correspondante */
+$link = 'https://www.youtube.com/watch?v=HHQIXCs4d98';
+
+/* Résumé de l'entrée (ici la vidéo) */
+$summary = 'This is a legit proof that unicorn are real, they exist I have a proof now !';
+
+/* Date de création de l'entrée (utilisation de la classe DateTime pour les tests mais elle doit être 
+* la date de création de l'entrée (ex : date de publication de l'article correspondant sur le site))
+*/
+$date = new \DateTime();
+$dateU = $date->format('Y-m-d\TH:i:s\Z');
+
+/* Ajout de l'entrée au fichier que l'on souhaite créer */
+$feed->addEntry($title, $link, $summary, $dateU);
+```
+
+## Génération du flux
+
+Une fois toutes les entrées saisies, on génére notre flux (par la création du fichier correspondant) comme ceci : 
+
+```php
+$feed->create(); // Ce n'est pas très compliqué :)
+```
+La méthode va ainsi appeller la méthode write de sa classe mère ([XML](#xml)) pour générer le document XML correspondant, bien indenté complet :)
