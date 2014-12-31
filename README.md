@@ -16,7 +16,6 @@ WHERE IS THE SWAG ?
         - Exceptions (Everybody)
         - Request helpers (Loick)
         - Gestion BD (Loick)
-        - Flux RSS (Thomas)
         - PHP-Unit (Everybody) 
         - Caching (Loick)
 
@@ -45,5 +44,6 @@ WHERE IS THE SWAG ?
      - Gestion de routes (Thomas)
      - Serialisation XML (Thomas)
      - URL Rewriting (Thomas)
+    - Flux RSS (Thomas)
       
 ### Date finale 18 janvier 2015 ###
