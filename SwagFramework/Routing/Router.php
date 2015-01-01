@@ -7,6 +7,8 @@
  */
 namespace SwagFramework\Routing;
 
+use SwagFramework\Exceptions\RoutingException;
+
 class Router
 {
     /**
@@ -63,7 +65,7 @@ class Router
     private function match()
     {
         if(empty($this->routes))
-            throw RoutingException('There is no route saved !');
+            throw new RoutingException('There is no route saved !');
 
         foreach($this->routes as $route)
         {
@@ -102,8 +104,8 @@ class Router
      */
     private function dispatch($route)
     {
-        $func = $route->getController() . '::' . $route->getAction();
-
-        call_user_func_array($func, $this->route->getParameters());
+        $action = $route->getAction();
+        $route->getController()->setParams($this->route->getParameters());
+        $route->getController()->$action();
     }
 }
