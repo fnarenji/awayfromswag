@@ -7,17 +7,11 @@ WHERE IS THE SWAG ?
     - Framework :
         - Authentification avec niveaux accès + nb connectés (Thomas) 
         - Géneration formulaire (Loick)
-        - Autoloader (Loick)
-        - Couplage moteur de template - Twig (Loick)
         - Gestion modules (Optionnel)
-        - Système POP-UP (Thomas)
         - Gestion logs (Très optionnel voir inutile)
-        - Input (Loick)
         - Exceptions (Everybody)
-        - Request helpers (Loick)
-        - Gestion BD (Loick)
         - PHP-Unit (Everybody) 
-        - Caching (Loick)
+        - Caching (Thomas)
 
 
     - Base de données :
@@ -41,9 +35,15 @@ WHERE IS THE SWAG ?
         - ...
       
 # DONE
-     - Gestion de routes (Thomas)
-     - Serialisation XML (Thomas)
-     - URL Rewriting (Thomas)
+    - Gestion de routes (Thomas)
+    - Serialisation XML (Thomas)
+    - URL Rewriting (Thomas)
     - Flux RSS (Thomas)
+    - Autoloader (Loick)
+    - Couplage moteur de template - Twig (Loick)
+    - Système POP-UP (Thomas)
+    - Input (Loick)
+    - Request helpers (Loick)
+    - Gestion BD (Loick)
       
 ### Date finale 18 janvier 2015 ###
