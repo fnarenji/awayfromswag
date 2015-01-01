@@ -8,9 +8,8 @@
 
 namespace tests\Database;
 
-
 use SwagFramework\Config\DatabaseConfig;
-use \SwagFramework\Database\Database;
+use SwagFramework\Database\Database;
 
 class DatabaseTest extends \PHPUnit_Framework_TestCase {
     private $database;
