@@ -11,5 +11,37 @@ namespace SwagFramework\mvc;
 
 class Controller
 {
+    private $loader;
+    private $view;
+    private $params;
 
+    function __construct()
+    {
+        $this->loader = new \Twig_Loader_Filesystem('app/views');
+        $this->view = new View($this->loader);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    /**
+     * @param array $params
+     */
+    public function setParams($params)
+    {
+        $this->params = $params;
+    }
+
+    /**
+     * @return \SwagFramework\mvc\View
+     */
+    public function getView()
+    {
+        return $this->view;
+    }
 } 

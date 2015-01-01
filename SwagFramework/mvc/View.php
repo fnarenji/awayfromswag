@@ -11,5 +11,14 @@ namespace SwagFramework\mvc;
 
 class View extends \Twig_Environment
 {
+    public function loadTemplate($name, $index = null)
+    {
+        $name = $name . '.twig';
+        return parent::loadTemplate($name, $index);
+    }
 
+    public function render($name, array $context = array())
+    {
+        echo parent::render($name, $context);
+    }
 } 
