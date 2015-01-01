@@ -9,7 +9,7 @@
 namespace SwagFramework\mvc;
 
 
-class View
+class View extends \Twig_Environment
 {
 
 } 

@@ -10,11 +10,14 @@
     }
   ],
   "require": {
-    "phpunit/phpunit": "4.4.0"
+    "phpunit/phpunit": "4.4.0",
+    "twig/twig": "~1.0"
   },
   "autoload": {
     "psr-4": {
-      "SwagFramework\\": "SwagFramework/"
+      "app\\": "app/",
+      "SwagFramework\\": "SwagFramework/",
+      "SwagTests\\": "tests/"
     }
   }
 }
