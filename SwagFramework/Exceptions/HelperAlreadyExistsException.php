@@ -9,7 +9,7 @@
 namespace SwagFramework\Exceptions;
 
 
-class HelperAlreadyExistsException extends \Exception
+class HelperAlreadyExistsException extends SwagException
 {
     private $previous;
 

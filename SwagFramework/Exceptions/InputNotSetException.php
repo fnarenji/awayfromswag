@@ -9,7 +9,7 @@
 namespace SwagFramework\Exceptions;
 
 
-class InputNotSetException extends \Exception
+class InputNotSetException extends SwagException
 {
     private $previous;
 

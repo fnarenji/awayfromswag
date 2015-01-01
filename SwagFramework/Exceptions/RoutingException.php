@@ -6,10 +6,10 @@
  * Time: 23:19
  */
 
-namespace SwagFramework\Routing;
+namespace SwagFramework\Exceptions;
 
 
-class RoutingException extends \Exception
+class RoutingException extends SwagException
 {
     private $previous;
 

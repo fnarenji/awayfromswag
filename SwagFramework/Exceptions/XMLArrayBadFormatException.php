@@ -9,7 +9,7 @@
 namespace SwagFramework\Exceptions;
 
 
-class XMLArrayBadFormatException extends \Exception
+class XMLArrayBadFormatException extends SwagException
 {
     private $previous;
 

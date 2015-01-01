@@ -9,7 +9,7 @@
 namespace SwagFramework\Exceptions;
 
 
-class PopupIncorrectTypeException extends \Exception
+class PopupIncorrectTypeException extends SwagException
 {
     private $previous;
 

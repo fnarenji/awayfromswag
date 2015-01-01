@@ -9,7 +9,7 @@
 namespace SwagFramework\Exceptions;
 
 
-class FileNotFoundException extends \Exception
+class FileNotFoundException extends SwagException
 {
     private $previous;
 

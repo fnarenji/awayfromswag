@@ -9,7 +9,7 @@
 namespace SwagFramework\Exceptions;
 
 
-class XMLNotWritableException extends \Exception
+class XMLNotWritableException extends SwagException
 {
     private $previous;
 
