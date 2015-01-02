@@ -11,7 +11,8 @@ namespace tests\Tools;
 
 use SwagFramework\Tools\Session;
 
-class SessionTest extends \PHPUnit_Framework_TestCase {
+class SessionTest extends \PHPUnit_Framework_TestCase
+{
     private $session;
 
     function __construct()
@@ -27,10 +28,10 @@ class SessionTest extends \PHPUnit_Framework_TestCase {
 
         // ARRAY
         $this->session->set('test', array(
-            'test'      =>      'testvalue'
+            'test' => 'testvalue'
         ));
         $this->assertEquals($this->session->get('test'), array(
-            'test'      =>      'testvalue'
+            'test' => 'testvalue'
         ));
     }
 }

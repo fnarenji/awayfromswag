@@ -52,8 +52,7 @@ class Route
         $this->url = $url;
 
         // For the homepage :)
-        if($url !== '/')
-        {
+        if ($url !== '/') {
             $path = trim($url, '/');
             $path = explode('/', $path);
 
@@ -80,10 +79,29 @@ class Route
         $this->method = $method;
     }
 
-    public function getUrl(){ return $this->url; }
-    public function getController(){ return $this->controller; }
-    public function getAction(){return $this->action; }
-    public function getParameters(){ return $this->parameters; }
-    public function getMethod(){ return $this->method; }
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    public function getController()
+    {
+        return $this->controller;
+    }
+
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    public function getParameters()
+    {
+        return $this->parameters;
+    }
+
+    public function getMethod()
+    {
+        return $this->method;
+    }
 
 }

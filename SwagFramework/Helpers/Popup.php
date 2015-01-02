@@ -12,16 +12,17 @@ namespace SwagFramework\Helpers;
 use SwagFramework\Exceptions\PopupIncorrectTypeException;
 use SwagFramework\Tools\Session;
 
-class Popup {
+class Popup
+{
     /**
      * session key
      */
     const SESSION_KEY = 'popup';
 
     private $type = array(
-        'success'       =>      'success',
-        'error'         =>      'error',
-        'warning'       =>      'warning'
+        'success' => 'success',
+        'error' => 'error',
+        'warning' => 'warning'
     );
 
     /**
@@ -42,8 +43,9 @@ class Popup {
         $this->session = new Session();
 
         $popup = $this->session->get(self::SESSION_KEY);
-        if(!empty($popup))
+        if (!empty($popup)) {
             $this->popup = $popup;
+        }
     }
 
     /**
@@ -53,14 +55,16 @@ class Popup {
      * @param string $type type of popup
      * @throws PopupIncorrectTypeException
      */
-    public function set($title, $message, $type = 'warning') {
-        if(!array_key_exists($type, $this->type))
+    public function set($title, $message, $type = 'warning')
+    {
+        if (!array_key_exists($type, $this->type)) {
             throw new PopupIncorrectTypeException($type, $title);
-        
+        }
+
         $new = array(
-            'title'     =>      $title,
-            'message'   =>      $message,
-            'type'      =>      $type
+            'title' => $title,
+            'message' => $message,
+            'type' => $type
         );
 
         array_push($this->popup, $new);
@@ -71,7 +75,8 @@ class Popup {
      * get all popup
      * @return array
      */
-    public function getAll() {
+    public function getAll()
+    {
         return $this->popup;
     }
 }

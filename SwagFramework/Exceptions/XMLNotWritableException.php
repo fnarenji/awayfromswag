@@ -21,7 +21,8 @@ class XMLNotWritableException extends SwagException
 
         parent::__construct($message, $code);
 
-        if (!is_null($previous))
+        if (!is_null($previous)) {
             $this->previous = $previous;
+        }
     }
 }

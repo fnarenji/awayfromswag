@@ -45,14 +45,13 @@ class Router
         /* If the route doesn't match, it will reformat the wrong route
         *  in order to "redirect" to the home page (/)
         */
-        if($route == false)
-        {
+        if ($route == false) {
             $this->route = new Route();
             $this->route->parseUrl();
             $this->match();
-        }
-        else
+        } else {
             $this->dispatch($route);
+        }
     }
 
     /**
@@ -64,17 +63,19 @@ class Router
      */
     private function match()
     {
-        if(empty($this->routes))
+        if (empty($this->routes)) {
             throw new RoutingException('There is no route saved !');
+        }
 
-        foreach($this->routes as $route)
-        {
-            if($route->getMethod() != $this->route->getMethod())
+        foreach ($this->routes as $route) {
+            if ($route->getMethod() != $this->route->getMethod()) {
                 continue;
+            }
 
             // If the url doesn't begin with the url $route
-            if(!preg_match('@^' . $route->getUrl() . '*@', $this->route->getUrl()))
+            if (!preg_match('@^' . $route->getUrl() . '*@', $this->route->getUrl())) {
                 continue;
+            }
 
             return $route;
         }

@@ -7,8 +7,6 @@
  */
 
 namespace SwagFramework\XML;
-use SwagFramework\Exceptions\XMLArrayBadFormatException;
-use SwagFramework\Exceptions\XMLNotWritableException;
 
 /**
  * This class creates a XML file (or rewrites it)
@@ -60,11 +58,13 @@ class XML
     {
         $size = count($content);
 
-        if($size < 1 || $size > 2)
+        if ($size < 1 || $size > 2) {
             throw XMLNotWritableException($content);
-
-        else if(!isset($content['title']) || !isset($content['content']))
-            throw XMLArrayBadFormatException();
+        } else {
+            if (!isset($content['title']) || !isset($content['content'])) {
+                throw XMLArrayBadFormatException();
+            }
+        }
 
         $tag = '<' . $content['title'];
         $tag .= isset($content['option']) ? ' ' . $content['option'] : '';
@@ -87,53 +87,53 @@ class XML
 
     private function addTab($number)
     {
-        for($i = 0; $i < $number; ++$i)
+        for ($i = 0; $i < $number; ++$i) {
             $this->file->fwrite("\t");
+        }
     }
 
     public function write($content = array(), $level = 1)
     {
 
-          // faster than is_array()
-          if(isset($content['content']) && (array) $content['content'] == $content['content'] )
-          {
-              $tag = '<' . $content['title'];
-              $tag .= isset($content['option']) ? ' ' . $content['option'] : '';
-              $tag .= '>';
-              $tag .= "\n";
-              $this->file->fwrite($tag);
+        // faster than is_array()
+        if (isset($content['content']) && (array)$content['content'] == $content['content']) {
+            $tag = '<' . $content['title'];
+            $tag .= isset($content['option']) ? ' ' . $content['option'] : '';
+            $tag .= '>';
+            $tag .= "\n";
+            $this->file->fwrite($tag);
 
-              if(count($content['content']) > 2)
-              {
-                  foreach($content['content'] as $item)
-                  {
-                      $this->addTab($level);
-                      $this->write($item, $level + 1);
-                  }
-              }
-              else
-              {
-                  $this->addTab($level);
-                  $this->write($content['content'], $level + 1);
-              }
+            if (count($content['content']) > 2) {
+                foreach ($content['content'] as $item) {
+                    $this->addTab($level);
+                    $this->write($item, $level + 1);
+                }
+            } else {
+                $this->addTab($level);
+                $this->write($content['content'], $level + 1);
+            }
 
-              $this->addTab($level - 1);
-              $tag = '</' . $content['title'] . '>';
-              $tag .= "\n";
-              $this->file->fwrite($tag);
-          }
-          else
-          {
-              if(!isset($content['content']))
-                  $this->writeOrphanTag($content);
+            $this->addTab($level - 1);
+            $tag = '</' . $content['title'] . '>';
+            $tag .= "\n";
+            $this->file->fwrite($tag);
+        } else {
+            if (!isset($content['content'])) {
+                $this->writeOrphanTag($content);
+            } else {
+                $this->writeTag($content);
+            }
 
-
-              else
-                  $this->writeTag($content);
-
-          }
+        }
     }
 
-    protected function getFile(){ return $this->file; }
-    public function getFileName(){ return $this->name; }
+    protected function getFile()
+    {
+        return $this->file;
+    }
+
+    public function getFileName()
+    {
+        return $this->name;
+    }
 }

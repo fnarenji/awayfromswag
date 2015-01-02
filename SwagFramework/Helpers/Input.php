@@ -11,18 +11,21 @@ namespace SwagFramework\Helpers;
 
 use SwagFramework\Exceptions\InputNotSetException;
 
-class Input {
+class Input
+{
     /**
      * get var $_GET
      * @param $key
      * @return mixed
      * @throws InputNotSetException
      */
-    public function get($key) {
-        if(!isset($_GET[$key]) || empty($_GET[$key])) 
+    public function get($key)
+    {
+        if (!isset($_GET[$key]) || empty($_GET[$key])) {
             throw new InputNotSetException('$_GET', $key);
-    //TODO: Protect input $_GET
-    return $_GET[$key];
+        }
+        //TODO: Protect input $_GET
+        return $_GET[$key];
     }
 
     /**
@@ -31,9 +34,11 @@ class Input {
      * @return mixed
      * @throws InputNotSetException
      */
-    public function post($key) {
-        if(isset($_POST[$key]) && !empty($_POST[$key]))
+    public function post($key)
+    {
+        if (isset($_POST[$key]) && !empty($_POST[$key])) {
             throw new InputNotSetException('$_POST', $key);
+        }
         //TODO: Protect input $_GET
         return $_POST[$key];
     }
@@ -42,7 +47,8 @@ class Input {
      * get user ip
      * @return mixed
      */
-    public function userIP() {
+    public function userIP()
+    {
         return $_SERVER['REMOTE_ADDR'];
     }
 }

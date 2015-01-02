@@ -6,10 +6,14 @@
  * Time: 20:31
  */
 
-namespace system\Helpers;
+namespace SwagFramework\Helpers;
 
 
-class Form {
+use SwagFramework\Config\DatabaseConfig;
+use SwagFramework\Database\Database;
+
+class Form
+{
     /**
      * @var database
      */
@@ -23,7 +27,8 @@ class Form {
      * @param string $class
      * @return string
      */
-    private function input($type, $name, $value = '', $class = '') {
+    private function input($type, $name, $value = '', $class = '')
+    {
         $input = '<input type="' . $type . '" name="' . $name . '" value="' . $value . '" class="' . $class . '"';
 
         return $input;
@@ -35,9 +40,10 @@ class Form {
      * @param $for input name
      * @return string
      */
-    private function label($name, $for) {
+    private function label($name, $for)
+    {
         $name = ucfirst($name) . ' :';
-        return '<label for="' . $for . '">' . $name. '</label>';
+        return '<label for="' . $for . '">' . $name . '</label>';
     }
 
     /**
@@ -48,11 +54,11 @@ class Form {
      * @param string $type
      * @return string
      */
-    private function key($table, $type = 'text') {
-        if($type == 'hidden') {
+    private function key($table, $type = 'text')
+    {
+        if ($type == 'hidden') {
             $res = $this->input('hidden', $table['Field']);
-        }
-        else {
+        } else {
             $res = $this->label($table['Field'], $table['Field']) . '\n';
             $res .= $this->input('text', $table['Field']);
         }
@@ -65,7 +71,7 @@ class Form {
      */
     function __construct()
     {
-        $this->db = new Database();
+        $this->db = new Database(new DatabaseConfig());
     }
 
     /**
@@ -75,7 +81,8 @@ class Form {
      * @param string $method method form (default = POST)
      * @return string form
      */
-    public function generate($table, $action, $method = 'POST') {
+    public function generate($table, $action, $method = 'POST')
+    {
         $sql = 'SHOW FIELDS '
             . 'FROM ?';
 
@@ -83,7 +90,7 @@ class Form {
 
         $form = '<form action="' . $action . '" method="' . $method . '">';
 
-        foreach($res as $value) {
+        foreach ($res as $value) {
             $form .= $this->key($value);
         }
 

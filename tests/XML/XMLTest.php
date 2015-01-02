@@ -20,26 +20,26 @@ class XMLTest extends \PHPUnit_Framework_TestCase
         $file = new XML($name, $header);
 
         $content = array(
-                            'title' => 'note',
-                            'content' => array(
-                                array(
-                                    'title' => 'to',
-                                    'content' =>'Tove'
-                                ),
-                                array(
-                                    'title' => 'from',
-                                    'content' => 'Jani'
-                                ),
-                                array(
-                                    'title' => 'heading',
-                                    'content' => 'Reminder'
-                                ),
-                                array(
-                                    'title' => 'body',
-                                    'content' => 'Don\'t forget me this weekend!'
-                                )
-                            )
-                        );
+            'title' => 'note',
+            'content' => array(
+                array(
+                    'title' => 'to',
+                    'content' => 'Tove'
+                ),
+                array(
+                    'title' => 'from',
+                    'content' => 'Jani'
+                ),
+                array(
+                    'title' => 'heading',
+                    'content' => 'Reminder'
+                ),
+                array(
+                    'title' => 'body',
+                    'content' => 'Don\'t forget me this weekend!'
+                )
+            )
+        );
         $file->write($content);
         return $name;
     }
@@ -52,59 +52,59 @@ class XMLTest extends \PHPUnit_Framework_TestCase
         $file = new XML($name, $header);
 
         $content = array(
-                        'title' => 'rss',
-                        'option' => 'version="2.0"',
+            'title' => 'rss',
+            'option' => 'version="2.0"',
+            'content' => array(
+                'title' => 'channel',
+                'content' => array(
+                    array(
+                        'title' => 'title',
+                        'content' => 'W3Schools Home Page'
+                    ),
+                    array(
+                        'title' => 'link',
+                        'content' => 'http://www.w3schools.com'
+                    ),
+                    array(
+                        'title' => 'description',
+                        'content' => 'Free web building tutorials'
+                    ),
+                    array(
+                        'title' => 'item',
                         'content' => array(
-                            'title' => 'channel',
-                            'content' => array(
-                                        array(
-                                            'title' => 'title',
-                                            'content' => 'W3Schools Home Page'
-                                            ),
-                                        array(
-                                            'title' => 'link',
-                                            'content' => 'http://www.w3schools.com'
-                                             ),
-                                        array(
-                                            'title' => 'description',
-                                            'content' => 'Free web building tutorials'
-                                            ),
-                                        array(
-                                            'title' => 'item',
-                                            'content' => array(
-                                                            array(
-                                                                'title' => 'title',
-                                                                'content' => 'RSS Tutorial'
-                                                            ),
-                                                            array(
-                                                                'title' => 'link',
-                                                                'content' => 'http://www.w3schools.com/rss'
-                                                            ),
-                                                            array(
-                                                                'title' => 'description',
-                                                                'content' => 'New RSS tutorial on W3Schools'
-                                                            )
-                                                        )
-                                        ),
-                                        array(
-                                            'title' => 'item',
-                                            'content' => array(
-                                                array(
-                                                    'title' => 'title',
-                                                    'content' => 'XML Tutorial'
-                                                ),
-                                                array(
-                                                    'title' => 'link',
-                                                    'content' => 'http://www.w3schools.com/xml'
-                                                ),
-                                                array(
-                                                    'title' => 'description',
-                                                    'content' => 'New XML tutorial on W3Schools'
-                                                )
-                                            )
-                                    )
-                                    )
+                            array(
+                                'title' => 'title',
+                                'content' => 'RSS Tutorial'
+                            ),
+                            array(
+                                'title' => 'link',
+                                'content' => 'http://www.w3schools.com/rss'
+                            ),
+                            array(
+                                'title' => 'description',
+                                'content' => 'New RSS tutorial on W3Schools'
+                            )
                         )
+                    ),
+                    array(
+                        'title' => 'item',
+                        'content' => array(
+                            array(
+                                'title' => 'title',
+                                'content' => 'XML Tutorial'
+                            ),
+                            array(
+                                'title' => 'link',
+                                'content' => 'http://www.w3schools.com/xml'
+                            ),
+                            array(
+                                'title' => 'description',
+                                'content' => 'New XML tutorial on W3Schools'
+                            )
+                        )
+                    )
+                )
+            )
         );
         $file->write($content);
         return $name;
@@ -122,6 +122,7 @@ class XMLTest extends \PHPUnit_Framework_TestCase
 
         return array($contentToTest, $content);
     }
+
     private function readComplexXML()
     {
         $filename = $this->createComplexXMLFile();
@@ -134,11 +135,13 @@ class XMLTest extends \PHPUnit_Framework_TestCase
 
         return array($contentToTest, $content);
     }
+
     public function testSimpleXML()
     {
         $simpleXML = $this->readSimpleXML();
         $this->assertEquals($simpleXML[0], $simpleXML[1]);
     }
+
     public function testComplexXML()
     {
         $complexXML = $this->readComplexXML();

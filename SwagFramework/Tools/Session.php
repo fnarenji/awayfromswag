@@ -9,13 +9,15 @@
 namespace SwagFramework\Tools;
 
 
-class Session {
+class Session
+{
     /**
      * get session
      * @param $key
      * @param $value
      */
-    public function set($key, $value) {
+    public function set($key, $value)
+    {
         $_SESSION[$key] = $value;
     }
 
@@ -24,7 +26,8 @@ class Session {
      * @param $key
      * @return mixed
      */
-    public function get($key) {
+    public function get($key)
+    {
         return isset($_SESSION[$key]) ? $_SESSION[$key] : null;
     }
 }

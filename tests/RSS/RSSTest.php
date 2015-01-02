@@ -78,6 +78,7 @@ class RSSTest extends \PHPUnit_Framework_TestCase
 
         return $name;
     }
+
     private function readSimpleRSS()
     {
         $filename = $this->createSimpleRSS();
@@ -103,6 +104,7 @@ class RSSTest extends \PHPUnit_Framework_TestCase
 
         return array($contentToTest, $content);
     }
+
     public function testSimpleRSS()
     {
         /**

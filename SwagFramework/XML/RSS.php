@@ -74,60 +74,61 @@ class RSS extends XML
     public function create()
     {
         $this->document = array(
-                                'title' => 'feed',
-                                'option' => 'xmlns="http://www.w3.org/2005/Atom" xml:lang="fr"',
-                                'content' => $this->entries
-                                );
+            'title' => 'feed',
+            'option' => 'xmlns="http://www.w3.org/2005/Atom" xml:lang="fr"',
+            'content' => $this->entries
+        );
         $this->generate();
     }
 
     public function initEntries()
     {
         $this->entries = array(
-                                array(
-                                    'title' => 'title',
-                                    'content' => $this->title
-                                     ),
-                                array(
-                                    'title' => 'atom:link',
-                                    'option' => 'href="' . $this->url . '" rel="self" type="application/rss+xml"'
-                                     ),
-                                array(
-                                    'title' => 'updated',
-                                    'content' => $this->date
-                                     ),
-                                array(
-                                    'title' => 'author',
-                                    'content' => array(
-                                        'title' => 'name',
-                                        'content' => $this->author
-                                    )
-                                )
-                            );
+            array(
+                'title' => 'title',
+                'content' => $this->title
+            ),
+            array(
+                'title' => 'atom:link',
+                'option' => 'href="' . $this->url . '" rel="self" type="application/rss+xml"'
+            ),
+            array(
+                'title' => 'updated',
+                'content' => $this->date
+            ),
+            array(
+                'title' => 'author',
+                'content' => array(
+                    'title' => 'name',
+                    'content' => $this->author
+                )
+            )
+        );
     }
+
     public function addEntry($title, $link, $summary, $date)
     {
         $this->entries [] = array(
-                                    'title' => 'entry',
-                                    'content' => array(
-                                                        array(
-                                                                'title' => 'title',
-                                                                'content' => $title
-                                                             ),
-                                                        array(
-                                                                'title' => 'link',
-                                                                'option' => 'href="' . $link . '"'
-                                                             ),
-                                                        array(
-                                                                'title' => 'updated',
-                                                                'content' => $date
-                                                             ),
-                                                        array(
-                                                                'title' => 'summary',
-                                                                'content' => $summary
-                                                             ),
-                                                      )
-                                 );
+            'title' => 'entry',
+            'content' => array(
+                array(
+                    'title' => 'title',
+                    'content' => $title
+                ),
+                array(
+                    'title' => 'link',
+                    'option' => 'href="' . $link . '"'
+                ),
+                array(
+                    'title' => 'updated',
+                    'content' => $date
+                ),
+                array(
+                    'title' => 'summary',
+                    'content' => $summary
+                ),
+            )
+        );
 
 
     }

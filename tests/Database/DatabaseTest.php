@@ -11,14 +11,17 @@ namespace tests\Database;
 use SwagFramework\Config\DatabaseConfig;
 use SwagFramework\Database\Database;
 
-class DatabaseTest extends \PHPUnit_Framework_TestCase {
+class DatabaseTest extends \PHPUnit_Framework_TestCase
+{
     private $database;
 
-    private function createDatabase() {
+    private function createDatabase()
+    {
         $this->database = new Database(new DatabaseConfig());
     }
 
-    public function testDatabase() {
+    public function testDatabase()
+    {
         $this->createDatabase();
         $this->assertNotNull($this->database);
     }

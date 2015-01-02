@@ -11,17 +11,20 @@ namespace SwagFramework\Helpers;
 
 use SwagFramework\Exceptions\FileNotFoundException;
 
-class Assets {
+class Assets
+{
     /**
      * get file web
      * @param $file
      * @return string
      * @throws FileNotFoundException
      */
-    private function file($file) {
-        $file = ROOT . 'public' . DS . $file;
-        if(!file_exists($file))
-            throw new FileNotFoundException($file);
+    private function file($file)
+    {
+        $test = ROOT . 'public' . DS . $file;
+        if (!file_exists($test)) {
+            throw new FileNotFoundException($test);
+        }
         return WEBROOT . 'public' . DS . $file;
     }
 
@@ -31,9 +34,10 @@ class Assets {
      * @return string css link
      * @throws FileNotFoundException
      */
-    public function css($name) {
+    public function css($name)
+    {
         $file = $this->file('css' . DS . $name . '.css');
-        return '<link rel="stylesheet" href="' . $file . '">';
+        echo '<link rel="stylesheet" href="' . $file . '">';
     }
 
     /**
@@ -42,9 +46,10 @@ class Assets {
      * @return string js link
      * @throws FileNotFoundException
      */
-    public function js($name) {
+    public function js($name)
+    {
         $file = $this->file('js' . DS . $name . '.js');
-        return '<script type="text/javascript" src="' . $file . '"></script>';
+        echo '<script type="text/javascript" src="' . $file . '"></script>';
     }
 
     /**
@@ -54,8 +59,9 @@ class Assets {
      * @return string img link
      * @throws FileNotFoundException
      */
-    public function img($src, $alt = '') {
+    public function img($src, $alt = '')
+    {
         $file = $this->file('img' . DS . $src);
-        return '<img src="' . $file . '" alt="' . $alt . '" />';
+        echo '<img src="' . $file . '" alt="' . $alt . '" />';
     }
 }

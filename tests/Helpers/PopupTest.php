@@ -10,10 +10,12 @@ namespace tests\Helpers;
 
 use SwagFramework\Helpers\Popup;
 
-class PopupTest extends \PHPUnit_Framework_TestCase {
+class PopupTest extends \PHPUnit_Framework_TestCase
+{
     private $popup;
 
-    private function Popup() {
+    private function Popup()
+    {
         $this->popup = new Popup();
 
         // NO POPUP
@@ -21,9 +23,9 @@ class PopupTest extends \PHPUnit_Framework_TestCase {
 
         // 1 POPUP
         $new = array(
-            'title'     =>      'Title',
-            'message'   =>      'Message',
-            'type'      =>      'success'
+            'title' => 'Title',
+            'message' => 'Message',
+            'type' => 'success'
         );
 
         $this->popup->set($new['title'], $new['message'], $new['type']);
@@ -33,9 +35,9 @@ class PopupTest extends \PHPUnit_Framework_TestCase {
 
         // 2 POPUP
         $new2 = array(
-            'title'     =>      'Title2',
-            'message'   =>      'Message2',
-            'type'      =>      'success'
+            'title' => 'Title2',
+            'message' => 'Message2',
+            'type' => 'success'
         );
 
         $this->popup->set($new2['title'], $new2['message'], $new2['type']);
@@ -45,7 +47,8 @@ class PopupTest extends \PHPUnit_Framework_TestCase {
         ));
     }
 
-    public function testPopup() {
+    public function testPopup()
+    {
         $this->Popup();
     }
 }

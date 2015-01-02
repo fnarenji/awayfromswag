@@ -9,6 +9,7 @@
 namespace SwagFramework\Exceptions;
 
 
-class SwagException extends \Exception {
+class SwagException extends \Exception
+{
 
 }

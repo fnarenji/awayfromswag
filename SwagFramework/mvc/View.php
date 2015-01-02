@@ -9,6 +9,8 @@
 namespace SwagFramework\mvc;
 
 
+use SwagFramework\Helpers\Helpers;
+
 class View extends \Twig_Environment
 {
     public function loadTemplate($name, $index = null)
@@ -19,6 +21,9 @@ class View extends \Twig_Environment
 
     public function render($name, array $context = array())
     {
-        echo parent::render($name, $context);
+        $helpers = array(
+            'helpers'       =>      new Helpers()
+        );
+        echo parent::render($name, array_merge($helpers, $context));
     }
 } 
