@@ -5,6 +5,7 @@ body
     font-family: 'Roboto', sans-serif;
 }
 
+
 header
 {
     max-width: 100%;
@@ -109,12 +110,25 @@ section article h2
 }
 section article h3
 {
-    font-size: 1.5em;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.7em;
 }
 section article h4
 {
-    font-size: 1.3em;
+    position: relative;
+    font-size: 1.6em;
+    margin-left: 35px;
+    vertical-align: 75%;
 }
+
+h4, img {
+    display: inline-block;
+    margin-left: 30px;
+}
+
+
 section article h5
 {
     font-size: 1.1em;
