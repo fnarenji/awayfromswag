@@ -9,7 +9,8 @@
 namespace SwagFramework\mvc;
 
 
-use SwagFramework\Helpers\Helpers;
+use SwagFramework\Helpers\Assets;
+use SwagFramework\Helpers\Form;
 
 class View extends \Twig_Environment
 {
@@ -21,9 +22,12 @@ class View extends \Twig_Environment
 
     public function render($name, array $context = array())
     {
-        $helpers = array(
-            'helpers'       =>      new Helpers()
-        );
-        echo parent::render($name, array_merge($helpers, $context));
+        $helpers = new \stdClass();
+        $helpers->assets = new Assets();
+        $helpers->form = new Form();
+
+        echo parent::render($name, array_merge(array(
+            'helpers'       =>      $helpers
+        ), $context));
     }
 } 
