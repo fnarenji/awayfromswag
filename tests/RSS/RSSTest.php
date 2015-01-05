@@ -14,7 +14,7 @@ class RSSTest extends \PHPUnit_Framework_TestCase
 {
     private function createSimpleRSS()
     {
-        $name = 'tests/RSS/SimpleRSS.rss';
+        $name = 'home/RSS/SimpleRSS.rss';
         $url = 'http://unicorn.ovh';
         $title = 'Articles about Unicorn - Unicorn are real!';
         $img = 'http://upload.wikimedia.org/wikipedia/commons/8/8f/Historiae_animalium_1551_De_Monocerote.jpg';
@@ -38,7 +38,7 @@ class RSSTest extends \PHPUnit_Framework_TestCase
     {
 
         /* HEADER */
-        $name = 'tests/RSS/ComplexRSS.rss';
+        $name = 'home/RSS/ComplexRSS.rss';
         $url = 'http://unicorn.ovh';
         $title = 'Articles about Unicorn - Unicorn are real!';
         $img = 'http://upload.wikimedia.org/wikipedia/commons/8/8f/Historiae_animalium_1551_De_Monocerote.jpg';
@@ -85,7 +85,7 @@ class RSSTest extends \PHPUnit_Framework_TestCase
         $file = new \SplFileObject($filename, "r");
         $contentToTest = $file->fread($file->getSize());
 
-        $filename = 'tests/RSS/SimpleRSS.rss';
+        $filename = 'home/RSS/SimpleRSS.rss';
         $file = new \SplFileObject($filename, "r");
         $content = $file->fread($file->getSize());
 
@@ -98,7 +98,7 @@ class RSSTest extends \PHPUnit_Framework_TestCase
         $file = new \SplFileObject($filename, "r");
         $contentToTest = $file->fread($file->getSize());
 
-        $filename = 'tests/RSS/ComplexRSS.rss';
+        $filename = 'home/RSS/ComplexRSS.rss';
         $file = new \SplFileObject($filename, "r");
         $content = $file->fread($file->getSize());
 
