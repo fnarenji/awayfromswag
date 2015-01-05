@@ -20,7 +20,8 @@ require 'vendor/autoload.php';
 try {
     $router = new \SwagFramework\Routing\Router();
 
-    $router->add('/', new \app\controllers\TestsController(), 'index');
+    $router->add('/errors/err404', new \app\controllers\ErrorsController(), 'err404');
+    $router->add('/', new \app\controllers\HomeController(), 'index');
 
     $router->matchCurrentRequest();
 } catch (\SwagFramework\Exceptions\SwagException $e) {
