@@ -9,38 +9,13 @@
 namespace SwagFramework\mvc;
 
 
-use SwagFramework\Helpers\Assets;
-use SwagFramework\Helpers\Form;
-use SwagFramework\Helpers\Popup;
-use Twig_LoaderInterface;
-
-class ViewHelpers {
-    /**
-     * @var \SwagFramework\Helpers\Assets
-     */
-    public $assets;
-    /**
-     * @var \SwagFramework\Helpers\Form
-     */
-    public $form;
-    /**
-     * @var \SwagFramework\Helpers\Popup
-     */
-    public $popup;
-
-    function __construct()
-    {
-        $this->assets = new Assets();
-        $this->form = new Form();
-        $this->popup = new Popup();
-    }
-}
+use SwagFramework\Helpers\ViewHelpers;
 
 class View extends \Twig_Environment
 {
     private $helpers;
 
-    public function __construct(Twig_LoaderInterface $loader = null, $options = array())
+    public function __construct(\Twig_LoaderInterface $loader = null, $options = array())
     {
         parent::__construct($loader, $options);
         $this->helpers = new ViewHelpers();
