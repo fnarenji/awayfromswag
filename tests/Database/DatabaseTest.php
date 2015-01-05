@@ -13,16 +13,28 @@ use SwagFramework\Database\Database;
 
 class DatabaseTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var \SwagFramework\Database\Database
+     */
     private $database;
 
     private function createDatabase()
     {
         $this->database = new Database(new DatabaseConfig());
+        $this->assertNotNull($this->database);
+    }
+
+    private function selectTable($table)
+    {
+        $sql = 'SHOW FIELDS FROM ?';
+        $res = $this->database->execute($sql, $table);
+        var_dump($res);
+        $this->assertNotEmpty($res);
     }
 
     public function testDatabase()
     {
         $this->createDatabase();
-        $this->assertNotNull($this->database);
+        $this->selectTable('users');
     }
 }

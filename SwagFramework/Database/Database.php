@@ -37,26 +37,29 @@ class Database extends \PDO
      * execute query
      * @param $query
      * @param $_
-     * @return bool
+     * @return array
      */
     public function execute($query, $_)
     {
         $params = func_get_args();
-        $stmt = $this->prepare(array_shift($params));
-        return $stmt->execute($params);
+        array_shift($params);
+        $stmt = $this->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
     }
 
     /**
-     * select all from query
-     * @param $query query    * @param $_ params
-     * @return array
+     * update query
+     * @param $query
+     * @param $_
+     * @return bool
      */
-    public function selectAll($query, $_)
+    public function update($query, $_)
     {
         $params = func_get_args();
-        $stmt = $this->prepare(array_shift($params));
-        $stmt->execute($params);
-        return $stmt->fetchAll();
+        array_shift($params);
+        $stmt = $this->prepare($query);
+        return $stmt->execute($params);
     }
 
     /**
@@ -68,7 +71,8 @@ class Database extends \PDO
     public function selectFirst($query, $_)
     {
         $params = func_get_args();
-        $stmt = $this->prepare(array_shift($params));
+        array_shift($params);
+        $stmt = $this->prepare($query);
         $stmt->execute($params);
         return $stmt->fetch();
     }

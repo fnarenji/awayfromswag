@@ -11,6 +11,7 @@ namespace SwagFramework\Helpers;
 
 use SwagFramework\Config\DatabaseConfig;
 use SwagFramework\Database\Database;
+use SwagFramework\Exceptions\TableNotFoundDatabaseException;
 
 class Form
 {
@@ -29,7 +30,13 @@ class Form
      */
     private function input($type, $name, $value = '', $class = '')
     {
-        $input = '<input type="' . $type . '" name="' . $name . '" value="' . $value . '" class="' . $class . '"';
+        $input = CR . TAB
+            . '<input '
+            . 'type="' . $type . '" '
+            . 'name="' . $name . '" '
+            . 'value="' . $value . '" '
+            . 'class="' . $class . '" '
+            . '/>';
 
         return $input;
     }
@@ -43,7 +50,7 @@ class Form
     private function label($name, $for)
     {
         $name = ucfirst($name) . ' :';
-        return '<label for="' . $for . '">' . $name . '</label>';
+        return CR . TAB . '<label for="' . $for . '">' . $name . '</label>';
     }
 
     /**
@@ -80,23 +87,28 @@ class Form
      * @param $action action
      * @param string $method method form (default = POST)
      * @return string form
+     * @throws TableNotFoundDatabaseException
      */
     public function generate($table, $action, $method = 'POST')
     {
-        $sql = 'SHOW FIELDS '
+        $sql = 'SELECT * '
             . 'FROM ?';
 
-        $res = $db->execute($sql, array($table));
+        $res = $this->db->execute($sql, $table);
+
+        if (empty($res)) {
+            throw new TableNotFoundDatabaseException($table);
+        }
 
         $form = '<form action="' . $action . '" method="' . $method . '">';
 
-        foreach ($res as $value) {
-            $form .= $this->key($value);
-        }
+//        foreach ($res as $value) {
+//            $form .= $this->key($value);
+//        }
 
         $form .= $this->input('submit', 'submit', 'Envoyer');
-        $form .= '</form>';
+        $form .= "\n" . '</form>';
 
-        return $form;
+        echo $form;
     }
 }
