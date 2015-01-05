@@ -43,15 +43,15 @@ class Router
         $route = $this->match();
 
         /* If the route doesn't match, it will reformat the wrong route
-        *  in order to "redirect" to the home page (/)
+        *  in order to "redirect" to the error404 page (/errors/err404)
         */
         if ($route == false) {
             $this->route = new Route();
-            $this->route->parseUrl();
-            $this->match();
-        } else {
-            $this->dispatch($route);
+            $this->route->parseUrl('/errors/err404');
+            $route = $this->match();
         }
+
+        $this->dispatch($route);
     }
 
     /**

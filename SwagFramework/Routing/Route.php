@@ -19,7 +19,7 @@ class Route
 
     /**
      * The controller targeted by this route
-     * @var string
+     * @var \SwagFramework\mvc\Controller
      */
     private $controller;
 

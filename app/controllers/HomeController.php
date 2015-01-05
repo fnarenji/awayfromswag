@@ -10,10 +10,10 @@ namespace app\controllers;
 
 use SwagFramework\mvc\Controller;
 
-class TestsController extends Controller
+class HomeController extends Controller
 {
     public function index()
     {
-        $this->getView()->render('tests/index');
+        $this->getView()->render('home/index');
     }
 }
