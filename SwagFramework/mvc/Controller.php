@@ -12,6 +12,23 @@ namespace SwagFramework\mvc;
 use SwagFramework\Helpers\Input;
 use SwagFramework\Helpers\Popup;
 
+class ControllerHelpers {
+    /**
+     * @var \SwagFramework\Helpers\Input
+     */
+    public $input;
+    /**
+     * @var \SwagFramework\Helpers\Popup
+     */
+    public $popup;
+
+    function __construct()
+    {
+        $this->input = new Input();
+        $this->popup = new Popup();
+    }
+}
+
 class Controller
 {
     private $loader;
@@ -23,10 +40,7 @@ class Controller
     {
         $this->loader = new \Twig_Loader_Filesystem('app/views');
         $this->view = new View($this->loader);
-
-        $this->helpers = new \stdClass();
-        $this->helpers->input = new Input();
-        $this->helpers->popup = new Popup();
+        $this->helpers = new ControllerHelpers();
     }
 
     /**
