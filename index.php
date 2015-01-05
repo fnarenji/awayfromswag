@@ -1,10 +1,13 @@
 <?php
 
+define('CR', "\n");
+define('TAB', '    ');
+
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', __DIR__ . DS);
 define('WEBROOT', '/');
 
-define(DEBUG, true);
+define('DEBUG', true);
 
 if (DEBUG) {
     ini_set('display_errors', true);
