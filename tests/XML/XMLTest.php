@@ -16,7 +16,7 @@ class XMLTest extends \PHPUnit_Framework_TestCase
     {
         // Example taken on http://www.w3schools.com/xml/
         $header = 'xml version="1.0" encoding="UTF-8"';
-        $name = 'home/XML/SimpleXML.xml';
+        $name = 'tests/XML/SimpleXML.xml';
         $file = new XML($name, $header);
 
         $content = array(
@@ -48,7 +48,7 @@ class XMLTest extends \PHPUnit_Framework_TestCase
     {
         // Example taken on http://www.w3schools.com/xml/
         $header = 'xml version="1.0" encoding="UTF-8" ';
-        $name = 'home/XML/ComplexXML.xml';
+        $name = 'tests/XML/ComplexXML.xml';
         $file = new XML($name, $header);
 
         $content = array(
@@ -116,7 +116,7 @@ class XMLTest extends \PHPUnit_Framework_TestCase
         $file = new \SplFileObject($filename, "r");
         $contentToTest = $file->fread($file->getSize());
 
-        $filename = 'home/XML/SimpleXML.xml';
+        $filename = 'tests/XML/SimpleXML.xml';
         $file = new \SplFileObject($filename, "r");
         $content = $file->fread($file->getSize());
 
@@ -129,7 +129,7 @@ class XMLTest extends \PHPUnit_Framework_TestCase
         $file = new \SplFileObject($filename, "r");
         $contentToTest = $file->fread($file->getSize());
 
-        $filename = 'home/XML/ComplexXML.xml';
+        $filename = 'tests/XML/ComplexXML.xml';
         $file = new \SplFileObject($filename, "r");
         $content = $file->fread($file->getSize());
 

@@ -35,6 +35,6 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase
     public function testDatabase()
     {
         $this->createDatabase();
-        $this->selectTable('users');
+//        $this->selectTable('users');
     }
 }
