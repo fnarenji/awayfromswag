@@ -45,7 +45,9 @@ class Router
         /* If the route doesn't match, it will reformat the wrong route
         *  in order to "redirect" to the error404 page (/errors/err404)
         */
-        if ($route == false) {
+
+        if ($route == false)
+        {
             $this->route = new Route();
             $this->route->parseUrl('/errors/err404');
             $route = $this->match();
@@ -73,7 +75,16 @@ class Router
             }
 
             // If the url doesn't begin with the url $route
-            if (!preg_match('@^' . $route->getUrl() . '*@', $this->route->getUrl())) {
+            $url = ($this->route->getUrl() == '/') ? '/' : substr($this->route->getUrl(), 1);
+            $urlb = ($route->getUrl() == '/') ? '/' : substr($route->getUrl(), 1);
+
+            if (!preg_match('@^' . $urlb  . '*@', $url)) {
+                continue;
+            }
+
+            // Fix default route bug :)
+            if($urlb == '/' && $url != $urlb)
+            {
                 continue;
             }
 
