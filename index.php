@@ -1,14 +1,4 @@
 <?php
-<<<<<<< HEAD
-/**
- * Created by PhpStorm.
- * User: loick
- * Date: 08/12/14
- * Time: 11:18
- */ 
-
-echo 'ohohoh c\'est le commit de Noël !';
-=======
 
 define('CR', "\n");
 define('TAB', '    ');
@@ -41,4 +31,3 @@ try {
     echo '<h1>Exception !</h1>';
     echo $e;
 }
->>>>>>> origin/#SWAG-Framework
