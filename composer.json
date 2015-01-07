@@ -1,0 +1,23 @@
+{
+  "name": "vendor_name/package_name",
+  "description": "description_text",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "author's name",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "phpunit/phpunit": "4.4.0",
+    "twig/twig": "~1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "app\\": "app/",
+      "SwagFramework\\": "SwagFramework/",
+      "SwagTests\\": "tests/"
+    }
+  }
+}
