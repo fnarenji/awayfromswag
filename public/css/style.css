@@ -1,4 +1,141 @@
 body
 {
-    text-align: center;
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+header
+{
+    max-width: 100%;
+    min-width: 1000px;
+    height:120px;
+    background-color:#FFF;
+    border-bottom: 1px solid #AAAAAA;
+}
+#logo
+{
+    color:transparent;
+}
+header img
+{
+    height:120px;
+    width:auto;
+    float:left;
+}
+
+header nav
+{
+    position: inherit;
+    display: inline-block;
+    height: inherit;
+    padding: 0;
+    margin-left: 20px;
+}
+nav ul
+{
+    height: 100%;
+    margin: 0;
+}
+nav li
+{
+    display: inline-block;
+    line-height: 120px;
+    text-align:center;
+    width: 150px;
+}
+nav a
+{
+    display:inline-block;
+    text-decoration: none;
+    color: #448AFF;
+    height: 120px;
+    width: 140px;
+    font-size: 1.5em;
+}
+
+nav a:hover
+{
+    color: #FFF;
+    background-color: #448AFF;
+}
+
+/* Menu latéral */
+
+aside
+{
+    position: absolute;
+    top: 121px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    background-color: #FFF;
+    width: 200px;
+    padding-left:5px;
+    border-right: 1px solid #AAAAAA;
+}
+
+aside ul
+{
+    list-style: none;
+}
+aside ul a
+{
+    text-decoration: none;
+}
+section
+{
+    padding-left: 220px;
+    margin:0;
+}
+
+section article
+{
+    max-width: 90%;
+    min-width: 1000px;
+    border-bottom: 1px solid #212121;
+    padding: 0 10px 0 10px;
+    margin: 0 auto 0 auto;
+    text-align: justify;
+}
+section article h2
+{
+    color: #448AFF;
+    font-size: 2em;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+}
+section article h3
+{
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.7em;
+}
+section article h4
+{
+    position: relative;
+    font-size: 1.6em;
+    margin-left: 35px;
+    vertical-align: 75%;
+}
+
+h4, img {
+    display: inline-block;
+    margin-left: 30px;
+}
+
+
+section article h5
+{
+    font-size: 1.1em;
+    margin:0;
+}
+section article .part_block
+{
+    display: inline-block;
+    width: 33%;
 }
