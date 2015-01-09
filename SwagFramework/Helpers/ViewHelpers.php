@@ -27,7 +27,7 @@ class ViewHelpers
     function __construct()
     {
         $this->assets = new Assets();
-        $this->form = new Form();
+//        $this->form = new Form();
         $this->popup = new Popup();
     }
 }
