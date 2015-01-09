@@ -1,34 +1,48 @@
 CREATE DATABASE IF NOT EXISTS 'AFS';
 
 CREATE TABLE IF NOT EXISTS 'AFS'.'Users' (
-  'idUsers' INT NOT NULL,
+  'idUsers' INT NOT NULL AUTO_INCREMENT,
   'userName' VARCHAR(45) NOT NULL,
   'firstName' VARCHAR(45) NOT NULL,
   'lastName' VARCHAR(45) NOT NULL,
   'mail' VARCHAR(45) NOT NULL,
   'password' VARCHAR(45) NOT NULL,
-  'level' VARCHAR(45) NOT NULL,
+  'level' VARCHAR(45) NOT NULL DEFAULT 'Novice',
   'position' INT NOT NULL,
-  'nbPoints' INT NOT NULL,
+  'nbPoints' INT NOT NULL DEFAULT 0,
   PRIMARY KEY ('idUsers'),
-  UNIQUE INDEX 'mail_UNIQUE' ('mail' ASC))
+  UNIQUE (mail))
 ENGINE = MYISAM;
 
-CREATE TABLE IF NOT EXISTS 'AFS'.'news' (
-  'idnews' INT NOT NULL,
-  'author' INT NOT NULL,
-  'content' VARCHAR(1000) NOT NULL,
-  PRIMARY KEY ('idnews'),
-  INDEX 'fk_news_Users1_idx' ('author' ASC),
-  CONSTRAINT 'fk_news_Users1'
-    FOREIGN KEY ('author')
-    REFERENCES 'AFS'.'Users' ('idUsers')
+CREATE TABLE IF NOT EXISTS `AFS`.`catNews` (
+  `idcatNews` INT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idcatNews`))
+  ENGINE = MYISAM;
+
+CREATE TABLE IF NOT EXISTS `AFS`.`news` (
+  `idnews` INT NOT NULL AUTO_INCREMENT,
+  `author` INT NOT NULL,
+  `content` VARCHAR(1000) NOT NULL,
+  `date` TIMESTAMP NOT NULL,
+  `catNews_idcatNews` INT,
+  PRIMARY KEY (`idnews`),
+  INDEX `fk_news_Users1_idx` (`author` ASC),
+  INDEX `fk_news_catNews1_idx` (`catNews_idcatNews` ASC),
+  CONSTRAINT `fk_news_Users1`
+  FOREIGN KEY (`author`)
+  REFERENCES `AFS`.`Users` (`idUsers`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_news_catNews1`
+  FOREIGN KEY (`catNews_idcatNews`)
+  REFERENCES `AFS`.`catNews` (`idcatNews`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS 'AFS'.'commentN' (
-  'idcomment' INT NOT NULL,
+  'idcomment' INT NOT NULL AUTO_INCREMENT,
   'Users_idUsers' INT NOT NULL,
   'news_idnews' INT NOT NULL,
   'Comments_idComments' INT NOT NULL,
@@ -54,7 +68,7 @@ CREATE TABLE IF NOT EXISTS 'AFS'.'commentN' (
   ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS 'AFS'.'event' (
-  'idEvent' INT NOT NULL,
+  'idEvent' INT NOT NULL AUTO_INCREMENT,
   'creator' INT NOT NULL,
   'nbParticipantMax' INT NOT NULL,
   PRIMARY KEY ('idEvent'),
@@ -85,7 +99,7 @@ CREATE TABLE IF NOT EXISTS 'AFS'.'participateE' (
   ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS 'AFS'.'commentE' (
-  'idcommentE' INT NOT NULL,
+  'idcommentE' INT NOT NULL AUTO_INCREMENT,
   'participateE_event_idEvent' INT NOT NULL,
   'participateE_Users_idUsers' INT NOT NULL,
   'Comments_idComments' INT NOT NULL,
@@ -105,7 +119,7 @@ CREATE TABLE IF NOT EXISTS 'AFS'.'commentE' (
   ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS 'AFS'.'challenges' (
-  'idchallenges' INT NOT NULL,
+  'idchallenges' INT NOT NULL AUTO_INCREMENT,
   'name' VARCHAR(45) NOT NULL,
   'description' VARCHAR(500) NOT NULL,
   'filesAdd' VARCHAR(45) NULL,
@@ -125,7 +139,7 @@ CREATE TABLE IF NOT EXISTS 'AFS'.'ParticipationC' (
   'Users_idUsers' INT NOT NULL,
   'challenges_idchallenges' INT NOT NULL,
   'challenges_creator' INT NOT NULL,
-  'idParticipation' INT NOT NULL,
+  'idParticipation' INT NOT NULL AUTO_INCREMENT,
   INDEX 'fk_Participation_Users1_idx' ('Users_idUsers' ASC),
   INDEX 'fk_Participation_challenges1_idx' ('challenges_idchallenges' ASC, 'challenges_creator' ASC),
   PRIMARY KEY ('idParticipation'),
@@ -142,7 +156,7 @@ CREATE TABLE IF NOT EXISTS 'AFS'.'ParticipationC' (
   ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS 'AFS'.'commentC' (
-  'idcommentC' INT NOT NULL,
+  'idcommentC' INT NOT NULL AUTO_INCREMENT,
   'ParticipationC_idParticipation' INT NOT NULL,
   'challenges_idchallenges' INT NOT NULL,
   'Comments_idComments' INT NOT NULL,
@@ -168,7 +182,7 @@ CREATE TABLE IF NOT EXISTS 'AFS'.'commentC' (
   ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS 'AFS'.'Comments' (
-  'idComments' INT NOT NULL,
+  'idComments' INT NOT NULL AUTO_INCREMENT,
   'contents' VARCHAR(500) NOT NULL,
   'mark' INT NULL,
   'idPere' INT NULL,
