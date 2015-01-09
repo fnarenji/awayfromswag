@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="fr">
+    <meta charset="UTF-8">
+    <title>AFS - Accueil</title>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    {{ helpers.assets.css('style') }}
+</head>
+<body>
+<header>
+    <a href="#" id="logo">{{ helpers.assets.img('logolarge.png', 'Logo Away From Security') }}</a>
+    <nav>
+        <ul>
+            <li><a href="#">Événements</a></li>
+            <li><a href="#">Annuaire</a></li>
+            <li> <a href="#">Partenaire</a></li>
+        </ul>
+    </nav>
+</header>
+<aside>
+    <h3>Se connecter</h3>
+
+    <form class="pure-form" action="#">
+        <fieldset class="pure-group">
+            <input class="pure-input-1-1" type="text" placeholder="Nom d'utilisateur"/>
+            <input class="pure-input-1-1" type="password" placeholder="Mot de passe"/>
+        </fieldset>
+    </form>
+    <a href="#">Rester connecté</a>
+    <a href="#">Inscription</a>
+</aside>
+<section>
+    {% block content %}
+
+    {% endblock %}
+</section>
+</body>
+</html>
