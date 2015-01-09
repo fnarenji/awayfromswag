@@ -12,28 +12,49 @@ namespace SwagFramework\Config;
 class DatabaseConfig
 {
     /**
-     * @var Host
+     * @var instance
+     */
+    private static $instance;
+
+    /**
+     * @var host
      */
     private $host = 'localhost';
 
     /**
-     * @var User
+     * @var user
      */
     private $user = 'root';
 
     /**
-     * @var Password
+     * @var password
      */
     private $password = '';
 
     /**
-     * @var Database
+     * @var database
      */
     private $database = 'afs';
 
+
     /**
-     * generate DSN
-     * @return string dsn
+     * Disable construction of object.
+     */
+    private function __construct()
+    {
+    }
+
+    public static function getInstance()
+    {
+        if (!(self::$instance instanceof self))
+            self::$instance = new self();
+
+        return self::$instance;
+    }
+
+    /**
+     * generate Data source name string (connection string)
+     * @return string data source name string
      */
     public function dsn()
     {
@@ -47,7 +68,7 @@ class DatabaseConfig
 
     /**
      * get user
-     * @return string user
+     * @return string user name for mysql connection
      */
     public function getUser()
     {
@@ -56,12 +77,17 @@ class DatabaseConfig
 
     /**
      * get password
-     * @return string password
+     * @return string password for mysql connection for the user returned by getUser()
      */
     public function getPassword()
     {
         return $this->password;
     }
 
-
+    /**
+     * Disable copy of object
+     */
+    private function __clone()
+    {
+    }
 }

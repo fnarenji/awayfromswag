@@ -1,53 +1,49 @@
-body
-{
+body {
     padding: 0;
     margin: 0;
     font-family: 'Roboto', sans-serif;
 }
 
-
-header
-{
+header {
     max-width: 100%;
     min-width: 1000px;
-    height:120px;
-    background-color:#FFF;
+    height: 120px;
+    background-color: #FFF;
     border-bottom: 1px solid #AAAAAA;
 }
-#logo
-{
-    color:transparent;
-}
-header img
-{
-    height:120px;
-    width:auto;
-    float:left;
+
+#logo {
+    color: transparent;
 }
 
-header nav
-{
+header img {
+    height: 120px;
+    width: auto;
+    float: left;
+}
+
+header nav {
     position: inherit;
     display: inline-block;
     height: inherit;
     padding: 0;
     margin-left: 20px;
 }
-nav ul
-{
+
+nav ul {
     height: 100%;
     margin: 0;
 }
-nav li
-{
+
+nav li {
     display: inline-block;
     line-height: 120px;
-    text-align:center;
+    text-align: center;
     width: 150px;
 }
-nav a
-{
-    display:inline-block;
+
+nav a {
+    display: inline-block;
     text-decoration: none;
     color: #448AFF;
     height: 120px;
@@ -55,16 +51,14 @@ nav a
     font-size: 1.5em;
 }
 
-nav a:hover
-{
+nav a:hover {
     color: #FFF;
     background-color: #448AFF;
 }
 
 /* Menu latéral */
 
-aside
-{
+aside {
     position: absolute;
     top: 121px;
     left: 0;
@@ -73,26 +67,24 @@ aside
     height: 100%;
     background-color: #FFF;
     width: 200px;
-    padding-left:5px;
+    padding-left: 5px;
     border-right: 1px solid #AAAAAA;
 }
 
-aside ul
-{
+aside ul {
     list-style: none;
 }
-aside ul a
-{
+
+aside ul a {
     text-decoration: none;
 }
-section
-{
+
+section {
     padding-left: 220px;
-    margin:0;
+    margin: 0;
 }
 
-section article
-{
+section article {
     max-width: 90%;
     min-width: 1000px;
     border-bottom: 1px solid #212121;
@@ -100,23 +92,23 @@ section article
     margin: 0 auto 0 auto;
     text-align: justify;
 }
-section article h2
-{
+
+section article h2 {
     color: #448AFF;
     font-size: 2em;
     display: table;
     margin-left: auto;
     margin-right: auto;
 }
-section article h3
-{
+
+section article h3 {
     display: table;
     margin-left: auto;
     margin-right: auto;
     font-size: 1.7em;
 }
-section article h4
-{
+
+section article h4 {
     position: relative;
     font-size: 1.6em;
     margin-left: 35px;
@@ -128,14 +120,12 @@ h4, img {
     margin-left: 30px;
 }
 
-
-section article h5
-{
+section article h5 {
     font-size: 1.1em;
-    margin:0;
+    margin: 0;
 }
-section article .part_block
-{
+
+section article .part_block {
     display: inline-block;
     width: 33%;
 }

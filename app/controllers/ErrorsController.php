@@ -11,8 +11,10 @@ namespace app\controllers;
 
 use SwagFramework\mvc\Controller;
 
-class ErrorsController extends Controller {
-    public function err404() {
+class ErrorsController extends Controller
+{
+    public function err404()
+    {
         $this->getView()->render('errors/err404');
     }
 }

@@ -30,7 +30,7 @@ class View extends \Twig_Environment
     public function render($name, array $context = array())
     {
         echo parent::render($name, array_merge(array(
-            'helpers'       =>      $this->helpers
+            'helpers' => $this->helpers
         ), $context));
     }
 } 

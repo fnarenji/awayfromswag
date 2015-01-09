@@ -9,7 +9,8 @@
 namespace SwagFramework\Helpers;
 
 
-class ViewHelpers {
+class ViewHelpers
+{
     /**
      * @var \SwagFramework\Helpers\Assets
      */

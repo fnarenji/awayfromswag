@@ -14,6 +14,18 @@ use SwagFramework\Exceptions\FileNotFoundException;
 class Assets
 {
     /**
+     * generate css link
+     * @param $name name of css file without extension .css
+     * @return string css link
+     * @throws FileNotFoundException
+     */
+    public function css($name)
+    {
+        $file = $this->file('css' . DS . $name . '.css');
+        echo '<link rel="stylesheet" href="' . $file . '">';
+    }
+
+    /**
      * get file web
      * @param $file
      * @return string
@@ -26,18 +38,6 @@ class Assets
             throw new FileNotFoundException($test);
         }
         return WEBROOT . 'public' . DS . $file;
-    }
-
-    /**
-     * generate css link
-     * @param $name name of css file without extension .css
-     * @return string css link
-     * @throws FileNotFoundException
-     */
-    public function css($name)
-    {
-        $file = $this->file('css' . DS . $name . '.css');
-        echo '<link rel="stylesheet" href="' . $file . '">';
     }
 
     /**
