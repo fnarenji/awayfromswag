@@ -12,6 +12,31 @@ use SwagFramework\XML\RSS;
 
 class RSSTest extends \PHPUnit_Framework_TestCase
 {
+    public function testSimpleRSS()
+    {
+        /**
+         * You have to check manually if the test passed (simply by clicking
+         * on "Click to see difference" on PhpStorm) because the RSS insert the
+         * date on the file so it can't be equals to the original file :)
+         */
+        $simpleRSS = $this->readSimpleRSS();
+
+        $this->assertEquals($simpleRSS[0], $simpleRSS[1]);
+    }
+
+    private function readSimpleRSS()
+    {
+        $filename = $this->createSimpleRSS();
+        $file = new \SplFileObject($filename, "r");
+        $contentToTest = $file->fread($file->getSize());
+
+        $filename = 'tests/RSS/SimpleRSS.rss';
+        $file = new \SplFileObject($filename, "r");
+        $content = $file->fread($file->getSize());
+
+        return array($contentToTest, $content);
+    }
+
     private function createSimpleRSS()
     {
         $name = 'tests/RSS/SimpleRSS.rss';
@@ -32,6 +57,32 @@ class RSSTest extends \PHPUnit_Framework_TestCase
         $feed->create();
 
         return $name;
+    }
+
+    public function testComplexRSS()
+    {
+        /**
+         * You have to check manually if the test passed (simply by clicking
+         * on "Click to see difference" on PhpStorm) because the RSS insert the
+         * date on the file so it can't be equals to the original file :)
+         */
+
+        $complexRSS = $this->readComplexRSS();
+
+        $this->assertEquals($complexRSS[0], $complexRSS[1]);
+    }
+
+    private function readComplexRSS()
+    {
+        $filename = $this->createComplexRSS();
+        $file = new \SplFileObject($filename, "r");
+        $contentToTest = $file->fread($file->getSize());
+
+        $filename = 'tests/RSS/ComplexRSS.rss';
+        $file = new \SplFileObject($filename, "r");
+        $content = $file->fread($file->getSize());
+
+        return array($contentToTest, $content);
     }
 
     private function createComplexRSS()
@@ -77,56 +128,5 @@ class RSSTest extends \PHPUnit_Framework_TestCase
         $feed->create();
 
         return $name;
-    }
-
-    private function readSimpleRSS()
-    {
-        $filename = $this->createSimpleRSS();
-        $file = new \SplFileObject($filename, "r");
-        $contentToTest = $file->fread($file->getSize());
-
-        $filename = 'tests/RSS/SimpleRSS.rss';
-        $file = new \SplFileObject($filename, "r");
-        $content = $file->fread($file->getSize());
-
-        return array($contentToTest, $content);
-    }
-
-    private function readComplexRSS()
-    {
-        $filename = $this->createComplexRSS();
-        $file = new \SplFileObject($filename, "r");
-        $contentToTest = $file->fread($file->getSize());
-
-        $filename = 'tests/RSS/ComplexRSS.rss';
-        $file = new \SplFileObject($filename, "r");
-        $content = $file->fread($file->getSize());
-
-        return array($contentToTest, $content);
-    }
-
-    public function testSimpleRSS()
-    {
-        /**
-         * You have to check manually if the test passed (simply by clicking
-         * on "Click to see difference" on PhpStorm) because the RSS insert the
-         * date on the file so it can't be equals to the original file :)
-         */
-        $simpleRSS = $this->readSimpleRSS();
-
-        $this->assertEquals($simpleRSS[0], $simpleRSS[1]);
-    }
-
-    public function testComplexRSS()
-    {
-        /**
-         * You have to check manually if the test passed (simply by clicking
-         * on "Click to see difference" on PhpStorm) because the RSS insert the
-         * date on the file so it can't be equals to the original file :)
-         */
-
-        $complexRSS = $this->readComplexRSS();
-
-        $this->assertEquals($complexRSS[0], $complexRSS[1]);
     }
 }

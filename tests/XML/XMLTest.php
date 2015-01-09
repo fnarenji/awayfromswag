@@ -12,6 +12,25 @@ use SwagFramework\XML\XML;
 
 class XMLTest extends \PHPUnit_Framework_TestCase
 {
+    public function testSimpleXML()
+    {
+        $simpleXML = $this->readSimpleXML();
+        $this->assertEquals($simpleXML[0], $simpleXML[1]);
+    }
+
+    private function readSimpleXML()
+    {
+        $filename = $this->createSimpleXMLFile();
+        $file = new \SplFileObject($filename, "r");
+        $contentToTest = $file->fread($file->getSize());
+
+        $filename = 'tests/XML/SimpleXML.xml';
+        $file = new \SplFileObject($filename, "r");
+        $content = $file->fread($file->getSize());
+
+        return array($contentToTest, $content);
+    }
+
     private function createSimpleXMLFile()
     {
         // Example taken on http://www.w3schools.com/xml/
@@ -42,6 +61,25 @@ class XMLTest extends \PHPUnit_Framework_TestCase
         );
         $file->write($content);
         return $name;
+    }
+
+    public function testComplexXML()
+    {
+        $complexXML = $this->readComplexXML();
+        $this->assertEquals($complexXML[0], $complexXML[1]);
+    }
+
+    private function readComplexXML()
+    {
+        $filename = $this->createComplexXMLFile();
+        $file = new \SplFileObject($filename, "r");
+        $contentToTest = $file->fread($file->getSize());
+
+        $filename = 'tests/XML/ComplexXML.xml';
+        $file = new \SplFileObject($filename, "r");
+        $content = $file->fread($file->getSize());
+
+        return array($contentToTest, $content);
     }
 
     private function createComplexXMLFile()
@@ -108,43 +146,5 @@ class XMLTest extends \PHPUnit_Framework_TestCase
         );
         $file->write($content);
         return $name;
-    }
-
-    private function readSimpleXML()
-    {
-        $filename = $this->createSimpleXMLFile();
-        $file = new \SplFileObject($filename, "r");
-        $contentToTest = $file->fread($file->getSize());
-
-        $filename = 'tests/XML/SimpleXML.xml';
-        $file = new \SplFileObject($filename, "r");
-        $content = $file->fread($file->getSize());
-
-        return array($contentToTest, $content);
-    }
-
-    private function readComplexXML()
-    {
-        $filename = $this->createComplexXMLFile();
-        $file = new \SplFileObject($filename, "r");
-        $contentToTest = $file->fread($file->getSize());
-
-        $filename = 'tests/XML/ComplexXML.xml';
-        $file = new \SplFileObject($filename, "r");
-        $content = $file->fread($file->getSize());
-
-        return array($contentToTest, $content);
-    }
-
-    public function testSimpleXML()
-    {
-        $simpleXML = $this->readSimpleXML();
-        $this->assertEquals($simpleXML[0], $simpleXML[1]);
-    }
-
-    public function testComplexXML()
-    {
-        $complexXML = $this->readComplexXML();
-        $this->assertEquals($complexXML[0], $complexXML[1]);
     }
 }

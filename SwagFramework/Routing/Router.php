@@ -46,8 +46,7 @@ class Router
         *  in order to "redirect" to the error404 page (/errors/err404)
         */
 
-        if ($route == false)
-        {
+        if ($route == false) {
             $this->route = new Route();
             $this->route->parseUrl('/errors/err404');
             $route = $this->match();
@@ -78,19 +77,30 @@ class Router
             $url = ($this->route->getUrl() == '/') ? '/' : substr($this->route->getUrl(), 1);
             $urlb = ($route->getUrl() == '/') ? '/' : substr($route->getUrl(), 1);
 
-            if (!preg_match('@^' . $urlb  . '*@', $url)) {
+            if (!preg_match('@^' . $urlb . '*@', $url)) {
                 continue;
             }
 
             // Fix default route bug :)
-            if($urlb == '/' && $url != $urlb)
-            {
+            if ($urlb == '/' && $url != $urlb) {
                 continue;
             }
 
             return $route;
         }
         return false;
+    }
+
+    /**
+     * This method call the right function in the controller
+     * targeted by the route with the parameters in the URI
+     * @param Route $route
+     */
+    private function dispatch($route)
+    {
+        $action = $route->getAction();
+        $route->getController()->setParams($this->route->getParameters());
+        $route->getController()->$action();
     }
 
     /**
@@ -107,17 +117,5 @@ class Router
         $route->setRoute($url, $controller, $action, $method);
 
         $this->routes[] = $route;
-    }
-
-    /**
-     * This method call the right function in the controller
-     * targeted by the route with the parameters in the URI
-     * @param Route $route
-     */
-    private function dispatch($route)
-    {
-        $action = $route->getAction();
-        $route->getController()->setParams($this->route->getParameters());
-        $route->getController()->$action();
     }
 }

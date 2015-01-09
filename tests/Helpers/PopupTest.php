@@ -14,6 +14,11 @@ class PopupTest extends \PHPUnit_Framework_TestCase
 {
     private $popup;
 
+    public function testPopup()
+    {
+        $this->Popup();
+    }
+
     private function Popup()
     {
         $this->popup = new Popup();
@@ -45,10 +50,5 @@ class PopupTest extends \PHPUnit_Framework_TestCase
             $new,
             $new2
         ));
-    }
-
-    public function testPopup()
-    {
-        $this->Popup();
     }
 }

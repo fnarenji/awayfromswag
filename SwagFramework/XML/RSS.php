@@ -71,16 +71,6 @@ class RSS extends XML
         parent::__construct($name, 'xml version="1.0" encoding="utf-8"');
     }
 
-    public function create()
-    {
-        $this->document = array(
-            'title' => 'feed',
-            'option' => 'xmlns="http://www.w3.org/2005/Atom" xml:lang="fr"',
-            'content' => $this->entries
-        );
-        $this->generate();
-    }
-
     public function initEntries()
     {
         $this->entries = array(
@@ -104,6 +94,21 @@ class RSS extends XML
                 )
             )
         );
+    }
+
+    public function create()
+    {
+        $this->document = array(
+            'title' => 'feed',
+            'option' => 'xmlns="http://www.w3.org/2005/Atom" xml:lang="fr"',
+            'content' => $this->entries
+        );
+        $this->generate();
+    }
+
+    private function generate()
+    {
+        $this->write($this->document);
     }
 
     public function addEntry($title, $link, $summary, $date)
@@ -131,11 +136,6 @@ class RSS extends XML
         );
 
 
-    }
-
-    private function generate()
-    {
-        $this->write($this->document);
     }
 
 }

@@ -29,101 +29,101 @@ This is the parent `<div>` that contains the menu and the content area.
     position: relative;
     padding-left: 0;
 }
-    #layout.active {
-        position: relative;
-        left: 150px;
-    }
-        #layout.active #menu {
-            left: 150px;
-            width: 150px;
-        }
 
-        #layout.active .menu-link {
-            left: 150px;
-        }
+#layout.active {
+    position: relative;
+    left: 150px;
+}
+
+#layout.active #menu {
+    left: 150px;
+    width: 150px;
+}
+
+#layout.active .menu-link {
+    left: 150px;
+}
+
 /*
 The content `<div>` is where all your content goes.
 */
 .content {
     margin-top: 10%;
-	padding: 0 2em;
+    padding: 0 2em;
     max-width: 800px;
     margin-bottom: 50px;
     line-height: 1.6em;
-	border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #eee;
 }
 
 .content h1 {
-	font-family: Roboto;
-	color: #448AFF;
-	text-align: center;
-	font-size: 65px;
-	font-weight: 500;
-	margin-top: 20%;
-	margin-bottom: 8%;
+    font-family: Roboto;
+    color: #448AFF;
+    text-align: center;
+    font-size: 65px;
+    font-weight: 500;
+    margin-top: 20%;
+    margin-bottom: 8%;
 }
 
 p {
-	font-family: Roboto;
-	color: #212121;
-	font-size: 30px;
-	font-weight: 500;
-	/*text-align:justify;*/	
+    font-family: Roboto;
+    color: #212121;
+    font-size: 30px;
+    font-weight: 500;
+    /*text-align:justify;*/
 }
 
 .header {
-	 position: fixed;
-	 top:0;
-	 left:0;
-	 z-index:1001;
-     margin: 0;
-     color: #333;
-     
-     padding: 0 em em 0;
-     
- }
-    
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+    margin: 0;
+    color: #333;
+
+    padding: 0em em 0;
+
+}
 
 .header ul {
-	 padding:0;
-	 margin:0;
-	 list-style-type:none;
- }
- 
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
 .header li {
-	margin-left:2px;
-	float:left; /*pour IE*/
- }
- 
+    margin-left: 2px;
+    float: left; /*pour IE*/
+}
+
 .header ul li a {
-	display:block;
-	float:left;   
-	width: 200px;
-	height: 70px;
-	font-size: 36px;
-	height:70px;
-    line-height:70px;
-    text-align:center; /* centrage horizontal */
-	background-color:white;
-	color:#448AFF;
-	text-decoration:none;
-	text-align:center;
-	padding:5px;
+    display: block;
+    float: left;
+    width: 200px;
+    height: 70px;
+    font-size: 36px;
+    height: 70px;
+    line-height: 70px;
+    text-align: center; /* centrage horizontal */
+    background-color: white;
+    color: #448AFF;
+    text-decoration: none;
+    text-align: center;
+    padding: 5px;
 }
 
 .header ul li a:hover {
-	color: white;
-	background-color:#448AFF;
-	
- } 
+    color: white;
+    background-color: #448AFF;
+
+}
 
 .content-subhead {
     margin: 50px 0 20px 0;
     font-weight: 300;
     color: #888;
 }
-
-
 
 /*
 The `#menu` `<div>` is the parent `<div>` that contains the `.pure-menu` that
@@ -142,61 +142,64 @@ appears on the left side of the page.
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 }
-    /*
-    All anchors inside the menu should be styled like this.
-    */
-    #menu a {
-        color: #999;
-        border: none;
-        padding: 0.6em 0 0.6em 0.6em;
-    }
 
-    /*
-    Remove all background/borders, since we are applying them to #menu.
-    */
-     #menu .pure-menu,
-     #menu .pure-menu ul {
-        border: none;
-        background: transparent;
-    }
+/*
+All anchors inside the menu should be styled like this.
+*/
+#menu a {
+    color: #999;
+    border: none;
+    padding: 0.6em 0 0.6em 0.6em;
+}
 
-    /*
-    Add that light border to separate items into groups.
-    */
-    #menu .pure-menu ul,
-    #menu .pure-menu .menu-item-divided {
-        border-top: 1px solid #333;
-    }
-        /*
-        Change color of the anchor links on hover/focus.
-        */
-        #menu .pure-menu li a:hover,
-        #menu .pure-menu li a:focus {
-            background: #333;
-        }
+/*
+Remove all background/borders, since we are applying them to #menu.
+*/
+#menu .pure-menu,
+#menu .pure-menu ul {
+    border: none;
+    background: transparent;
+}
 
-    /*
-    This styles the selected menu item `<li>`.
-    */
-    #menu .pure-menu-selected,
-    #menu .pure-menu-heading {
-        background: #1f8dd6;
-    }
-        /*
-        This styles a link within a selected menu item `<li>`.
-        */
-        #menu .pure-menu-selected a {
-            color: #fff;
-        }
+/*
+Add that light border to separate items into groups.
+*/
+#menu .pure-menu ul,
+#menu .pure-menu .menu-item-divided {
+    border-top: 1px solid #333;
+}
 
-    /*
-    This styles the menu heading.
-    */
-    #menu .pure-menu-heading {
-        font-size: 110%;
-        color: #fff;
-        margin: 0;
-    }
+/*
+Change color of the anchor links on hover/focus.
+*/
+#menu .pure-menu li a:hover,
+#menu .pure-menu li a:focus {
+    background: #333;
+}
+
+/*
+This styles the selected menu item `<li>`.
+*/
+#menu .pure-menu-selected,
+#menu .pure-menu-heading {
+    background: #1f8dd6;
+}
+
+/*
+This styles a link within a selected menu item `<li>`.
+*/
+#menu .pure-menu-selected a {
+    color: #fff;
+}
+
+/*
+This styles the menu heading.
+*/
+#menu .pure-menu-heading {
+    font-size: 110%;
+    color: #fff;
+    margin: 0;
+}
 
 /* -- Dynamic Button For Responsive Menu -------------------------------------*/
 
@@ -215,7 +218,7 @@ small screens.
     top: 0;
     left: 0; /* "#menu width" */
     background: #000;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0, 0, 0, 0.7);
     font-size: 10px; /* change this value to increase/decrease button size */
     z-index: 10;
     width: 2em;
@@ -223,35 +226,34 @@ small screens.
     padding: 2.1em 1.6em;
 }
 
-    .menu-link:hover,
-    .menu-link:focus {
-        background: #000;
-    }
+.menu-link:hover,
+.menu-link:focus {
+    background: #000;
+}
 
-    .menu-link span {
-        position: relative;
-        display: block;
-    }
+.menu-link span {
+    position: relative;
+    display: block;
+}
 
-    .menu-link span,
-    .menu-link span:before,
-    .menu-link span:after {
-        background-color: #fff;
-        width: 100%;
-        height: 0.2em;
-    }
+.menu-link span,
+.menu-link span:before,
+.menu-link span:after {
+    background-color: #fff;
+    width: 100%;
+    height: 0.2em;
+}
 
-        .menu-link span:before,
-        .menu-link span:after {
-            position: absolute;
-            margin-top: -0.6em;
-            content: " ";
-        }
+.menu-link span:before,
+.menu-link span:after {
+    position: absolute;
+    margin-top: -0.6em;
+    content: " ";
+}
 
-        .menu-link span:after {
-            margin-top: 0.6em;
-        }
-
+.menu-link span:after {
+    margin-top: 0.6em;
+}
 
 /* -- Responsive Styles (Media Queries) ------------------------------------- */
 
@@ -270,6 +272,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         padding-left: 150px; /* left col width "#menu" */
         left: 0;
     }
+
     #menu {
         left: 150px;
     }

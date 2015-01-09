@@ -21,19 +21,17 @@ class XML
      * @var string
      */
     protected $name;
-
+    /**
+     * This is the file that we want to edit
+     * @var SplFileObject
+     */
+    protected $file;
     /**
      * This is the name of the very first tag in your file
      * (the doctype tag in HTMl for example)
      * @var string
      */
     private $header;
-
-    /**
-     * This is the file that we want to edit
-     * @var SplFileObject
-     */
-    protected $file;
 
     public function __construct($name, $header)
     {
@@ -52,44 +50,6 @@ class XML
         $tag .= "\n";
 
         $this->file->fwrite($tag);
-    }
-
-    private function writeTag($content = array())
-    {
-        $size = count($content);
-
-        if ($size < 1 || $size > 2) {
-            throw XMLNotWritableException($content);
-        } else {
-            if (!isset($content['title']) || !isset($content['content'])) {
-                throw XMLArrayBadFormatException();
-            }
-        }
-
-        $tag = '<' . $content['title'];
-        $tag .= isset($content['option']) ? ' ' . $content['option'] : '';
-        $tag .= '>';
-        $tag .= $content['content'];
-        $tag .= '</' . $content['title'] . '>';
-        $tag .= "\n";
-
-        $this->file->fwrite($tag);
-    }
-
-    private function writeOrphanTag($content)
-    {
-        $tag = '<' . $content['title'];
-        $tag .= isset($content['option']) ? ' ' . $content['option'] : '';
-        $tag .= '/>';
-        $tag .= "\n";
-        $this->file->fwrite($tag);
-    }
-
-    private function addTab($number)
-    {
-        for ($i = 0; $i < $number; ++$i) {
-            $this->file->fwrite("\t");
-        }
     }
 
     public function write($content = array(), $level = 1)
@@ -127,13 +87,51 @@ class XML
         }
     }
 
-    protected function getFile()
+    private function addTab($number)
     {
-        return $this->file;
+        for ($i = 0; $i < $number; ++$i) {
+            $this->file->fwrite("\t");
+        }
+    }
+
+    private function writeOrphanTag($content)
+    {
+        $tag = '<' . $content['title'];
+        $tag .= isset($content['option']) ? ' ' . $content['option'] : '';
+        $tag .= '/>';
+        $tag .= "\n";
+        $this->file->fwrite($tag);
+    }
+
+    private function writeTag($content = array())
+    {
+        $size = count($content);
+
+        if ($size < 1 || $size > 2) {
+            throw XMLNotWritableException($content);
+        } else {
+            if (!isset($content['title']) || !isset($content['content'])) {
+                throw XMLArrayBadFormatException();
+            }
+        }
+
+        $tag = '<' . $content['title'];
+        $tag .= isset($content['option']) ? ' ' . $content['option'] : '';
+        $tag .= '>';
+        $tag .= $content['content'];
+        $tag .= '</' . $content['title'] . '>';
+        $tag .= "\n";
+
+        $this->file->fwrite($tag);
     }
 
     public function getFileName()
     {
         return $this->name;
+    }
+
+    protected function getFile()
+    {
+        return $this->file;
     }
 }

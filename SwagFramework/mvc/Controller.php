@@ -13,10 +13,10 @@ use SwagFramework\Helpers\ControllerHelpers;
 
 class Controller
 {
+    public $helpers;
     private $loader;
     private $view;
     private $params;
-    public $helpers;
 
     function __construct()
     {
