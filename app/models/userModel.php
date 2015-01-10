@@ -100,5 +100,22 @@ class userModel {
 
     }
 
+    /**
+     * Update the user with id in paramater
+     * @param $id
+     * @param $username
+     * @param $firstName
+     * @param $lastName
+     * @param $mail
+     * @param $password
+     * @return bool
+     */
+    public function updateUser($id,$username, $firstName, $lastName, $mail, $password){
+        $sql = 'UPDATE Users SET userName = ?, firstName = ?, lastName = ?, mail = ?, password = ? WHERE idUsers = ?';
+
+        return Database::update($sql,$username,$firstName,$lastName,$mail,$password,$id);
+
+    }
+
 
 } 

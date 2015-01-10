@@ -69,6 +69,7 @@ CREATE TABLE IF NOT EXISTS 'AFS'.'commentN' (
 
 CREATE TABLE IF NOT EXISTS 'AFS'.'event' (
   'idEvent' INT NOT NULL AUTO_INCREMENT,
+  'nameEvent' VARCHAR(50) NOT NULL,
   'creator' INT NOT NULL,
   'nbParticipantMax' INT NOT NULL,
   PRIMARY KEY ('idEvent'),
@@ -135,10 +136,9 @@ CREATE TABLE IF NOT EXISTS 'AFS'.'challenges' (
   ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS 'AFS'.'ParticipationC' (
-  'win' TINYINT(1) NOT NULL,
+  'win' BOOLEAN NOT NULL DEFAULT FALSE,
   'Users_idUsers' INT NOT NULL,
   'challenges_idchallenges' INT NOT NULL,
-  'challenges_creator' INT NOT NULL,
   'idParticipation' INT NOT NULL AUTO_INCREMENT,
   INDEX 'fk_Participation_Users1_idx' ('Users_idUsers' ASC),
   INDEX 'fk_Participation_challenges1_idx' ('challenges_idchallenges' ASC, 'challenges_creator' ASC),

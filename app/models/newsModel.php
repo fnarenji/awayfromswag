@@ -60,5 +60,18 @@ class newsModel {
 
     }
 
+    /**
+     * Update a news
+     * @param $id
+     * @param $content
+     * @param $date
+     * @return bool
+     */
+    public function updateNews($id,$content,$date){
+        $sql = 'UPDATE news SET content = ?, date = ? WHERE idnews = ?';
+
+        return Database::update($sql,$content,$date,$id);
+    }
+
 
 } 
