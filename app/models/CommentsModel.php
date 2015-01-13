@@ -8,6 +8,7 @@
 
 namespace app\models;
 
+use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\mvc\Model;
 
 class CommentsModel extends Model
@@ -17,11 +18,12 @@ class CommentsModel extends Model
      * Return all comment for all event.
      * @return array
      */
-    public function getAllCommentsEvent(){
-        $sql = "SELECT nameEvent,contents,userName FROM Users,commentE,Comments,event WHERE ".
-                "event_idEvent = idEvent AND Comments_idComments = idComments AND idUsers = participateE_Users_idUsers;";
+    public function getAllCommentsEvent()
+    {
+        $sql = "SELECT nameEvent,contents,userName FROM Users,commentE,Comments,event WHERE " .
+            "event_idEvent = idEvent AND Comments_idComments = idComments AND idUsers = participateE_Users_idUsers;";
 
-        return  $this->getDatabase()->execute($sql,null);
+        return DatabaseProvider::connection()->execute($sql, null);
     }
 
 
@@ -30,15 +32,17 @@ class CommentsModel extends Model
      * @param $id
      * @return array
      */
-    public function getCommentEvent($id){
-        $sql = "SELECT nameEvent,contents,userName FROM Users,commentE,Comments,event WHERE ".
+    public function getCommentEvent($id)
+    {
+        $sql = "SELECT nameEvent,contents,userName FROM Users,commentE,Comments,event WHERE " .
             "event_idEvent = ? AND Comments_idComments = idComments AND idUsers = participateE_Users_idUsers;";
 
-        return $this->getDatabase()->execute($sql,$id);
+        return DatabaseProvider::connection()->execute($sql, $id);
 
     }
 
-    public function insertCommentEvent($idparticip,$iduser,$contents,$mark){
+    public function insertCommentEvent($idparticip, $iduser, $contents, $mark)
+    {
         // TO DO
     }
 
@@ -47,11 +51,12 @@ class CommentsModel extends Model
      * @param $id
      * @return bool
      */
-    public function deleteCommentEvent($id){
+    public function deleteCommentEvent($id)
+    {
 
         $sql = "DELETE FROM commentE WHERE idcommentE = ?";
 
-        $this->getDatabase()->execute($sql,$id);
+        DatabaseProvider::connection()->execute($sql, $id);
 
         return true;
     }

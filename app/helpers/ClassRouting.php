@@ -39,6 +39,11 @@ class ClassRouting
         $this->setClasses($classes);
     }
 
+    private function setNamespace($namespace)
+    {
+        $this->namespace = $namespace;
+    }
+
     private function setClasses($classes)
     {
         $this->classes = $classes;
@@ -49,20 +54,13 @@ class ClassRouting
         $this->classes[] = $class;
     }
 
-    private function setNamespace($namespace)
-    {
-        $this->namespace = $namespace;
-    }
-
-
     /**
      * Add all the routes in the router in parameter
      * @param $router
      */
     public function generateRoute($router)
     {
-        foreach ($this->classes as $class)
-        {
+        foreach ($this->classes as $class) {
             $classMethods = get_class_methods($this->namespace . $class . 'Controller');
             $rc = new \ReflectionClass($this->namespace . $class . 'Controller');
 
@@ -71,12 +69,12 @@ class ClassRouting
 
             $className = $this->namespace . $class . 'Controller';
 
-            foreach ($classMethods as $methodName)
-            {
-                if (in_array($methodName, $parent) || $methodName == 'index')
+            foreach ($classMethods as $methodName) {
+                if (in_array($methodName, $parent) || $methodName == 'index') {
                     continue;
-                else
+                } else {
                     $router->add('/' . strtolower($class) . '/' . $methodName, new $className(), $methodName);
+                }
             }
             $router->add('/' . strtolower($class), new $className(), 'index');
         }

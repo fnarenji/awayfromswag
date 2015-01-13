@@ -8,8 +8,6 @@
 
 namespace SwagFramework\mvc;
 
-use SwagFramework\Config\DatabaseConfig;
-use SwagFramework\Database\Database;
 use SwagFramework\Exceptions\InvalidModelClassException;
 use SwagFramework\Helpers\ControllerHelpers;
 
@@ -19,18 +17,12 @@ class Controller
     private $loader;
     private $view;
     private $params;
-    private $databaseConfig;
 
     function __construct()
     {
         $this->loader = new \Twig_Loader_Filesystem('app/views');
         $this->view = new View($this->loader);
         $this->helpers = new ControllerHelpers();
-    }
-
-    public function setDatabaseConfig(DatabaseConfig $databaseConfig)
-    {
-        $this->databaseConfig = $databaseConfig;
     }
 
     /**
@@ -42,7 +34,7 @@ class Controller
         if (!$classInfo->getParentClass()->isSubclassOf('Model')) {
             throw new InvalidModelClassException($model);
         }
-        return $classInfo->newInstanceArgs([new Database($this->databaseConfig)]);
+        return $classInfo->newInstance();
     }
 
     /**

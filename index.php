@@ -9,8 +9,7 @@ define('WEBROOT', dirname($_SERVER['SCRIPT_NAME']) . DIRECTORY_SEPARATOR);
 
 define('DEBUG', true);
 
-if (DEBUG)
-{
+if (DEBUG) {
     ini_set('display_errors', true);
     ini_set('html_errors', true);
     error_reporting(E_ALL);
@@ -18,9 +17,10 @@ if (DEBUG)
 
 require 'vendor/autoload.php';
 
-try
-{
-    $router = new \SwagFramework\Routing\Router(\SwagFramework\Config\DatabaseConfig::parseFromFile("app/config/database.json"));
+try {
+    \SwagFramework\Database\DatabaseProvider::connect(\SwagFramework\Config\DatabaseConfig::parseFromFile("app/config/database.json"));
+
+    $router = new \SwagFramework\Routing\Router();
 
     $classrouting = new \app\helpers\ClassRouting('\app\controllers\\');
     $classrouting->addclass('User');
@@ -30,14 +30,10 @@ try
     $router->add('/', new \app\controllers\HomeController(), 'index');
 
     $router->matchcurrentrequest();
-}
-catch (\SwagFramework\Exceptions\SwagException $e)
-{
+} catch (\SwagFramework\Exceptions\SwagException $e) {
     echo '<h1>SwagException !</h1>';
     echo '<p>' . $e->getMessage() . '</p>';
-}
-catch (Exception $e)
-{
+} catch (Exception $e) {
     echo '<h1>Exception !</h1>';
     echo $e;
 }

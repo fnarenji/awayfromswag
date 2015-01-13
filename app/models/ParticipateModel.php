@@ -21,7 +21,7 @@ class ParticipateModel extends Model
     {
         $sql = 'SELECT userName,nameEvent FROM Users,event,participateE WHERE idUsers = Users_idUsers AND idEvent = event_idEvent; ';
 
-        return $this->getDatabase()->execute($sql, null);
+        return DatabaseProvider::connection()->execute($sql, null);
     }
 
     /**
@@ -33,7 +33,7 @@ class ParticipateModel extends Model
     {
         $sql = 'SELECT userName,nameEvent FROM Users,event,participateE WHERE idUsers = Users_idUsers AND idEvent = event_idEvent AND event_idEvent = ? ; ';
 
-        return $this->getDatabase()->execute($sql, $id);
+        return DatabaseProvider::connection()->execute($sql, $id);
 
     }
 
@@ -46,7 +46,7 @@ class ParticipateModel extends Model
     {
         $sql = 'SELECT nameEvent FROM event,participateE WHERE Users_idUsers = ? AND idEvent = event_idEvent ; ';
 
-        return $this->getDatabase()->execute($sql, $id);
+        return DatabaseProvider::connection()->execute($sql, $id);
     }
 
     /**
@@ -60,7 +60,7 @@ class ParticipateModel extends Model
     {
         $sql = 'INSERT INTO participateE VALUES ?,?,?';
 
-        $this->getDatabase()->execute($sql, $idEvent, $idUser, $nbAvailable);
+        DatabaseProvider::connection()->execute($sql, $idEvent, $idUser, $nbAvailable);
 
         return true;
     }
@@ -76,7 +76,7 @@ class ParticipateModel extends Model
     {
         $sql = 'DELETE FROM participateE WHERE Users_idUsers = ? AND event_idEvent = ?';
 
-        $this->getDatabase()->execute($sql, $idUser, $idEvent);
+        DatabaseProvider::connection()->execute($sql, $idUser, $idEvent);
 
         return true;
     }
@@ -89,7 +89,7 @@ class ParticipateModel extends Model
     {
         $sql = 'SELECT userName,name FROM challenges,ParticipationC,Users WHERE idUsers = Users_idUsers AND challenges_idchallenges =  idchallenges';
 
-        return $this->getDatabase()->execute($sql, null);
+        return DatabaseProvider::connection()->execute($sql, null);
     }
 
     /**
@@ -101,7 +101,7 @@ class ParticipateModel extends Model
     {
         $sql = 'SELECT userName FROM ParticipationC,Users WHERE idUsers = Users_idUsers AND challenges_idchallenges =  ? ';
 
-        return $this->getDatabase()->execute($sql, $id);
+        return DatabaseProvider::connection()->execute($sql, $id);
 
     }
 
@@ -114,7 +114,7 @@ class ParticipateModel extends Model
     {
         $sql = 'SELECT name FROM challenges,ParticipationC WHERE Users_idUsers = ? AND challenges_idchallenges =  idchallenges';
 
-        return $this->getDatabase()->execute($sql, $id);
+        return DatabaseProvider::connection()->execute($sql, $id);
 
     }
 
@@ -128,7 +128,7 @@ class ParticipateModel extends Model
     {
         $sql = 'INSERT INTO ParticipationC (`Users_idUsers`, `challenges_idchallenges`) VALUES ?,?';
 
-        $this->getDatabase()->execute($sql, $idUsers, $idchallenges);
+        DatabaseProvider::connection()->execute($sql, $idUsers, $idchallenges);
 
         return true;
     }
@@ -142,7 +142,7 @@ class ParticipateModel extends Model
     {
         $sql = 'DELETE FROM ParticipationC WHERE idParticipation = ?';
 
-        $this->getDatabase()->execute($sql, $id);
+        DatabaseProvider::connection()->execute($sql, $id);
 
         return true;
     }

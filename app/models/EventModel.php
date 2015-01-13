@@ -16,10 +16,11 @@ class EventModel extends Model
      * Return all event
      * @return array
      */
-    public function getEvents(){
+    public function getEvents()
+    {
         $sql = "SELECT nameEvent,userName FROM event,Users WHERE creator = idUsers;";
 
-        return  $this->getDatabase()->execute($sql,null);
+        return DatabaseProvider::connection()->execute($sql, null);
 
     }
 
@@ -28,10 +29,11 @@ class EventModel extends Model
      * @param $id
      * @return array
      */
-    public function getOneEvents($id){
+    public function getOneEvents($id)
+    {
         $sql = "SELECT nameEvent,userName,nbParticipantMax FROM event,Users WHERE creator = idUsers AND idEvent = ?;";
 
-        return  $this->getDatabase()->execute($sql,$id);
+        return DatabaseProvider::connection()->execute($sql, $id);
 
     }
 
@@ -42,11 +44,11 @@ class EventModel extends Model
      * @param $nbMaxPart
      * @return bool
      */
-    public function insertEvent($name,$idc,$nbMaxPart)
+    public function insertEvent($name, $idc, $nbMaxPart)
     {
         $sql = "INSERT INTO event (`nameEvent`,`creator`,`nbParticipantMax`) VALUE ?,?,?";
 
-        $this->getDatabase()->execute($sql, $name, $idc, $nbMaxPart);
+        DatabaseProvider::connection()->execute($sql, $name, $idc, $nbMaxPart);
 
         return true;
 
@@ -57,11 +59,12 @@ class EventModel extends Model
      * @param $id
      * @return bool
      */
-    public function deleteEvent($id){
+    public function deleteEvent($id)
+    {
 
         $sql = "DELETE FROM event WHERE idEvent = ?";
 
-        $this->getDatabase()->execute($sql,$id);
+        DatabaseProvider::connection()->execute($sql, $id);
 
         return true;
     }

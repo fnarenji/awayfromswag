@@ -9,26 +9,14 @@
 namespace SwagFramework\mvc;
 
 use SwagFramework\Config\DatabaseConfig;
-use SwagFramework\Database\Database;
 
 class Model
 {
     /**
-     * @var database
-     */
-    private $database;
-
-    /**
      * default constructor
      * @param DatabaseConfig $config
      */
-    public function __construct(Database $db)
+    public function __construct()
     {
-        $this->database = $db;
-    }
-
-    public function getDatabase()
-    {
-        return $this->database;
     }
 } 

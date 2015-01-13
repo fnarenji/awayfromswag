@@ -11,9 +11,16 @@ namespace tests\Form;
 
 use SwagFramework\Form\Field\Input;
 
-class InputTest extends \PHPUnit_Framework_TestCase {
+class InputTest extends \PHPUnit_Framework_TestCase
+{
 
     private $input;
+
+    public function testInput()
+    {
+        $this->InputEmpty();
+        $this->InputTest();
+    }
 
     private function InputEmpty()
     {
@@ -26,12 +33,6 @@ class InputTest extends \PHPUnit_Framework_TestCase {
         $this->input = new Input('testInput');
         $this->input->addAttribute('test', 'testValue');
         $this->assertEquals('<input name="testInput" test="testValue" />', $this->input->getHTML());
-    }
-
-    public function testInput()
-    {
-        $this->InputEmpty();
-        $this->InputTest();
     }
 
 }

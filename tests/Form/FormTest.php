@@ -10,13 +10,13 @@ namespace tests\Form;
 
 
 use SwagFramework\Form\Field\Input;
-use SwagFramework\Form\Field\Label;
 use SwagFramework\Form\Form;
 
 define('CR', "\n");
 define('TAB', "    ");
 
-class FormTest extends \PHPUnit_Framework_TestCase {
+class FormTest extends \PHPUnit_Framework_TestCase
+{
 
     private $form;
 

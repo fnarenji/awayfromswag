@@ -25,7 +25,7 @@ class UserModel extends Model
             . 'FROM ' . self::TABLE_NAME . ' '
             . 'WHERE id= ?';
 
-        return $this->getDatabase()->execute($sql, $id);
+        return DatabaseProvider::connection()->execute($sql, $id);
     }
 
     /**
@@ -37,7 +37,7 @@ class UserModel extends Model
         $sql = 'SELECT *'
             . 'FROM ' . self::TABLE_NAME . ' ';
 
-        return $this->getDatabase()->execute($sql, null);
+        return DatabaseProvider::connection()->execute($sql, null);
     }
 
     /**
@@ -53,7 +53,7 @@ class UserModel extends Model
             . 'WHERE userName = ?'
             . 'AND password = ?';
 
-        return $this->getDatabase()->execute($sql, $username, sha1($password));
+        return DatabaseProvider::connection()->execute($sql, $username, sha1($password));
     }
 
     /**
@@ -74,7 +74,7 @@ class UserModel extends Model
         $sql = 'INSERT INTO users (`userName`, `firstName`, `lastName`, `mail`, `password`, `position`)
                  VALUES (?,?,?,?,?,?)';
 
-        $this->getDatabase()->execute($sql, $username, $firstName, $lastName, $mail, $password, $nbuser);
+        DatabaseProvider::connection()->execute($sql, $username, $firstName, $lastName, $mail, $password, $nbuser);
 
         return true;
     }
@@ -89,7 +89,7 @@ class UserModel extends Model
         $sql = 'SELECT COUNT(idUsers) '
             . 'FROM ' . self::TABLE_NAME;
 
-        return $this->getDatabase()->execute($sql, null)[0];
+        return DatabaseProvider::connection()->execute($sql, null)[0];
     }
 
     /**
@@ -102,7 +102,7 @@ class UserModel extends Model
 
         $sql = 'DELETE FROM `Users` WHERE idUsers = ?';
 
-        $this->getDatabase()->execute($sql, $id);
+        DatabaseProvider::connection()->execute($sql, $id);
 
         return true;
 
@@ -122,7 +122,7 @@ class UserModel extends Model
     {
         $sql = 'UPDATE Users SET userName = ?, firstName = ?, lastName = ?, mail = ?, password = ? WHERE idUsers = ?';
 
-        return $this->getDatabase()->update($sql, $username, $firstName, $lastName, $mail, $password, $id);
+        return DatabaseProvider::connection()->update($sql, $username, $firstName, $lastName, $mail, $password, $id);
 
     }
 
@@ -131,13 +131,14 @@ class UserModel extends Model
      * @param $name
      * @return array
      */
-    public function getUserLike($name){
+    public function getUserLike($name)
+    {
 
-        $name = '%'.$name.'%';
+        $name = '%' . $name . '%';
 
         $sql = "SELECT idUsers, userName, firstName, lastName FROM Users WHERE userName LIKE ? ";
 
-        return $this->getDatabase()->execute($sql,$name);
+        return DatabaseProvider::connection()->execute($sql, $name);
     }
 
 

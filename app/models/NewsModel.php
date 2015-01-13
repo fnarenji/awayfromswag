@@ -22,7 +22,7 @@ class NewsModel extends Model
     {
         $sql = 'SELECT author,content FROM news WHERE idnews = ?';
 
-        return $this->getDatabase()->execute($sql, $id);
+        return DatabaseProvider::connection()->execute($sql, $id);
     }
 
     /**
@@ -33,7 +33,7 @@ class NewsModel extends Model
     {
         $sql = 'SELECT author,content,date FROM news';
 
-        return $this->getDatabase()->execute($sql, null);
+        return DatabaseProvider::connection()->execute($sql, null);
     }
 
     /**
@@ -47,7 +47,7 @@ class NewsModel extends Model
     {
         $sql = 'INSERT INTO news (`author`,`content`,`date`) VALUE ?,?,? ';
 
-        $this->getDatabase()->execute($sql, $author, $content, $date);
+        DatabaseProvider::connection()->execute($sql, $author, $content, $date);
 
         return true;
     }
@@ -61,7 +61,7 @@ class NewsModel extends Model
     {
         $sql = 'DELETE FROM news WHERE idnews = ?';
 
-        $this->getDatabase()->execute($sql, $id);
+        DatabaseProvider::connection()->execute($sql, $id);
 
         return true;
 
@@ -78,7 +78,7 @@ class NewsModel extends Model
     {
         $sql = 'UPDATE news SET content = ?, date = ? WHERE idnews = ?';
 
-        return $this->getDatabase()->update($sql, $content, $date, $id);
+        return DatabaseProvider::connection()->update($sql, $content, $date, $id);
     }
 
 
