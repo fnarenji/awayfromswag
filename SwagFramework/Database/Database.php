@@ -39,17 +39,6 @@ class Database extends \PDO
      * @param $_
      * @return array
      */
-    public function execute($query)
-    {
-        $this->execute($query, null);
-    }
-
-    /**
-     * execute query
-     * @param $query
-     * @param $_
-     * @return array
-     */
     public function execute($query, $_)
     {
         $params = func_get_args();
