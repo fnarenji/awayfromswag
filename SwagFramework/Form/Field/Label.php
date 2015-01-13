@@ -21,6 +21,6 @@ class Label extends Field
 
     public function getHTML()
     {
-        return '<label' . $this->getAttributesHTML() . ' ' . '>' . ucfirst($this->value) . '</label>';
+        return '<label' . $this->getAttributesHTML() . '>' . ucfirst($this->value) . '</label>';
     }
 }

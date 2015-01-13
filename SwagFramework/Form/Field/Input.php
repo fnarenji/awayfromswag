@@ -13,6 +13,6 @@ class Input extends Field
 {
     public function getHTML()
     {
-        return '<input ' . $this->getAttributesHTML() . ' />';
+        return '<input' . $this->getAttributesHTML() . ' />';
     }
 }

@@ -18,6 +18,7 @@ abstract class Field
     {
         $this->name = $name;
         $this->attributes = $attributes;
+        $this->addAttribute('name', $this->name);
     }
 
     public function addAttribute($name, $value)
