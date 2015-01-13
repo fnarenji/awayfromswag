@@ -8,11 +8,8 @@
 
 namespace SwagFramework\Exceptions;
 
-
 class TableNotFoundDatabaseException extends SwagException
 {
-    private $previous;
-
     public function __construct($table, $code = 0, Exception $previous = null)
     {
         $message = 'The table ' . $table . ' was not found !';

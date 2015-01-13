@@ -37,7 +37,7 @@ class Assets
         if (!file_exists($test)) {
             throw new FileNotFoundException($test);
         }
-        return WEBROOT . 'public' . DS . $file;
+        return 'public' . DS . $file;
     }
 
     /**
@@ -54,7 +54,7 @@ class Assets
 
     /**
      * generate img link
-     * @param $src src /public/img/src
+     * @param $src src public/img/src
      * @param string $alt
      * @return string img link
      * @throws FileNotFoundException

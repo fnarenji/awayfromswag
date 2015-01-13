@@ -11,8 +11,6 @@ namespace SwagFramework\Exceptions;
 
 class PopupIncorrectTypeException extends SwagException
 {
-    private $previous;
-
     public function __construct($type, $title, $code = 0, Exception $previous = null)
     {
         $message = 'The type ' . $type . ' for the popup ' . $title . ' is incorrect !';
