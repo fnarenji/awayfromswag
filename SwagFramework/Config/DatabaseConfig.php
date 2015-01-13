@@ -12,45 +12,43 @@ namespace SwagFramework\Config;
 class DatabaseConfig
 {
     /**
-     * @var instance
-     */
-    private static $instance;
-
-    /**
      * @var host
      */
-    private $host = 'localhost';
-
+    private $host;
     /**
      * @var user
      */
-    private $user = 'root';
-
+    private $user;
     /**
      * @var password
      */
-    private $password = '';
-
+    private $password;
     /**
      * @var database
      */
-    private $database = 'afs';
-
+    private $database;
 
     /**
      * Disable construction of object.
      */
-    private function __construct()
+    private function __construct($host, $user, $password, $database)
     {
+        $this->host = $host;
+        $this->user = $user;
+        $this->password = $password;
+        $this->database = $database;
     }
 
-    public static function getInstance()
+    /**
+     * @param $fileName database config file
+     */
+    public static function parseFromFile($fileName)
     {
-        if (!(self::$instance instanceof self)) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
+        $configFile = new ConfigFileParser($fileName);
+        return new self($configFile->getEntry("host"),
+            $configFile->getEntry("user"),
+            $configFile->getEntry("password"),
+            $configFile->getEntry("database"));
     }
 
     /**
@@ -83,12 +81,5 @@ class DatabaseConfig
     public function getPassword()
     {
         return $this->password;
-    }
-
-    /**
-     * Disable copy of object
-     */
-    private function __clone()
-    {
     }
 }

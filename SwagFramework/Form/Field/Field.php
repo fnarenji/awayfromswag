@@ -27,18 +27,19 @@ abstract class Field
         $this->attributes[$name] = $value;
     }
 
-    public function getAttributes()
-    {
-        return $this->attributes;
-    }
-
     public function getAttributesHTML()
     {
         $html = '';
-        foreach($this->getAttributes() as $key => $value)
+        foreach ($this->getAttributes() as $key => $value) {
             $html .= ' ' . $key . '="' . addslashes($value) . '"';
+        }
 
         return $html;
+    }
+
+    public function getAttributes()
+    {
+        return $this->attributes;
     }
 
     public function getName()

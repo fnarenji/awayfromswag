@@ -11,18 +11,12 @@ namespace SwagFramework\Exceptions;
 
 class XMLNotWritableException extends SwagException
 {
-    private $previous;
-
     public function __construct($input, $key, $code = 0, Exception $previous = null)
     {
         $message = 'The array provided for the XML tag is ';
         $message .= (count($input) < 1) ? 'too short' : 'too big. ';
         $message .= 'Size expected : 2.';
 
-        parent::__construct($message, $code);
-
-        if (!is_null($previous)) {
-            $this->previous = $previous;
-        }
+        parent::__construct($message, $code, $previous);
     }
 }

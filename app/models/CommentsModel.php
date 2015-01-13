@@ -10,7 +10,8 @@ namespace app\models;
 
 use SwagFramework\mvc\Model;
 
-class commentsModel extends Model {
+class CommentsModel extends Model
+{
     //TODO: commentsModel
 
 } 

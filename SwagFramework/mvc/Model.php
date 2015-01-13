@@ -16,23 +16,19 @@ class Model
     /**
      * @var database
      */
-    private $db;
+    private $database;
 
     /**
      * default constructor
+     * @param DatabaseConfig $config
      */
-    function __construct()
+    public function __construct(Database $db)
     {
-        $this->db = new Database(new DatabaseConfig());
+        $this->database = $db;
     }
 
-    public function getDb()
+    public function getDatabase()
     {
-        return $this->db;
-    }
-
-    public function switchConfig($config)
-    {
-        $this->db = new Database($config);
+        return $this->database;
     }
 } 

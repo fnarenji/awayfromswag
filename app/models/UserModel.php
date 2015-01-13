@@ -10,32 +10,34 @@ namespace app\models;
 
 use SwagFramework\mvc\Model;
 
-class userModel extends Model {
-
-    const table = 'Users';
+class UserModel extends Model
+{
+    const TABLE_NAME = 'Users';
 
     /**
      *  Return all information with the id
      * @param $id
      * @return array
      */
-    public function getUser($id){
+    public function getUser($id)
+    {
         $sql = 'SELECT * '
-                .'FROM ' .self::table.' '
-                .'WHERE id= ?';
+            . 'FROM ' . self::TABLE_NAME . ' '
+            . 'WHERE id= ?';
 
-        return $this->getDb()->execute($sql,$id);
+        return $this->getDatabase()->execute($sql, $id);
     }
 
     /**
      * Return all information for all users
      * @return array
      */
-    public function getAllUsers(){
+    public function getAllUsers()
+    {
         $sql = 'SELECT *'
-                . 'FROM ' .self::table. ' ';
+            . 'FROM ' . self::TABLE_NAME . ' ';
 
-        return $this->getDb()->execute($sql,null);
+        return $this->getDatabase()->execute($sql);
     }
 
     /**
@@ -44,25 +46,14 @@ class userModel extends Model {
      * @param $password
      * @return array
      */
-    public function getUserConnect($username,$password){
+    public function getUserConnect($username, $password)
+    {
         $sql = 'SELECT idUsers, userName, firstName, lastName '
-                . 'FROM ' .self::table. ' '
-                . 'WHERE userName = ?'
-                . 'AND password = ?';
+            . 'FROM ' . self::TABLE_NAME . ' '
+            . 'WHERE userName = ?'
+            . 'AND password = ?';
 
-        return $this->getDb()->execute($sql,$username,sha1($password));
-    }
-
-    /**
-     * Return the number of users.
-     * @return mixed
-     */
-    private function nbUsers(){
-
-        $sql = 'SELECT COUNT(idUsers) '
-                . 'FROM ' .self::table;
-
-        return $this->getDb()->execute($sql,null)[0];
+        return $this->getDatabase()->execute($sql, $username, sha1($password));
     }
 
     /**
@@ -75,16 +66,30 @@ class userModel extends Model {
      * @param $password
      * @return bool
      */
-    public function insertUser($username, $firstName, $lastName, $mail, $password){
+    public function insertUser($username, $firstName, $lastName, $mail, $password)
+    {
 
         $nbuser = self::nbUsers();
 
         $sql = 'INSERT INTO users (`userName`, `firstName`, `lastName`, `mail`, `password`, `position`)
                  VALUES (?,?,?,?,?,?)';
 
-        $this->getDb()->execute($sql,$username,$firstName,$lastName,$mail,$password,$nbuser);
+        $this->getDatabase()->execute($sql, $username, $firstName, $lastName, $mail, $password, $nbuser);
 
         return true;
+    }
+
+    /**
+     * Return the number of users.
+     * @return mixed
+     */
+    private function nbUsers()
+    {
+
+        $sql = 'SELECT COUNT(idUsers) '
+            . 'FROM ' . self::TABLE_NAME;
+
+        return $this->getDatabase()->execute($sql, null)[0];
     }
 
     /**
@@ -92,11 +97,12 @@ class userModel extends Model {
      * @param $id
      * @return bool
      */
-    public function deleteUser($id){
+    public function deleteUser($id)
+    {
 
         $sql = 'DELETE FROM `Users` WHERE idUsers = ?';
 
-        $this->getDb()->execute($sql,$id);
+        $this->getDatabase()->execute($sql, $id);
 
         return true;
 
@@ -112,10 +118,11 @@ class userModel extends Model {
      * @param $password
      * @return bool
      */
-    public function updateUser($id,$username, $firstName, $lastName, $mail, $password){
+    public function updateUser($id, $username, $firstName, $lastName, $mail, $password)
+    {
         $sql = 'UPDATE Users SET userName = ?, firstName = ?, lastName = ?, mail = ?, password = ? WHERE idUsers = ?';
 
-        return $this->getDb()->update($sql,$username,$firstName,$lastName,$mail,$password,$id);
+        return $this->getDatabase()->update($sql, $username, $firstName, $lastName, $mail, $password, $id);
 
     }
 

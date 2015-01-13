@@ -20,7 +20,7 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase
 
     private function createDatabase()
     {
-        $this->database = new Database(new DatabaseConfig());
+        $this->database = new Database(DatabaseConfig::parseFromFile("tests/Database/testdatabase.json"));
         $this->assertNotNull($this->database);
     }
 

@@ -20,7 +20,7 @@ require 'vendor/autoload.php';
 
 try
 {
-    $router = new \SwagFramework\Routing\Router();
+    $router = new \SwagFramework\Routing\Router(\SwagFramework\Config\DatabaseConfig::parseFromFile("app/config/database.json"));
 
     $classrouting = new \app\helpers\ClassRouting('\app\controllers\\');
     $classrouting->addclass('User');

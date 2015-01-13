@@ -76,13 +76,11 @@ class Form
         $form = '<form '
             . 'method="' . $this->getMethod() . '"'
             . ' '
-            . 'action="' . $this->getAction() .'"'
+            . 'action="' . $this->getAction() . '"'
             . '>';
 
-        foreach($this->getFields() as $field)
-        {
-            if(!empty($labels) && array_key_exists($field->getName(), $labels))
-            {
+        foreach ($this->getFields() as $field) {
+            if (!empty($labels) && array_key_exists($field->getName(), $labels)) {
                 $label = new Label($field->getName(), $labels[$field->getName()]);
                 $form .= CR . TAB . $label->getHTML();
             }

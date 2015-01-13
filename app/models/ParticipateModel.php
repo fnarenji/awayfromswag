@@ -10,16 +10,18 @@ namespace app\models;
 
 use SwagFramework\mvc\Model;
 
-class participateModel extends Model {
+class ParticipateModel extends Model
+{
 
     /**
      * Return all participant.
      * @return array
      */
-    public function getEventsParticipations(){
+    public function getEventsParticipations()
+    {
         $sql = 'SELECT userName,nameEvent FROM Users,event,participateE WHERE idUsers = Users_idUsers AND idEvent = event_idEvent; ';
 
-        return $this->getDb()->execute($sql,null);
+        return $this->getDatabase()->execute($sql, null);
     }
 
     /**
@@ -27,10 +29,11 @@ class participateModel extends Model {
      * @param $id of event
      * @return array
      */
-    public function getEventParticipation($id){
+    public function getEventParticipation($id)
+    {
         $sql = 'SELECT userName,nameEvent FROM Users,event,participateE WHERE idUsers = Users_idUsers AND idEvent = event_idEvent AND event_idEvent = ? ; ';
 
-        return $this->getDb()->execute($sql,$id);
+        return $this->getDatabase()->execute($sql, $id);
 
     }
 
@@ -39,10 +42,11 @@ class participateModel extends Model {
      * @param $id of user
      * @return array
      */
-    public function getUserParticipations($id){
+    public function getUserParticipations($id)
+    {
         $sql = 'SELECT nameEvent FROM event,participateE WHERE Users_idUsers = ? AND idEvent = event_idEvent ; ';
 
-        return $this->getDb()->execute($sql,$id);
+        return $this->getDatabase()->execute($sql, $id);
     }
 
     /**
@@ -52,10 +56,11 @@ class participateModel extends Model {
      * @param $nbAvailable Place available after insert ( can be optionnal ? )
      * @return bool
      */
-    public function insertEventParticipation($idEvent,$idUser,$nbAvailable){
+    public function insertEventParticipation($idEvent, $idUser, $nbAvailable)
+    {
         $sql = 'INSERT INTO participateE VALUES ?,?,?';
 
-        $this->getDb()->execute($sql,$idEvent,$idUser,$nbAvailable);
+        $this->getDatabase()->execute($sql, $idEvent, $idUser, $nbAvailable);
 
         return true;
     }
@@ -67,10 +72,11 @@ class participateModel extends Model {
      * @param $idUser
      * @return bool
      */
-    public function deleteEventParticipation($idEvent,$idUser){
+    public function deleteEventParticipation($idEvent, $idUser)
+    {
         $sql = 'DELETE FROM participateE WHERE Users_idUsers = ? AND event_idEvent = ?';
 
-        $this->getDb()->execute($sql,$idUser,$idEvent);
+        $this->getDatabase()->execute($sql, $idUser, $idEvent);
 
         return true;
     }
@@ -79,10 +85,11 @@ class participateModel extends Model {
      * Return all participant at one or more challenge
      * @return array
      */
-    public function getAllChanllengesParticipations(){
+    public function getAllChanllengesParticipations()
+    {
         $sql = 'SELECT userName,name FROM challenges,ParticipationC,Users WHERE idUsers = Users_idUsers AND challenges_idchallenges =  idchallenges';
 
-        return $this->getDb()->execute($sql,null);
+        return $this->getDatabase()->execute($sql, null);
     }
 
     /**
@@ -90,10 +97,11 @@ class participateModel extends Model {
      * @param $id
      * @return array
      */
-    public function getOneChanllengesParticipations($id){
+    public function getOneChanllengesParticipations($id)
+    {
         $sql = 'SELECT userName FROM ParticipationC,Users WHERE idUsers = Users_idUsers AND challenges_idchallenges =  ? ';
 
-        return $this->getDb()->execute($sql,$id);
+        return $this->getDatabase()->execute($sql, $id);
 
     }
 
@@ -102,10 +110,11 @@ class participateModel extends Model {
      * @param $id
      * @return array
      */
-    public function getChanllengesParticipationUser($id){
+    public function getChanllengesParticipationUser($id)
+    {
         $sql = 'SELECT name FROM challenges,ParticipationC WHERE Users_idUsers = ? AND challenges_idchallenges =  idchallenges';
 
-        return $this->getDb()->execute($sql,$id);
+        return $this->getDatabase()->execute($sql, $id);
 
     }
 
@@ -115,10 +124,11 @@ class participateModel extends Model {
      * @param $idchallenges
      * @return bool
      */
-    public function insertChanllengesParticipation($idUsers,$idchallenges){
+    public function insertChanllengesParticipation($idUsers, $idchallenges)
+    {
         $sql = 'INSERT INTO ParticipationC (`Users_idUsers`, `challenges_idchallenges`) VALUES ?,?';
 
-        $this->getDb()->execute($sql,$idUsers,$idchallenges);
+        $this->getDatabase()->execute($sql, $idUsers, $idchallenges);
 
         return true;
     }
@@ -128,10 +138,11 @@ class participateModel extends Model {
      * @param $id
      * @return bool
      */
-    public function deleteChanllengesParticipation($id){
+    public function deleteChanllengesParticipation($id)
+    {
         $sql = 'DELETE FROM ParticipationC WHERE idParticipation = ?';
 
-        $this->getDb()->execute($sql,$id);
+        $this->getDatabase()->execute($sql, $id);
 
         return true;
     }

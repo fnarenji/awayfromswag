@@ -10,7 +10,6 @@ namespace SwagFramework\Routing;
 
 class Route
 {
-
     /**
      * The address of the route
      * @var string

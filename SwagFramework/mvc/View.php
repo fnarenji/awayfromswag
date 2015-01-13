@@ -8,7 +8,6 @@
 
 namespace SwagFramework\mvc;
 
-
 use SwagFramework\Helpers\ViewHelpers;
 
 class View extends \Twig_Environment

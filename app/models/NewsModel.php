@@ -10,27 +10,30 @@ namespace app\models;
 
 use SwagFramework\mvc\Model;
 
-class newsModel extends Model {
+class NewsModel extends Model
+{
 
     /**
      * Return the content of new of the id
      * @param $id
      * @return array
      */
-    public function getOneNews($id){
+    public function getOneNews($id)
+    {
         $sql = 'SELECT author,content FROM news WHERE idnews = ?';
 
-        return $this->getDb()->execute($sql,$id);
+        return $this->getDatabase()->execute($sql, $id);
     }
 
     /**
      * Return all news
      * @return array
      */
-    public function getNews(){
+    public function getNews()
+    {
         $sql = 'SELECT author,content,date FROM news';
 
-        return $this->getDb()->execute($sql,null);
+        return $this->getDatabase()->execute($sql, null);
     }
 
     /**
@@ -40,10 +43,11 @@ class newsModel extends Model {
      * @param $date
      * @return bool
      */
-    public function insertNews($author,$content,$date){
+    public function insertNews($author, $content, $date)
+    {
         $sql = 'INSERT INTO news (`author`,`content`,`date`) VALUE ?,?,? ';
 
-        $this->getDb()->execute($sql,$author,$content,$date);
+        $this->getDatabase()->execute($sql, $author, $content, $date);
 
         return true;
     }
@@ -53,10 +57,11 @@ class newsModel extends Model {
      * @param $id
      * @return bool
      */
-    public function deleteNews($id){
+    public function deleteNews($id)
+    {
         $sql = 'DELETE FROM news WHERE idnews = ?';
 
-        $this->getDb()->execute($sql,$id);
+        $this->getDatabase()->execute($sql, $id);
 
         return true;
 
@@ -69,10 +74,11 @@ class newsModel extends Model {
      * @param $date
      * @return bool
      */
-    public function updateNews($id,$content,$date){
+    public function updateNews($id, $content, $date)
+    {
         $sql = 'UPDATE news SET content = ?, date = ? WHERE idnews = ?';
 
-        return $this->getDb()->update($sql,$content,$date,$id);
+        return $this->getDatabase()->update($sql, $content, $date, $id);
     }
 
 

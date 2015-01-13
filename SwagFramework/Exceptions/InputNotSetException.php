@@ -11,16 +11,10 @@ namespace SwagFramework\Exceptions;
 
 class InputNotSetException extends SwagException
 {
-    private $previous;
-
     public function __construct($input, $key, $code = 0, Exception $previous = null)
     {
         $message = 'Var ' . $input . '[' . $key . ']' . ' not set !';
 
-        parent::__construct($message, $code);
-
-        if (!is_null($previous)) {
-            $this->previous = $previous;
-        }
+        parent::__construct($message, $code, $previous);
     }
 }
