@@ -6,6 +6,11 @@
  * Time: 16:35
  */
 
-class commentsModel {
+namespace app\models;
+
+use SwagFramework\mvc\Model;
+
+class commentsModel extends Model {
+    //TODO: commentsModel
 
 } 

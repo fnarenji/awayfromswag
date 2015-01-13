@@ -16,7 +16,7 @@ class Model
     /**
      * @var database
      */
-    private $db;
+    private $database;
 
     /**
      * default constructor
@@ -24,6 +24,11 @@ class Model
      */
     public function __construct(Database $db)
     {
-        $this->db = $db;
+        $this->database = $db;
+    }
+
+    public function getDatabase()
+    {
+        return $this->database;
     }
 } 

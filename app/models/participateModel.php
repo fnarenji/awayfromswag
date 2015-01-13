@@ -6,10 +6,11 @@
  * Time: 12:12
  */
 
-use \SwagFramework\Database\Database;
+namespace app\models;
 
+use SwagFramework\mvc\Model;
 
-class participateModel {
+class participateModel extends Model {
 
     /**
      * Return all participant.
@@ -18,7 +19,7 @@ class participateModel {
     public function getEventsParticipations(){
         $sql = 'SELECT userName,nameEvent FROM Users,event,participateE WHERE idUsers = Users_idUsers AND idEvent = event_idEvent; ';
 
-        return Database::execute($sql,null);
+        return $this->getDatabase()->execute($sql,null);
     }
 
     /**
@@ -29,7 +30,7 @@ class participateModel {
     public function getEventParticipation($id){
         $sql = 'SELECT userName,nameEvent FROM Users,event,participateE WHERE idUsers = Users_idUsers AND idEvent = event_idEvent AND event_idEvent = ? ; ';
 
-        return Database::execute($sql,$id);
+        return $this->getDatabase()->execute($sql,$id);
 
     }
 
@@ -41,7 +42,7 @@ class participateModel {
     public function getUserParticipations($id){
         $sql = 'SELECT nameEvent FROM event,participateE WHERE Users_idUsers = ? AND idEvent = event_idEvent ; ';
 
-        return Database::execute($sql,$id);
+        return $this->getDatabase()->execute($sql,$id);
     }
 
     /**
@@ -54,7 +55,7 @@ class participateModel {
     public function insertEventParticipation($idEvent,$idUser,$nbAvailable){
         $sql = 'INSERT INTO participateE VALUES ?,?,?';
 
-        Database::execute($sql,$idEvent,$idUser,$nbAvailable);
+        $this->getDatabase()->execute($sql,$idEvent,$idUser,$nbAvailable);
 
         return true;
     }
@@ -69,7 +70,7 @@ class participateModel {
     public function deleteEventParticipation($idEvent,$idUser){
         $sql = 'DELETE FROM participateE WHERE Users_idUsers = ? AND event_idEvent = ?';
 
-        Database::execute($sql,$idUser,$idEvent);
+        $this->getDatabase()->execute($sql,$idUser,$idEvent);
 
         return true;
     }
@@ -81,7 +82,7 @@ class participateModel {
     public function getAllChanllengesParticipations(){
         $sql = 'SELECT userName,name FROM challenges,ParticipationC,Users WHERE idUsers = Users_idUsers AND challenges_idchallenges =  idchallenges';
 
-        return Database::execute($sql,null);
+        return $this->getDatabase()->execute($sql,null);
     }
 
     /**
@@ -92,7 +93,7 @@ class participateModel {
     public function getOneChanllengesParticipations($id){
         $sql = 'SELECT userName FROM ParticipationC,Users WHERE idUsers = Users_idUsers AND challenges_idchallenges =  ? ';
 
-        return Database::execute($sql,$id);
+        return $this->getDatabase()->execute($sql,$id);
 
     }
 
@@ -104,7 +105,7 @@ class participateModel {
     public function getChanllengesParticipationUser($id){
         $sql = 'SELECT name FROM challenges,ParticipationC WHERE Users_idUsers = ? AND challenges_idchallenges =  idchallenges';
 
-        return Database::execute($sql,$id);
+        return $this->getDatabase()->execute($sql,$id);
 
     }
 
@@ -117,7 +118,7 @@ class participateModel {
     public function insertChanllengesParticipation($idUsers,$idchallenges){
         $sql = 'INSERT INTO ParticipationC (`Users_idUsers`, `challenges_idchallenges`) VALUES ?,?';
 
-        Database::execute($sql,$idUsers,$idchallenges);
+        $this->getDatabase()->execute($sql,$idUsers,$idchallenges);
 
         return true;
     }
@@ -130,7 +131,7 @@ class participateModel {
     public function deleteChanllengesParticipation($id){
         $sql = 'DELETE FROM ParticipationC WHERE idParticipation = ?';
 
-        Database::execute($sql,$id);
+        $this->getDatabase()->execute($sql,$id);
 
         return true;
     }

@@ -6,6 +6,20 @@
  * Time: 16:34
  */
 
-class eventModel {
+namespace app\models;
 
+use SwagFramework\mvc\Model;
+
+class eventModel extends Model {
+    //TODO: eventModel
+
+    public function getAll()
+    {
+        //TODO: getAll events
+    }
+
+    public function get($id)
+    {
+        //TODO: get event
+    }
 } 

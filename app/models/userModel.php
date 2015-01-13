@@ -6,9 +6,11 @@
  * Time: 10:07
  */
 
-use \SwagFramework\Database\Database;
+namespace app\models;
 
-class userModel {
+use SwagFramework\mvc\Model;
+
+class userModel extends Model {
 
     const table = 'Users';
 
@@ -22,7 +24,7 @@ class userModel {
                 .'FROM ' .self::table.' '
                 .'WHERE id= ?';
 
-        return Database::execute($sql,$id);
+        return $this->getDatabase()->execute($sql,$id);
     }
 
     /**
@@ -33,7 +35,7 @@ class userModel {
         $sql = 'SELECT *'
                 . 'FROM ' .self::table. ' ';
 
-        return Database::execute($sql,null);
+        return $this->getDatabase()->execute($sql,null);
     }
 
     /**
@@ -48,7 +50,7 @@ class userModel {
                 . 'WHERE userName = ?'
                 . 'AND password = ?';
 
-        return Database::execute($sql,$username,sha1($password));
+        return $this->getDatabase()->execute($sql,$username,sha1($password));
     }
 
     /**
@@ -60,7 +62,7 @@ class userModel {
         $sql = 'SELECT COUNT(idUsers) '
                 . 'FROM ' .self::table;
 
-        return Database::execute($sql,null)[0];
+        return $this->getDatabase()->execute($sql,null)[0];
     }
 
     /**
@@ -80,7 +82,7 @@ class userModel {
         $sql = 'INSERT INTO users (`userName`, `firstName`, `lastName`, `mail`, `password`, `position`)
                  VALUES (?,?,?,?,?,?)';
 
-        Database::execute($sql,$username,$firstName,$lastName,$mail,$password,$nbuser);
+        $this->getDatabase()->execute($sql,$username,$firstName,$lastName,$mail,$password,$nbuser);
 
         return true;
     }
@@ -94,7 +96,7 @@ class userModel {
 
         $sql = 'DELETE FROM `Users` WHERE idUsers = ?';
 
-        Database::execute($sql,$id);
+        $this->getDatabase()->execute($sql,$id);
 
         return true;
 
@@ -113,7 +115,7 @@ class userModel {
     public function updateUser($id,$username, $firstName, $lastName, $mail, $password){
         $sql = 'UPDATE Users SET userName = ?, firstName = ?, lastName = ?, mail = ?, password = ? WHERE idUsers = ?';
 
-        return Database::update($sql,$username,$firstName,$lastName,$mail,$password,$id);
+        return $this->getDatabase()->update($sql,$username,$firstName,$lastName,$mail,$password,$id);
 
     }
 

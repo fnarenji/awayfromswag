@@ -12,6 +12,7 @@ WHERE IS THE SWAG ?
         - Exceptions (Everybody)
         - PHP-Unit (Everybody) 
         - Caching (Thomas)
+        - Les Helpers devraient lever des FileNotFoundException
 
 
     - Base de données :
