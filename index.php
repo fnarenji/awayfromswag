@@ -4,8 +4,8 @@ define('CR', "\n");
 define('TAB', '    ');
 
 define('DS', DIRECTORY_SEPARATOR);
-define('ROOT', __DIR__ . DS);
-define('WEBROOT', '/');
+define('FSROOT', __DIR__ . DS);
+define('WEBROOT', dirname($_SERVER['SCRIPT_NAME']) . DIRECTORY_SEPARATOR);
 
 define('DEBUG', true);
 
@@ -26,8 +26,8 @@ try
     $classrouting->addclass('User');
     $classrouting->generateroute($router);
 
-    $router->add('/errors/err404', new \app\controllers\Errorscontroller(), 'err404');
-    $router->add('/', new \app\controllers\Homecontroller(), 'index');
+    $router->add('/errors/err404', new \app\controllers\ErrorsController(), 'err404');
+    $router->add('/', new \app\controllers\HomeController(), 'index');
 
     $router->matchcurrentrequest();
 }
