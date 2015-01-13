@@ -15,10 +15,6 @@ class PopupIncorrectTypeException extends SwagException
     {
         $message = 'The type ' . $type . ' for the popup ' . $title . ' is incorrect !';
 
-        parent::__construct($message, $code);
-
-        if (!is_null($previous)) {
-            $this->previous = $previous;
-        }
+        parent::__construct($message, $code, $previous);
     }
 }

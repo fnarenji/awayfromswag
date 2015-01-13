@@ -17,10 +17,6 @@ class XMLNotWritableException extends SwagException
         $message .= (count($input) < 1) ? 'too short' : 'too big. ';
         $message .= 'Size expected : 2.';
 
-        parent::__construct($message, $code);
-
-        if (!is_null($previous)) {
-            $this->previous = $previous;
-        }
+        parent::__construct($message, $code, $previous);
     }
 }

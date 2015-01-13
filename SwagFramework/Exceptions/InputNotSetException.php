@@ -15,10 +15,6 @@ class InputNotSetException extends SwagException
     {
         $message = 'Var ' . $input . '[' . $key . ']' . ' not set !';
 
-        parent::__construct($message, $code);
-
-        if (!is_null($previous)) {
-            $this->previous = $previous;
-        }
+        parent::__construct($message, $code, $previous);
     }
 }

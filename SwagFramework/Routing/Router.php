@@ -7,6 +7,7 @@
  */
 namespace SwagFramework\Routing;
 
+use SwagFramework\Config\DatabaseConfig;
 use SwagFramework\Exceptions\RoutingException;
 
 class Router
@@ -17,15 +18,18 @@ class Router
      */
     private $route;
 
+    private $databaseConfig;
+
     /**
      * An array that contains all the routes for this application
      * @var array
      */
     private $routes = array();
 
-    public function __construct($routes = array())
+    public function __construct(DatabaseConfig $databaseConfig, $routes = array())
     {
         $this->routes = $routes;
+        $this->databaseConfig = $databaseConfig;
     }
 
     /**
@@ -100,6 +104,7 @@ class Router
     {
         $action = $route->getAction();
         $route->getController()->setParams($this->route->getParameters());
+        $route->getController()->setDatabaseConfig($this->databaseConfig);
         $route->getController()->$action();
     }
 

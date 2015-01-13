@@ -18,7 +18,7 @@ if (DEBUG) {
 require 'vendor/autoload.php';
 
 try {
-    $router = new \SwagFramework\Routing\Router();
+    $router = new \SwagFramework\Routing\Router(\SwagFramework\Config\DatabaseConfig::parseFromFile("app/config/database.json"));
 
     $router->add('/errors/err404', new \app\controllers\ErrorsController(), 'err404');
     $router->add('/', new \app\controllers\HomeController(), 'index');

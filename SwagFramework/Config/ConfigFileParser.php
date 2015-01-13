@@ -28,16 +28,19 @@ class ConfigFileParser {
      * @throws FileNotFoundException
      */
     public function __construct($fileName) {
-        if (!file_exists($fileName)) {
+        if (!file_exists($fileName))
             throw new FileNotFoundException($fileName);
-        }
 
         $fileContent = file_get_contents($fileName);
-        $this->jsonData = json_decode($fileContent);
+        $this->jsonData = json_decode($fileContent, true);
+        if ($this->jsonData == null)
+            throw new FileNotFoundException($this->fileName);
     }
 
     public function getEntry($entryName) {
         if (!array_key_exists($entryName, $this->jsonData))
             throw new MissingConfigEntryException($this->fileName, $entryName);
+
+        return $this->jsonData[$entryName];
     }
 }

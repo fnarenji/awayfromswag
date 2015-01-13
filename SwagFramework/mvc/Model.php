@@ -20,14 +20,10 @@ class Model
 
     /**
      * default constructor
+     * @param DatabaseConfig $config
      */
-    function __construct()
+    public function __construct(Database $db)
     {
-        $this->db = new Database(new DatabaseConfig());
-    }
-
-    public function switchConfig($config)
-    {
-        $this->db = new Database($config);
+        $this->db = $db;
     }
 } 

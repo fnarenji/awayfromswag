@@ -18,10 +18,6 @@ class XMLArrayBadFormatException extends SwagException
         $message .= '["options" => "options for the tag"]';
 
 
-        parent::__construct($message, $code);
-
-        if (!is_null($previous)) {
-            $this->previous = $previous;
-        }
+        parent::__construct($message, $code, $previous);
     }
 }

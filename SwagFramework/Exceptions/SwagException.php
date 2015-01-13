@@ -11,5 +11,4 @@ namespace SwagFramework\Exceptions;
 
 class SwagException extends \Exception
 {
-    protected $previous;
 }
