@@ -126,5 +126,19 @@ class UserModel extends Model
 
     }
 
+    /**
+     * Return data for username like param
+     * @param $name
+     * @return array
+     */
+    public function getUserLike($name){
+
+        $name = '%'.$name.'%';
+
+        $sql = "SELECT idUsers, userName, firstName, lastName FROM Users WHERE userName LIKE ? ";
+
+        return $this->getDatabase()->execute($sql,$name);
+    }
+
 
 } 
