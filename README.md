@@ -93,8 +93,6 @@ WHERE IS THE SWAG ?
                 -table listant les convers avec un fichier contenant les convers
 
 
-
-
             -Pour tout :
                 -recherche (Défis, Evenements, membres, tout)
 
