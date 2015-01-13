@@ -35,7 +35,7 @@ class userModel extends Model {
         $sql = 'SELECT *'
                 . 'FROM ' .self::table. ' ';
 
-        return $this->getDatabase()->execute($sql,null);
+        return $this->getDatabase()->execute($sql);
     }
 
     /**
