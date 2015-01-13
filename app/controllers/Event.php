@@ -9,7 +9,7 @@
 namespace app\controllers;
 
 
-use app\models\eventModel;
+use app\models\EventModel;
 use SwagFramework\Exceptions\EventNotFoundException;
 use SwagFramework\mvc\Controller;
 
@@ -17,13 +17,13 @@ class Event extends Controller
 {
 
     /**
-     * @var eventModel
+     * @var EventModel
      */
     private $model;
 
     function __construct()
     {
-        $this->model = new eventModel();
+        $this->model = new EventModel();
     }
 
     public function index()

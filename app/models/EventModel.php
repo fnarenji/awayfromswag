@@ -10,7 +10,8 @@ namespace app\models;
 
 use SwagFramework\mvc\Model;
 
-class eventModel extends Model {
+class EventModel extends Model
+{
     //TODO: eventModel
 
     public function getAll()

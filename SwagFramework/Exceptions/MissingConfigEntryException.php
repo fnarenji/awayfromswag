@@ -9,7 +9,8 @@
 namespace SwagFramework\Exceptions;
 
 
-class MissingConfigEntryException extends SwagException {
+class MissingConfigEntryException extends SwagException
+{
     /**
      * @param string $fileName
      * @param int $configEntry

@@ -28,19 +28,21 @@ class Controller
         $this->helpers = new ControllerHelpers();
     }
 
-    public function setDatabaseConfig(DatabaseConfig $databaseConfig) {
+    public function setDatabaseConfig(DatabaseConfig $databaseConfig)
+    {
         $this->databaseConfig = $databaseConfig;
     }
 
     /**
      * @param $model
      */
-    public function loadModel($model) {
+    public function loadModel($model)
+    {
         $classInfo = new \ReflectionClass($model);
         if (!$classInfo->getParentClass()->isSubclassOf('Model')) {
             throw new InvalidModelClassException($model);
         }
-        return $classInfo->newInstanceArgs([ new Database($this->databaseConfig) ]);
+        return $classInfo->newInstanceArgs([new Database($this->databaseConfig)]);
     }
 
     /**

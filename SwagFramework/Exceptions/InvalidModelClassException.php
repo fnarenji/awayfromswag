@@ -9,7 +9,8 @@
 namespace SwagFramework\Exceptions;
 
 
-class InvalidModelClassException extends SwagException {
+class InvalidModelClassException extends SwagException
+{
     public function __construct($className, $code = 0, Exception $previous = null)
     {
         parent::__construct($className . ' is not a valid class.', $code, $previous);

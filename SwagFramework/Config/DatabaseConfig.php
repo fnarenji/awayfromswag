@@ -9,40 +9,24 @@
 namespace SwagFramework\Config;
 
 
-
 class DatabaseConfig
 {
-    /**
-     * @param $fileName database config file
-     */
-    public static function parseFromFile($fileName) {
-        $configFile = new ConfigFileParser($fileName);
-        return new self($configFile->getEntry("host"),
-            $configFile->getEntry("user"),
-            $configFile->getEntry("password"),
-            $configFile->getEntry("database"));
-    }
-
     /**
      * @var host
      */
     private $host;
-
     /**
      * @var user
      */
     private $user;
-
     /**
      * @var password
      */
     private $password;
-
     /**
      * @var database
      */
     private $database;
-
 
     /**
      * Disable construction of object.
@@ -53,6 +37,18 @@ class DatabaseConfig
         $this->user = $user;
         $this->password = $password;
         $this->database = $database;
+    }
+
+    /**
+     * @param $fileName database config file
+     */
+    public static function parseFromFile($fileName)
+    {
+        $configFile = new ConfigFileParser($fileName);
+        return new self($configFile->getEntry("host"),
+            $configFile->getEntry("user"),
+            $configFile->getEntry("password"),
+            $configFile->getEntry("database"));
     }
 
     /**

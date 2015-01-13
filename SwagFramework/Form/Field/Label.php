@@ -9,7 +9,8 @@
 namespace SwagFramework\Form\Field;
 
 
-class Label extends Field {
+class Label extends Field
+{
     private $value;
 
     function __construct($for, $value)

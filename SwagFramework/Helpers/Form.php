@@ -29,10 +29,12 @@ class Form
         $this->db = new Database(new DatabaseConfig());
     }
 
-    private function getType($type) {
+    private function getType($type)
+    {
         $tmp = explode('(', $type);
-        if(!empty($tmp))
+        if (!empty($tmp)) {
             $type = $tmp[0];
+        }
         return $type;
     }
 
@@ -46,8 +48,9 @@ class Form
     private function convertAttributeType($att)
     {
         $type = $this->getType($att['Type']);
-        if($att['Key'] == 'PRI')
+        if ($att['Key'] == 'PRI') {
             return 'hidden';
+        }
         return 'text';
     }
 
@@ -72,8 +75,7 @@ class Form
 
         $form = new \SwagFramework\Form\Form();
 
-        foreach($res as $value)
-        {
+        foreach ($res as $value) {
             $field = new Input($value['Field']);
             $field->addAttribute('type', $this->convertAttributeType($value));
             $form->addField($field);
