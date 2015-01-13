@@ -9,7 +9,8 @@ define('WEBROOT', '/');
 
 define('DEBUG', true);
 
-if (DEBUG) {
+if (DEBUG)
+{
     ini_set('display_errors', true);
     ini_set('html_errors', true);
     error_reporting(E_ALL);
@@ -17,17 +18,26 @@ if (DEBUG) {
 
 require 'vendor/autoload.php';
 
-try {
+try
+{
     $router = new \SwagFramework\Routing\Router(\SwagFramework\Config\DatabaseConfig::parseFromFile("app/config/database.json"));
 
-    $router->add('/errors/err404', new \app\controllers\ErrorsController(), 'err404');
-    $router->add('/', new \app\controllers\HomeController(), 'index');
+    $classrouting = new \app\helpers\ClassRouting('\app\controllers\\');
+    $classrouting->addclass('User');
+    $classrouting->generateroute($router);
 
-    $router->matchCurrentRequest();
-} catch (\SwagFramework\Exceptions\SwagException $e) {
+    $router->add('/errors/err404', new \app\controllers\Errorscontroller(), 'err404');
+    $router->add('/', new \app\controllers\Homecontroller(), 'index');
+
+    $router->matchcurrentrequest();
+}
+catch (\SwagFramework\Exceptions\SwagException $e)
+{
     echo '<h1>SwagException !</h1>';
     echo '<p>' . $e->getMessage() . '</p>';
-} catch (Exception $e) {
+}
+catch (Exception $e)
+{
     echo '<h1>Exception !</h1>';
     echo $e;
 }

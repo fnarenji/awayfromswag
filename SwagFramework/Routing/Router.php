@@ -123,4 +123,9 @@ class Router
 
         $this->routes[] = $route;
     }
+
+    public function displayRoute()
+    {
+        var_dump($this->route);
+    }
 }

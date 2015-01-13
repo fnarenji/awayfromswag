@@ -26,7 +26,7 @@ class Form
      */
     function __construct()
     {
-        $this->db = new Database(new DatabaseConfig());
+        $this->db = new Database(DatabaseConfig::parseFromFile());
     }
 
     private function getType($type)

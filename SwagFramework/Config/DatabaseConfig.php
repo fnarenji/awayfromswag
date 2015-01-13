@@ -42,7 +42,7 @@ class DatabaseConfig
     /**
      * @param $fileName database config file
      */
-    public static function parseFromFile($fileName)
+    public static function parseFromFile($fileName = 'config/database.json')
     {
         $configFile = new ConfigFileParser($fileName);
         return new self($configFile->getEntry("host"),
