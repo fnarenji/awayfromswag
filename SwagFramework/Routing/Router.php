@@ -15,7 +15,7 @@ class Router
      * The route in the URI
      * @var Route
      */
-    private $route;
+    public $route;
 
     /**
      * An array that contains all the routes for this application
@@ -117,5 +117,10 @@ class Router
         $route->setRoute($url, $controller, $action, $method);
 
         $this->routes[] = $route;
+    }
+
+    public function displayRoute()
+    {
+        var_dump($this->route);
     }
 }
