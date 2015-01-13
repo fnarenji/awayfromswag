@@ -26,6 +26,11 @@ class Model
         $this->db = new Database(new DatabaseConfig());
     }
 
+    public function getDb()
+    {
+        return $this->db;
+    }
+
     public function switchConfig($config)
     {
         $this->db = new Database($config);

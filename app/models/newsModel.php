@@ -6,9 +6,11 @@
  * Time: 12:11
  */
 
-use \SwagFramework\Database\Database;
+namespace app\models;
 
-class newsModel {
+use SwagFramework\mvc\Model;
+
+class newsModel extends Model {
 
     /**
      * Return the content of new of the id
@@ -18,7 +20,7 @@ class newsModel {
     public function getOneNews($id){
         $sql = 'SELECT author,content FROM news WHERE idnews = ?';
 
-        return Database::execute($sql,$id);
+        return $this->getDb()->execute($sql,$id);
     }
 
     /**
@@ -28,7 +30,7 @@ class newsModel {
     public function getNews(){
         $sql = 'SELECT author,content,date FROM news';
 
-        return Database::execute($sql,null);
+        return $this->getDb()->execute($sql,null);
     }
 
     /**
@@ -41,7 +43,7 @@ class newsModel {
     public function insertNews($author,$content,$date){
         $sql = 'INSERT INTO news (`author`,`content`,`date`) VALUE ?,?,? ';
 
-        Database::execute($sql,$author,$content,$date);
+        $this->getDb()->execute($sql,$author,$content,$date);
 
         return true;
     }
@@ -54,7 +56,7 @@ class newsModel {
     public function deleteNews($id){
         $sql = 'DELETE FROM news WHERE idnews = ?';
 
-        Database::execute($sql,$id);
+        $this->getDb()->execute($sql,$id);
 
         return true;
 
@@ -70,7 +72,7 @@ class newsModel {
     public function updateNews($id,$content,$date){
         $sql = 'UPDATE news SET content = ?, date = ? WHERE idnews = ?';
 
-        return Database::update($sql,$content,$date,$id);
+        return $this->getDb()->update($sql,$content,$date,$id);
     }
 
 
