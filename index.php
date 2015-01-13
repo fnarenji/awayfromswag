@@ -4,7 +4,7 @@ define('CR', "\n");
 define('TAB', '    ');
 
 define('DS', DIRECTORY_SEPARATOR);
-define('ROOT', __DIR__ . DS);
+define('FSROOT', __DIR__ . DS);
 define('WEBROOT', dirname($_SERVER['SCRIPT_NAME']) . '/');
 
 define('DEBUG', true);

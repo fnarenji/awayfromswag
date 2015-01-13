@@ -8,7 +8,6 @@
 
 namespace SwagFramework\Helpers;
 
-
 use SwagFramework\Exceptions\FileNotFoundException;
 
 class Assets
@@ -33,7 +32,7 @@ class Assets
      */
     private function file($file)
     {
-        $test = ROOT . 'public' . DS . $file;
+        $test = FSROOT . 'public' . DS . $file;
         if (!file_exists($test)) {
             throw new FileNotFoundException($test);
         }
