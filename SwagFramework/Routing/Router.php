@@ -16,7 +16,7 @@ class Router
      * The route in the URI
      * @var Route
      */
-    public $route;
+    private $route;
 
     private $databaseConfig;
 
