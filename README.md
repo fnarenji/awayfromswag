@@ -33,6 +33,72 @@ WHERE IS THE SWAG ?
             - Gestion membres
             - Ajout partenaire, défis, ...
         - ...
+            -News :
+                -dernière sur la PB
+                -basé sur evenemnts (proposer une news (+back office))
+
+            -Evenements :
+                -Liste evenements :
+                    -affichage personnalisé (participation par user)
+                    -nombre d'evenements
+                -Evenement:
+                    -image
+                    -créateur
+                    -description
+                    -adresse
+                    -date créa/evenements
+                    -Participation financière
+                    -nombre de places restantes + totale
+                    -statut de la participation
+                    -commentaire
+                    -boutton "participer" (si pas déjà fait) + annule
+                    -Lieu (#Google Maps)
+                    -liste des inscrits
+
+            -Défis :
+                -jour, semaine, mois (page d'accueil = 3 derniers + 3 populaires)
+                -top 5 classement
+                -prochain évenements
+
+            -Utilisateurs :
+                -personnel :
+                    -modifier profil
+                        -info personelle (public / privée)
+                            -profil :
+                                -nom                 oblig
+                                -prénom              oblig
+                                -pseudo              oblig
+                                -date naissance
+                                -date inscription
+                                -adresse mail
+                                -numeros telephone
+                                -twitter
+                                -skype
+                                -facebook
+                                -site web perso
+                                -bio / descript
+                                -métier
+                                -mot de passe
+                                -avatar gravatar     oblig
+                        -notifications
+                    -Consulter le profil (via l'avatr)
+                    -Messagerie
+                    -Calendrier
+                    -Liste d'amis  (demande => accepter /refuser,  liste)
+                    #Mes défis
+                    -Mes évenements
+                    -Se déconnecter
+
+            -messagerie :
+                -table listant les convers avec un fichier contenant les convers
+
+
+
+
+            -Pour tout :
+                -recherche (Défis, Evenements, membres, tout)
+
+
       
 # DONE
     - Gestion de routes (Thomas)
