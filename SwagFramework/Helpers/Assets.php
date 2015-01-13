@@ -37,7 +37,7 @@ class Assets
         if (!file_exists($test)) {
             throw new FileNotFoundException($test);
         }
-        return 'public' . DS . $file;
+        return WEBROOT . 'public' . DS . $file;
     }
 
     /**
