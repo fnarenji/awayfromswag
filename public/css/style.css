@@ -155,6 +155,22 @@ article ul
     margin-top: 5px;
 }
 
+.search-button
+{
+    height: 26px;
+    border-radius: 2px;
+    background-color: rgba(255,255,255,0.9);
+    background-image: linear-gradient(#fcfcfc, #eee);
+    border: 1px solid #d5d5d5
+}
+.search-input
+{
+    width: 150px;
+}
+.search-button:active
+{
+    background-color: red;
+}
 @media only screen and (min-width:  900px)
 {
     .wrapper_menu
@@ -167,11 +183,24 @@ article ul
         position: absolute;
         top: 0;
         left: 0;
+        padding-left: 5px;
         width: 250px;
         height: 100%;
         background-color: #FFF;
         border-right: 1px solid rgba(0,0,0,0.4);
+    }
 
+    aside nav a
+    {
+        text-decoration: none;
+        color: inherit;
+        font-size: 1.5em;
+        line-height: 1.7em;
+    }
+
+    aside nav a:hover
+    {
+        color: #666;
     }
     section
     {
