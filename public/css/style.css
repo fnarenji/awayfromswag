@@ -31,7 +31,7 @@ footer, header, hgroup, menu, nav, section {
 body {
     line-height: 1;
 }
-ol, ul {
+ul, ol {
     list-style: none;
 }
 blockquote, q {
@@ -53,26 +53,26 @@ body
 {
     font-family: 'Roboto', sans-serif;
     background-color: #f9f9f9;
+    -webkit-font-smoothing: antialiased;
 }
 .wrapper_menu
 {
     position: fixed;
-    width: 25px;
-    height: 25px;
-    margin-top:20px;
-    margin-left: 5px;
-    border: 1px solid #000;
-    border-radius: 4px;
-    background-color: #AAAAAA;
+    width: 30px;
+    height: 30px;
+    border-bottom: 1px solid rgba(0,0,0,0.4);
+    border-right: 1px solid rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.3);
+    margin-top: -6px;
 
 }
 .menu_ham
 {
     position: relative;
     cursor: pointer;
-    padding-left: 5px;
+    padding-left: 7px;
     padding-top: 3px;
-    margin-top: 5px;
+    margin-top: 8px;
 }
 .menu_ham:before
 {
@@ -83,6 +83,10 @@ body
     border-top: 0.375em double #000;
     border-bottom: 0.125em solid #000;
 
+}
+#description
+{
+    color: #212121;
 }
 aside
 {
@@ -101,8 +105,7 @@ article
     text-align: justify;
     border-bottom: 1px solid rgba(0,0,0,0.4);
 }
-
-article h2, article h3
+article h2, article h3, article h4
 {
     display: table;
     margin: 5px auto 10px auto;
@@ -111,13 +114,79 @@ article p
 {
     padding-left: 5px;
     padding-right: 5px;
+    color: #757575;
 }
-h3
+h1,h2,h3,h4,h5,h6
 {
-    font-size: 1.3rem;
+    font-weight: bold;
+    color: #212121;
 }
-h2
+
+h2 {font-size: 1.5rem;}
+h3 {font-size: 1.3rem;}
+h4 {font-size: 1.1rem;}
+
+h5
 {
-    font-size: 1.5rem;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+article a
+{
+    text-decoration: none;
+    color: inherit;
+}
+article a:hover
+{
+    color: #666;
+}
+article ul
+{
+    display: block;
+    margin-left: 5px;
+}
+
+.part_block img
+{
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+}
+
+@media only screen and (min-width:  900px)
+{
+    .wrapper_menu
+    {
+        display:none;
+    }
+    aside
+    {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 250px;
+        height: 100%;
+        background-color: #FFF;
+        border-right: 1px solid rgba(0,0,0,0.4);
+
+    }
+    section
+    {
+        width: 75%;
+        transform: translateX(260px);
+        -webkit-transform: translateX(260px);
+    }
+    #logo img
+    {
+        height: 100px;
+        width: auto;
+    }
+    #logo:after
+    {
+        border-bottom:1px solid rgba(0,0,0,0.4);
+    }
 }
 
