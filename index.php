@@ -5,7 +5,7 @@ define('TAB', '    ');
 
 define('DS', DIRECTORY_SEPARATOR);
 define('FSROOT', __DIR__ . DS);
-define('WEBROOT', dirname($_SERVER['SCRIPT_NAME']) . DIRECTORY_SEPARATOR);
+define('WEBROOT', dirname($_SERVER['SCRIPT_NAME']));
 
 define('DEBUG', true);
 
