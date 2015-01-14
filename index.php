@@ -30,6 +30,7 @@ try {
     $router->add('/', new \app\controllers\HomeController(), 'index');
 
     $router->matchcurrentrequest();
+
 } catch (\SwagFramework\Exceptions\SwagException $e) {
     echo '<h1>SwagException !</h1>';
     echo '<p>' . $e->getMessage() . '</p>';

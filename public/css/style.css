@@ -1,131 +1,123 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
 body {
-    padding: 0;
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
+    line-height: 1;
 }
-
-header {
-    max-width: 100%;
-    min-width: 1000px;
-    height: 120px;
-    background-color: #FFF;
-    border-bottom: 1px solid #AAAAAA;
-}
-
-#logo {
-    color: transparent;
-}
-
-header img {
-    height: 120px;
-    width: auto;
-    float: left;
-}
-
-header nav {
-    position: inherit;
-    display: inline-block;
-    height: inherit;
-    padding: 0;
-    margin-left: 20px;
-}
-
-nav ul {
-    height: 100%;
-    margin: 0;
-}
-
-nav li {
-    display: inline-block;
-    line-height: 120px;
-    text-align: center;
-    width: 150px;
-}
-
-nav a {
-    display: inline-block;
-    text-decoration: none;
-    color: #448AFF;
-    height: 120px;
-    width: 140px;
-    font-size: 1.5em;
-}
-
-nav a:hover {
-    color: #FFF;
-    background-color: #448AFF;
-}
-
-/* Menu latéral */
-
-aside {
-    position: absolute;
-    top: 121px;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    height: 100%;
-    background-color: #FFF;
-    width: 200px;
-    padding-left: 5px;
-    border-right: 1px solid #AAAAAA;
-}
-
-aside ul {
+ol, ul {
     list-style: none;
 }
-
-aside ul a {
-    text-decoration: none;
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
-section {
-    padding-left: 220px;
-    margin: 0;
-}
+/* END RESET */
 
-section article {
-    max-width: 90%;
-    min-width: 1000px;
-    border-bottom: 1px solid #212121;
-    padding: 0 10px 0 10px;
-    margin: 0 auto 0 auto;
-    text-align: justify;
+body
+{
+    font-family: 'Roboto', sans-serif;
+    background-color: #f9f9f9;
 }
+.wrapper_menu
+{
+    position: fixed;
+    width: 25px;
+    height: 25px;
+    margin-top:20px;
+    margin-left: 5px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    background-color: #AAAAAA;
 
-section article h2 {
-    color: #448AFF;
-    font-size: 2em;
-    display: table;
-    margin-left: auto;
-    margin-right: auto;
 }
-
-section article h3 {
-    display: table;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 1.7em;
-}
-
-section article h4 {
+.menu_ham
+{
     position: relative;
-    font-size: 1.6em;
-    margin-left: 35px;
-    vertical-align: 75%;
+    cursor: pointer;
+    padding-left: 5px;
+    padding-top: 3px;
+    margin-top: 5px;
+}
+.menu_ham:before
+{
+    content: "";
+    position: fixed;
+    width: 1em;
+    height: 0.125em;
+    border-top: 0.375em double #000;
+    border-bottom: 0.125em solid #000;
+
+}
+aside
+{
+    display: none;
+}
+section
+{
+    width: 100%;
 }
 
-h4, img {
-    display: inline-block;
-    margin-left: 30px;
+article
+{
+    width: 100%;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    text-align: justify;
+    border-bottom: 1px solid rgba(0,0,0,0.4);
 }
 
-section article h5 {
-    font-size: 1.1em;
-    margin: 0;
+article h2, article h3
+{
+    display: table;
+    margin: 5px auto 10px auto;
+}
+article p
+{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+h3
+{
+    font-size: 1.3rem;
+}
+h2
+{
+    font-size: 1.5rem;
 }
 
-section article .part_block {
-    display: inline-block;
-    width: 33%;
-}
