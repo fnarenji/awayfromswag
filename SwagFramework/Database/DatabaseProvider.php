@@ -13,6 +13,9 @@ use SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException;
 
 class DatabaseProvider
 {
+    /**
+     * @var \SwagFramework\Database\Database
+     */
     static private $database;
 
     private function __construct()
