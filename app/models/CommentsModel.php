@@ -41,9 +41,30 @@ class CommentsModel extends Model
 
     }
 
+    /**
+     * Insert in DB a comment for an event.
+     * @param $idparticip
+     * @param $iduser
+     * @param $contents
+     * @param $mark
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
     public function insertCommentEvent($idparticip, $iduser, $contents, $mark)
     {
-        // TO DO
+        try{
+            DatabaseProvider::connection()->beginTransaction();
+
+            $sql = "INSERT INTO commentE (`participateE_event_idEvent`,`participateE_Users_idUsers`) VALUES ?,? ;";
+            $sqlComm = "INSERT INTO comments (`contents`,`mark`) VALUES ?,? ;";
+            DatabaseProvider::connection()->execute($sql,$idparticip,$iduser);
+            DatabaseProvider::connection()->execute($sqlComm,$contents,$mark);
+
+            DatabaseProvider::connection()->commit();
+
+        }catch (\Exception $e){
+            DatabaseProvider::connection()->rollBack();
+        }
+
     }
 
     /**
@@ -53,12 +74,10 @@ class CommentsModel extends Model
      */
     public function deleteCommentEvent($id)
     {
-
         $sql = "DELETE FROM commentE WHERE idcommentE = ?";
 
         DatabaseProvider::connection()->execute($sql, $id);
 
         return true;
     }
-
 } 
