@@ -35,7 +35,7 @@ class CommentsModel extends Model
     public function getCommentEvent($id)
     {
         $sql = "SELECT nameEvent,contents,userName FROM Users,commentE,Comments,event WHERE " .
-            "event_idEvent = ? AND Comments_idComm<ents = idComments AND idUsers = participateE_Users_idUsers;";
+            "event_idEvent = ? AND Comments_idComments = idComments AND idUsers = participateE_Users_idUsers;";
 
         return DatabaseProvider::connection()->execute($sql, $id);
 
