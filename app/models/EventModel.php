@@ -8,6 +8,7 @@
 
 namespace app\models;
 
+use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\mvc\Model;
 
 class EventModel extends Model
