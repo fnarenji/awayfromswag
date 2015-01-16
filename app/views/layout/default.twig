@@ -15,10 +15,12 @@
 
 </head>
 <body>
-<div class="wrapper_menu">
-    <div class="menu_ham"></div>
+<div class="menu-reduced">
+    <div class="wrapper_menu">
+        <div class="menu_ham"></div>
+    </div>
 </div>
-<aside class="menu-extend">
+<aside class="menu-reduced">
     <a href="#" id="logo">{{ helpers.assets.img('logolarge.png', 'Logo Away From Security') }}</a>
     <nav>
         <form class="pure-form" action="#">
@@ -42,10 +44,12 @@
     <a href="#">Rester connecté</a>
     <a href="#">Inscription</a>
 </aside>
-<section class="menu-extend">
+<section class="menu-reduced">
     {% block content %}
 
     {% endblock %}
 </section>
+<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+{{ helpers.assets.js('menu') }}
 </body>
 </html>

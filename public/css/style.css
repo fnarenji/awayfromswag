@@ -305,7 +305,25 @@ section
     transition-duration: 0.5s;
 }
 
-
+aside.menu-extend
+{
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+section.menu-extend
+{
+    width: 100%;
+    transform: translateX(260px);
+    -webkit-transform: translateX(260px);
+    opacity: 0.4;
+}
+.menu-extend .wrapper_menu
+{
+    z-index: 99999999;
+    margin-left: 255px;
+}
 @media only screen and (min-width:  1050px)
 {
     .wrapper_menu
@@ -322,6 +340,7 @@ section
     {
         display: block;
         position: absolute;
+        z-index: 1000;
         top: 0;
         left: 0;
     }
@@ -332,8 +351,7 @@ section
     }
     aside
     {
-        display:block;
-        z-index: 1000;
+
     }
     article .first-news img
     {
