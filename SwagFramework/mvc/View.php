@@ -32,4 +32,9 @@ class View extends \Twig_Environment
             'helpers' => $this->helpers
         ), $context));
     }
-} 
+
+    public function redirect($to)
+    {
+        header('Location : ' . $to);
+    }
+}
