@@ -9,17 +9,20 @@
 namespace app\controllers\admin;
 
 
-class CommentAdminController {
+class CommentAdminController
+{
 
     /**
      * @var \app\models\CommentsModel
      */
     private $model;
+
     // NOT WORKING //
-    public function index(){
+    public function index()
+    {
         $this->model = $this->loadModel('Comments');
         $allEvents = $this->model->getAllCommentsEvent();
-        $this->getView()->render('admin/event',array('allEvents' => $allEvents));
+        $this->getView()->render('admin/event', array('allEvents' => $allEvents));
     }
 
 }

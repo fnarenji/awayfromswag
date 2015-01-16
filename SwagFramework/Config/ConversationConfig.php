@@ -9,7 +9,8 @@
 namespace SwagFramework\Config;
 
 
-class ConversationConfig {
+class ConversationConfig
+{
 
     private $path;
 
@@ -18,7 +19,8 @@ class ConversationConfig {
         $this->path = $path;
     }
 
-    public static function parseFromFile($fileName = 'config/conversations.json') {
+    public static function parseFromFile($fileName = 'config/conversations.json')
+    {
         $config = new ConfigFileParser($fileName);
         return self(
             $config->getEntry('path')

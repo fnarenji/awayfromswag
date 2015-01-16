@@ -11,13 +11,16 @@ namespace app\models;
 
 use SwagFramework\mvc\Model;
 
-class ConversationModel extends Model {
+class ConversationModel extends Model
+{
 
-    public function getAll() {
+    public function getAll()
+    {
 
     }
 
-    public function get($id) {
+    public function get($id)
+    {
 
     }
 

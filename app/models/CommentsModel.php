@@ -51,17 +51,17 @@ class CommentsModel extends Model
      */
     public function insertCommentEvent($idparticip, $iduser, $contents, $mark)
     {
-        try{
+        try {
             DatabaseProvider::connection()->beginTransaction();
 
             $sql = "INSERT INTO commentE (`participateE_event_idEvent`,`participateE_Users_idUsers`) VALUES ?,? ;";
             $sqlComm = "INSERT INTO comments (`contents`,`mark`) VALUES ?,? ;";
-            DatabaseProvider::connection()->execute($sql,$idparticip,$iduser);
-            DatabaseProvider::connection()->execute($sqlComm,$contents,$mark);
+            DatabaseProvider::connection()->execute($sql, $idparticip, $iduser);
+            DatabaseProvider::connection()->execute($sqlComm, $contents, $mark);
 
             DatabaseProvider::connection()->commit();
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DatabaseProvider::connection()->rollBack();
         }
 

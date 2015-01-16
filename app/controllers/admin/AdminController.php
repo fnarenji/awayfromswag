@@ -11,12 +11,14 @@ namespace app\controllers\admin;
 
 use SwagFramework\mvc\Controller;
 
-class AdminController extends Controller {
+class AdminController extends Controller
+{
 
     /**
      * Load admin index.
      */
-    public function index(){
+    public function index()
+    {
         $this->getView()->render('admin/index');
     }
 

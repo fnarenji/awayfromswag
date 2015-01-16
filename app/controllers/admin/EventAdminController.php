@@ -18,19 +18,22 @@ class EventAdminController extends Controller
      */
     private $model;
 
-    public function index(){
+    public function index()
+    {
         $this->model = $this->loadModel('Event');
         $allEvents = $this->model->getEvents();
-        $this->getView()->render('admin/event',array('allEvents' => $allEvents));
+        $this->getView()->render('admin/event', array('allEvents' => $allEvents));
     }
 
-    public function delete(){
-        $event = (int) $this->getParams()[0];
+    public function delete()
+    {
+        $event = (int)$this->getParams()[0];
         $this->model->deleteEvent($event);
     }
 
-    public function update(){
-        $event = (int) $this->getParams()[0];
+    public function update()
+    {
+        $event = (int)$this->getParams()[0];
         //TO DO, NO DB
         $this->model->updateEvent($event);
     }
