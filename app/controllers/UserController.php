@@ -9,6 +9,8 @@
 namespace app\controllers;
 
 
+use SwagFramework\Exceptions\MissingParamsException;
+use SwagFramework\Exceptions\NoUserFoundException;
 use SwagFramework\mvc\Controller;
 
 class UserController extends Controller
@@ -20,12 +22,29 @@ class UserController extends Controller
 
     public function profile()
     {
-        $name = $this->getParams();
+       try
+       {
+           $name = $this->getParams();
+           $userModel = $this->loadModel('User');
+           $user = $userModel->getUserByName($name[0]);
 
-        $userModel = $this->loadModel('User');
-        $user = $userModel->getUserByName($name[0]);
+            if(empty($user))
+                throw new NoUserFoundException($name[0]);
 
+           $user = $user[0];
 
-        $this->getView()->render('user/profile', $user);
+           $user['mailHash'] = md5($user['mail']);
+           $this->getView()->render('user/profile', $user);
+       }
+       catch(MissingParamsException $e)
+       {
+           // TODO POPUP
+           $this->getView()->render('/home/index');
+       }
+       catch(NoUserFoundException $e)
+       {
+           // TODO POPUP
+           $this->getView()->render('/home/index');
+       }
     }
 }

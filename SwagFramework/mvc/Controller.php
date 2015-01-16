@@ -9,6 +9,7 @@
 namespace SwagFramework\mvc;
 
 use SwagFramework\Exceptions\InvalidModelClassException;
+use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Helpers\ControllerHelpers;
 
 class Controller
@@ -41,9 +42,13 @@ class Controller
 
     /**
      * @return mixed
+     * @throws MissingParamsException
      */
     public function getParams()
     {
+        if(empty($this->params)){
+            throw new MissingParamsException();
+        }
         return $this->params;
     }
 

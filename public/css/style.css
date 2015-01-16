@@ -102,10 +102,15 @@ article
     border-bottom: 1px solid rgba(0,0,0,0.4);
 }
 
-article h1, article h2, article h3, article h4
+article h2, article h3, article h4
 {
     display: table;
     margin: 5px auto 5px auto;
+}
+article h1
+{
+    display:block;
+    margin: 5px auto 5px 37px;
 }
 
 article p
@@ -430,6 +435,11 @@ section.menu-extend
     {
         display: inline-block;
         width: 49%;
+    }
+    article h1
+    {
+        display: table;
+        margin-left: auto;
     }
 }
 
