@@ -118,7 +118,25 @@ class UserModel extends Model
      * @param $password
      * @return bool
      */
-    public function updateUser($id, $username, $firstName, $lastName, $mail, $password)
+    public function updateUser($id, $firstName, $lastName, $mail, $password)
+    {
+        $sql = 'UPDATE Users SET firstName = ?, lastName = ?, mail = ?, password = ? WHERE idUsers = ?';
+
+        return DatabaseProvider::connection()->update($sql, $firstName, $lastName, $mail, $password, $id);
+
+    }
+
+    /**
+     * Update user by admin
+     * @param $id
+     * @param $username
+     * @param $firstName
+     * @param $lastName
+     * @param $mail
+     * @param $password
+     * @return mixed
+     */
+    public function updateAdminUser($id, $username, $firstName, $lastName, $mail, $password)
     {
         $sql = 'UPDATE Users SET userName = ?, firstName = ?, lastName = ?, mail = ?, password = ? WHERE idUsers = ?';
 
