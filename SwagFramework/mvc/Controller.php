@@ -27,11 +27,13 @@ class Controller
 
     /**
      * @param $model
+     * @return object
+     * @throws InvalidModelClassException
      */
     public function loadModel($model)
     {
-        $classInfo = new \ReflectionClass($model);
-        if (!$classInfo->getParentClass()->isSubclassOf('Model')) {
+        $classInfo = new \ReflectionClass('app\models\\' . $model . 'Model');
+        if ($classInfo->getParentClass()->isSubclassOf('SwagFramework\mvc\Model')) {
             throw new InvalidModelClassException($model);
         }
         return $classInfo->newInstance();

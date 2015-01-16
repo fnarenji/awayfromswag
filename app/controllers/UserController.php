@@ -20,6 +20,12 @@ class UserController extends Controller
 
     public function profile()
     {
-        $this->getView()->render('user/profile');
+        $name = $this->getParams();
+
+        $userModel = $this->loadModel('User');
+        $user = $userModel->getUserByName($name[0]);
+
+
+        $this->getView()->render('user/profile', $user);
     }
 }
