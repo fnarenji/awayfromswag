@@ -2,7 +2,20 @@
 
 {% block content %}
     <article>
-        <h1>Profil d'un utilisateur</h1>
-        <b>Wesh, bien ou bien ?</b>
+        <h1>Profil de {{ username }} ({{ firstname ~ ' ' ~ lastname }})</h1>
+        <img src="http://www.gravatar.com/avatar/{{ mailHash }}.png" alt="{{ username ~ ' avatar'}}" class="profile-avatar"/>
+        <b class="profile-label">Nom : </b>
+        <b class="profile-label">Prénom : </b>
+        <b class="profile-label">Pseudo : </b>
+        <b class="profile-label">Age : </b>
+        <b class="profile-label">Inscrit depuis le </b>
+        <b class="profile-label"><i class="fa fa-at"></i></b>
+        <b class="profile-label"><i class="fa fa-phone"></i></b>
+        <b class="profile-label"><i class="fa fa-twitter"></i></b>
+        <b class="profile-label"><i class="fa fa-facebook"></i></b>
+        <b class="profile-label"><i class="fa fa-skype"></i></b>
+        <b class="profile-label"><i class="fa fa-desktop"></i></b>
+        <b class="profile-label"></b>
+        <b class="profile-label"></b>
     </article>
 {% endblock %}

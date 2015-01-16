@@ -102,10 +102,15 @@ article
     border-bottom: 1px solid rgba(0,0,0,0.4);
 }
 
-article h1, article h2, article h3, article h4
+article h2, article h3, article h4
 {
     display: table;
     margin: 5px auto 5px auto;
+}
+article h1
+{
+    display:block;
+    margin: 5px auto 5px 37px;
 }
 
 article p
@@ -145,9 +150,10 @@ article .first-news img:hover
 article .last-news .litle-news {margin-bottom: 10px;}
 article .last-news {margin-top: 15px;}
 article .mini-title {font-weight: bold;}
+
 article .first-news img
 {
-    width: 99%;
+    width: 100%;
     height: auto;
     margin-bottom: 5px;
 }
@@ -176,7 +182,7 @@ h4 {font-size: 1.1rem;}
 
 h1
 {
-    font-size: 1.8rem;
+    font-size: 2.3rem;
     color: #42A5F5;
 }
 #news
@@ -262,11 +268,15 @@ aside h3
 
 aside
 {
+    position: fixed;
+    top:0;
+    left:0;
     padding-left: 5px;
     width: 250px;
     height: 100%;
     background-color: #FFF;
     border-right: 1px solid rgba(0,0,0,0.4);
+    border-bottom: 1px solid rgba(0,0,0,0.4);
 }
 
 aside nav a
@@ -308,9 +318,55 @@ section
 aside.menu-extend
 {
     display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
+}
+
+aside .user-menu
+{
+    display: block;
+    width: 100%;
+    margin-top: 15px;
+    border-top: 1px solid rgba(0,0,0,0.4);
+    padding-top: 15px;
+}
+aside .user-menu .avatar-menu img
+{
+    width: 150px;
+    border-radius: 5px;
+}
+aside .user-menu .avatar-menu
+{
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+}
+aside .user-menu b
+{
+    font-weight: bold;
+    display: table;
+    font-size: 1.3rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 25px;
+}
+aside .user-menu ul li
+{
+    margin-top: 13px;
+    font-size: 1.3rem;
+}
+aside .user-menu ul li i
+{
+    display:inline-block;
+    margin-right: 5px;
+}
+aside .user-menu ul li a:hover {color: #42A5F5;}
+aside .footer b
+{
+    font-weight: bold;
+}
+aside .footer
+{
+    display: block;
+    margin-top: 150px;
 }
 section.menu-extend
 {
@@ -324,18 +380,17 @@ section.menu-extend
     z-index: 99999999;
     margin-left: 255px;
 }
+
+/* WOW MEDIA QUERIES, SUCH RESPONSIVE, MUCH SKILLS */
 @media only screen and (min-width:  1050px)
 {
-    .wrapper_menu
-    {
-        display:none;
-    }
+    .wrapper_menu {display:none;}
 
     section
     {
         width:75%;
+        opacity: 1;
     }
-
     aside
     {
         display: block;
@@ -349,10 +404,6 @@ section.menu-extend
         transform: translateX(260px);
         -webkit-transform: translateX(260px);
     }
-    aside
-    {
-
-    }
     article .first-news img
     {
         width: 350px;
@@ -362,10 +413,8 @@ section.menu-extend
         margin-top: -40px;
         float:left;
     }
-    article .first-news, article .last-news
-    {
-        display: table;
-    }
+    article .first-news, article .last-news {display: table;}
+
     article .first-news-description-block
     {
         text-align:left;
@@ -382,6 +431,15 @@ section.menu-extend
         margin-left: 15px;
     }
     article .mini-title:after {content: " - ";}
-
+    article .grid
+    {
+        display: inline-block;
+        width: 49%;
+    }
+    article h1
+    {
+        display: table;
+        margin-left: auto;
+    }
 }
 

@@ -6,8 +6,7 @@ define('TAB', '    ');
 define('DS', DIRECTORY_SEPARATOR);
 define('FSROOT', __DIR__ . DS);
 
-//define('WEBROOT', dirname($_SERVER['SCRIPT_NAME']));
-define('WEBROOT', '');
+define('WEBROOT', dirname($_SERVER['SCRIPT_NAME']));
 define('DEBUG', true);
 
 if (DEBUG) {
@@ -28,9 +27,10 @@ try {
     $classrouting->generateroute($router);
 
 
-    $router->add('/admin', new \app\controllers\admin\EventAdminController(), 'index');
+
     $router->add('/admin/index', new \app\controllers\admin\EventAdminController(), 'index');
     $router->add('/errors/err404', new \app\controllers\ErrorsController(), 'err404');
+    $router->add('/admin', new \app\controllers\admin\EventAdminController(), 'index');
     $router->add('/', new \app\controllers\HomeController(), 'index');
 
 

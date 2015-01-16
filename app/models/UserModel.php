@@ -9,10 +9,11 @@
 namespace app\models;
 
 use SwagFramework\mvc\Model;
+use SwagFramework\Database\DatabaseProvider;
 
 class UserModel extends Model
 {
-    const TABLE_NAME = 'Users';
+    const TABLE_NAME = 'user';
 
     /**
      *  Return all information with the id
@@ -28,6 +29,19 @@ class UserModel extends Model
         return DatabaseProvider::connection()->execute($sql, $id);
     }
 
+    /**
+     * Returns all the informations about an user with the username
+     * @param $name
+     * @return array
+     */
+    public function getUserByName($name)
+    {
+        $sql = 'SELECT * '
+             . 'FROM ' . self::TABLE_NAME . ' '
+             . 'WHERE username = ?';
+
+        return DatabaseProvider::connection()->execute($sql, $name);
+    }
     /**
      * Return all information for all users
      * @return array

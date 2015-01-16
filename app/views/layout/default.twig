@@ -29,20 +29,30 @@
         </form>
         <ul>
             <li><a href="#">Événements</a></li>
+            <li><a href="#">Actualité</a></li>
             <li><a href="#">Annuaire</a></li>
             <li><a href="#">Partenaire</a></li>
         </ul>
     </nav>
-    <h3>Se connecter</h3>
-    <form class="pure-form" action="#" method="get">
-        <fieldset class="pure-group">
-            <input class="pure-input-1-1" type="text" placeholder="Nom d'utilisateur"/>
-            <input class="pure-input-1-1" type="password" placeholder="Mot de passe"/>
-        </fieldset>
-        <input type="submit" value="Se connecter" class="submit-button"/>
-    </form>
-    <a href="#">Rester connecté</a>
-    <a href="#">Inscription</a>
+    <div class="user-menu">
+        <a href="#" class="avatar-menu">
+            <img src="http://www.gravatar.com/avatar/9c78e88a995de179fe5bca874fb79115.png" alt="avatar"/>
+        </a>
+        <b class="nav-pseudo">Thomas Munoz</b>
+        <ul>
+            <li><a href="#"><i class="fa fa-cog"></i>Mon profil</a></li>
+            <li><a href="#"><i class="fa fa-bicycle"></i>Mes évènements</a></li>
+            <li><a href="#"><i class="fa fa-calendar"></i>Calendrier</a></li>
+            <li><a href="#"><i class="fa fa-users"></i>Mes amis</a></li>
+            <li><a href="#"><i class="fa fa-comments-o"></i>Messagerie</a></li>
+            <li><a href="#"><i class="fa fa-power-off"></i>Se déconnecter</a></li>
+        </ul>
+    </div>
+    <ul class="footer">
+        <li><a href="#"><b>23</b> connecté(s)</a></li>
+        <li><a href="#"><b>5</b> inscrits</a></li>
+        <li><a href="#"><b>20</b></a> évènements</li>
+    </ul>
 </aside>
 <section class="menu-reduced">
     {% block content %}
