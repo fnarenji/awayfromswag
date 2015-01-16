@@ -26,8 +26,12 @@ try {
     $classrouting->addclass('User');
     $classrouting->generateroute($router);
 
+
+    $router->add('/admin', new \app\controllers\admin\EventAdminController(), 'index');
+    $router->add('/admin/index', new \app\controllers\admin\EventAdminController(), 'index');
     $router->add('/errors/err404', new \app\controllers\ErrorsController(), 'err404');
     $router->add('/', new \app\controllers\HomeController(), 'index');
+
 
     $router->matchcurrentrequest();
 
