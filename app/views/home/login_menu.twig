@@ -1,0 +1,13 @@
+{% extends "layout/default" %}
+
+{% block login %}
+    <h3>Se connecter</h3>
+    <form class="pure-form" action="#" method="get">
+        <fieldset class="pure-group">
+            <input class="pure-input-1-1" type="text" placeholder="Nom d'utilisateur"/>
+            <input class="pure-input-1-1" type="password" placeholder="Mot de passe"/>
+        </fieldset>
+        <input type="submit" value="Se connecter" class="submit-button"/>
+    </form>
+    <a href="#">Inscription</a>
+{% endblock %}
