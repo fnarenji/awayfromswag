@@ -2,6 +2,8 @@
 <html>
 <head lang="fr">
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AFS - Accueil</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/forms-min.css"/>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -16,7 +18,7 @@
 <div class="wrapper_menu">
     <div class="menu_ham"></div>
 </div>
-<aside>
+<aside class="menu-extend">
     <a href="#" id="logo">{{ helpers.assets.img('logolarge.png', 'Logo Away From Security') }}</a>
     <nav>
         <form class="pure-form" action="#">
@@ -30,16 +32,17 @@
         </ul>
     </nav>
     <h3>Se connecter</h3>
-    <form class="pure-form" action="#">
+    <form class="pure-form" action="#" method="get">
         <fieldset class="pure-group">
             <input class="pure-input-1-1" type="text" placeholder="Nom d'utilisateur"/>
             <input class="pure-input-1-1" type="password" placeholder="Mot de passe"/>
         </fieldset>
+        <input type="submit" value="Se connecter" class="submit-button"/>
     </form>
     <a href="#">Rester connecté</a>
     <a href="#">Inscription</a>
 </aside>
-<section>
+<section class="menu-extend">
     {% block content %}
 
     {% endblock %}
