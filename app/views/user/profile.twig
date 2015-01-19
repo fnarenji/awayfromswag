@@ -1,21 +1,63 @@
 {% extends "layout/default" %}
 
 {% block content %}
-    <article>
+    <article class="profile">
         <h1>Profil de {{ username }} ({{ firstname ~ ' ' ~ lastname }})</h1>
-        <img src="http://www.gravatar.com/avatar/{{ mailHash }}.png" alt="{{ username ~ ' avatar'}}" class="profile-avatar"/>
-        <b class="profile-label">Nom : </b>
-        <b class="profile-label">Prénom : </b>
-        <b class="profile-label">Pseudo : </b>
-        <b class="profile-label">Age : </b>
-        <b class="profile-label">Inscrit depuis le </b>
-        <b class="profile-label"><i class="fa fa-at"></i></b>
-        <b class="profile-label"><i class="fa fa-phone"></i></b>
-        <b class="profile-label"><i class="fa fa-twitter"></i></b>
-        <b class="profile-label"><i class="fa fa-facebook"></i></b>
-        <b class="profile-label"><i class="fa fa-skype"></i></b>
-        <b class="profile-label"><i class="fa fa-desktop"></i></b>
-        <b class="profile-label"></b>
-        <b class="profile-label"></b>
+        <div class="profile-group">
+            <img src="http://www.gravatar.com/avatar/{{ mailHash }}.png" alt="{{ username ~ ' avatar'}}" class="profile-avatar"/>
+            <span class="profile-line"><b class="profile-label">Nom : </b>{{ lastname }}</span>
+            <span class="profile-line"><b class="profile-label">Prénom : </b>{{ firstname }}</span>
+            <span class="profile-line"><b class="profile-label">Pseudo : </b>{{ username }}</span>
+            <span class="profile-line"><b class="profile-label">Age : </b>{{ age }} ans</span>
+        </div>
+        <div class="profile-group">
+            <span class="profile-line"><b class="profile-label">Profession : </b>{{ job }}</span>
+            <span class="profile-line"><b class="profile-label">Inscrit depuis le </b>{{ registerDateFormat }}</span>
+        </div>
+        <div class="profile-group">
+            <span class="profile-line"><b class="profile-label">Description : </b></span>
+            <span class="profile-line"><p class="profile-description">{{ description }}</p></span>
+        </div>
+        <div class="profile-group">
+            {% if mail %}
+                <span class="profile-line">
+                    <b class="profile-label"><i class="fa fa-at"></i>
+                    </b>{{ mail }}</span>
+            {% endif %}
+            {% if phonenumber %}
+                <span class="profile-line"><b class="profile-label"><i class="fa fa-phone"></i></b>{{ phonenumber }}</span>
+            {% endif %}
+            {% if twitter %}
+                <span class="profile-line">
+                    <b class="profile-label">
+                        <i class="fa fa-twitter"></i>
+                    </b>
+                    <a href="https://twitter.com/{{ twitter }}">{{ twitter }}</a>
+                </span>
+            {% endif %}
+            {% if facebookuri %}
+                <span class="profile-line">
+                    <b class="profile-label">
+                        <i class="fa fa-facebook"></i>
+                    </b>
+                    <a href="https://www.facebook.com/{{ facebookuri }}">{{ facebookuri }}</a>
+                </span>
+            {% endif %}
+            {% if skype %}
+                <span class="profile-line">
+                    <b class="profile-label">
+                        <i class="fa fa-skype"></i>
+                    </b>
+                    {{ skype }}
+                </span>
+            {% endif %}
+            {% if website %}
+                <span class="profile-line">
+                    <b class="profile-label"><i class="fa fa-desktop"></i>
+                    </b>
+                    <a href="{{ website }}">{{ website }}</a>
+                </span>
+            {% endif %}
+        </div>
     </article>
 {% endblock %}

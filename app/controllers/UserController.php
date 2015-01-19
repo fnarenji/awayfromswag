@@ -34,6 +34,14 @@ class UserController extends Controller
            $user = $user[0];
 
            $user['mailHash'] = md5($user['mail']);
+
+           $birthday = new \DateTime($user['birthday']);
+           $today = new \DateTime();
+           $user['age'] = $birthday->diff($today)->format('%Y');
+
+           $registerDate = new \DateTime($user['registerdate']);
+           $user['registerDateFormat'] = $registerDate->format('d/m/Y');
+
            $this->getView()->render('user/profile', $user);
        }
        catch(MissingParamsException $e)
