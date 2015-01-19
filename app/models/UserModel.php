@@ -62,9 +62,9 @@ class UserModel extends Model
      */
     public function getUserConnect($username, $password)
     {
-        $sql = 'SELECT idUsers, userName, firstName, lastName '
+        $sql = 'SELECT id, username, firstname, lastname '
             . 'FROM ' . self::TABLE_NAME . ' '
-            . 'WHERE userName = ?'
+            . 'WHERE username = ?'
             . 'AND password = ?';
 
         return DatabaseProvider::connection()->execute($sql, $username, sha1($password));
@@ -72,38 +72,49 @@ class UserModel extends Model
 
     /**
      * Insert in database a new user
-     *
      * @param $username
      * @param $firstName
      * @param $lastName
      * @param $mail
      * @param $password
+     * @param $birthday
+     * @param $phonenumber
+     * @param $twitter
+     * @param $skype
+     * @param $facebookuri
+     * @param $website
+     * @param $job
+     * @param $description
+     * @param $privacy
+     * @param $mailnotifications
+     * @param $accesslevel
      * @return bool
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function insertUser($username, $firstName, $lastName, $mail, $password)
+    public function insertUser($username, $firstName, $lastName, $mail, $password,
+                               $birthday, $phonenumber, $twitter, $skype, $facebookuri,
+                               $website, $job, $description, $privacy, $mailnotifications,
+                               $accesslevel)
     {
+        try{
 
-        $nbuser = self::nbUsers();
+            DatabaseProvider::connection()->beginTransaction();
 
-        $sql = 'INSERT INTO users (`userName`, `firstName`, `lastName`, `mail`, `password`, `position`)
-                 VALUES (?,?,?,?,?,?)';
+            $sql = 'INSERT INTO '.self::TABLE_NAME.' (`userName`, `firstname`, `lastname`, `mail`, `password`, `birthday`,`phonenumber`,'.
+                    '`twitter`,`skype`,`facebookuri`,`website`,`job`,`description`,`privacy`,`mailnotifications`,`accesslevel`);
+                     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
 
-        DatabaseProvider::connection()->execute($sql, $username, $firstName, $lastName, $mail, $password, $nbuser);
+            DatabaseProvider::connection()->execute($sql, $username, $firstName, $lastName, $mail, $password, $birthday,
+                                                    $phonenumber, $twitter, $skype, $facebookuri, $website, $job, $description,
+                                                    $privacy, $mailnotifications, $accesslevel);
+            DatabaseProvider::connection()->commit();
 
-        return true;
-    }
+            return true;
 
-    /**
-     * Return the number of users.
-     * @return mixed
-     */
-    private function nbUsers()
-    {
+        }catch (\Exception $e){
 
-        $sql = 'SELECT COUNT(idUsers) '
-            . 'FROM ' . self::TABLE_NAME;
-
-        return DatabaseProvider::connection()->execute($sql, null)[0];
+            DatabaseProvider::connection()->rollBack();
+        }
     }
 
     /**
@@ -113,30 +124,68 @@ class UserModel extends Model
      */
     public function deleteUser($id)
     {
+        try{
 
-        $sql = 'DELETE FROM `Users` WHERE idUsers = ?';
+            DatabaseProvider::connection()->beginTransaction();
 
-        DatabaseProvider::connection()->execute($sql, $id);
+            $sql = 'DELETE FROM '.self::TABLE_NAME.' WHERE id = ?';
 
-        return true;
+            DatabaseProvider::connection()->execute($sql, $id);
+            DatabaseProvider::connection()->commit();
+
+            return true;
+
+        }catch (\Exception $e){
+
+            DatabaseProvider::connection()->rollBack();
+        }
 
     }
 
     /**
      * Update the user with id in paramater
      * @param $id
-     * @param $username
      * @param $firstName
      * @param $lastName
      * @param $mail
      * @param $password
+     * @param $birthday
+     * @param $phonenumber
+     * @param $twitter
+     * @param $skype
+     * @param $facebookuri
+     * @param $website
+     * @param $job
+     * @param $description
+     * @param $privacy
+     * @param $mailnotifications
+     * @param $accesslevel
      * @return bool
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function updateUser($id, $firstName, $lastName, $mail, $password)
+    public function updateUser($id, $firstName, $lastName, $mail, $password,
+                               $birthday, $phonenumber, $twitter, $skype, $facebookuri,
+                               $website, $job, $description, $privacy, $mailnotifications,
+                               $accesslevel)
     {
-        $sql = 'UPDATE Users SET firstName = ?, lastName = ?, mail = ?, password = ? WHERE idUsers = ?';
+        try{
 
-        return DatabaseProvider::connection()->update($sql, $firstName, $lastName, $mail, $password, $id);
+            DatabaseProvider::connection()->beginTransaction();
+            $sql = 'UPDATE '.self::TABLE_NAME.' SET firstname = ?, lastname = ?, mail = ?, password = ?, birthday = ?,
+                    phonenumber = ?,twitter = ?, skype = ?, facebookuri = ?, website = ?, job = ?, description = ?,
+                    privacy = ?, mailnotifications = ?, accesslevel = ? WHERE id = ?';
+
+            DatabaseProvider::connection()->update($sql, $firstName, $lastName, $mail, $password, $birthday,
+                                                    $phonenumber, $twitter, $skype, $facebookuri, $website,
+                                                    $job, $description, $privacy, $mailnotifications,
+                                                    $accesslevel, $id);
+            DatabaseProvider::connection()->commit();
+            return true;
+
+        }catch (\Exception $e){
+
+            DatabaseProvider::connection()->rollBack();
+        }
 
     }
 
@@ -148,15 +197,46 @@ class UserModel extends Model
      * @param $lastName
      * @param $mail
      * @param $password
-     * @return mixed
+     * @param $birthday
+     * @param $phonenumber
+     * @param $twitter
+     * @param $skype
+     * @param $facebookuri
+     * @param $website
+     * @param $job
+     * @param $description
+     * @param $privacy
+     * @param $mailnotifications
+     * @param $accesslevel
+     * @return bool
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function updateAdminUser($id, $username, $firstName, $lastName, $mail, $password)
+    public function updateAdminUser($id, $username, $firstName, $lastName, $mail, $password,
+                                    $birthday, $phonenumber, $twitter, $skype, $facebookuri,
+                                    $website, $job, $description, $privacy, $mailnotifications,
+                                    $accesslevel)
     {
-        $sql = 'UPDATE Users SET userName = ?, firstName = ?, lastName = ?, mail = ?, password = ? WHERE idUsers = ?';
+        try{
 
-        return DatabaseProvider::connection()->update($sql, $username, $firstName, $lastName, $mail, $password, $id);
+            DatabaseProvider::connection()->beginTransaction();
+            $sql = 'UPDATE '.self::TABLE_NAME.' SET username = ?, firstname = ?, lastname = ?, mail = ?, password = ?, birthday = ?,
+                    phonenumber = ?,twitter = ?, skype = ?, facebookuri = ?, website = ?, job = ?, description = ?,
+                    privacy = ?, mailnotifications = ?, accesslevel = ? WHERE id = ?';
+
+            DatabaseProvider::connection()->update($sql, $username, $firstName, $lastName, $mail, $password, $birthday,
+                $phonenumber, $twitter, $skype, $facebookuri, $website,
+                $job, $description, $privacy, $mailnotifications,
+                $accesslevel, $id);
+            DatabaseProvider::connection()->commit();
+            return true;
+
+        }catch (\Exception $e){
+
+            DatabaseProvider::connection()->rollBack();
+        }
 
     }
+
 
     /**
      * Return data for username like param
@@ -168,7 +248,7 @@ class UserModel extends Model
 
         $name = '%' . $name . '%';
 
-        $sql = "SELECT idUsers, userName, firstName, lastName FROM Users WHERE userName LIKE ? ";
+        $sql = 'SELECT id, username, firstname, lastname FROM '.self::TABLE_NAME.' WHERE username LIKE ? ';
 
         return DatabaseProvider::connection()->execute($sql, $name);
     }

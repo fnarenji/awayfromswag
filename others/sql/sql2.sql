@@ -169,7 +169,7 @@ ENGINE = InnoDB;
 -- Table `afs`.`article_category`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `afs`.`article_category` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
@@ -180,7 +180,7 @@ ENGINE = InnoDB;
 -- Table `afs`.`article`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `afs`.`article` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `user` INT NULL,
   `text` TEXT NULL,
   `postdate` DATETIME NULL,

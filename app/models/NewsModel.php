@@ -9,18 +9,21 @@
 namespace app\models;
 
 use SwagFramework\mvc\Model;
+use SwagFramework\Database\DatabaseProvider;
 
 class NewsModel extends Model
 {
 
     /**
-     * Return the content of new of the id
+     * Return a news
      * @param $id
-     * @return array
+     * @return mixed
      */
     public function getOneNews($id)
     {
-        $sql = 'SELECT author,content FROM news WHERE idnews = ?';
+        $sql =  "SELECT username, text, postdate ".
+                "FROM article, user ".
+                "WHERE user.id = article.user AND article.id = ?";
 
         return DatabaseProvider::connection()->execute($sql, $id);
     }
@@ -31,25 +34,38 @@ class NewsModel extends Model
      */
     public function getNews()
     {
-        $sql = 'SELECT author,content,date FROM news';
+        $sql = "SELECT username, text, postdate ".
+                "FROM article, user ".
+                "WHERE user.id = article.user";
 
         return DatabaseProvider::connection()->execute($sql, null);
     }
 
     /**
-     * Insert a news in DB
+     * Insert new article in D
      * @param $author
      * @param $content
      * @param $date
+     * @param $categorie
      * @return bool
      */
-    public function insertNews($author, $content, $date)
+    public function insertNews($author, $content, $date, $categorie)
     {
-        $sql = 'INSERT INTO news (`author`,`content`,`date`) VALUE ?,?,? ';
+        try{
 
-        DatabaseProvider::connection()->execute($sql, $author, $content, $date);
+            DatabaseProvider::connection()->beginTransaction();
+            $sql = 'INSERT INTO article (`user`,`text`,`postdate`,`category`) VALUE ?,?,?,? ';
 
-        return true;
+            DatabaseProvider::connection()->execute($sql, $author, $content, $date, $categorie);
+
+            DatabaseProvider::connection()->commit();
+
+            return true;
+
+        }catch (\Exception $e){
+
+            DatabaseProvider::connection()->rollBack();
+        }
     }
 
     /**
@@ -59,11 +75,19 @@ class NewsModel extends Model
      */
     public function deleteNews($id)
     {
-        $sql = 'DELETE FROM news WHERE idnews = ?';
+        try{
 
-        DatabaseProvider::connection()->execute($sql, $id);
+            DatabaseProvider::connection()->beginTransaction();
+            $sql = 'DELETE FROM article WHERE id = ?';
 
-        return true;
+            DatabaseProvider::connection()->execute($sql, $id);
+            DatabaseProvider::connection()->commit();
+
+            return true;
+        }catch (\Exception $e){
+
+            DatabaseProvider::connection()->rollBack();
+        }
 
     }
 
@@ -76,9 +100,18 @@ class NewsModel extends Model
      */
     public function updateNews($id, $content, $date)
     {
-        $sql = 'UPDATE news SET content = ?, date = ? WHERE idnews = ?';
+        try{
 
-        return DatabaseProvider::connection()->update($sql, $content, $date, $id);
+            DatabaseProvider::connection()->beginTransaction();
+            $sql = 'UPDATE article SET text = ?, postdate = ? WHERE id = ?';
+            DatabaseProvider::connection()->update($sql, $content, $date, $id);
+
+            DatabaseProvider::connection()->commit();
+        }catch (\Exception $e){
+
+            DatabaseProvider::connection()->rollBack();
+        }
+
     }
 
 
