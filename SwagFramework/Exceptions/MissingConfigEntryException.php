@@ -18,7 +18,7 @@ class MissingConfigEntryException extends SwagException
      * @param int $code
      * @param Exception $previous
      */
-    public function __construct($fileName, $configEntry, $key, $code = 0, Exception $previous = null)
+    public function __construct($fileName, $configEntry, $code = 0, Exception $previous = null)
     {
         $message = 'Missing config entry ' . $configEntry . ' from config file ' . $fileName . '!';
 

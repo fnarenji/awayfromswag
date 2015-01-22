@@ -9,6 +9,7 @@
 namespace SwagFramework\Config;
 
 use SwagFramework\Exceptions\FileNotFoundException;
+use SwagFramework\Exceptions\MissingConfigEntryException;
 
 class ConfigFileParser
 {

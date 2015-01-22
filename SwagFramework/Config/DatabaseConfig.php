@@ -24,6 +24,10 @@ class DatabaseConfig
      */
     private $password;
     /**
+     * @var port
+     */
+    private $port;
+    /**
      * @var database
      */
     private $database;
@@ -31,12 +35,13 @@ class DatabaseConfig
     /**
      * Disable construction of object.
      */
-    private function __construct($host, $user, $password, $database)
+    private function __construct($host, $user, $password, $database, $port)
     {
         $this->host = $host;
         $this->user = $user;
         $this->password = $password;
         $this->database = $database;
+        $this->port = $port;
     }
 
     /**
@@ -48,7 +53,8 @@ class DatabaseConfig
         return new self($configFile->getEntry("host"),
             $configFile->getEntry("user"),
             $configFile->getEntry("password"),
-            $configFile->getEntry("database"));
+            $configFile->getEntry("database"),
+            $configFile->getEntry("port"));
     }
 
     /**
@@ -58,7 +64,7 @@ class DatabaseConfig
     public function dsn()
     {
         $dsn = 'mysql:';
-        $dsn .= 'host=' . $this->host;
+        $dsn .= 'host=' . $this->host . ':' . $this->port;
         $dsn .= ';';
         $dsn .= 'dbname=' . $this->database;
 

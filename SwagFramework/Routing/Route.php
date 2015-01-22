@@ -57,7 +57,7 @@ class Route
 
             $this->controller = $path[0];
             $this->action = isset($path[1]) ? $path[1] : '';
-            $this->parameters = array_splice($path, 2, count($path) - 1);
+            $this->parameters = array_splice($path, 2, count($path) - 1); // @todo Filtrage
         }
 
         $this->method = $method;
