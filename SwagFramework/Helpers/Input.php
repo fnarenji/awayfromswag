@@ -36,7 +36,7 @@ class Input
      */
     public function post($key)
     {
-        if (isset($_POST[$key]) && !empty($_POST[$key])) {
+        if (!isset($_POST[$key]) || empty($_POST[$key])) {
             throw new InputNotSetException('$_POST', $key);
         }
         //TODO: Protect input $_GET

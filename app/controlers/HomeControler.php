@@ -6,11 +6,11 @@
  * Time: 20:27
  */
 
-namespace app\controllers;
+namespace app\controlers;
 
-use SwagFramework\mvc\Controller;
+use SwagFramework\mvc\Controler;
 
-class HomeController extends Controller
+class HomeControler extends Controler
 {
     public function index()
     {

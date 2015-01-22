@@ -8,8 +8,8 @@
 
 namespace app\models;
 
-use SwagFramework\mvc\Model;
 use SwagFramework\Database\DatabaseProvider;
+use SwagFramework\mvc\Model;
 
 class UserModel extends Model
 {
@@ -37,11 +37,12 @@ class UserModel extends Model
     public function getUserByName($name)
     {
         $sql = 'SELECT * '
-             . 'FROM ' . self::TABLE_NAME . ' '
-             . 'WHERE username = ?';
+            . 'FROM ' . self::TABLE_NAME . ' '
+            . 'WHERE username = ?';
 
         return DatabaseProvider::connection()->execute($sql, $name);
     }
+
     /**
      * Return all information for all users
      * @return array
@@ -58,16 +59,16 @@ class UserModel extends Model
      * Return information if the user with the $password and $username was found.
      * @param $username
      * @param $password
-     * @return array
+     * @return boolean true if auth valid false otherwise
      */
-    public function getUserConnect($username, $password)
+    public function validateAuthentication($username, $password)
     {
-        $sql = 'SELECT id, username, firstname, lastname '
+        $sql = 'SELECT 1'
             . 'FROM ' . self::TABLE_NAME . ' '
             . 'WHERE username = ?'
             . 'AND password = ?';
 
-        return DatabaseProvider::connection()->execute($sql, $username, sha1($password));
+        return DatabaseProvider::connection()->query($sql, $username, sha1($password))->rowCount() == 1;
     }
 
     /**
@@ -91,27 +92,40 @@ class UserModel extends Model
      * @return bool
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function insertUser($username, $firstName, $lastName, $mail, $password,
-                               $birthday, $phonenumber, $twitter, $skype, $facebookuri,
-                               $website, $job, $description, $privacy, $mailnotifications,
-                               $accesslevel)
-    {
-        try{
+    public function insertUser(
+        $username,
+        $firstName,
+        $lastName,
+        $mail,
+        $password,
+        $birthday,
+        $phonenumber,
+        $twitter,
+        $skype,
+        $facebookuri,
+        $website,
+        $job,
+        $description,
+        $privacy,
+        $mailnotifications,
+        $accesslevel
+    ) {
+        try {
 
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql = 'INSERT INTO '.self::TABLE_NAME.' (`userName`, `firstname`, `lastname`, `mail`, `password`, `birthday`,`phonenumber`,'.
-                    '`twitter`,`skype`,`facebookuri`,`website`,`job`,`description`,`privacy`,`mailnotifications`,`accesslevel`);
+            $sql = 'INSERT INTO ' . self::TABLE_NAME . ' (`userName`, `firstname`, `lastname`, `mail`, `password`, `birthday`,`phonenumber`,' .
+                '`twitter`,`skype`,`facebookuri`,`website`,`job`,`description`,`privacy`,`mailnotifications`,`accesslevel`);
                      VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
 
             DatabaseProvider::connection()->execute($sql, $username, $firstName, $lastName, $mail, $password, $birthday,
-                                                    $phonenumber, $twitter, $skype, $facebookuri, $website, $job, $description,
-                                                    $privacy, $mailnotifications, $accesslevel);
+                $phonenumber, $twitter, $skype, $facebookuri, $website, $job, $description,
+                $privacy, $mailnotifications, $accesslevel);
             DatabaseProvider::connection()->commit();
 
             return true;
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
 
             DatabaseProvider::connection()->rollBack();
         }
@@ -124,18 +138,18 @@ class UserModel extends Model
      */
     public function deleteUser($id)
     {
-        try{
+        try {
 
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql = 'DELETE FROM '.self::TABLE_NAME.' WHERE id = ?';
+            $sql = 'DELETE FROM ' . self::TABLE_NAME . ' WHERE id = ?';
 
             DatabaseProvider::connection()->execute($sql, $id);
             DatabaseProvider::connection()->commit();
 
             return true;
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
 
             DatabaseProvider::connection()->rollBack();
         }
@@ -163,26 +177,39 @@ class UserModel extends Model
      * @return bool
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function updateUser($id, $firstName, $lastName, $mail, $password,
-                               $birthday, $phonenumber, $twitter, $skype, $facebookuri,
-                               $website, $job, $description, $privacy, $mailnotifications,
-                               $accesslevel)
-    {
-        try{
+    public function updateUser(
+        $id,
+        $firstName,
+        $lastName,
+        $mail,
+        $password,
+        $birthday,
+        $phonenumber,
+        $twitter,
+        $skype,
+        $facebookuri,
+        $website,
+        $job,
+        $description,
+        $privacy,
+        $mailnotifications,
+        $accesslevel
+    ) {
+        try {
 
             DatabaseProvider::connection()->beginTransaction();
-            $sql = 'UPDATE '.self::TABLE_NAME.' SET firstname = ?, lastname = ?, mail = ?, password = ?, birthday = ?,
+            $sql = 'UPDATE ' . self::TABLE_NAME . ' SET firstname = ?, lastname = ?, mail = ?, password = ?, birthday = ?,
                     phonenumber = ?,twitter = ?, skype = ?, facebookuri = ?, website = ?, job = ?, description = ?,
                     privacy = ?, mailnotifications = ?, accesslevel = ? WHERE id = ?';
 
             DatabaseProvider::connection()->update($sql, $firstName, $lastName, $mail, $password, $birthday,
-                                                    $phonenumber, $twitter, $skype, $facebookuri, $website,
-                                                    $job, $description, $privacy, $mailnotifications,
-                                                    $accesslevel, $id);
+                $phonenumber, $twitter, $skype, $facebookuri, $website,
+                $job, $description, $privacy, $mailnotifications,
+                $accesslevel, $id);
             DatabaseProvider::connection()->commit();
             return true;
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
 
             DatabaseProvider::connection()->rollBack();
         }
@@ -211,15 +238,29 @@ class UserModel extends Model
      * @return bool
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function updateAdminUser($id, $username, $firstName, $lastName, $mail, $password,
-                                    $birthday, $phonenumber, $twitter, $skype, $facebookuri,
-                                    $website, $job, $description, $privacy, $mailnotifications,
-                                    $accesslevel)
-    {
-        try{
+    public function updateAdminUser(
+        $id,
+        $username,
+        $firstName,
+        $lastName,
+        $mail,
+        $password,
+        $birthday,
+        $phonenumber,
+        $twitter,
+        $skype,
+        $facebookuri,
+        $website,
+        $job,
+        $description,
+        $privacy,
+        $mailnotifications,
+        $accesslevel
+    ) {
+        try {
 
             DatabaseProvider::connection()->beginTransaction();
-            $sql = 'UPDATE '.self::TABLE_NAME.' SET username = ?, firstname = ?, lastname = ?, mail = ?, password = ?, birthday = ?,
+            $sql = 'UPDATE ' . self::TABLE_NAME . ' SET username = ?, firstname = ?, lastname = ?, mail = ?, password = ?, birthday = ?,
                     phonenumber = ?,twitter = ?, skype = ?, facebookuri = ?, website = ?, job = ?, description = ?,
                     privacy = ?, mailnotifications = ?, accesslevel = ? WHERE id = ?';
 
@@ -230,7 +271,7 @@ class UserModel extends Model
             DatabaseProvider::connection()->commit();
             return true;
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
 
             DatabaseProvider::connection()->rollBack();
         }
@@ -248,7 +289,7 @@ class UserModel extends Model
 
         $name = '%' . $name . '%';
 
-        $sql = 'SELECT id, username, firstname, lastname FROM '.self::TABLE_NAME.' WHERE username LIKE ? ';
+        $sql = 'SELECT id, username, firstname, lastname FROM ' . self::TABLE_NAME . ' WHERE username LIKE ? ';
 
         return DatabaseProvider::connection()->execute($sql, $name);
     }

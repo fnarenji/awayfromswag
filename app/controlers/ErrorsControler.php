@@ -6,12 +6,12 @@
  * Time: 21:35
  */
 
-namespace app\controllers;
+namespace app\controlers;
 
 
-use SwagFramework\mvc\Controller;
+use SwagFramework\mvc\Controler;
 
-class ErrorsController extends Controller
+class ErrorsControler extends Controler
 {
     public function err404()
     {

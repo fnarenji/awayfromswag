@@ -20,9 +20,9 @@ class EventModel extends Model
      */
     public function getEvents()
     {
-        $sql =  "SELECT name, username, description, address, eventtime, money, personsmax, personsnow ".
-                "FROM event,user ".
-                "WHERE event.user = user.id ;";
+        $sql = "SELECT name, username, description, address, eventtime, money, personsmax, personsnow " .
+            "FROM event,user " .
+            "WHERE event.user = user.id ;";
 
         return DatabaseProvider::connection()->execute($sql, null);
 
@@ -36,9 +36,9 @@ class EventModel extends Model
      */
     public function getOneEvents($id)
     {
-        $sql =  "SELECT name, username, description, address, eventtime, money, personsmax, personsnow ".
-                "FROM event,user ".
-                "WHERE event.user = user.id AND user.id = ?;";
+        $sql = "SELECT name, username, description, address, eventtime, money, personsmax, personsnow " .
+            "FROM event,user " .
+            "WHERE event.user = user.id AND user.id = ?;";
 
         return DatabaseProvider::connection()->execute($sql, $id);
 
@@ -58,20 +58,21 @@ class EventModel extends Model
      */
     public function insertEvent($name, $idCreator, $nbMaxPart, $description, $address, $eventTime, $money)
     {
-        try{
+        try {
 
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql =  "INSERT INTO event (`name`,`user`,`description`, `address`, `eventtime`, `money`, `personsmax`) ".
+            $sql = "INSERT INTO event (`name`,`user`,`description`, `address`, `eventtime`, `money`, `personsmax`) " .
                 " VALUE ?,?,?,?,?,?,?";
 
-            DatabaseProvider::connection()->execute($sql, $name, $idCreator, $description, $address, $eventTime, $money, $nbMaxPart);
+            DatabaseProvider::connection()->execute($sql, $name, $idCreator, $description, $address, $eventTime, $money,
+                $nbMaxPart);
 
             DatabaseProvider::connection()->commit();
 
             return true;
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
 
             DatabaseProvider::connection()->rollBack();
         }
@@ -93,21 +94,22 @@ class EventModel extends Model
      */
     public function upadateEvent($idEvent, $name, $nbMaxPart, $description, $address, $eventTime, $money)
     {
-        try{
+        try {
 
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql =  "UPDATE event ".
-                    "SET name = ? ,description = ?, address = ?, eventtime = ?, money = ?, personsmax = ? ".
-                    "WHERE id = ?";
+            $sql = "UPDATE event " .
+                "SET name = ? ,description = ?, address = ?, eventtime = ?, money = ?, personsmax = ? " .
+                "WHERE id = ?";
 
-            DatabaseProvider::connection()->execute($sql, $name, $description, $address, $eventTime, $money, $nbMaxPart, $idEvent);
+            DatabaseProvider::connection()->execute($sql, $name, $description, $address, $eventTime, $money, $nbMaxPart,
+                $idEvent);
 
             DatabaseProvider::connection()->commit();
 
             return true;
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
 
             DatabaseProvider::connection()->rollBack();
         }

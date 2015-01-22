@@ -3,8 +3,10 @@
 {% block content %}
     <article class="profile">
         <h1>Profil de {{ username }} ({{ firstname ~ ' ' ~ lastname }})</h1>
+
         <div class="profile-group">
-            <img src="http://www.gravatar.com/avatar/{{ mailHash }}.png" alt="{{ username ~ ' avatar'}}" class="profile-avatar"/>
+            <img src="http://www.gravatar.com/avatar/{{ mailHash }}.png" alt="{{ username ~ ' avatar' }}"
+                 class="profile-avatar"/>
             <span class="profile-line"><b class="profile-label">Nom : </b>{{ lastname }}</span>
             <span class="profile-line"><b class="profile-label">Prénom : </b>{{ firstname }}</span>
             <span class="profile-line"><b class="profile-label">Pseudo : </b>{{ username }}</span>
@@ -25,7 +27,8 @@
                     </b>{{ mail }}</span>
             {% endif %}
             {% if phonenumber %}
-                <span class="profile-line"><b class="profile-label"><i class="fa fa-phone"></i></b>{{ phonenumber }}</span>
+                <span class="profile-line"><b class="profile-label"><i
+                                class="fa fa-phone"></i></b>{{ phonenumber }}</span>
             {% endif %}
             {% if twitter %}
                 <span class="profile-line">

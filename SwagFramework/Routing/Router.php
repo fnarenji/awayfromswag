@@ -92,29 +92,29 @@ class Router
     }
 
     /**
-     * This method call the right function in the controller
+     * This method call the right function in the controler
      * targeted by the route with the parameters in the URI
      * @param Route $route
      */
     private function dispatch($route)
     {
         $action = $route->getAction();
-        $route->getController()->setParams($this->route->getParameters());
-        $route->getController()->$action();
+        $route->getControler()->setParams($this->route->getParameters());
+        $route->getControler()->$action();
     }
 
     /**
      * This function add a route to the $routes that contains all the routes
      * for this application.
      * @param $url
-     * @param $controller
+     * @param $controler
      * @param $action
      * @param $method
      */
-    public function add($url, $controller, $action, $method = 'GET')
+    public function add($url, $controler, $action, $method = 'GET')
     {
         $route = new Route();
-        $route->setRoute($url, $controller, $action, $method);
+        $route->setRoute($url, $controler, $action, $method);
 
         $this->routes[] = $route;
     }

@@ -8,8 +8,8 @@
 
 namespace app\models;
 
-use SwagFramework\mvc\Model;
 use SwagFramework\Database\DatabaseProvider;
+use SwagFramework\mvc\Model;
 
 class NewsModel extends Model
 {
@@ -21,9 +21,9 @@ class NewsModel extends Model
      */
     public function getOneNews($id)
     {
-        $sql =  "SELECT username, text, postdate ".
-                "FROM article, user ".
-                "WHERE user.id = article.user AND article.id = ?";
+        $sql = "SELECT username, text, postdate " .
+            "FROM article, user " .
+            "WHERE user.id = article.user AND article.id = ?";
 
         return DatabaseProvider::connection()->execute($sql, $id);
     }
@@ -34,9 +34,9 @@ class NewsModel extends Model
      */
     public function getNews()
     {
-        $sql = "SELECT username, text, postdate ".
-                "FROM article, user ".
-                "WHERE user.id = article.user";
+        $sql = "SELECT username, text, postdate " .
+            "FROM article, user " .
+            "WHERE user.id = article.user";
 
         return DatabaseProvider::connection()->execute($sql, null);
     }
@@ -51,7 +51,7 @@ class NewsModel extends Model
      */
     public function insertNews($author, $content, $date, $categorie)
     {
-        try{
+        try {
 
             DatabaseProvider::connection()->beginTransaction();
             $sql = 'INSERT INTO article (`user`,`text`,`postdate`,`category`) VALUE ?,?,?,? ';
@@ -62,7 +62,7 @@ class NewsModel extends Model
 
             return true;
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
 
             DatabaseProvider::connection()->rollBack();
         }
@@ -75,7 +75,7 @@ class NewsModel extends Model
      */
     public function deleteNews($id)
     {
-        try{
+        try {
 
             DatabaseProvider::connection()->beginTransaction();
             $sql = 'DELETE FROM article WHERE id = ?';
@@ -84,7 +84,7 @@ class NewsModel extends Model
             DatabaseProvider::connection()->commit();
 
             return true;
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
 
             DatabaseProvider::connection()->rollBack();
         }
@@ -100,14 +100,14 @@ class NewsModel extends Model
      */
     public function updateNews($id, $content, $date)
     {
-        try{
+        try {
 
             DatabaseProvider::connection()->beginTransaction();
             $sql = 'UPDATE article SET text = ?, postdate = ? WHERE id = ?';
-            DatabaseProvider::connection()->update($sql, $content, $date, $id);
+            DatabaseProvider::connection()->updateNotStupid($sql, [$content, $date, $id]);
 
             DatabaseProvider::connection()->commit();
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
 
             DatabaseProvider::connection()->rollBack();
         }

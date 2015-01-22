@@ -1,44 +1,47 @@
 CREATE DATABASE IF NOT EXISTS `AFS`;
 
 CREATE TABLE IF NOT EXISTS `AFS`.`Users` (
-  `idUsers` INT NOT NULL AUTO_INCREMENT,
+  `idUsers`  INT         NOT NULL AUTO_INCREMENT,
   `userName` VARCHAR(45) NOT NULL,
   `firstName` VARCHAR(45) NOT NULL,
   `lastName` VARCHAR(45) NOT NULL,
-  `mail` VARCHAR(45) NOT NULL,
+  `mail`     VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
-  `position` INT NOT NULL,
-  `nbPoints` INT NOT NULL DEFAULT 0,
+  `position` INT         NOT NULL,
+  `nbPoints` INT         NOT NULL DEFAULT 0,
   PRIMARY KEY (`idUsers`),
-  UNIQUE (mail))
-ENGINE = InnoDB;
+  UNIQUE (mail)
+)
+  ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `AFS`.`catNews` (
-  `idcatNews` INT NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idcatNews`))
+  `idcatNews` INT         NOT NULL,
+  `name`      VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idcatNews`)
+)
   ENGINE = InnoDB;
 
 
 CREATE TABLE IF NOT EXISTS `AFS`.`Comments` (
-  `idComments` INT NOT NULL AUTO_INCREMENT,
-  `contents` VARCHAR(500) NOT NULL,
-  `mark` INT NULL,
-  `idPere` INT NULL,
+  `idComments` INT          NOT NULL AUTO_INCREMENT,
+  `contents`   VARCHAR(500) NOT NULL,
+  `mark`       INT          NULL,
+  `idPere`     INT          NULL,
   PRIMARY KEY (`idComments`),
   INDEX `fk_Comments_Comments1_idx` (`idPere` ASC),
   CONSTRAINT `fk_Comments_Comments1`
   FOREIGN KEY (`idPere`)
   REFERENCES `AFS`.`Comments` (`idComments`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION
+)
   ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `AFS`.`news` (
-  `idnews` INT NOT NULL AUTO_INCREMENT,
-  `author` INT NOT NULL,
+  `idnews`  INT           NOT NULL AUTO_INCREMENT,
+  `author`  INT           NOT NULL,
   `content` VARCHAR(1000) NOT NULL,
-  `date` TIMESTAMP NOT NULL,
+  `date`    TIMESTAMP     NOT NULL,
   `catNews_idcatNews` INT,
   PRIMARY KEY (`idnews`),
   INDEX `fk_news_Users1_idx` (`author` ASC),
@@ -52,13 +55,14 @@ CREATE TABLE IF NOT EXISTS `AFS`.`news` (
   FOREIGN KEY (`catNews_idcatNews`)
   REFERENCES `catNews` (`idcatNews`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION
+)
   ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `AFS`.`commentN` (
-  `idcomment` INT NOT NULL AUTO_INCREMENT,
+  `idcomment`     INT NOT NULL AUTO_INCREMENT,
   `Users_idUsers` INT NOT NULL,
-  `news_idnews` INT NOT NULL,
+  `news_idnews`   INT NOT NULL,
   `Comments_idComments` INT NOT NULL,
   PRIMARY KEY (`idcomment`, `Comments_idComments`),
   INDEX `fk_comment_Users1_idx` (`Users_idUsers` ASC),
@@ -78,25 +82,27 @@ CREATE TABLE IF NOT EXISTS `AFS`.`commentN` (
   FOREIGN KEY (`Comments_idComments`)
   REFERENCES `AFS`.`Comments` (`idComments`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION
+)
   ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `AFS`.`event` (
-  `idEvent` INT NOT NULL AUTO_INCREMENT,
-  `nameEvent` VARCHAR(50) NOT NULL,
-  `creator` INT NOT NULL,
-  `price` INT,
-  `address` VARCHAR(50) NOT NULL,
-  `dateE` TIMESTAMP,
-  `dateCrea` TIMESTAMP,
-  `nbParticipantMax` INT NOT NULL,
+  `idEvent`          INT         NOT NULL AUTO_INCREMENT,
+  `nameEvent`        VARCHAR(50) NOT NULL,
+  `creator`          INT         NOT NULL,
+  `price`            INT,
+  `address`          VARCHAR(50) NOT NULL,
+  `dateE`            TIMESTAMP,
+  `dateCrea`         TIMESTAMP,
+  `nbParticipantMax` INT         NOT NULL,
   PRIMARY KEY (`idEvent`),
   INDEX `fk_event_Users1_idx` (`creator` ASC),
   CONSTRAINT `fk_event_Users1`
   FOREIGN KEY (`creator`)
-  REFERENCES Users(idUsers)
+  REFERENCES Users (idUsers)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION
+)
   ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `AFS`.`participateE` (
@@ -114,11 +120,12 @@ CREATE TABLE IF NOT EXISTS `AFS`.`participateE` (
   FOREIGN KEY (`Users_idUsers`)
   REFERENCES `AFS`.`Users` (`idUsers`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION
+)
   ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `AFS`.`commentE` (
-  `idcommentE` INT NOT NULL AUTO_INCREMENT,
+  `idcommentE`          INT NOT NULL AUTO_INCREMENT,
   `participateE_event_idEvent` INT NOT NULL,
   `participateE_Users_idUsers` INT NOT NULL,
   `Comments_idComments` INT NOT NULL,
@@ -126,31 +133,33 @@ CREATE TABLE IF NOT EXISTS `AFS`.`commentE` (
   INDEX `fk_commentE_participateE1_idx` (`participateE_event_idEvent` ASC, `participateE_Users_idUsers` ASC),
   INDEX `fk_commentE_Comments1_idx` (`Comments_idComments` ASC),
   CONSTRAINT `fk_commentE_participateE1`
-  FOREIGN KEY (`participateE_event_idEvent` , `participateE_Users_idUsers`)
-  REFERENCES `AFS`.`participateE` (`event_idEvent` , `Users_idUsers`)
+  FOREIGN KEY (`participateE_event_idEvent`, `participateE_Users_idUsers`)
+  REFERENCES `AFS`.`participateE` (`event_idEvent`, `Users_idUsers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_commentE_Comments1`
   FOREIGN KEY (`Comments_idComments`)
   REFERENCES `AFS`.`Comments` (`idComments`)
     ON DELETE CASCADE
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION
+)
   ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `AFS`.`challenges` (
-  `idchallenges` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `description` VARCHAR(500) NOT NULL,
-  `filesAdd` VARCHAR(45) NULL,
-  `creator` INT NOT NULL,
-  `points` INT NOT NULL,
+  `idchallenges` INT          NOT NULL AUTO_INCREMENT,
+  `name`         VARCHAR(45)  NOT NULL,
+  `description`  VARCHAR(500) NOT NULL,
+  `filesAdd`     VARCHAR(45)  NULL,
+  `creator`      INT          NOT NULL,
+  `points`       INT          NOT NULL,
   PRIMARY KEY (`idchallenges`),
   INDEX `fk_challenges_Users_idx` (`creator` ASC),
   CONSTRAINT `fk_challenges_Users`
   FOREIGN KEY (`creator`)
   REFERENCES `AFS`.`Users` (`idUsers`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION
+)
   ENGINE = InnoDB;
 
 

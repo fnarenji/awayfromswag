@@ -6,10 +6,10 @@
  * Time: 10:33
  */
 
-namespace app\controllers\admin;
+namespace app\controlers\admin;
 
 
-class CommentAdminController
+class CommentAdminControler
 {
 
     /**

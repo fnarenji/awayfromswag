@@ -8,8 +8,8 @@
 
 namespace app\models;
 
-use SwagFramework\mvc\Model;
 use SwagFramework\Database\DatabaseProvider;
+use SwagFramework\mvc\Model;
 
 class ParticipateModel extends Model
 {
@@ -59,7 +59,7 @@ class ParticipateModel extends Model
      */
     public function insertEventParticipation($idEvent, $idUser, $joindate)
     {
-        try{
+        try {
 
             DatabaseProvider::connection()->beginTransaction();
 
@@ -71,7 +71,7 @@ class ParticipateModel extends Model
 
             return true;
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
 
             DatabaseProvider::connection()->rollBack();
         }
@@ -87,7 +87,7 @@ class ParticipateModel extends Model
      */
     public function deleteEventParticipation($idEvent, $idUser)
     {
-        try{
+        try {
 
             DatabaseProvider::connection()->beginTransaction();
             $sql = 'DELETE FROM event_user WHERE user = ? AND id = ?';
@@ -97,7 +97,7 @@ class ParticipateModel extends Model
 
             return true;
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
 
             DatabaseProvider::connection()->rollBack();
         }

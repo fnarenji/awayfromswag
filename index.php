@@ -22,16 +22,15 @@ try {
 
     $router = new \SwagFramework\Routing\Router();
 
-    $classrouting = new \app\helpers\ClassRouting('\app\controllers\\');
+    $classrouting = new \app\helpers\ClassRouting('\app\controlers\\');
     $classrouting->addclass('User');
     $classrouting->generateroute($router);
 
 
-
-    $router->add('/admin/index', new \app\controllers\admin\EventAdminController(), 'index');
-    $router->add('/errors/err404', new \app\controllers\ErrorsController(), 'err404');
-    $router->add('/admin', new \app\controllers\admin\EventAdminController(), 'index');
-    $router->add('/', new \app\controllers\HomeController(), 'index');
+    $router->add('/admin/index', new \app\controlers\admin\EventAdminControler(), 'index');
+    $router->add('/errors/err404', new \app\controlers\ErrorsControler(), 'err404');
+    $router->add('/admin', new \app\controlers\admin\EventAdminControler(), 'index');
+    $router->add('/', new \app\controlers\HomeControler(), 'index');
 
 
     $router->matchcurrentrequest();

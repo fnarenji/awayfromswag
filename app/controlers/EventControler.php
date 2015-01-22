@@ -6,16 +6,16 @@
  * Time: 15:11
  */
 
-namespace app\controllers;
+namespace app\controlers;
 
 
 use app\models\EventModel;
 use SwagFramework\Config\DatabaseConfig;
 use SwagFramework\Database\Database;
 use SwagFramework\Exceptions\EventNotFoundException;
-use SwagFramework\mvc\Controller;
+use SwagFramework\mvc\Controler;
 
-class Event extends Controller
+class Event extends Controler
 {
 
     /**

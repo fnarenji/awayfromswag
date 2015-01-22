@@ -8,6 +8,8 @@
 
 namespace app\helpers;
 
+use SwagFramework\Routing\Router;
+
 /**
  * Class ClassRouting
  * This function generate basics routes for a list of classes
@@ -56,18 +58,18 @@ class ClassRouting
 
     /**
      * Add all the routes in the router in parameter
-     * @param $router
+     * @param $router Router
      */
-    public function generateRoute($router)
+    public function generateRoute(Router $router)
     {
         foreach ($this->classes as $class) {
-            $classMethods = get_class_methods($this->namespace . $class . 'Controller');
-            $rc = new \ReflectionClass($this->namespace . $class . 'Controller');
+            $classMethods = get_class_methods($this->namespace . $class . 'Controler');
+            $rc = new \ReflectionClass($this->namespace . $class . 'Controler');
 
             $parent = $rc->getParentClass();
             $parent = get_class_methods($parent->name);
 
-            $className = $this->namespace . $class . 'Controller';
+            $className = $this->namespace . $class . 'Controler';
 
             foreach ($classMethods as $methodName) {
                 if (in_array($methodName, $parent) || $methodName == 'index') {
