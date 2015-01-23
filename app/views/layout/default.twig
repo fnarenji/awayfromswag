@@ -35,18 +35,11 @@
         </ul>
     </nav>
     <div class="user-menu">
-        <a href="#" class="avatar-menu">
-            <img src="https://www.gravatar.com/avatar/9c78e88a995de179fe5bca874fb79115.png" alt="avatar"/>
-        </a>
-        <b class="nav-pseudo">Thomas Munoz</b>
-        <ul>
-            <li><a href="#"><i class="fa fa-cog"></i>Mon profil</a></li>
-            <li><a href="#"><i class="fa fa-bicycle"></i>Mes évènements</a></li>
-            <li><a href="#"><i class="fa fa-calendar"></i>Calendrier</a></li>
-            <li><a href="#"><i class="fa fa-users"></i>Mes amis</a></li>
-            <li><a href="#"><i class="fa fa-comments-o"></i>Messagerie</a></li>
-            <li><a href="#"><i class="fa fa-power-off"></i>Se déconnecter</a></li>
-        </ul>
+       {% if logged %}
+           {% include 'home/user_menu' %}
+       {% else %}
+           {% include 'home/login_menu' %}
+       {% endif %}
     </div>
     <ul class="footer">
         <li><a href="#"><b>23</b> connecté(s)</a></li>
