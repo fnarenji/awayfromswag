@@ -18,11 +18,10 @@ class EventModel extends Model
      * @return array
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function getEvents()
+    public function getAll()
     {
-        $sql = "SELECT id, name, username, description, address, eventtime, money, personsmax, personsnow " .
-            "FROM event,user " .
-            "WHERE event.user = user.id ;";
+        $sql = "SELECT * " .
+            "FROM event ";
 
         return DatabaseProvider::connection()->execute($sql, null);
 
@@ -34,14 +33,13 @@ class EventModel extends Model
      * @return array
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function getOneEvents($id)
+    public function get($id)
     {
-        $sql = "SELECT name, username, description, address, eventtime, money, personsmax, personsnow " .
-            "FROM event,user " .
-            "WHERE event.user = user.id AND user.id = ?;";
+        $sql = "SELECT * " .
+            "FROM event " .
+            "WHERE id=?";
 
-        return DatabaseProvider::connection()->execute($sql, $id);
-
+        return DatabaseProvider::connection()->selectFirst($sql, $id);
     }
 
     /**
@@ -92,7 +90,7 @@ class EventModel extends Model
      * @return bool
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function upadateEvent($idEvent, $name, $nbMaxPart, $description, $address, $eventTime, $money)
+    public function updateEvent($idEvent, $name, $nbMaxPart, $description, $address, $eventTime, $money)
     {
         try {
 

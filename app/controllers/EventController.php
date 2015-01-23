@@ -11,6 +11,7 @@ namespace app\controllers;
 
 use app\exceptions\EventNotFoundException;
 use app\models\EventModel;
+use app\models\UserModel;
 use SwagFramework\Helpers\Form;
 use SwagFramework\mvc\Controller;
 
@@ -20,18 +21,23 @@ class EventController extends Controller
     /**
      * @var EventModel
      */
-    private $model;
+    private $eventModel;
+
+    /**
+     * @var UserModel
+     */
+    private $userModel;
 
     function __construct()
     {
-        $this->model = new EventModel();
+        $this->eventModel = new EventModel();
+        $this->userModel = new UserModel();
         parent::__construct();
     }
 
     public function index()
     {
-        $events = $this->model->getEvents();
-        var_dump($events);
+        $events = $this->eventModel->getAll();
 
         $this->getView()->render('event/index', array(
             'events' => $events
@@ -42,16 +48,16 @@ class EventController extends Controller
     {
         $id = (int)$this->getParams()[0];
 
-        $event = $this->model->getOneEvents($id);
+        $event = $this->eventModel->get(1);
 
-        $error = [];
         if (empty($event)) {
             throw new EventNotFoundException($id);
         }
 
+        $event['user'] = $this->userModel->getUser($event['user']);
+
         $this->getView()->render('event/show', array(
-            'event' => $event,
-            'error' => $error
+            'event' => $event
         ));
     }
 

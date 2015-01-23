@@ -45,8 +45,6 @@ class UserController extends Controller
                 throw new NoUserFoundException($name[0]);
             }
 
-            $user = $user[0];
-
             $user['mailHash'] = md5($user['mail']);
 
             $birthday = new \DateTime($user['birthday']);
