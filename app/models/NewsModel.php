@@ -25,7 +25,7 @@ class NewsModel extends Model
             "FROM article, user " .
             "WHERE user.id = article.user AND article.id = ?";
 
-        return DatabaseProvider::connection()->execute($sql, [$id]);
+        return DatabaseProvider::connection()->query($sql, [$id]);
     }
 
     /**
@@ -38,7 +38,7 @@ class NewsModel extends Model
             "FROM article, user " .
             "WHERE user.id = article.user";
 
-        return DatabaseProvider::connection()->execute($sql, []);
+        return DatabaseProvider::connection()->query($sql, []);
     }
 
     /**
@@ -54,9 +54,9 @@ class NewsModel extends Model
         try {
 
             DatabaseProvider::connection()->beginTransaction();
-            $sql = "INSERT INTO article ('user','text','postdate','category') VALUE ?,?,?,? ";
+            $sql = "INSERT INTO article ('user','text','postdate','category') VALUE (?,?,?,?)";
 
-            DatabaseProvider::connection()->execute($sql, [$author, $content, $date, $categorie]);
+            DatabaseProvider::connection()->query($sql, [$author, $content, $date, $categorie]);
 
             DatabaseProvider::connection()->commit();
 
@@ -81,7 +81,7 @@ class NewsModel extends Model
             DatabaseProvider::connection()->beginTransaction();
             $sql = 'DELETE FROM article WHERE id = ?';
 
-            DatabaseProvider::connection()->execute($sql, [$id]);
+            DatabaseProvider::connection()->query($sql, [$id]);
             DatabaseProvider::connection()->commit();
 
             return true;
@@ -106,7 +106,7 @@ class NewsModel extends Model
 
             DatabaseProvider::connection()->beginTransaction();
             $sql = 'UPDATE article SET text = ?, postdate = ? WHERE id = ?';
-            DatabaseProvider::connection()->updateNotStupid($sql, [$content, $date, $id]);
+            DatabaseProvider::connection()->update($sql, [$content, $date, $id]);
 
             DatabaseProvider::connection()->commit();
         } catch (\Exception $e) {

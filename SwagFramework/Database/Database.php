@@ -40,9 +40,9 @@ class Database extends \PDO
      * execute query
      * @param $query
      * @param $params
-     * @return array
+     * @return array Rows
      */
-    public function execute($query, $params)
+    public function query($query, $params)
     {
         $stmt = $this->prepare($query);
         $stmt->execute($params);

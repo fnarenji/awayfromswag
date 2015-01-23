@@ -25,7 +25,7 @@ class CommentsArticleModel extends Model
         $sql = "SELECT id, title, text, username FROM user,comment_article,comment,article WHERE " .
             "comment_article.article = article.id AND comment_article.id = comment.id AND user.id = comment.user ;";
 
-        return DatabaseProvider::connection()->execute($sql, []);
+        return DatabaseProvider::connection()->query($sql, []);
     }
 
     /**
@@ -39,7 +39,7 @@ class CommentsArticleModel extends Model
         $sql = "SELECT title, text, username FROM user,comment_article,comment,article WHERE " .
             "comment_article.article = ? AND comment_article.id = comment.id AND user.id = comment.user ;";
 
-        return DatabaseProvider::connection()->execute($sql, [$id]);
+        return DatabaseProvider::connection()->query($sql, [$id]);
 
     }
 
@@ -55,11 +55,11 @@ class CommentsArticleModel extends Model
             DatabaseProvider::connection()->beginTransaction();
 
             $sqlComm = "INSERT INTO comments ('user','contents') VALUES (? , ?);";
-            DatabaseProvider::connection()->execute($sqlComm, [$param['iduser'], $param['contents']]);
+            DatabaseProvider::connection()->query($sqlComm, [$param['iduser'], $param['contents']]);
 
             $tmp = $this->getIdComment();
             $sqlComm = "INSERT INTO comment_event ('id','article') VALUES (? , ?);";
-            DatabaseProvider::connection()->execute($sqlComm, [$tmp, $param['idarticle']]);
+            DatabaseProvider::connection()->query($sqlComm, [$tmp, $param['idarticle']]);
 
             DatabaseProvider::connection()->commit();
 
@@ -81,7 +81,7 @@ class CommentsArticleModel extends Model
     {
         $sql = "SELECT MAX(id) FROM comment";
 
-        return DatabaseProvider::connection()->execute($sql, [])[0];
+        return DatabaseProvider::connection()->query($sql, [])[0];
     }
 
     /**
@@ -96,7 +96,7 @@ class CommentsArticleModel extends Model
             DatabaseProvider::connection()->beginTransaction();
 
             $sqlComm = "UPDATE comments  SET contents = ? WHERE id = ? ;";
-            DatabaseProvider::connection()->execute($sqlComm, [$params['content'], $params['idcomment']]);
+            DatabaseProvider::connection()->query($sqlComm, [$params['content'], $params['idcomment']]);
 
             DatabaseProvider::connection()->commit();
 
@@ -121,7 +121,7 @@ class CommentsArticleModel extends Model
             DatabaseProvider::connection()->beginTransaction();
             $sql = "DELETE FROM comment_article WHERE id = ? ";
 
-            DatabaseProvider::connection()->execute($sql, [$id]);
+            DatabaseProvider::connection()->query($sql, [$id]);
 
             DatabaseProvider::connection()->commit();
 

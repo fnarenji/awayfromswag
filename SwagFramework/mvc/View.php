@@ -8,6 +8,7 @@
 
 namespace SwagFramework\mvc;
 
+use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\ViewHelpers;
 
 class View extends \Twig_Environment
@@ -28,13 +29,16 @@ class View extends \Twig_Environment
 
     public function render($name, array $context = [])
     {
-        echo parent::render($name, array_merge(['helpers' => $this->helpers], $context));
+        $context = array_merge(['helpers' => $this->helpers], $context);
+        $context = Authentication::getInstance()->addToContext($context);
+
+        echo parent::render($name, $context);
     }
 
     public function redirect($to)
     {
         //header('Location: ' . $to);
         // Quand ça marche pas, wallhack + aimbot = win.
-        //echo '<script>location.href="' . $to . '"</script>';
+        echo '<script>location.href="' . $to . '"</script>';
     }
 }

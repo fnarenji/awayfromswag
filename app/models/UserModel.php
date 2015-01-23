@@ -26,7 +26,7 @@ class UserModel extends Model
             . 'FROM ' . self::TABLE_NAME . ' '
             . 'WHERE id = ?';
 
-        return DatabaseProvider::connection()->execute($sql, [$id]);
+        return DatabaseProvider::connection()->query($sql, [$id]);
     }
 
     /**
@@ -40,7 +40,7 @@ class UserModel extends Model
             . 'FROM ' . self::TABLE_NAME . ' '
             . 'WHERE username = ? ';
 
-        return DatabaseProvider::connection()->execute($sql, [$name]);
+        return DatabaseProvider::connection()->query($sql, [$name]);
     }
 
     /**
@@ -52,7 +52,7 @@ class UserModel extends Model
         $sql = 'SELECT *'
             . 'FROM ' . self::TABLE_NAME . ' ';
 
-        return DatabaseProvider::connection()->execute($sql, []);
+        return DatabaseProvider::connection()->query($sql, []);
     }
 
     /**
@@ -68,7 +68,7 @@ class UserModel extends Model
             . 'WHERE username = ? '
             . 'AND password = SHA1(?)';
 
-        return DatabaseProvider::connection()->execute($sql, [$username, $password]);
+        return DatabaseProvider::connection()->query($sql, [$username, $password])[0];
     }
 
     /**
@@ -87,7 +87,7 @@ class UserModel extends Model
                 'twitter','skype','facebookuri','website','job','description','privacy','mailnotifications','accesslevel')
                      VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
 
-            DatabaseProvider::connection()->execute($sql, $infos);
+            DatabaseProvider::connection()->query($sql, $infos);
 
             DatabaseProvider::connection()->commit();
 
@@ -113,7 +113,7 @@ class UserModel extends Model
 
             $sql = 'DELETE FROM ' . self::TABLE_NAME . ' WHERE id = ?';
 
-            DatabaseProvider::connection()->execute($sql, [$id]);
+            DatabaseProvider::connection()->query($sql, [$id]);
 
             DatabaseProvider::connection()->commit();
 
@@ -197,7 +197,7 @@ class UserModel extends Model
 
         $sql = 'SELECT id, username, firstname, lastname FROM ' . self::TABLE_NAME . ' WHERE username LIKE ? ';
 
-        return DatabaseProvider::connection()->execute($sql, [$name]);
+        return DatabaseProvider::connection()->query($sql, [$name]);
     }
 
 

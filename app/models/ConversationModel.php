@@ -24,7 +24,7 @@ class ConversationModel extends Model
     {
         $sql = "SELECT id, username FROM conversation_user,user WHERE user.id = conversation_user.user";
 
-        return DatabaseProvider::connection()->execute($sql, []);
+        return DatabaseProvider::connection()->query($sql, []);
     }
 
     /**
@@ -37,7 +37,7 @@ class ConversationModel extends Model
     {
         $sql = "SELECT id, username FROM conversation_user,user WHERE user.id = conversation_user.user AND conversation_user.id = ? ";
 
-        return DatabaseProvider::connection()->execute($sql, [$id]);
+        return DatabaseProvider::connection()->query($sql, [$id]);
     }
 
     /**
@@ -55,11 +55,11 @@ class ConversationModel extends Model
             $sql = "INSERT INTO conversation_user ('id', 'user') VALUES (?,?);";
             $sqlOther = "INSERT INTO   conversation ('createtime') VALUES (?);";
 
-            DatabaseProvider::connection()->execute($sqlOther, [new \DateTime()]);
+            DatabaseProvider::connection()->query($sqlOther, [new \DateTime()]);
 
             $tmp = $this->getIdConversation();
 
-            DatabaseProvider::connection()->execute($sql, [$tmp, $idUser]);
+            DatabaseProvider::connection()->query($sql, [$tmp, $idUser]);
 
             DatabaseProvider::connection()->commit();
 
@@ -81,7 +81,7 @@ class ConversationModel extends Model
     {
         $sql = "SELECT MAX(id) FROM conversation";
 
-        return DatabaseProvider::connection()->execute($sql, [])[0];
+        return DatabaseProvider::connection()->query($sql, [])[0];
     }
 
     /**
@@ -97,7 +97,7 @@ class ConversationModel extends Model
             DatabaseProvider::connection()->beginTransaction();
 
             $sql = "DELETE FROM conversation_user WHERE id = ?";
-            DatabaseProvider::connection()->execute($sql, [$id]);
+            DatabaseProvider::connection()->query($sql, [$id]);
 
             DatabaseProvider::connection()->commit();
 

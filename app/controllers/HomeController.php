@@ -8,12 +8,13 @@
 
 namespace app\controllers;
 
+use app\helpers\Authentication;
 use SwagFramework\mvc\Controller;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $this->getView()->render('home/index', [ 'logged' => false ]);
+        $this->getView()->render('home/index');
     }
 }

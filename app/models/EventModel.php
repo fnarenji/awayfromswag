@@ -23,7 +23,7 @@ class EventModel extends Model
         $sql = "SELECT * " .
             "FROM event ";
 
-        return DatabaseProvider::connection()->execute($sql, []);
+        return DatabaseProvider::connection()->query($sql, []);
 
     }
 
@@ -39,7 +39,7 @@ class EventModel extends Model
             "FROM event " .
             "WHERE id=?";
 
-        return DatabaseProvider::connection()->execute($sql, [$id]);
+        return DatabaseProvider::connection()->query($sql, [$id]);
 
     }
 
@@ -62,9 +62,9 @@ class EventModel extends Model
             DatabaseProvider::connection()->beginTransaction();
 
             $sql = "INSERT INTO event ('name','user','description', 'address', 'eventtime', 'money', 'personsmax') " .
-                " VALUE ?,?,?,?,?,?,?";
+                " VALUE (?,?,?,?,?,?,?)";
 
-            DatabaseProvider::connection()->execute($sql, [$name, $idCreator, $description, $address, $eventTime, $money, $nbMaxPart]);
+            DatabaseProvider::connection()->query($sql, [$name, $idCreator, $description, $address, $eventTime, $money, $nbMaxPart]);
 
             DatabaseProvider::connection()->commit();
 
@@ -100,7 +100,7 @@ class EventModel extends Model
                 "SET name = ? ,description = ?, address = ?, eventtime = ?, money = ?, personsmax = ? " .
                 "WHERE id = ?";
 
-            DatabaseProvider::connection()->execute($sql, [$name, $description, $address, $eventTime, $money, $nbMaxPart, $idEvent]);
+            DatabaseProvider::connection()->query($sql, [$name, $description, $address, $eventTime, $money, $nbMaxPart, $idEvent]);
 
             DatabaseProvider::connection()->commit();
 
@@ -123,7 +123,7 @@ class EventModel extends Model
     {
         $sql = "DELETE FROM event WHERE id = ?";
 
-        DatabaseProvider::connection()->execute($sql, [$id]);
+        DatabaseProvider::connection()->query($sql, [$id]);
 
         return true;
     }

@@ -6,7 +6,7 @@
  * Time: 8:05 PM
  */
 
-namespace app\helpers;
+namespace SwagFramework\Helpers;
 
 class Authentication
 {
@@ -32,10 +32,10 @@ class Authentication
         $_SESSION['authDate'] = new \DateTime();
     }
 
-    public function addToContext(array $context)
+    public function addToContext(array $context = [])
     {
         return array_merge($context, ['auth' => [
-            'auth' => $this->isAuthenticated(),
+            'valid' => $this->isAuthenticated(),
             'userName' => $this->getUserName(),
             'userId' => $this->getUserId(),
             'authDate' => $this->getAuthDate()

@@ -8,11 +8,11 @@
 
 namespace app\controllers;
 
-use app\helpers\Authentication;
 use app\models\UserModel;
 use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Exceptions\NoUserFoundException;
+use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\Input;
 use SwagFramework\mvc\Controller;
 
@@ -75,7 +75,7 @@ class UserController extends Controller
             $password = Input::post('password');
 
             $validAuth = $this->userModel->validateAuthentication($username, $password);
-            var_dump($validAuth);
+
             if (!empty($validAuth)) {
                 Authentication::getInstance()->setAuthenticated($username, $validAuth['id']);
                 //$this->getView()->render('/home/index');
