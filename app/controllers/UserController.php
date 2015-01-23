@@ -13,7 +13,6 @@ use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Exceptions\NoUserFoundException;
 use SwagFramework\mvc\Controller;
-use SwagFramework\Helpers\Input;
 
 class UserController extends Controller
 {

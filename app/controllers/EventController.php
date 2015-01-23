@@ -25,34 +25,35 @@ class EventController extends Controller
 
     function __construct()
     {
+        parent::__construct();
         $this->model = new EventModel(new Database(DatabaseConfig::parseFromFile()));
     }
 
     public function index()
     {
-        $events = $this->model->getAll();
+        $events = $this->model->getEvents();
         var_dump($events);
 
-//        $this->getView()->render('event/index', array(
-//            'events' => $events
-//        ));
+        $this->getView()->render('event/index', array(
+            'events' => $events
+        ));
     }
 
     public function show()
     {
         $id = (int)$this->getParams()[0];
 
-        $event = $this->model->get($id);
+        $event = $this->model->getOneEvents($id);
 
         $error = array();
         if (empty($event)) {
             throw new EventNotFoundException($id);
         }
 
-//        $this->getView()->render('event/show', array(
-//            'event' => $event,
-//            'error' => $error
-//        ));
+        $this->getView()->render('event/show', array(
+            'event' => $event,
+            'error' => $error
+        ));
     }
 
     public function add()

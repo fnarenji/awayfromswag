@@ -54,8 +54,9 @@ class ConversationController extends Controller
         $id = (int)$this->getParams()[0];
         $convers = $this->conversationModel->get($id);
 
-        if (empty($convers))
+        if (empty($convers)) {
             throw new ConversationNotFoundException($id);
+        }
 
         $file = $this->conversationConfig->getPath() . $id . '.xml';
 
