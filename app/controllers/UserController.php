@@ -85,7 +85,8 @@ class UserController extends Controller
                 $_SESSION['id'] = $validAuth[0]['id'];
                 $_SESSION['authDate'] = new \DateTime();
 
-                $this->getView()->render('/home/index');
+                //$this->getView()->render('/home/index');
+                $this->getView()->redirect('/');
             } else {
                 // TODO POPUP
 

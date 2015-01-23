@@ -43,6 +43,8 @@ class View extends \Twig_Environment
 
     public function redirect($to)
     {
-        header('Location : ' . $to);
+        //header('Location: ' . $to);
+        // Quand ça marche pas, wallhack + aimbot = win.
+        echo '<script>location.href="' . $to . '"</script>';
     }
 }

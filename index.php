@@ -3,6 +3,7 @@
 use SwagFramework\Exceptions\SwagException;
 
 session_start();
+
 define('CR', "\n");
 define('TAB', '    ');
 
@@ -20,7 +21,11 @@ if (DEBUG) {
     ini_set('display_errors', true);
     ini_set('html_errors', true);
     error_reporting(E_ALL);
+    error_reporting(E_ALL);
+    ini_set('display_errors', 'On');
+
 }
+
 require 'vendor/autoload.php';
 
 try {
@@ -40,7 +45,6 @@ try {
     $router->add('/', new \app\controllers\HomeController(), 'index');
 
     $router->matchCurrentRequest();
-
 } catch (SwagException $e) {
     echo '<h1>SwagException !</h1>';
     echo '<p>' . $e->getMessage() . '</p>';
