@@ -75,8 +75,8 @@ class UserController extends Controller
             $password = Input::post('password');
 
             $validAuth = $this->userModel->validateAuthentication($username, $password);
-
-            if ($validAuth) {
+            var_dump($validAuth);
+            if (!empty($validAuth)) {
                 Authentication::getInstance()->setAuthenticated($username, $validAuth['id']);
                 //$this->getView()->render('/home/index');
                 $this->getView()->redirect('/');

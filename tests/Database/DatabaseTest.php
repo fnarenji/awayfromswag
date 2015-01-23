@@ -18,6 +18,13 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase
      */
     private $database;
 
+    public function testDatabase()
+    {
+        $this->createDatabase();
+        $this->selectTable('user');
+        $this->selectUser(1);
+    }
+
     private function createDatabase()
     {
         $this->database = new Database(DatabaseConfig::parseFromFile("tests/Database/testdatabase.json"));
@@ -27,7 +34,7 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase
     private function selectTable($table)
     {
         $sql = 'SHOW FIELDS FROM ' . $table;
-        $res = $this->database->execute($sql, null);
+        $res = $this->database->execute($sql, []);
         $this->assertNotEmpty($res);
     }
 
@@ -35,14 +42,7 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase
     {
         $sql = 'SELECT * FROM user '
             . 'WHERE id=?';
-        $res = $this->database->execute($sql, $userID);
+        $res = $this->database->execute($sql, [$userID]);
         $this->assertNotEmpty($res);
-    }
-
-    public function testDatabase()
-    {
-        $this->createDatabase();
-        $this->selectTable('user');
-        $this->selectUser(1);
     }
 }

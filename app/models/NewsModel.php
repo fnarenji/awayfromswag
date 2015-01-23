@@ -25,7 +25,7 @@ class NewsModel extends Model
             "FROM article, user " .
             "WHERE user.id = article.user AND article.id = ?";
 
-        return DatabaseProvider::connection()->execute($sql, $id);
+        return DatabaseProvider::connection()->execute($sql, [$id]);
     }
 
     /**
@@ -38,7 +38,7 @@ class NewsModel extends Model
             "FROM article, user " .
             "WHERE user.id = article.user";
 
-        return DatabaseProvider::connection()->execute($sql, null);
+        return DatabaseProvider::connection()->execute($sql, []);
     }
 
     /**
@@ -56,7 +56,7 @@ class NewsModel extends Model
             DatabaseProvider::connection()->beginTransaction();
             $sql = "INSERT INTO article ('user','text','postdate','category') VALUE ?,?,?,? ";
 
-            DatabaseProvider::connection()->execute($sql, $author, $content, $date, $categorie);
+            DatabaseProvider::connection()->execute($sql, [$author, $content, $date, $categorie]);
 
             DatabaseProvider::connection()->commit();
 
@@ -81,7 +81,7 @@ class NewsModel extends Model
             DatabaseProvider::connection()->beginTransaction();
             $sql = 'DELETE FROM article WHERE id = ?';
 
-            DatabaseProvider::connection()->execute($sql, $id);
+            DatabaseProvider::connection()->execute($sql, [$id]);
             DatabaseProvider::connection()->commit();
 
             return true;
