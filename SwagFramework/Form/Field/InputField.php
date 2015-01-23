@@ -9,7 +9,7 @@
 namespace SwagFramework\Form\Field;
 
 
-class Input extends Field
+class InputField extends Field
 {
     public function getHTML()
     {

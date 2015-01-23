@@ -9,7 +9,7 @@
 namespace tests\Form;
 
 
-use SwagFramework\Form\Field\Input;
+use SwagFramework\Form\Field\InputField;
 use SwagFramework\Form\Form;
 
 define('CR', "\n");
@@ -24,21 +24,26 @@ class FormTest extends \PHPUnit_Framework_TestCase
     {
         $this->form = new Form();
         $this->form->setAction('test');
-        $this->form->addField(new Input('test1'));
+        $this->form->addField(new InputField('test1'));
         $this->assertEquals('<form method="POST" action="test">
+    <label for="test1"></label>
     <input name="test1" />
-</form>', $this->form->getFormHTML());
+</form>', $this->form->getFormHTML(array(
+            'test1' => ''
+        )));
     }
 
     private function createWithLabel()
     {
         $this->form = new Form();
         $this->form->setAction('test');
-        $this->form->addField(new Input('test1'));
+        $this->form->addField(new InputField('test1'));
         $this->assertEquals('<form method="POST" action="test">
     <label for="test1">Test1</label>
     <input name="test1" />
-</form>', $this->form->getFormHTML(array('test1' => 'Test1')));
+</form>', $this->form->getFormHTML(array(
+            'test1' => 'Test1'
+        )));
     }
 
     public function testForm()

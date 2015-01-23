@@ -10,7 +10,7 @@ namespace SwagFramework\Form;
 
 
 use SwagFramework\Form\Field\Field;
-use SwagFramework\Form\Field\Label;
+use SwagFramework\Form\Field\LabelField;
 use SwagFramework\Helpers\Input;
 
 class Form
@@ -39,38 +39,6 @@ class Form
         return (isset($this->fields[$name])) ? $this->fields[$name] : null;
     }
 
-    public function getForm()
-    {
-        $form = array();
-
-        foreach ($this->fields as $field) {
-            $form[$field->getName()] = $this->input->post($field->getName());
-        }
-
-        return $form;
-    }
-
-    public function getFormHTML($labels = array())
-    {
-        $form = '<form '
-            . 'method="' . $this->getMethod() . '"'
-            . ' '
-            . 'action="' . $this->getAction() . '"'
-            . '>';
-
-        foreach ($this->getFields() as $field) {
-            if (!empty($labels) && array_key_exists($field->getName(), $labels)) {
-                $label = new Label($field->getName(), $labels[$field->getName()]);
-                $form .= CR . TAB . $label->getHTML();
-            }
-            $form .= CR . TAB . $field->getHTML();
-        }
-
-        $form .= CR . '</form>';
-
-        return $form;
-    }
-
     public function getMethod()
     {
         return $this->method;
@@ -97,5 +65,40 @@ class Form
     public function getFields()
     {
         return $this->fields;
+    }
+
+
+
+    public function getForm()
+    {
+        $form = array();
+
+        foreach ($this->fields as $field) {
+            $form[$field->getName()] = $this->input->post($field->getName());
+        }
+
+        return $form;
+    }
+
+    public function getFormHTML($labels = array())
+    {
+        $form = '<form '
+            . 'method="' . $this->getMethod() . '"'
+            . ' '
+            . 'action="' . $this->getAction() . '"'
+            . '>';
+
+        foreach ($this->getFields() as $field) {
+            if (!empty($labels) && array_key_exists($field->getName(), $labels)) {
+                $label = new LabelField($field->getName(), $labels[$field->getName()]);
+                $form .= CR . TAB . $label->getHTML();
+                $form .= CR . TAB . $field->getHTML();
+            } elseif($field->getName() == 'submit' || $field->getAttribute('type') == 'hidden')
+                $form .= CR . TAB . $field->getHTML();
+        }
+
+        $form .= CR . '</form>';
+
+        return $form;
     }
 }

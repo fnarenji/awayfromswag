@@ -39,10 +39,15 @@ class Form
         $form = new \SwagFramework\Form\Form();
 
         foreach ($res as $value) {
-            $field = new Input($value['Field']);
+            $field = new InputField($value['Field']);
             $field->addAttribute('type', $this->convertAttributeType($value));
             $form->addField($field);
         }
+
+        $submit = new InputField('submit');
+        $submit->addAttribute('type', 'submit');
+        $submit->addAttribute('value', 'Envoyer');
+        $form->addField($submit);
 
         return $form;
     }

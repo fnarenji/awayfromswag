@@ -43,6 +43,13 @@ abstract class Field
         return $this->attributes;
     }
 
+    public function getAttribute($att)
+    {
+        if(!isset($this->attributes[$att]))
+            throw new AttributeNotExistsException($att);
+        return $this->attributes[$att];
+    }
+
     public function getName()
     {
         return $this->name;
