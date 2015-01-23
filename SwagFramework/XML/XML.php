@@ -56,10 +56,10 @@ class XML
         $this->file->fwrite($tag);
     }
 
-    public function write($content = array(), $level = 1)
+    public function write($content = [], $level = 1)
     {
 
-        // faster than is_array()
+        // faster than is_[]
         if (isset($content['content']) && (array)$content['content'] == $content['content']) {
             $tag = '<' . $content['title'];
             $tag .= isset($content['option']) ? ' ' . $content['option'] : '';
@@ -107,7 +107,7 @@ class XML
         $this->file->fwrite($tag);
     }
 
-    private function writeTag($content = array())
+    private function writeTag($content = [])
     {
         $size = count($content);
 

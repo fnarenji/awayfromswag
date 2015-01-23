@@ -22,7 +22,7 @@ class Form
     /**
      * @var Field[]
      */
-    private $fields = array();
+    private $fields = [];
 
     function __construct($action, $method = 'POST')
     {
@@ -42,7 +42,7 @@ class Form
 
     public function getForm()
     {
-        $form = array();
+        $form = [];
 
         foreach ($this->fields as $field) {
             $form[$field->getName()] = $this->input->post($field->getName());
@@ -51,7 +51,7 @@ class Form
         return $form;
     }
 
-    public function getFormHTML($labels = array())
+    public function getFormHTML($labels = [])
     {
         $form = '<form '
             . 'method="' . $this->getMethod() . '"'

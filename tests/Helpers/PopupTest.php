@@ -24,7 +24,7 @@ class PopupTest extends \PHPUnit_Framework_TestCase
         $this->popup = new Popup();
 
         // NO POPUP
-        $this->assertEquals($this->popup->getAll(), array());
+        $this->assertEquals($this->popup->getAll(), []);
 
         // 1 POPUP
         $new = array(
