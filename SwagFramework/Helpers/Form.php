@@ -52,7 +52,7 @@ class Form
     public function generate($table, $action, $method = 'POST')
     {
         $sql = 'SHOW FIELDS '
-            . 'FROM ?';
+            . 'FROM ' . $table;
 
         DatabaseProvider::connect(DatabaseConfig::parseFromFile());
         $res = DatabaseProvider::connection()->execute($sql, $table);
@@ -69,6 +69,6 @@ class Form
             $form->addField($field);
         }
 
-        echo $form;
+        return $form;
     }
 }
