@@ -13,6 +13,7 @@ use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Exceptions\NoUserFoundException;
 use SwagFramework\Helpers\Authentication;
+use SwagFramework\Helpers\FormHelper;
 use SwagFramework\Helpers\Input;
 use SwagFramework\mvc\Controller;
 
@@ -93,6 +94,33 @@ class UserController extends Controller
     {
         Authentication::getInstance()->disconnect();
         $this->getView()->redirect('/');
+    }
+
+    public function register()
+    {
+        $form = new FormHelper();
+        $form = $form->generate('user', 'user/register');
+        $form->setClass('pure-form pure-form-stacked');
+
+        $formHtml = $form->getFormHTML([
+            'username' => 'Nom d\'utilisateur',
+            'password' => 'Mot de passe',
+            'firstname' => 'Prénom',
+            'lastname' => 'Nom',
+            'birthday' => 'Date de naissance',
+            'mail' => 'Adresse e-mail',
+            'phonenumber' => 'Téléphone',
+            'twitter' => 'Twitter',
+            'skype' => 'Skype',
+            'facebookuri' => 'Facebook',
+            'website' => 'Site web',
+            'job' => 'Activité',
+            'description' => 'Description',
+            'privacy' => 'Options de vie privée',
+            'mailnotifications' => 'Recevoir les emails'
+        ]);
+
+        $this->getView()->render('user/register', ['formHtml' => $formHtml]);
     }
 
     public function account()
