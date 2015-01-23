@@ -24,7 +24,7 @@ class FormTest extends \PHPUnit_Framework_TestCase {
     }
 
     private function userForm() {
-        $form = $this->helper->generate('users', '#');
+        $form = $this->helper->generate('user', '#');
         var_dump($form);
     }
 
