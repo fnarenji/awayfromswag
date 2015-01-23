@@ -24,7 +24,7 @@ class UserModel extends Model
     {
         $sql = 'SELECT * '
             . 'FROM ' . self::TABLE_NAME . ' '
-            . 'WHERE id= ?';
+            . 'WHERE id = ?';
 
         return DatabaseProvider::connection()->execute($sql, $id);
     }
@@ -38,7 +38,7 @@ class UserModel extends Model
     {
         $sql = 'SELECT * '
             . 'FROM ' . self::TABLE_NAME . ' '
-            . 'WHERE username = ?';
+            . 'WHERE username = ? ';
 
         return DatabaseProvider::connection()->execute($sql, $name);
     }
@@ -113,10 +113,9 @@ class UserModel extends Model
         try {
 
             DatabaseProvider::connection()->beginTransaction();
-
-            $sql = 'INSERT INTO ' . self::TABLE_NAME . ' (`userName`, `firstname`, `lastname`, `mail`, `password`, `birthday`,`phonenumber`,' .
-                '`twitter`,`skype`,`facebookuri`,`website`,`job`,`description`,`privacy`,`mailnotifications`,`accesslevel`);
-                     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+            $sql = "INSERT INTO " . self::TABLE_NAME . " ('userName', 'firstname', 'lastname', 'mail', 'password', 'birthday','phonenumber', .
+                'twitter','skype','facebookuri','website','job','description','privacy','mailnotifications','accesslevel')
+                     VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
 
             DatabaseProvider::connection()->execute($sql, $username, $firstName, $lastName, $mail, $password, $birthday,
                 $phonenumber, $twitter, $skype, $facebookuri, $website, $job, $description,
@@ -198,9 +197,9 @@ class UserModel extends Model
         try {
 
             DatabaseProvider::connection()->beginTransaction();
-            $sql = 'UPDATE ' . self::TABLE_NAME . ' SET firstname = ?, lastname = ?, mail = ?, password = ?, birthday = ?,
-                    phonenumber = ?,twitter = ?, skype = ?, facebookuri = ?, website = ?, job = ?, description = ?,
-                    privacy = ?, mailnotifications = ?, accesslevel = ? WHERE id = ?';
+            $sql = 'UPDATE ' . self::TABLE_NAME . " SET 'firstname' = ?, 'lastname' = ?, 'mail' = ?, 'password' = ?, 'birthday' = ?,
+                    'phonenumber' = ?,'twitter' = ?, 'skype' = ?, 'facebookuri' = ?, 'website' = ?, 'job' = ?, 'description' = ?,
+                    'privacy' = ?, 'mailnotifications' = ?, 'accesslevel' = ? WHERE id = ? ";
 
             DatabaseProvider::connection()->update($sql, $firstName, $lastName, $mail, $password, $birthday,
                 $phonenumber, $twitter, $skype, $facebookuri, $website,

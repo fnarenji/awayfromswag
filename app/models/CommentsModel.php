@@ -66,11 +66,11 @@ class CommentsModel extends Model
         try {
             DatabaseProvider::connection()->beginTransaction();
 
-            $sqlComm = "INSERT INTO comments ('user','contents') VALUES ?,? ;";
+            $sqlComm = "INSERT INTO comments ('user','contents') VALUES ? , ? ;";
             DatabaseProvider::connection()->execute($sqlComm, $iduser, $contents);
 
             $tmp = $this->getIdComment();
-            $sqlComm = "INSERT INTO comment_event ('event','event') VALUES ?,?;";
+            $sqlComm = "INSERT INTO comment_event ('event','event') VALUES ? , ? ;";
             DatabaseProvider::connection()->execute($sqlComm, $tmp, $idevent);
 
             DatabaseProvider::connection()->commit();
@@ -91,7 +91,7 @@ class CommentsModel extends Model
     {
         try {
             DatabaseProvider::connection()->beginTransaction();
-            $sql = "DELETE FROM comment_event WHERE id = ?";
+            $sql = "DELETE FROM comment_event WHERE id = ? ";
 
             DatabaseProvider::connection()->execute($sql, $id);
 
