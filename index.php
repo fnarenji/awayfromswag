@@ -1,5 +1,7 @@
 <?php
 
+require 'vendor/autoload.php';
+use app\helpers\ClassRouting;
 use SwagFramework\Exceptions\SwagException;
 
 session_start();
@@ -26,14 +28,13 @@ if (DEBUG) {
 
 }
 
-require 'vendor/autoload.php';
 
 try {
     \SwagFramework\Database\DatabaseProvider::connect(\SwagFramework\Config\DatabaseConfig::parseFromFile("app/config/database.json"));
 
     $router = new \SwagFramework\Routing\Router();
 
-    $classRouting = new \app\helpers\ClassRouting('\app\controllers\\');
+    $classRouting = new ClassRouting('\app\controllers\\');
     $classRouting->addClass('User');
     $classRouting->addClass('Conversation');
     $classRouting->addClass('Event');

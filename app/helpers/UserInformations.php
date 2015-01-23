@@ -11,17 +11,13 @@ namespace app\helpers;
 
 use app\models\UserModel;
 use SwagFramework\Exceptions\InputNotSetException;
-use SwagFramework\Helpers\Input;
+use SwagFramework\helpers\Authentication;
 
 class UserInformations
 {
     private static $informations = array();
 
     protected function __construct()
-    {
-    }
-
-    private function __clone()
     {
     }
 
@@ -38,10 +34,14 @@ class UserInformations
     {
         try {
             $model = new UserModel();
-            $input = new Input();
-            self::$informations = $model->getUser($input->session('id'));
+
+            self::$informations = $model->getUser(Authentication::getInstance()->getUserId());
         } catch (InputNotSetException $e) {
             $e->getMessage();
         }
+    }
+
+    private function __clone()
+    {
     }
 }

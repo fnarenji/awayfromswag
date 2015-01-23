@@ -13,6 +13,7 @@ use app\models\UserModel;
 use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Exceptions\NoUserFoundException;
+use SwagFramework\helpers\Authentication;
 use SwagFramework\Helpers\Input;
 use SwagFramework\mvc\Controller;
 
@@ -67,24 +68,19 @@ class UserController extends Controller
 
     public function auth()
     {
-        $this->getView()->render('/home/index');
+        $this->getView()->redirect('/');
     }
 
     public function authPOST()
     {
         try {
-            $input = $this->helpers->input;
-
-            $username = $input->post('username');
-            $password = sha1($input->post('password'));
+            $username = Input::post('username');
+            $password = Input::post('password');
 
             $validAuth = $this->userModel->validateAuthentication($username, $password);
 
             if ($validAuth) {
-                $_SESSION['user'] = $username;
-                $_SESSION['id'] = $validAuth[0]['id'];
-                $_SESSION['authDate'] = new \DateTime();
-
+                Authentication::getInstance()->setAuthenticated($username, $validAuth['id']);
                 //$this->getView()->render('/home/index');
                 $this->getView()->redirect('/');
             } else {
@@ -101,10 +97,10 @@ class UserController extends Controller
     {
         try {
             $userModel = $this->loadModel('User');
-            $input = new Input();
-            $user = $userModel->getUser($input->session('id'));
+
+            $user = $userModel->getUser(Authentication::getInstance()->getUserId());
             if (empty($user)) {
-                throw new NoUserFoundException($input->session('user'));
+                throw new NoUserFoundException(Authentication::getInstance()->getUserName());
             }
 
             $user = $user[0];

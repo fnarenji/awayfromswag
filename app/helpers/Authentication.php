@@ -8,7 +8,6 @@
 
 namespace SwagFramework\helpers;
 
-
 class Authentication
 {
     private static $instance;
@@ -24,6 +23,35 @@ class Authentication
             self::$instance = new self();
 
         return self::$instance;
+    }
+
+    public function setAuthenticated($userName, $userId)
+    {
+        $_SESSION['userName'] = $userName;
+        $_SESSION['userId'] = $userId;
+        $_SESSION['authDate'] = new \DateTime();
+    }
+
+    public function isAuthenticated()
+    {
+        return isset($_SESSION['userName']) && !empty($_SESSION['userName'])
+        && isset($_SESSION['userId']) && !empty($_SESSION['userId'])
+        && isset($_SESSION['authDate']) && !empty($_SESSION['authDate']);
+    }
+
+    public function getUserName()
+    {
+        return $_SESSION['userName'];
+    }
+
+    public function getUserId()
+    {
+        return $_SESSION['userId'];
+    }
+
+    public function getAuthDate()
+    {
+        return $_SESSION['authDate'];
     }
 
     private function __clone()

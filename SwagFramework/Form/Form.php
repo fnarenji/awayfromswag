@@ -21,11 +21,9 @@ class Form
      * @var Field[]
      */
     private $fields = array();
-    private $input;
 
     function __construct($action, $method = 'POST')
     {
-        $this->input = new Input();
         $this->method = $method;
         $this->action = $action;
     }
@@ -45,7 +43,7 @@ class Form
         $form = array();
 
         foreach ($this->fields as $field) {
-            $form[$field->getName()] = $this->input->post($field->getName());
+            $form[$field->getName()] = Input::post($field->getName());
         }
 
         return $form;

@@ -66,7 +66,7 @@ class UserModel extends Model
         $sql = 'SELECT id '
             . 'FROM ' . self::TABLE_NAME . ' '
             . 'WHERE username = ? '
-            . 'AND password = ? ';
+            . 'AND password = SHA1(?)';
 
         return DatabaseProvider::connection()->execute($sql, $username, $password);
     }

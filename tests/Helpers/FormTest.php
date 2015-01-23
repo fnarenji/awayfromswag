@@ -31,7 +31,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
     private function userForm()
     {
-        $result = '<form method="POST" action="">
+        $result = '<form method="POST" action="#">
     <input name="id" type="hidden" />
     <label for="username">Nom d\'utilisateur</label>
     <input name="username" type="text" />
