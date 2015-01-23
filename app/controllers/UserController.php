@@ -81,8 +81,7 @@ class UserController extends Controller
                 $this->getView()->redirect('/');
             } else {
                 // TODO POPUP
-
-                $this->getView()->render('/home/index');
+                $this->getView()->redirect('/');
             }
         } catch (InputNotSetException $e) {
             throw $e;
