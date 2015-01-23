@@ -8,6 +8,8 @@
 
 namespace SwagFramework\mvc;
 
+use app\helpers\Authentication;
+use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Helpers\ViewHelpers;
 
 class View extends \Twig_Environment
