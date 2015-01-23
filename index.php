@@ -28,6 +28,8 @@ try {
 
     $classrouting = new \app\helpers\ClassRouting('\app\controlers\\');
     $classrouting->addclass('User');
+    $classrouting->addclass('Conversation');
+    $classrouting->addclass('Event');
     $classrouting->generateroute($router);
 
 

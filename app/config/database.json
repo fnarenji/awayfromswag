@@ -1,7 +1,7 @@
 {
-  "host": "srv0.sknz.info",
-  "user": "afs",
-  "password": "swaggens",
+  "host": "localhost",
+  "user": "root",
+  "password": "",
   "database": "afs",
   "port": "3306"
 }

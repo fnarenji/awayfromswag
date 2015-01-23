@@ -19,10 +19,10 @@ class ConversationConfig
         $this->path = $path;
     }
 
-    public static function parseFromFile($fileName = 'config/conversations.json')
+    public static function parseFromFile($fileName = 'app/config/conversation.json')
     {
         $config = new ConfigFileParser($fileName);
-        return self(
+        return new self(
             $config->getEntry('path')
         );
     }

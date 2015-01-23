@@ -45,9 +45,11 @@ class DatabaseConfig
     }
 
     /**
-     * @param $fileName database config file
+     * @param string|database $fileName database config file
+     * @return DatabaseConfig
+     * @throws \SwagFramework\Exceptions\MissingConfigEntryException
      */
-    public static function parseFromFile($fileName = 'config/database.json')
+    public static function parseFromFile($fileName = 'app/config/database.json')
     {
         $configFile = new ConfigFileParser($fileName);
         return new self($configFile->getEntry("host"),
