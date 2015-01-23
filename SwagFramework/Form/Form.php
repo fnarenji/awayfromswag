@@ -24,13 +24,13 @@ class Form
      */
     private $fields = array();
 
-    function __construct()
+    function __construct($action, $method = 'POST')
     {
         $this->method = $method;
         $this->action = $action;
     }
 
-    public function addField(\SwagFramework\Form\Field\Field $field)
+    public function addField(Field $field)
     {
         $this->fields[$field->getName()] = $field;
     }
@@ -57,6 +57,10 @@ class Form
             . 'method="' . $this->getMethod() . '"'
             . ' '
             . 'action="' . $this->getAction() . '"'
+            . ' '
+            . 'id="' . $this->getId() . '"'
+            . ' '
+            . 'class="' . $this->getClass() . '"'
             . '>';
 
         foreach ($this->getFields() as $field) {
