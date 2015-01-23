@@ -39,6 +39,15 @@ class Authentication
         && isset($_SESSION['authDate']) && !empty($_SESSION['authDate']);
     }
 
+    public function addToContext(array $context)
+    {
+        return array_merge($context, ['auth' => [
+            'userName' => $this->getUserName(),
+            'userId' => $this->getUserId(),
+            'authDate' => $this->getAuthDate()
+        ]]);
+    }
+
     public function getUserName()
     {
         return $_SESSION['userName'];
