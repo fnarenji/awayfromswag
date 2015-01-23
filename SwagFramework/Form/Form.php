@@ -9,14 +9,16 @@
 namespace SwagFramework\Form;
 
 
+use SwagFramework\Exceptions\AttributeNotExistsException;
 use SwagFramework\Form\Field\Field;
 use SwagFramework\Form\Field\LabelField;
-use SwagFramework\Helpers\Input;
 
 class Form
 {
     private $method;
     private $action;
+    private $id;
+    private $class;
     /**
      * @var Field[]
      */
@@ -43,7 +45,7 @@ class Form
         $form = [];
 
         foreach ($this->fields as $field) {
-            $form[$field->getName()] = Input::post($field->getName());
+            $form[$field->getName()] = $this->input->post($field->getName());
         }
 
         return $form;
@@ -55,20 +57,60 @@ class Form
             . 'method="' . $this->getMethod() . '"'
             . ' '
             . 'action="' . $this->getAction() . '"'
+            . ' '
+            . 'id="' . $this->getId() . '"'
+            . ' '
+            . 'class="' . $this->getClass() . '"'
             . '>';
 
         foreach ($this->getFields() as $field) {
-            if (!empty($labels) && array_key_exists($field->getName(), $labels)) {
-                $label = new LabelField($field->getName(), $labels[$field->getName()]);
-                $form .= CR . TAB . $label->getHTML();
-                $form .= CR . TAB . $field->getHTML();
-            } elseif ($field->getName() == 'submit' || $field->getAttribute('type') == 'hidden')
-                $form .= CR . TAB . $field->getHTML();
+            try{
+                if (!empty($labels) && array_key_exists($field->getName(), $labels)) {
+                    $label = new LabelField($field->getName(), $labels[$field->getName()]);
+                    $form .= CR . TAB . $label->getHTML();
+                    $form .= CR . TAB . $field->getHTML();
+                } elseif($field->getName() == 'submit' || $field->getAttribute('type') == 'hidden')
+                    $form .= CR . TAB . $field->getHTML();
+            } catch(AttributeNotExistsException $e){
+                // fix getAttribute('type') on TextArea
+            }
         }
 
         $form .= CR . '</form>';
 
         return $form;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     * @param mixed $class
+     */
+    public function setClass($class)
+    {
+        $this->class = $class;
     }
 
     public function getMethod()
