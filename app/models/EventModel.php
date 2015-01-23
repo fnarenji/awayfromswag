@@ -39,7 +39,7 @@ class EventModel extends Model
             "FROM event " .
             "WHERE id=?";
 
-        return DatabaseProvider::connection()->query($sql, [$id]);
+        return DatabaseProvider::connection()->selectFirst($sql, [$id]);
 
     }
 

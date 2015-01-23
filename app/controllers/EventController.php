@@ -66,7 +66,7 @@ class EventController extends Controller
     {
         $id = (int)$this->getParams()[0];
 
-        $event = $this->eventModel->get(1);
+        $event = $this->eventModel->get($id);
 
         if (empty($event)) {
             throw new EventNotFoundException($id);
