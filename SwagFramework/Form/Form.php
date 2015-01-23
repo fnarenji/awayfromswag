@@ -16,6 +16,8 @@ class Form
 {
     private $method;
     private $action;
+    private $id;
+    private $class;
     private $fields = array();
     private $input;
 
@@ -77,6 +79,10 @@ class Form
             . 'method="' . $this->getMethod() . '"'
             . ' '
             . 'action="' . $this->getAction() . '"'
+            . ' '
+            . 'id="' . $this->getId() .'"'
+            . ' '
+            . 'class="' . $this->getClass() . '"'
             . '>';
 
         foreach ($this->getFields() as $field) {
@@ -91,5 +97,37 @@ class Form
         $form .= CR . '</form>';
 
         return $form;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     * @param mixed $class
+     */
+    public function setClass($class)
+    {
+        $this->class = $class;
     }
 }
