@@ -68,7 +68,7 @@ class UserModel extends Model
             . 'WHERE username = ? '
             . 'AND password = SHA1(?)';
 
-        return DatabaseProvider::connection()->selectFirst($sql, [$username, $password])[0];
+        return DatabaseProvider::connection()->selectFirst($sql, [$username, $password]);
     }
 
     /**
