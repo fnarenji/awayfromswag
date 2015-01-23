@@ -79,13 +79,13 @@ class EventController extends Controller
         ));
     }
 
-    public function performAdd()
+    public function performPOST()
     {
         if(!Authentication::getInstance()->isAuthenticated())
             throw new NotAuthenticatedException();
 
-        $formHelper = new Form('/event/perfomAdd');
-        $form = $formHelper->generate('event', '/event/performAdd');
+        $formHelper = new Form();
+        $form = $formHelper->generate('event', '/event/perform');
 
         $result = $form->validate(array(
             'name' => 'Nom de l\'évènement',
@@ -105,6 +105,8 @@ class EventController extends Controller
             $result['eventtime'],
             $result['money']
         );
+
+        $this->getView()->redirect('/event');
     }
 
     public function add()
@@ -112,10 +114,8 @@ class EventController extends Controller
         if(!Authentication::getInstance()->isAuthenticated())
             throw new NotAuthenticatedException();
 
-        $formHelper = new Form('/event/perfomAdd');
-        $form = $formHelper->generate('event', '/event/performAdd');
-
-        $form->setAction('/event/perfomAdd');
+        $formHelper = new Form();
+        $form = $formHelper->generate('event', '/event/perform');
         $form->setClass('pure-form pure-form-stacked');
 
         $html = $form->getFormHTML(array(
