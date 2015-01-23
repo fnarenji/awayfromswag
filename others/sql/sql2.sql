@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `afs`.`conversation_user` (
   CONSTRAINT `fk_conversation_2`
   FOREIGN KEY (`id`)
   REFERENCES `afs`.`conversation` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
@@ -192,6 +192,7 @@ CREATE TABLE IF NOT EXISTS `afs`.`article_category` (
 CREATE TABLE IF NOT EXISTS `afs`.`article` (
   `id`       INT  NOT NULL AUTO_INCREMENT,
   `user`     INT  NULL,
+  `title`    VARCHAR(50),
   `text`     TEXT NULL,
   `postdate` DATETIME NULL,
   `category` INT  NOT NULL,
@@ -229,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `afs`.`comment_article` (
   CONSTRAINT `fk_comment_article_2`
   FOREIGN KEY (`id`)
   REFERENCES `afs`.`comment` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;

@@ -51,6 +51,7 @@ class Input
         //TODO: Protect input $_SESSION
         return $_SESSION[$key];
     }
+
     /**
      * get user ip
      * @return mixed

@@ -6,8 +6,11 @@
  * Time: 23:19
  */
 
-namespace SwagFramework\Exceptions;
+namespace app\exceptions;
 
+
+use Exception;
+use SwagFramework\Exceptions\SwagException;
 
 class EventNotFoundException extends SwagException
 {

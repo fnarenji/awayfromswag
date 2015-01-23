@@ -8,7 +8,6 @@
 
 namespace app\controllers;
 
-
 use app\exceptions\ConversationNotFoundException;
 use SwagFramework\Config\ConversationConfig;
 use SwagFramework\Exceptions\FileNotFoundException;
@@ -54,8 +53,9 @@ class ConversationController extends Controller
         $id = (int)$this->getParams()[0];
         $convers = $this->conversationModel->get($id);
 
-        if (empty($convers))
+        if (empty($convers)) {
             throw new ConversationNotFoundException($id);
+        }
 
         $file = $this->conversationConfig->getPath() . $id . '.xml';
 

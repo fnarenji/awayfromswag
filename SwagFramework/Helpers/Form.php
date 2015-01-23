@@ -10,7 +10,6 @@ namespace SwagFramework\Helpers;
 
 
 use SwagFramework\Config\DatabaseConfig;
-use SwagFramework\Database\Database;
 use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Exceptions\TableNotFoundDatabaseException;
 use SwagFramework\Form\Field\Input;
