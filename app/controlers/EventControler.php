@@ -10,12 +10,9 @@ namespace app\controlers;
 
 
 use app\models\EventModel;
-use SwagFramework\Config\DatabaseConfig;
-use SwagFramework\Database\Database;
-use SwagFramework\Exceptions\EventNotFoundException;
 use SwagFramework\mvc\Controler;
 
-class Event extends Controler
+class EventControler extends Controler
 {
 
     /**
@@ -25,38 +22,39 @@ class Event extends Controler
 
     function __construct()
     {
-        $this->model = new EventModel(new Database(DatabaseConfig::parseFromFile()));
+        parent::__construct();
+        $this->model = $this->loadModel('Event');
     }
 
     public function index()
     {
-        $events = $this->model->getAll();
-        var_dump($events);
+        $events = $this->model->getEvents();
 
-//        $this->getView()->render('event/index', array(
-//            'events' => $events
-//        ));
+        $this->getView()->render('event/index', array(
+            'events' => $events
+        ));
     }
 
     public function show()
     {
-        $id = (int)$this->getParams()[0];
+//        $id = (int)$this->getParams()[0];
 
-        $event = $this->model->get($id);
+//        $event = $this->model->getOneEvents($id);
 
-        $error = array();
-        if (empty($event)) {
-            throw new EventNotFoundException($id);
-        }
+//        $error = array();
+//        if (empty($event))
+//            throw new EventNotFoundException($id);
 
-//        $this->getView()->render('event/show', array(
-//            'event' => $event,
-//            'error' => $error
-//        ));
+        $this->getView()->render('event/show');
     }
 
     public function add()
     {
-        //TODO: add new event from user
+        $formHelper = new \SwagFramework\Helpers\Form();
+        $form = $formHelper->generate('events', '#');
+
+        $this->getView()->render('event/add', array(
+            'form' => $form
+        ));
     }
 }

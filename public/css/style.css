@@ -113,6 +113,10 @@ article {
     border-bottom: 1px solid rgba(0, 0, 0, 0.4);
 }
 
+article:first-child {
+    margin-top: 20px;
+}
+
 article h2, article h3, article h4 {
     display: table;
     margin: 5px auto 5px auto;
@@ -237,7 +241,7 @@ h5 {
     cursor: pointer;
     background-color: rgba(255, 255, 255, 0.9);
     background-image: linear-gradient(#fcfcfc, #eee);
-    border: 1px solid #d5d5d5
+    border: 1px solid #d5d5d5Évènements
 }
 
 aside {
@@ -420,6 +424,39 @@ section.menu-extend {
 article.profile {
     padding-left: 5px;
     padding-right: 5px;
+}
+
+ul#events li h1 {
+    text-align: left;
+    color: #1f8dd6;
+    font-size: 1.5em;
+    display: block;
+}
+
+ul#events li h2 {
+    text-align: left;
+    color: #5d5d5d;
+    font-size: 1em;
+    display: inline-block;
+}
+
+ul#events li h2:after {
+    content: ', ';
+}
+
+ul#events li h2:last-of-type:after {
+    content: '';
+}
+
+ul#events li h3 {
+    text-align: left;
+    color: #5d5d5d;
+    font-size: 1.1em;
+    display: block;
+}
+
+ul#events li p {
+    text-align: justify;
 }
 
 .profile-group {

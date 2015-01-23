@@ -11,24 +11,12 @@ namespace SwagFramework\Helpers;
 
 use SwagFramework\Config\DatabaseConfig;
 use SwagFramework\Database\Database;
+use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Exceptions\TableNotFoundDatabaseException;
 use SwagFramework\Form\Field\Input;
 
 class Form
 {
-    /**
-     * @var database
-     */
-    private $db;
-
-    /**
-     * default constructor
-     */
-    function __construct()
-    {
-        $this->db = new Database(DatabaseConfig::parseFromFile());
-    }
-
     private function getType($type)
     {
         $tmp = explode('(', $type);
@@ -67,7 +55,8 @@ class Form
         $sql = 'SHOW FIELDS '
             . 'FROM ?';
 
-        $res = $this->db->execute($sql, $table);
+        DatabaseProvider::connect(DatabaseConfig::parseFromFile());
+        $res = DatabaseProvider::connection()->execute($sql, $table);
 
         if (empty($res)) {
             throw new TableNotFoundDatabaseException($table);

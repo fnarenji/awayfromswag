@@ -27,6 +27,8 @@ try {
 
     $classrouting = new \app\helpers\ClassRouting('\app\controlers\\');
     $classrouting->addclass('User');
+    $classrouting->addclass('Conversation');
+    $classrouting->addclass('Event');
     $classrouting->generateroute($router);
 
     $router->add('/user/auth', new \app\controlers\UserControler(), 'auth', 'POST');

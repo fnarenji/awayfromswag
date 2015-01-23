@@ -26,7 +26,7 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase
 
     private function selectTable($table)
     {
-        $sql = 'SHOW FIELDS FROM ?';
+        $sql = 'show fields from ?';
         $res = $this->database->execute($sql, $table);
         var_dump($res);
         $this->assertNotEmpty($res);
@@ -35,6 +35,6 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase
     public function testDatabase()
     {
         $this->createDatabase();
-//        $this->selectTable('users');
+        $this->selectTable('user');
     }
 }

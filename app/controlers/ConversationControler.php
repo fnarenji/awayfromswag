@@ -9,8 +9,8 @@
 namespace app\controlers;
 
 
+use app\exceptions\ConversationNotFoundException;
 use SwagFramework\Config\ConversationConfig;
-use SwagFramework\Exceptions\ConversationNotFoundException;
 use SwagFramework\Exceptions\FileNotFoundException;
 use SwagFramework\mvc\Controler;
 
@@ -29,7 +29,8 @@ class ConversationControler extends Controler
 
     function __construct()
     {
-        $this->conversationModel = $this->loadModel('Chat');
+        parent::__construct();
+        $this->conversationModel = $this->loadModel('Conversation');
         $this->conversationConfig = ConversationConfig::parseFromFile();
     }
 
@@ -39,23 +40,22 @@ class ConversationControler extends Controler
 
         $message = '';
         if (empty($discussions)) {
-            $message = 'Vous n\'avez pas de conversations';
+            $message = 'Vous n\'avez pas de conversation';
         }
 
-        $this->getView()->render('conversations/index', array(
-            'conversations' => $discussions,
+        $this->getView()->render('conversation/index', array(
+            'conversation' => $discussions,
             'message' => $message
         ));
     }
 
-    public function convers()
+    public function show()
     {
         $id = (int)$this->getParams()[0];
         $convers = $this->conversationModel->get($id);
 
-        if (empty($convers)) {
+        if (empty($convers))
             throw new ConversationNotFoundException($id);
-        }
 
         $file = $this->conversationConfig->getPath() . $id . '.xml';
 
@@ -65,13 +65,8 @@ class ConversationControler extends Controler
 
         $conversation = new \SimpleXMLElement(file_get_contents($file));
 
-        $this->getView()->render('conversations/convers', array(
+        $this->getView()->render('conversation/show', array(
             'conversation' => $conversation
         ));
-    }
-
-    public function create()
-    {
-
     }
 }
