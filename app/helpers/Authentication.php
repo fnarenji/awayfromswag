@@ -6,7 +6,7 @@
  * Time: 8:05 PM
  */
 
-namespace SwagFramework\helpers;
+namespace app\helpers;
 
 class Authentication
 {

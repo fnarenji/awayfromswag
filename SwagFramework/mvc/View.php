@@ -8,6 +8,7 @@
 
 namespace SwagFramework\mvc;
 
+use app\helpers\Authentication;
 use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Helpers\ViewHelpers;
 
@@ -30,7 +31,7 @@ class View extends \Twig_Environment
     public function render($name, array $context = array())
     {
         try {
-            $context['userIDLogged'] = \SwagFramework\Helpers\Authentication::getInstance()->getUserId();
+            $context['userIDLogged'] = Authentication::getInstance()->getUserId();
         } catch (InputNotSetException $e) {
         } finally {
             echo parent::render($name, array_merge(array(
