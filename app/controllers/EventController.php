@@ -62,7 +62,7 @@ class EventController extends Controller
 
     public function add()
     {
-        $formHelper = new Form();
+        $formHelper = new Form('/event/perfomAdd');
         $form = $formHelper->generate('event', '/event/performAdd');
 
         $form->setAction('/event/perfomAdd');

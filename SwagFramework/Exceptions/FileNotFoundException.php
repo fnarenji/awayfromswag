@@ -9,6 +9,8 @@
 namespace SwagFramework\Exceptions;
 
 
+use Exception;
+
 class FileNotFoundException extends SwagException
 {
     public function __construct($file, $code = 0, Exception $previous = null)

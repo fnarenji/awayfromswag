@@ -9,8 +9,8 @@
 namespace SwagFramework\Helpers;
 
 
+use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\PopupIncorrectTypeException;
-use SwagFramework\Tools\Session;
 
 class Popup
 {
@@ -28,21 +28,18 @@ class Popup
     /**
      * @var array popup
      */
-    private $popup = array();
-
-    /**
-     * @var Session Session helper
-     */
-    private $session;
+    private $popup = [];
 
     /**
      * default constructor
      */
     function __construct()
     {
-        $this->session = new Session();
+        try {
+            $popup = Input::session(self::SESSION_KEY);
+        } catch (InputNotSetException $e) {
+        }
 
-        $popup = $this->session->get(self::SESSION_KEY);
         if (!empty($popup)) {
             $this->popup = $popup;
         }
@@ -50,8 +47,8 @@ class Popup
 
     /**
      * set popup
-     * @param $title title of popup
-     * @param $message message of popup
+     * @param $title string title of popup
+     * @param $message string message of popup
      * @param string $type type of popup
      * @throws PopupIncorrectTypeException
      */
@@ -61,14 +58,15 @@ class Popup
             throw new PopupIncorrectTypeException($type, $title);
         }
 
-        $new = array(
+        $new = [
             'title' => $title,
             'message' => $message,
             'type' => $type
-        );
+        ];
 
         array_push($this->popup, $new);
-        $this->session->set(self::SESSION_KEY, $this->popup);
+
+        $_SESSION[self::SESSION_KEY] = $this->popup;
     }
 
     /**

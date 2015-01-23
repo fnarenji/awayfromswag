@@ -14,7 +14,7 @@ class Assets
 {
     /**
      * generate css link
-     * @param $name name of css file without extension .css
+     * @param $name string name of css file without extension .css
      * @return string css link
      * @throws FileNotFoundException
      */
@@ -41,7 +41,7 @@ class Assets
 
     /**
      * generate js link
-     * @param $name name of js file without extension .js
+     * @param $name string name of js file without extension .js
      * @return string js link
      * @throws FileNotFoundException
      */
@@ -53,7 +53,7 @@ class Assets
 
     /**
      * generate img link
-     * @param $src src public/img/src
+     * @param $src string src public/img/src
      * @param string $alt
      * @return string img link
      * @throws FileNotFoundException

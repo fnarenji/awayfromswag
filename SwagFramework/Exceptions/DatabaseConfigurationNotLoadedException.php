@@ -9,6 +9,8 @@
 namespace SwagFramework\Exceptions;
 
 
+use Exception;
+
 class DatabaseConfigurationNotLoadedException extends SwagException
 {
     public function __construct($code = 0, Exception $previous = null)

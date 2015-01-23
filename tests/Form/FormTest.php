@@ -20,10 +20,15 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
     private $form;
 
+    public function testForm()
+    {
+        $this->create();
+        $this->createWithLabel();
+    }
+
     private function create()
     {
-        $this->form = new Form();
-        $this->form->setAction('test');
+        $this->form = new Form('test');
         $this->form->addField(new InputField('test1'));
         $this->assertEquals('<form method="POST" action="test" id="" class="">
     <label for="test1"></label>
@@ -35,8 +40,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
     private function createWithLabel()
     {
-        $this->form = new Form();
-        $this->form->setAction('test');
+        $this->form = new Form('test');
         $this->form->addField(new InputField('test1'));
         $this->assertEquals('<form method="POST" action="test" id="" class="">
     <label for="test1">Test1</label>
@@ -44,11 +48,5 @@ class FormTest extends \PHPUnit_Framework_TestCase
 </form>', $this->form->getFormHTML(array(
             'test1' => 'Test1'
         )));
-    }
-
-    public function testForm()
-    {
-        $this->create();
-        $this->createWithLabel();
     }
 }

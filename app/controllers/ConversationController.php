@@ -9,6 +9,7 @@
 namespace app\controllers;
 
 use app\exceptions\ConversationNotFoundException;
+use app\models\ConversationModel;
 use SwagFramework\Config\ConversationConfig;
 use SwagFramework\Exceptions\FileNotFoundException;
 use SwagFramework\mvc\Controller;
@@ -17,7 +18,7 @@ class ConversationController extends Controller
 {
 
     /**
-     * @var \app\models\ChatModel
+     * @var ConversationModel
      */
     private $conversationModel;
 

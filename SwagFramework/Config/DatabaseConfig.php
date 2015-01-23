@@ -12,28 +12,33 @@ namespace SwagFramework\Config;
 class DatabaseConfig
 {
     /**
-     * @var host
+     * @var string
      */
     private $host;
     /**
-     * @var user
+     * @var string
      */
     private $user;
     /**
-     * @var password
+     * @var string
      */
     private $password;
     /**
-     * @var port
+     * @var int
      */
     private $port;
     /**
-     * @var database
+     * @var string
      */
     private $database;
 
     /**
      * Disable construction of object.
+     * @param $host string the host hosting the database server
+     * @param $user string the username which to use
+     * @param $password string the password associated with the username
+     * @param $database string the database to select upon connecting
+     * @param $port int the port
      */
     private function __construct($host, $user, $password, $database, $port)
     {
@@ -45,7 +50,7 @@ class DatabaseConfig
     }
 
     /**
-     * @param string|database $fileName database config file
+     * @param $fileName string database config file
      * @return DatabaseConfig
      * @throws \SwagFramework\Exceptions\MissingConfigEntryException
      */

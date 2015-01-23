@@ -67,8 +67,8 @@ class Database extends \PDO
 
     /**
      * select first from query
-     * @param $query query
-     * @param $_ params
+     * @param $query string query
+     * @param $_ array params
      * @return mixed
      */
     public function selectFirst($query, $_)

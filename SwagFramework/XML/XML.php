@@ -8,6 +8,10 @@
 
 namespace SwagFramework\XML;
 
+use SplFileObject;
+use SwagFramework\Exceptions\XMLArrayBadFormatException;
+use SwagFramework\Exceptions\XMLNotWritableException;
+
 /**
  * This class creates a XML file (or rewrites it)
  * and write everything you want on it with the tags you choose.
@@ -108,10 +112,10 @@ class XML
         $size = count($content);
 
         if ($size < 1 || $size > 2) {
-            throw XMLNotWritableException($content);
+            throw new XMLNotWritableException($content);
         } else {
             if (!isset($content['title']) || !isset($content['content'])) {
-                throw XMLArrayBadFormatException();
+                throw new XMLArrayBadFormatException();
             }
         }
 

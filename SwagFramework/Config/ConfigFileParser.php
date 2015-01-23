@@ -14,13 +14,13 @@ use SwagFramework\Exceptions\MissingConfigEntryException;
 class ConfigFileParser
 {
     /**
-     * @var jsonData array
+     * @var array
      * @brief
      */
     private $jsonData;
 
     /**
-     * @var fileName string
+     * @var string
      * @brief Name of the config file
      */
     private $fileName;

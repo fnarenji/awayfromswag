@@ -41,19 +41,6 @@ class ConversationModel extends Model
     }
 
     /**
-     * Return id of last conversation
-     * @return mixed
-     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
-     */
-    private function getIdConversation()
-    {
-        $sql = "SELECT MAX(id) FROM conversation";
-
-        return DatabaseProvider::connection()->execute($sql, null)[0];
-    }
-
-
-    /**
      * Insert a new conversation
      * @param $idUser
      * @return bool
@@ -82,6 +69,19 @@ class ConversationModel extends Model
             DatabaseProvider::connection()->rollBack();
         }
 
+        return false;
+    }
+
+    /**
+     * Return id of last conversation
+     * @return mixed
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    private function getIdConversation()
+    {
+        $sql = "SELECT MAX(id) FROM conversation";
+
+        return DatabaseProvider::connection()->execute($sql, null)[0];
     }
 
     /**
@@ -107,6 +107,7 @@ class ConversationModel extends Model
             DatabaseProvider::connection()->rollBack();
         }
 
+        return false;
     }
 
 

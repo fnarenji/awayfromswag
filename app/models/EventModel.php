@@ -77,7 +77,7 @@ class EventModel extends Model
             DatabaseProvider::connection()->rollBack();
         }
 
-
+        return false;
     }
 
     /**
@@ -114,6 +114,7 @@ class EventModel extends Model
             DatabaseProvider::connection()->rollBack();
         }
 
+        return false;
     }
 
     /**

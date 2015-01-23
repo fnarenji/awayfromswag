@@ -19,7 +19,7 @@ class Input
      * @return mixed
      * @throws InputNotSetException
      */
-    public function get($key)
+    public static function get($key)
     {
         if (!isset($_GET[$key]) || empty($_GET[$key])) {
             throw new InputNotSetException('$_GET', $key);
@@ -34,7 +34,7 @@ class Input
      * @return mixed
      * @throws InputNotSetException
      */
-    public function post($key)
+    public static function post($key)
     {
         if (!isset($_POST[$key]) || empty($_POST[$key])) {
             throw new InputNotSetException('$_POST', $key);
@@ -43,12 +43,13 @@ class Input
         return $_POST[$key];
     }
 
-    public function session($key)
+    public static function session($key)
     {
         if (!isset($_SESSION[$key]) || empty($_SESSION[$key])) {
             throw new InputNotSetException('$_SESSION', $key);
         }
         //TODO: Protect input $_SESSION
+        //TODO: is $_SESSION even unsafe ?
         return $_SESSION[$key];
     }
 
@@ -56,7 +57,7 @@ class Input
      * get user ip
      * @return mixed
      */
-    public function userIP()
+    public static function userIP()
     {
         return $_SERVER['REMOTE_ADDR'];
     }

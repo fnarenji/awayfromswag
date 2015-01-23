@@ -10,8 +10,8 @@ namespace SwagFramework\Form;
 
 
 use SwagFramework\Exceptions\AttributeNotExistsException;
+use SwagFramework\Form\Field\Field;
 use SwagFramework\Form\Field\LabelField;
-use SwagFramework\Helpers\Input;
 
 class Form
 {
@@ -19,43 +19,20 @@ class Form
     private $action;
     private $id;
     private $class;
+    /**
+     * @var Field[]
+     */
     private $fields = array();
-    private $input;
 
     function __construct()
     {
-        $this->input = new Input();
-        $this->method = 'POST';
-    }
-
-    public function getMethod()
-    {
-        return $this->method;
-    }
-
-    public function setMethod($method)
-    {
         $this->method = $method;
-    }
-
-    public function getAction()
-    {
-        return $this->action;
-    }
-
-    public function setAction($action)
-    {
         $this->action = $action;
     }
 
     public function addField(\SwagFramework\Form\Field\Field $field)
     {
         $this->fields[$field->getName()] = $field;
-    }
-
-    public function getFields()
-    {
-        return $this->fields;
     }
 
     public function getField($name)
@@ -80,10 +57,6 @@ class Form
             . 'method="' . $this->getMethod() . '"'
             . ' '
             . 'action="' . $this->getAction() . '"'
-            . ' '
-            . 'id="' . $this->getId() .'"'
-            . ' '
-            . 'class="' . $this->getClass() . '"'
             . '>';
 
         foreach ($this->getFields() as $field) {
@@ -134,5 +107,33 @@ class Form
     public function setClass($class)
     {
         $this->class = $class;
+    }
+
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    public function setMethod($method)
+    {
+        $this->method = $method;
+    }
+
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    public function setAction($action)
+    {
+        $this->action = $action;
+    }
+
+    /**
+     * @return Field[]
+     */
+    public function getFields()
+    {
+        return $this->fields;
     }
 }

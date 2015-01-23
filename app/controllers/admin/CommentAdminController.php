@@ -8,10 +8,10 @@
 
 namespace app\controllers\admin;
 
+use SwagFramework\mvc\Controller;
 
-class CommentAdminController
+class CommentAdminController extends Controller
 {
-
     /**
      * @var \app\models\CommentsEventModel
      */
@@ -23,5 +23,4 @@ class CommentAdminController
         $allEvents = $this->model->getAllCommentsEvent();
         $this->getView()->render('admin/event', array('allEvents' => $allEvents));
     }
-
 }

@@ -58,8 +58,8 @@ class Form
 
     /**
      * generate form for table
-     * @param $table string
-     * @param $action string
+     * @param $table string table
+     * @param $action string action
      * @param string $method method form (default = POST)
      * @return \SwagFramework\Form\Form
      * @throws TableNotFoundDatabaseException
@@ -76,7 +76,7 @@ class Form
             throw new TableNotFoundDatabaseException($table);
         }
 
-        $form = new \SwagFramework\Form\Form();
+        $form = new \SwagFramework\Form\Form($action, $method);
 
         foreach ($res as $value) {
             if($this->getType($value['Type']) == 'text')
