@@ -10,6 +10,8 @@ namespace app\controllers;
 
 
 use app\exceptions\EventNotFoundException;
+use app\exceptions\NotAuthenticatedException;
+use app\helpers\Authentication;
 use app\models\EventModel;
 use app\models\UserModel;
 use SwagFramework\Helpers\Form;
@@ -28,6 +30,19 @@ class EventController extends Controller
      */
     private $userModel;
 
+    private function getInfos($event)
+    {
+        $event['user'] = $this->userModel->getUser($event['user']);
+
+        $createtime = new \DateTime($event['createtime']);
+        $event['createtime'] = $createtime->format('d/m/Y à H:i');
+
+        $eventtime = new \DateTime($event['eventtime']);
+        $event['eventtime'] = $eventtime->format('d/m/Y à H:i');
+
+        return $event;
+    }
+
     function __construct()
     {
         $this->eventModel = new EventModel();
@@ -38,6 +53,9 @@ class EventController extends Controller
     public function index()
     {
         $events = $this->eventModel->getAll();
+
+        foreach($events as &$event)
+            $event = $this->getInfos($event);
 
         $this->getView()->render('event/index', array(
             'events' => $events
@@ -54,7 +72,7 @@ class EventController extends Controller
             throw new EventNotFoundException($id);
         }
 
-        $event['user'] = $this->userModel->getUser($event['user']);
+        $event = $this->getInfos($event);
 
         $this->getView()->render('event/show', array(
             'event' => $event
@@ -63,11 +81,37 @@ class EventController extends Controller
 
     public function performAdd()
     {
+        if(!Authentication::getInstance()->isAuthenticated())
+            throw new NotAuthenticatedException();
 
+        $formHelper = new Form('/event/perfomAdd');
+        $form = $formHelper->generate('event', '/event/performAdd');
+
+        $result = $form->validate(array(
+            'name' => 'Nom de l\'évènement',
+            'description' => 'Description',
+            'address' => 'Adresse',
+            'eventtime' => 'Date de l\'évènement',
+            'money' => 'Prix',
+            'personsmax' => 'Nombre maximum de participants'
+        ));
+
+        $this->eventModel->insertEvent(
+            $result['name'],
+            Authentication::getInstance()->getUserId(),
+            $result['personsmax'],
+            $result['description'],
+            $result['address'],
+            $result['eventtime'],
+            $result['money']
+        );
     }
 
     public function add()
     {
+        if(!Authentication::getInstance()->isAuthenticated())
+            throw new NotAuthenticatedException();
+
         $formHelper = new Form('/event/perfomAdd');
         $form = $formHelper->generate('event', '/event/performAdd');
 
@@ -77,7 +121,7 @@ class EventController extends Controller
         $html = $form->getFormHTML(array(
             'name' => 'Nom de l\'évènement',
             'description' => 'Description',
-            'adress' => 'Adresse',
+            'address' => 'Adresse',
             'eventtime' => 'Date de l\'évènement',
             'money' => 'Prix',
             'personsmax' => 'Nombre maximum de participants'

@@ -9,7 +9,7 @@
             {% for event in events %}
             <li>
                 <a href="/event/show/{{ event.id }}"><h1>{{ event.name }}</h1></a>
-                <h2>{{ event.eventtime }}</h2>
+                <h2>le {{ event.eventtime }}</h2>
                 <h2>Prix : {{ event.money }}€</h2>
                 <p>
                     {{ event.description }}

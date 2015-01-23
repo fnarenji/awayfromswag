@@ -6,8 +6,8 @@
                 <h1>{{ event.name }}</h1>
 
                 <h2>Prix : {{ event.money }}€</h2>
-                <h2>{{ event.eventtime }}</h2>
-                <h2>ajouté le : {{ event.createtime }}</h2>
+                <h2>le {{ event.eventtime }}</h2>
+                <h2>ajouté le {{ event.createtime }}</h2>
                 <h2>par : <a href="/user/profile/{{ event.user.username }}">{{ event.user.firstname ~ ' ' ~ event.user.lastname }}</a></h2>
 
                 <h3>Adresse : {{ event.address }}</h3>

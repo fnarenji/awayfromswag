@@ -12,6 +12,7 @@ namespace SwagFramework\Form;
 use SwagFramework\Exceptions\AttributeNotExistsException;
 use SwagFramework\Form\Field\Field;
 use SwagFramework\Form\Field\LabelField;
+use SwagFramework\Helpers\Input;
 
 class Form
 {
@@ -79,6 +80,21 @@ class Form
         $form .= CR . '</form>';
 
         return $form;
+    }
+
+    public function validate($inputs)
+    {
+        $result = [];
+        foreach($this->getFields() as $field) {
+            if(array_key_exists($field->getName(), $inputs)) {
+                if($this->getMethod() == 'POST')
+                    $result[$field->getName()] = Input::post($field->getName());
+                elseif($this->getMethod() == 'GET')
+                    $result[$field->getName()] = Input::get($field->getName());
+            }
+        }
+
+        return $result;
     }
 
     /**
