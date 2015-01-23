@@ -30,19 +30,6 @@ class EventController extends Controller
      */
     private $userModel;
 
-    private function getInfos($event)
-    {
-        $event['user'] = $this->userModel->getUser($event['user']);
-
-        $createtime = new \DateTime($event['createtime']);
-        $event['createtime'] = $createtime->format('d/m/Y à H:i');
-
-        $eventtime = new \DateTime($event['eventtime']);
-        $event['eventtime'] = $eventtime->format('d/m/Y à H:i');
-
-        return $event;
-    }
-
     function __construct()
     {
         $this->eventModel = new EventModel();
@@ -62,6 +49,19 @@ class EventController extends Controller
         ));
     }
 
+    private function getInfos($event)
+    {
+        $event['user'] = $this->userModel->getUser($event['user']);
+
+        $createtime = new \DateTime($event['createtime']);
+        $event['createtime'] = $createtime->format('d/m/Y à H:i');
+
+        $eventtime = new \DateTime($event['eventtime']);
+        $event['eventtime'] = $eventtime->format('d/m/Y à H:i');
+
+        return $event;
+    }
+
     public function show()
     {
         $id = (int)$this->getParams()[0];
@@ -79,22 +79,43 @@ class EventController extends Controller
         ));
     }
 
-    public function performAdd()
+    public function add()
     {
-        if(!Authentication::getInstance()->isAuthenticated())
+        if (!Authentication::getInstance()->isAuthenticated())
             throw new NotAuthenticatedException();
 
-        $formHelper = new Form('/event/perfomAdd');
-        $form = $formHelper->generate('event', '/event/performAdd');
+        $formHelper = new Form();
+        $form = $formHelper->generate('event', '/event/add');
+        $form->setClass('pure-form pure-form-stacked');
 
-        $result = $form->validate(array(
+        $html = $form->getFormHTML([
             'name' => 'Nom de l\'évènement',
             'description' => 'Description',
             'address' => 'Adresse',
             'eventtime' => 'Date de l\'évènement',
             'money' => 'Prix',
             'personsmax' => 'Nombre maximum de participants'
-        ));
+        ]);
+
+        $this->getView()->render('event/add', ['form' => $html]);
+    }
+
+    public function addPOST()
+    {
+        if (!Authentication::getInstance()->isAuthenticated())
+            throw new NotAuthenticatedException();
+
+        $formHelper = new Form();
+        $form = $formHelper->generate('event', '/event/add');
+
+        $result = $form->validate([
+            'name' => 'Nom de l\'évènement',
+            'description' => 'Description',
+            'address' => 'Adresse',
+            'eventtime' => 'Date de l\'évènement',
+            'money' => 'Prix',
+            'personsmax' => 'Nombre maximum de participants'
+        ]);
 
         $this->eventModel->insertEvent(
             $result['name'],
@@ -105,30 +126,7 @@ class EventController extends Controller
             $result['eventtime'],
             $result['money']
         );
-    }
 
-    public function add()
-    {
-        if(!Authentication::getInstance()->isAuthenticated())
-            throw new NotAuthenticatedException();
-
-        $formHelper = new Form('/event/perfomAdd');
-        $form = $formHelper->generate('event', '/event/performAdd');
-
-        $form->setAction('/event/perfomAdd');
-        $form->setClass('pure-form pure-form-stacked');
-
-        $html = $form->getFormHTML(array(
-            'name' => 'Nom de l\'évènement',
-            'description' => 'Description',
-            'address' => 'Adresse',
-            'eventtime' => 'Date de l\'évènement',
-            'money' => 'Prix',
-            'personsmax' => 'Nombre maximum de participants'
-        ));
-
-        $this->getView()->render('event/add', array(
-            'form' => $html
-        ));
+        $this->getView()->redirect('/event');
     }
 }

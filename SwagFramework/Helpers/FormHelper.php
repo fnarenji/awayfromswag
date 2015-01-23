@@ -14,8 +14,9 @@ use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Exceptions\TableNotFoundDatabaseException;
 use SwagFramework\Form\Field\InputField;
 use SwagFramework\Form\Field\TextAreaField;
+use SwagFramework\Form\Form;
 
-class Form
+class FormHelper
 {
     /**
      * generate form for table
@@ -37,7 +38,7 @@ class Form
             throw new TableNotFoundDatabaseException($table);
         }
 
-        $form = new \SwagFramework\Form\Form($action, $method);
+        $form = new Form($action, $method);
 
         foreach ($res as $value) {
             if ($this->getType($value['Type']) == 'text')

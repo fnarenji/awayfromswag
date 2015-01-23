@@ -9,19 +9,19 @@
 namespace tests\Helpers;
 
 
-use SwagFramework\Helpers\Form;
+use SwagFramework\Helpers\FormHelper;
 
 class FormTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var Form
+     * @var FormHelper
      */
     private $helper;
 
     function __construct()
     {
-        $this->helper = new Form();
+        $this->helper = new FormHelper();
     }
 
     public function testForm()
