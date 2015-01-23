@@ -33,10 +33,8 @@ class View extends \Twig_Environment
     {
         try {
             $input = new Input();
-
             $context['userIDLogged'] = $input->session('id');
         } catch (InputNotSetException $e){
-
         } finally {
             echo parent::render($name, array_merge(array(
                 'helpers' => $this->helpers
