@@ -13,7 +13,7 @@ class LabelField extends Field
 {
     private $value;
 
-    function __construct($for, $value)
+    function __construct($for, $value = [])
     {
         $this->addAttribute('for', $for);
         $this->value = $value;

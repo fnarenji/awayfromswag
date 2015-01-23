@@ -418,7 +418,8 @@ article.profile
         width: 47%;
         margin-right: 15px;
     }
-    article.profile
+
+    article.profile, article.register
     {
         width: 90%;
         margin-right: auto;
