@@ -54,7 +54,7 @@ class Database extends \PDO
      * update query
      * @param $query
      * @param $params array
-     * @return bool
+     * @return bool whether it succeeded
      */
     public function update($query, array $params)
     {

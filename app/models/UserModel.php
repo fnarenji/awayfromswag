@@ -59,7 +59,7 @@ class UserModel extends Model
      * Return information if the user with the $password and $username was found.
      * @param $username
      * @param $password
-     * @return boolean true if auth valid false otherwise
+     * @return boolean id of the user if valid auth or false otherwise
      */
     public function validateAuthentication($username, $password)
     {
