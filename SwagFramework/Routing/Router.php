@@ -15,10 +15,11 @@ class Router
      * The route in the URI
      * @var Route
      */
-    private $route;
+    private $currentRoute;
+
     /**
      * An array that contains all the routes for this application
-     * @var array
+     * @var Route[]
      */
     private $routes = array();
 
@@ -41,8 +42,8 @@ class Router
         $path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/';
         $method = $_SERVER["REQUEST_METHOD"];
 
-        $this->route = new Route();
-        $this->route->parseUrl($path, $method);
+        $this->currentRoute = new Route();
+        $this->currentRoute->parseUrl($path, $method);
 
         $route = $this->match();
 
@@ -51,8 +52,8 @@ class Router
         */
 
         if ($route == false) {
-            $this->route = new Route();
-            $this->route->parseUrl('/errors/err404');
+            $this->currentRoute = new Route();
+            $this->currentRoute->parseUrl('/errors/err404');
             $route = $this->match();
         }
 
@@ -63,7 +64,7 @@ class Router
      * This function looks for the route in the URI and returns it
      * if there is no route matching with the URI it returns false.
      *
-     * @return bool
+     * @return Route
      * @throws RoutingException
      */
     private function match()
@@ -73,12 +74,12 @@ class Router
         }
 
         foreach ($this->routes as $route) {
-            if ($route->getMethod() != $this->route->getMethod()) {
+            if ($route->getMethod() != $this->currentRoute->getMethod()) {
                 continue;
             }
 
             // If the url doesn't begin with the url $route
-            $url = ($this->route->getUrl() == '/') ? '/' : substr($this->route->getUrl(), 1);
+            $url = ($this->currentRoute->getUrl() == '/') ? '/' : substr($this->currentRoute->getUrl(), 1);
             $urlb = ($route->getUrl() == '/') ? '/' : substr($route->getUrl(), 1);
 
             if (!preg_match('@^' . $urlb . '*@', $url)) {
@@ -92,7 +93,7 @@ class Router
 
             return $route;
         }
-        return false;
+        return null;
     }
 
     /**
@@ -103,7 +104,7 @@ class Router
     private function dispatch($route)
     {
         $action = $route->getAction();
-        $route->getController()->setParams($this->route->getParameters());
+        $route->getController()->setParams($this->currentRoute->getParameters());
         $route->getController()->$action();
     }
 
@@ -125,6 +126,6 @@ class Router
 
     public function displayRoute()
     {
-        var_dump($this->route);
+        var_dump($this->currentRoute);
     }
 }

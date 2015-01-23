@@ -20,8 +20,13 @@ class CommentsEventModel extends Model
      */
     public function getAllCommentsEvent()
     {
-        $sql = "SELECT id, name,text,username FROM user,comment_event,comment,event WHERE " .
-            "comment_event.event = event.id AND comment_event.id = comment.id AND user.id = comment.user;";
+        $sql = <<<'SQL'
+SELECT comment.id, comment.title, comment.message, username
+FROM user
+JOIN comment_event ON comment_event.event = event.id
+                    AND comment_event.id = comment.id
+                    AND comment.user = user.id;
+SQL;
 
         return DatabaseProvider::connection()->execute($sql, null);
     }
@@ -34,23 +39,18 @@ class CommentsEventModel extends Model
      */
     public function getCommentEvent($id)
     {
-        $sql = "SELECT name,text,username FROM user,comment_event,comment,event WHERE " .
-            "event.id = ? AND comment_event.id = comment.id AND user.id = comment.user;";
+        $sql = <<<SQL
+SELECT comment.title, comment.message, user.username
+FROM user, comment_event, comment, event
+JOIN comment_event ON comment_event.id = comment.id
+JOIN user.id = COMMENT.user;
+WHERE EVENT.id = ?
+  AND comment_event.id = COMMENT.id
+  AND USER.id = COMMENT.user;
+SQL;
 
         return DatabaseProvider::connection()->execute($sql, $id);
 
-    }
-
-    /**
-     * Return id of last comment
-     * @return mixed
-     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
-     */
-    private function getIdComment()
-    {
-        $sql = "SELECT MAX(id) FROM comment";
-
-        return DatabaseProvider::connection()->execute($sql, null)[0];
     }
 
     /**
@@ -74,7 +74,6 @@ class CommentsEventModel extends Model
 
     }
 
-
     /**
      * Insert in DB a comment for an event.
      * @param $params
@@ -85,11 +84,11 @@ class CommentsEventModel extends Model
         try {
             DatabaseProvider::connection()->beginTransaction();
 
-            $sqlComm = "INSERT INTO comments ('user','contents') VALUES ? , ? ;";
+            $sqlComm = "INSERT INTO comment ('user','contents') VALUES (?, ?);";
             DatabaseProvider::connection()->execute($sqlComm, $params['iduser'], $params['contents']);
 
             $tmp = $this->getIdComment();
-            $sqlComm = "INSERT INTO comment_event ('id','event') VALUES ? , ? ;";
+            $sqlComm = "INSERT INTO comment_event ('id','event') VALUES (?, ?) ;";
             DatabaseProvider::connection()->execute($sqlComm, $tmp, $params['idevent']);
 
             DatabaseProvider::connection()->commit();
@@ -101,8 +100,20 @@ class CommentsEventModel extends Model
     }
 
     /**
+     * Return id of last comment
+     * @return mixed
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    private function getIdComment()
+    {
+        $sql = "SELECT MAX(id) FROM comment";
+
+        return DatabaseProvider::connection()->execute($sql, null)[0];
+    }
+
+    /**
      *  Delete a comment.
-     * @param $id of comment
+     * @param $id int of comment
      * @return bool
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */

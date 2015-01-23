@@ -8,6 +8,7 @@
 
 namespace SwagFramework\Exceptions;
 
+use Exception;
 
 class RoutingException extends SwagException
 {

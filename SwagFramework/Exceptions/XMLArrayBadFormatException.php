@@ -8,10 +8,11 @@
 
 namespace SwagFramework\Exceptions;
 
+use Exception;
 
 class XMLArrayBadFormatException extends SwagException
 {
-    public function __construct($input, $key, $code = 0, Exception $previous = null)
+    public function __construct($code = 0, Exception $previous = null)
     {
         $message = 'The array provided for the tag creation doesn\'t match with the require format';
         $message .= 'Require format : array("title" => "tag title", "content" => "tag content",';

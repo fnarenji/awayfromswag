@@ -101,6 +101,7 @@ class UserModel extends Model
 
             DatabaseProvider::connection()->rollBack();
         }
+        return false;
     }
 
     /**
@@ -127,6 +128,7 @@ class UserModel extends Model
             DatabaseProvider::connection()->rollBack();
         }
 
+        return false;
     }
 
     /**
@@ -160,6 +162,7 @@ class UserModel extends Model
             DatabaseProvider::connection()->rollBack();
         }
 
+        return false;
     }
 
     /**
@@ -190,6 +193,7 @@ class UserModel extends Model
             DatabaseProvider::connection()->rollBack();
         }
 
+        return false;
     }
 
 

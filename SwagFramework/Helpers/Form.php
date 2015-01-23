@@ -16,35 +16,10 @@ use SwagFramework\Form\Field\Input;
 
 class Form
 {
-    private function getType($type)
-    {
-        $tmp = explode('(', $type);
-        if (!empty($tmp)) {
-            $type = $tmp[0];
-        }
-        return $type;
-    }
-
-    /**
-     * convert type mysql to input type
-     * if primary key -> hidden
-     * default text
-     * @param $att
-     * @return string
-     */
-    private function convertAttributeType($att)
-    {
-        $type = $this->getType($att['Type']);
-        if ($att['Key'] == 'PRI') {
-            return 'hidden';
-        }
-        return 'text';
-    }
-
     /**
      * generate form for table
-     * @param $table table
-     * @param $action action
+     * @param $table string table
+     * @param $action string action
      * @param string $method method form (default = POST)
      * @return \SwagFramework\Form\Form
      * @throws TableNotFoundDatabaseException
@@ -70,5 +45,20 @@ class Form
         }
 
         return $form;
+    }
+
+    /**
+     * convert type mysql to input type
+     * if primary key -> hidden
+     * default text
+     * @param $att
+     * @return string
+     */
+    private function convertAttributeType($att)
+    {
+        if ($att['Key'] == 'PRI') {
+            return 'hidden';
+        }
+        return 'text';
     }
 }

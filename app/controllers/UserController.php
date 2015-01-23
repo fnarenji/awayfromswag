@@ -9,11 +9,12 @@
 namespace app\controllers;
 
 
+use app\models\UserModel;
 use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Exceptions\NoUserFoundException;
-use SwagFramework\mvc\Controller;
 use SwagFramework\Helpers\Input;
+use SwagFramework\mvc\Controller;
 
 class UserController extends Controller
 {
@@ -83,7 +84,6 @@ class UserController extends Controller
                 $_SESSION['user'] = $username;
                 $_SESSION['id'] = $validAuth[0]['id'];
                 $_SESSION['authDate'] = new \DateTime();
-                die("AUTH");
             } else {
                 // TODO POPUP
 

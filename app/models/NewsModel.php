@@ -66,6 +66,7 @@ class NewsModel extends Model
 
             DatabaseProvider::connection()->rollBack();
         }
+        return false;
     }
 
     /**
@@ -89,6 +90,7 @@ class NewsModel extends Model
             DatabaseProvider::connection()->rollBack();
         }
 
+        return false;
     }
 
     /**

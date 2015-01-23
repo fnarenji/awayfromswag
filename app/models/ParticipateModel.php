@@ -27,7 +27,7 @@ class ParticipateModel extends Model
 
     /**
      * Return all participant of a event
-     * @param $id of event
+     * @param $id int of event
      * @return array
      */
     public function getEventParticipation($id)
@@ -40,7 +40,7 @@ class ParticipateModel extends Model
 
     /**
      * Return all participation of a user
-     * @param $id of user
+     * @param $id int of user
      * @return array
      */
     public function getUserParticipations($id)
@@ -63,7 +63,7 @@ class ParticipateModel extends Model
 
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql = 'INSERT INTO event_user VALUES ?,?,?';
+            $sql = 'INSERT INTO event_user VALUES (?,?,?)';
 
             DatabaseProvider::connection()->execute($sql, $idEvent, $idUser, $joindate);
 
@@ -75,7 +75,7 @@ class ParticipateModel extends Model
 
             DatabaseProvider::connection()->rollBack();
         }
-
+        return false;
     }
 
 
@@ -101,6 +101,7 @@ class ParticipateModel extends Model
 
             DatabaseProvider::connection()->rollBack();
         }
+        return false;
     }
 
     /**

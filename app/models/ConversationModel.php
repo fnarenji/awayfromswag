@@ -9,8 +9,8 @@
 namespace app\models;
 
 
-use SwagFramework\mvc\Model;
 use SwagFramework\Database\DatabaseProvider;
+use SwagFramework\mvc\Model;
 
 class ConversationModel extends Model
 {
@@ -41,19 +41,6 @@ class ConversationModel extends Model
     }
 
     /**
-     * Return id of last conversation
-     * @return mixed
-     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
-     */
-    private function getIdConversation()
-    {
-        $sql = "SELECT MAX(id) FROM conversation";
-
-        return DatabaseProvider::connection()->execute($sql, null)[0];
-    }
-
-
-    /**
      * Insert a new conversation
      * @param $idUser
      * @return bool
@@ -81,6 +68,19 @@ class ConversationModel extends Model
             DatabaseProvider::connection()->rollBack();
         }
 
+        return false;
+    }
+
+    /**
+     * Return id of last conversation
+     * @return mixed
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    private function getIdConversation()
+    {
+        $sql = "SELECT MAX(id) FROM conversation";
+
+        return DatabaseProvider::connection()->execute($sql, null)[0];
     }
 
     /**
@@ -101,10 +101,11 @@ class ConversationModel extends Model
 
             return true;
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DatabaseProvider::connection()->rollBack();
         }
 
+        return false;
     }
 
 

@@ -43,18 +43,6 @@ class CommentsArticleModel extends Model {
     }
 
     /**
-     * Return id of last comment
-     * @return mixed
-     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
-     */
-    private function getIdComment()
-    {
-        $sql = "SELECT MAX(id) FROM comment";
-
-        return DatabaseProvider::connection()->execute($sql, null)[0];
-    }
-
-    /**
      * Insert a new comment on article
      * @param $param
      * @return bool
@@ -80,8 +68,20 @@ class CommentsArticleModel extends Model {
             DatabaseProvider::connection()->rollBack();
         }
 
+        return false;
     }
 
+    /**
+     * Return id of last comment
+     * @return mixed
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    private function getIdComment()
+    {
+        $sql = "SELECT MAX(id) FROM comment";
+
+        return DatabaseProvider::connection()->execute($sql, null)[0];
+    }
 
     /**
      * Update a  comment on article
@@ -105,11 +105,12 @@ class CommentsArticleModel extends Model {
             DatabaseProvider::connection()->rollBack();
         }
 
+        return false;
     }
 
     /**
      * Delete an comment.
-     * @param $id of comment
+     * @param $id int of comment
      * @return bool
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */

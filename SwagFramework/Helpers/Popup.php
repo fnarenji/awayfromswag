@@ -50,8 +50,8 @@ class Popup
 
     /**
      * set popup
-     * @param $title title of popup
-     * @param $message message of popup
+     * @param $title string title of popup
+     * @param $message string message of popup
      * @param string $type type of popup
      * @throws PopupIncorrectTypeException
      */

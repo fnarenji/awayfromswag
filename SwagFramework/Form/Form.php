@@ -9,6 +9,7 @@
 namespace SwagFramework\Form;
 
 
+use SwagFramework\Form\Field\Field;
 use SwagFramework\Form\Field\Label;
 use SwagFramework\Helpers\Input;
 
@@ -16,6 +17,9 @@ class Form
 {
     private $method;
     private $action;
+    /**
+     * @var Field[]
+     */
     private $fields = array();
     private $input;
 
@@ -25,34 +29,9 @@ class Form
         $this->method = 'POST';
     }
 
-    public function getMethod()
-    {
-        return $this->method;
-    }
-
-    public function setMethod($method)
-    {
-        $this->method = $method;
-    }
-
-    public function getAction()
-    {
-        return $this->action;
-    }
-
-    public function setAction($action)
-    {
-        $this->action = $action;
-    }
-
-    public function addField(\SwagFramework\Form\Field\Field $field)
+    public function addField(Field $field)
     {
         $this->fields[$field->getName()] = $field;
-    }
-
-    public function getFields()
-    {
-        return $this->fields;
     }
 
     public function getField($name)
@@ -90,5 +69,33 @@ class Form
         $form .= CR . '</form>';
 
         return $form;
+    }
+
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    public function setMethod($method)
+    {
+        $this->method = $method;
+    }
+
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    public function setAction($action)
+    {
+        $this->action = $action;
+    }
+
+    /**
+     * @return Field[]
+     */
+    public function getFields()
+    {
+        return $this->fields;
     }
 }

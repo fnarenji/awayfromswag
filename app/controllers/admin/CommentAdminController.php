@@ -8,10 +8,10 @@
 
 namespace app\controllers\admin;
 
+use SwagFramework\mvc\Controller;
 
-class CommentAdminController
+class CommentAdminController extends Controller
 {
-
     /**
      * @var \app\models\CommentsEventModel
      */
