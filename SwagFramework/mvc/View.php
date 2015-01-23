@@ -8,14 +8,13 @@
 
 namespace SwagFramework\mvc;
 
-use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Helpers\ViewHelpers;
 
 class View extends \Twig_Environment
 {
     private $helpers;
 
-    public function __construct(\Twig_LoaderInterface $loader = null, $options = array())
+    public function __construct(\Twig_LoaderInterface $loader = null, $options = [])
     {
         parent::__construct($loader, $options);
         $this->helpers = new ViewHelpers();
@@ -27,16 +26,9 @@ class View extends \Twig_Environment
         return parent::loadTemplate($name, $index);
     }
 
-    public function render($name, array $context = array())
+    public function render($name, array $context = [])
     {
-        try {
-            $context['userIDLogged'] = \SwagFramework\Helpers\Authentication::getInstance()->getUserId();
-        } catch (InputNotSetException $e) {
-        } finally {
-            echo parent::render($name, array_merge(array(
-                'helpers' => $this->helpers
-            ), $context));
-        }
+        echo parent::render($name, array_merge(['helpers' => $this->helpers], $context));
     }
 
     public function redirect($to)

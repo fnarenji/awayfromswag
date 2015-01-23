@@ -43,13 +43,13 @@ class RSS extends XML
      * The content of the RSS feed
      * @var array
      */
-    private $document = array();
+    private $document = [];
 
     /**
      * Array of all the entries in the RSS feed (articles for example)
      * @var array
      */
-    private $entries = array();
+    private $entries = [];
 
     /**
      * Date of creation of the feed

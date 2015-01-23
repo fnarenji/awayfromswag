@@ -11,11 +11,10 @@ namespace app\helpers;
 
 use app\models\UserModel;
 use SwagFramework\Exceptions\InputNotSetException;
-use SwagFramework\helpers\Authentication;
 
 class UserInformations
 {
-    private static $informations = array();
+    private static $informations = [];
 
     protected function __construct()
     {

@@ -21,9 +21,9 @@ class Router
      * An array that contains all the routes for this application
      * @var Route[]
      */
-    private $routes = array();
+    private $routes = [];
 
-    public function __construct($routes = array())
+    public function __construct($routes = [])
     {
         $this->routes = $routes;
     }

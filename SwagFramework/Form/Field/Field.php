@@ -8,13 +8,14 @@
 
 namespace SwagFramework\Form\Field;
 
+use SwagFramework\Exceptions\AttributeNotExistsException;
 
 abstract class Field
 {
     private $name;
-    private $attributes = array();
+    private $attributes = [];
 
-    function __construct($name, $attributes = array())
+    function __construct($name, $attributes = [])
     {
         $this->name = $name;
         $this->attributes = $attributes;

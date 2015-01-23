@@ -37,7 +37,7 @@ class Route
      * The parameters for the route's controller method
      * @var array
      */
-    private $parameters = array();
+    private $parameters = [];
 
 
     /**

@@ -22,7 +22,7 @@ class ClassRouting
      * An array of all the classes we want to be generated
      * @var array
      */
-    private $classes = array();
+    private $classes = [];
 
     /**
      * The namespace of the class (should be like \foo\bar\ or \foo\)
@@ -35,7 +35,7 @@ class ClassRouting
      * @param array $classes
      * @param string $namespace
      */
-    public function __construct($namespace = '', $classes = array())
+    public function __construct($namespace = '', $classes = [])
     {
         $this->setNamespace($namespace);
         $this->setClasses($classes);
