@@ -68,7 +68,7 @@ class UserModel extends Model
             . 'WHERE username = ? '
             . 'AND password = ? ';
 
-       return !empty(DatabaseProvider::connection()->execute($sql, $username, $password));
+       return DatabaseProvider::connection()->execute($sql, $username, $password);
     }
 
     /**

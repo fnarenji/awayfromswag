@@ -64,13 +64,14 @@ class UserControler extends Controler
 
             $validAuth = $userModel->validateAuthentication($username, $password);
 
-            if (!$validAuth) {
+            if ($validAuth) {
                 $_SESSION['user'] = $username;
+                $_SESSION['id'] = $validAuth;
                 $_SESSION['authDate'] = new \DateTime();
-                $this->getParams()->render('/home/index');
+                $this->getView()->render('/home/index');
             } else {
                 // TODO POPUP
-                $this->getView()->render('/home/index', array("logged" => true));
+                $this->getView()->render('/home/index');
             }
         } catch (InputNotSetException $e) {
             throw $e;

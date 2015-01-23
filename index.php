@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 define('CR', "\n");
 define('TAB', '    ');
 
@@ -18,7 +18,6 @@ if (DEBUG) {
     ini_set('html_errors', true);
     error_reporting(E_ALL);
 }
-
 require 'vendor/autoload.php';
 
 try {
