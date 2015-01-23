@@ -6,12 +6,12 @@
  * Time: 09:31
  */
 
-namespace app\controlers\admin;
+namespace app\controllers\admin;
 
 
-use SwagFramework\mvc\Controler;
+use SwagFramework\mvc\Controller;
 
-class AdminControler extends Controler
+class AdminController extends Controller
 {
 
     /**

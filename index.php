@@ -25,17 +25,17 @@ try {
 
     $router = new \SwagFramework\Routing\Router();
 
-    $classrouting = new \app\helpers\ClassRouting('\app\controlers\\');
-    $classrouting->addclass('User');
-    $classrouting->addclass('Conversation');
-    $classrouting->addclass('Event');
-    $classrouting->generateroute($router);
+    $classRouting = new \app\helpers\ClassRouting('\app\controllers\\');
+    $classRouting->addclass('User');
+    $classRouting->addclass('Conversation');
+    $classRouting->addclass('Event');
+    $classRouting->generateroute($router);
 
-    $router->add('/user/auth', new \app\controlers\UserControler(), 'auth', 'POST');
-    $router->add('/admin/index', new \app\controlers\admin\EventAdminControler(), 'index');
-    $router->add('/errors/err404', new \app\controlers\ErrorsControler(), 'err404');
-    $router->add('/admin', new \app\controlers\admin\EventAdminControler(), 'index');
-    $router->add('/', new \app\controlers\HomeControler(), 'index');
+    $router->add('/user/auth', new \app\controllers\UserController(), 'auth', 'POST');
+    $router->add('/admin/index', new \app\controllers\admin\EventAdminController(), 'index');
+    $router->add('/errors/err404', new \app\controllers\ErrorsController(), 'err404');
+    $router->add('/admin', new \app\controllers\admin\EventAdminController(), 'index');
+    $router->add('/', new \app\controllers\HomeController(), 'index');
 
 
     $router->matchcurrentrequest();

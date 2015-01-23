@@ -10,9 +10,9 @@ namespace SwagFramework\mvc;
 
 use SwagFramework\Exceptions\InvalidModelClassException;
 use SwagFramework\Exceptions\MissingParamsException;
-use SwagFramework\Helpers\ControlerHelpers;
+use SwagFramework\Helpers\ControllerHelpers;
 
-class Controler
+class Controller
 {
     public $helpers;
     private $loader;
@@ -23,7 +23,7 @@ class Controler
     {
         $this->loader = new \Twig_Loader_Filesystem('app/views');
         $this->view = new View($this->loader);
-        $this->helpers = new ControlerHelpers();
+        $this->helpers = new ControllerHelpers();
     }
 
     /**

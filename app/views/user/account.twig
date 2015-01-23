@@ -1,0 +1,118 @@
+{% extends "layout/default" %}
+
+{% block content %}
+    <article class="profile">
+        <h1>Profil de {{ username }} ({{ firstname ~ ' ' ~ lastname }})</h1>
+
+        <form action="#" method="POST" class="pure-form">
+            <div class="profile-group">
+                <img src="http://www.gravatar.com/avatar/{{ mailHash }}.png" alt="{{ username ~ ' avatar' }}"
+                     class="profile-avatar"/>
+                <span class="profile-line"><b class="profile-label">Pseudo : </b>{{ username }}</span>
+                <span class="profile-line"><label for="lastname">Nom : </label><input type="text" name="lastname" value="{{ lastname }}"/></span>
+                <span class="profile-line"><label for="firstname">Prénom : </label><input type="text" name="firstname" value="{{ firstname }}"/></span>
+
+                <span class="profile-line"><b class="profile-label">Age : </b>{{ age }} ans</span>
+            </div>
+            <div class="profile-group">
+                <span class="profile-line">
+                    <label for="job">Profession: </label>
+                    <input type="text" name="job" value="{{ job }}"/>
+                    <label for="jobPrivacy">
+                        <input name="jobPrivacy" type="checkbox"> Public
+                    </label>
+                </span>
+
+                <span class="profile-line"><b class="profile-label">Inscrit depuis le </b>{{ registerDateFormat }}</span>
+            </div>
+            <div class="profile-group">
+                <span class="profile-line"><label for="description">Description : </label></span>
+                <span class="profile-line"><textarea name="description" cols="40" rows="5">{{ description }}</textarea></span>
+            </div>
+            <div class="profile-group">
+                    <span class="profile-line">
+                        <label for="mail"><i class="fa fa-at"></i></label>
+                        <input type="email" name="mail" value="{{ mail }}"/>
+                         <label for="mailPrivacy">
+                             <input name="mailPrivacy" type="checkbox"> Public
+                         </label>
+                    </span>
+                    <span class="profile-line">
+                        <label for="phonenumber"><i
+                                    class="fa fa-phone"></i></label>
+                        <input type="tel" name="phonenumber" value="{{ phonenumber }}"/>
+                         <label for="phonePrivacy">
+                             <input name="phonePrivacy" type="checkbox"> Public
+                         </label>
+                    </span>
+                    <span class="profile-line">
+                        <label for="twitter">
+                            <i class="fa fa-twitter"></i>
+                        </label>
+                        <input type="text" name="twitter" value="{{ twitter }}"/>
+                         <label for="twitterPrivacy">
+                             <input name="twitterPrivacy" type="checkbox"> Public
+                         </label>
+                    </span>
+                    <span class="profile-line">
+                        <label for="facebook">
+                            <i class="fa fa-facebook"></i>
+                        </label>
+                        <input type="text" name="facebook" value="{{ facebookuri }}"/>
+                         <label for="facebookPrivacy">
+                             <input name="facebookPrivacy" type="checkbox"> Public
+                         </label>
+                    </span>
+                    <span class="profile-line">
+                        <label for="skype">
+                            <i class="fa fa-skype"></i>
+                        </label>
+                        <input type="text" name="skype" value="{{ skype }}"/>
+                         <label for="skypePrivacy">
+                             <input name="skypePrivacy" type="checkbox"> Public
+                         </label>
+                    </span>
+                    <span class="profile-line">
+                        <label for="website">
+                            <i class="fa fa-desktop"></i>
+                        </label>
+                        <input type="text" name="website" value="{{ website }}"/>
+                         <label for="websitePrivacy">
+                             <input name="websitePrivacy" type="checkbox"> Public
+                         </label>
+                    </span>
+            </div>
+        </form>
+        <form class="pure-form pure-form-aligned">
+            <fieldset>
+                <div class="pure-control-group">
+                    <label for="name">Username</label>
+                    <input id="name" type="text" placeholder="Username">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" placeholder="Password">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="email">Email Address</label>
+                    <input id="email" type="email" placeholder="Email Address">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="foo">Supercalifragilistic Label</label>
+                    <input id="foo" type="text" placeholder="Enter something here...">
+                </div>
+
+                <div class="pure-controls">
+                    <label for="cb" class="pure-checkbox">
+                        <input id="cb" type="checkbox"> I've read the terms and conditions
+                    </label>
+
+                    <button type="submit" class="pure-button pure-button-primary">Submit</button>
+                </div>
+            </fieldset>
+        </form>
+    </article>
+{% endblock %}

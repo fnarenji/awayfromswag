@@ -17,13 +17,13 @@ class Route
     private $url;
 
     /**
-     * The controler targeted by this route
-     * @var \SwagFramework\mvc\Controler
+     * The controller targeted by this route
+     * @var \SwagFramework\mvc\Controller
      */
-    private $controler;
+    private $controller;
 
     /**
-     * The method for the controler called by the url
+     * The method for the controller called by the url
      * @var string
      */
     private $action;
@@ -34,7 +34,7 @@ class Route
     private $method;
 
     /**
-     * The parameters for the route's controler method
+     * The parameters for the route's controller method
      * @var array
      */
     private $parameters = array();
@@ -55,7 +55,7 @@ class Route
             $path = trim($url, '/');
             $path = explode('/', $path);
 
-            $this->controler = $path[0];
+            $this->controller = $path[0];
             $this->action = isset($path[1]) ? $path[1] : '';
             $this->parameters = array_splice($path, 2, count($path) - 1); // @todo Filtrage
         }
@@ -66,14 +66,14 @@ class Route
     /**
      * This method set a Route with the parameters
      * @param $url
-     * @param $controler
+     * @param $controller
      * @param $action
      * @param string $method
      */
-    public function setRoute($url, $controler, $action, $method = 'GET')
+    public function setRoute($url, $controller, $action, $method = 'GET')
     {
         $this->url = $url;
-        $this->controler = $controler;
+        $this->controller = $controller;
         $this->action = $action;
         $this->method = $method;
     }
@@ -83,9 +83,9 @@ class Route
         return $this->url;
     }
 
-    public function getControler()
+    public function getController()
     {
-        return $this->controler;
+        return $this->controller;
     }
 
     public function getAction()

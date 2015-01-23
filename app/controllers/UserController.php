@@ -6,15 +6,15 @@
  * Time: 15:39
  */
 
-namespace app\controlers;
+namespace app\controllers;
 
 
 use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Exceptions\NoUserFoundException;
-use SwagFramework\mvc\Controler;
+use SwagFramework\mvc\Controller;
 
-class UserControler extends Controler
+class UserController extends Controller
 {
     public function index()
     {
@@ -66,7 +66,7 @@ class UserControler extends Controler
 
             if ($validAuth) {
                 $_SESSION['user'] = $username;
-                $_SESSION['id'] = $validAuth;
+                $_SESSION['id'] = $validAuth[0]['id'];
                 $_SESSION['authDate'] = new \DateTime();
                 $this->getView()->render('/home/index');
             } else {
@@ -75,6 +75,39 @@ class UserControler extends Controler
             }
         } catch (InputNotSetException $e) {
             throw $e;
+        }
+    }
+
+    public function account()
+    {
+        try {
+            $userModel = $this->loadModel('User');
+            $input = new Input();
+            $user = $userModel->getUser($input->session('id'));
+            if (empty($user)) {
+                throw new NoUserFoundException($input->session('user'));
+            }
+
+            $user = $user[0];
+
+            $user['mailHash'] = md5($user['mail']);
+
+            $birthday = new \DateTime($user['birthday']);
+            $today = new \DateTime();
+            $user['age'] = $birthday->diff($today)->format('%Y');
+
+            $registerDate = new \DateTime($user['registerdate']);
+            $user['registerDateFormat'] = $registerDate->format('d/m/Y');
+
+            $this->getView()->render('user/account', $user);
+        } catch (MissingParamsException $e) {
+            // TODO POPUP
+            $e->getMessage();
+            $this->getView()->render('/home/index');
+        } catch (NoUserFoundException $e) {
+            // TODO POPUP
+            $e->getMessage();
+            $this->getView()->render('/home/index');
         }
     }
 }

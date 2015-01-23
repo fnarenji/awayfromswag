@@ -8,7 +8,7 @@
 
 namespace SwagFramework\Helpers;
 
-class ControlerHelpers
+class ControllerHelpers
 {
     /**
      * @var \SwagFramework\Helpers\Input

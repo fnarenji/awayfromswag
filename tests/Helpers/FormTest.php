@@ -11,7 +11,8 @@ namespace tests\Helpers;
 
 use SwagFramework\Helpers\Form;
 
-class FormTest extends \PHPUnit_Framework_TestCase {
+class FormTest extends \PHPUnit_Framework_TestCase
+{
 
     /**
      * @var Form
@@ -23,13 +24,14 @@ class FormTest extends \PHPUnit_Framework_TestCase {
         $this->helper = new Form();
     }
 
-    private function userForm() {
-        $form = $this->helper->generate('user', '#');
-        var_dump($form);
-    }
-
     public function testForm()
     {
         $this->userForm();
+    }
+
+    private function userForm()
+    {
+        $form = $this->helper->generate('user', '#');
+        var_dump($form);
     }
 }

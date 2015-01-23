@@ -17,27 +17,30 @@ class UserInformations
 {
     private static $informations = array();
 
-    protected function __construct(){}
-    private function __clone(){}
+    protected function __construct()
+    {
+    }
+
+    private function __clone()
+    {
+    }
 
     public function getInformations()
     {
-        if(empty(self::$informations))
+        if (empty(self::$informations)) {
             self::setInformations();
+        }
 
         return self::$informations;
     }
 
     private function setInformations()
     {
-        try
-        {
+        try {
             $model = new UserModel();
             $input = new Input();
             self::$informations = $model->getUser($input->session('id'));
-        }
-        catch (InputNotSetException $e)
-        {
+        } catch (InputNotSetException $e) {
             $e->getMessage();
         }
     }

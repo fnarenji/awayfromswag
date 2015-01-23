@@ -6,12 +6,12 @@
  * Time: 15:31
  */
 
-namespace app\controlers\admin;
+namespace app\controllers\admin;
 
 
-use SwagFramework\mvc\Controler;
+use SwagFramework\mvc\Controller;
 
-class EventAdminControler extends Controler
+class EventAdminController extends Controller
 {
     /**
      * @var \app\models\EventModel
