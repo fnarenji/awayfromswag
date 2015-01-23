@@ -8,7 +8,10 @@
 
 namespace SwagFramework\mvc;
 
+use SwagFramework\Exceptions\InputNotSetException;
+use SwagFramework\Exceptions\SwagException;
 use SwagFramework\Helpers\ViewHelpers;
+use SwagFramework\Helpers\Input;
 
 class View extends \Twig_Environment
 {
@@ -28,9 +31,15 @@ class View extends \Twig_Environment
 
     public function render($name, array $context = array())
     {
-        echo parent::render($name, array_merge(array(
-            'helpers' => $this->helpers
-        ), $context));
+        try {
+            $input = new Input();
+            $context['userIDLogged'] = $input->session('id');
+        } catch (InputNotSetException $e){
+        } finally {
+            echo parent::render($name, array_merge(array(
+                'helpers' => $this->helpers
+            ), $context));
+        }
     }
 
     public function redirect($to)

@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `afs`.`event_user` (
 -- Table `afs`.`comment`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `afs`.`comment` (
-  `id`      INT  NOT NULL,
+  `id`      INT  NOT NULL AUTO_INCREMENT,
   `user`    INT  NULL,
   `message` TEXT NULL,
   `postdate` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `afs`.`comment_event` (
   CONSTRAINT `fk_comment_event_1`
   FOREIGN KEY (`id`)
   REFERENCES `afs`.`comment` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_comment_event_2`
   FOREIGN KEY (`event`)

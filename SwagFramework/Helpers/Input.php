@@ -43,6 +43,14 @@ class Input
         return $_POST[$key];
     }
 
+    public function session($key)
+    {
+        if (!isset($_SESSION[$key]) || empty($_SESSION[$key])) {
+            throw new InputNotSetException('$_SESSION', $key);
+        }
+        //TODO: Protect input $_SESSION
+        return isset($_SESSION[$key]);
+    }
     /**
      * get user ip
      * @return mixed

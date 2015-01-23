@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 define('CR', "\n");
 define('TAB', '    ');
 
@@ -18,7 +18,6 @@ if (DEBUG) {
     ini_set('html_errors', true);
     error_reporting(E_ALL);
 }
-
 require 'vendor/autoload.php';
 
 try {
@@ -32,7 +31,7 @@ try {
     $classrouting->addclass('Event');
     $classrouting->generateroute($router);
 
-
+    $router->add('/user/auth', new \app\controlers\UserControler(), 'auth', 'POST');
     $router->add('/admin/index', new \app\controlers\admin\EventAdminControler(), 'index');
     $router->add('/errors/err404', new \app\controlers\ErrorsControler(), 'err404');
     $router->add('/admin', new \app\controlers\admin\EventAdminControler(), 'index');
