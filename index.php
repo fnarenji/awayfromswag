@@ -31,7 +31,6 @@ try {
     $classRouting->addclass('Event');
     $classRouting->generateroute($router);
 
-    $router->add('/user/auth', new \app\controllers\UserController(), 'auth', 'POST');
     $router->add('/admin/index', new \app\controllers\admin\EventAdminController(), 'index');
     $router->add('/errors/err404', new \app\controllers\ErrorsController(), 'err404');
     $router->add('/admin', new \app\controllers\admin\EventAdminController(), 'index');
