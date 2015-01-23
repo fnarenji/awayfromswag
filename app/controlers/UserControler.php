@@ -67,10 +67,10 @@ class UserControler extends Controler
             if (!$validAuth) {
                 $_SESSION['user'] = $username;
                 $_SESSION['authDate'] = new \DateTime();
-                $this->getParams()->render('/home/index', array("logged" => true));
+                $this->getParams()->render('/home/index');
             } else {
                 // TODO POPUP
-                $this->getView()->render('/home/index');
+                $this->getView()->render('/home/index', array("logged" => true));
             }
         } catch (InputNotSetException $e) {
             throw $e;
