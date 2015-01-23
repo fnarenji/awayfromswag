@@ -26,9 +26,9 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase
 
     private function selectTable($table)
     {
-        $sql = 'show fields from ?';
-        $res = $this->database->execute($sql, $table);
-        var_dump($res);
+        $sql = 'show fields from ' . $table;
+        $res = $this->database->execute($sql, null);
+
         $this->assertNotEmpty($res);
     }
 

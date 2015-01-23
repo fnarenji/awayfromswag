@@ -25,7 +25,7 @@ class EventController extends Controller
 
     function __construct()
     {
-        $this->model = new EventModel(new Database(DatabaseConfig::parseFromFile()));
+        $this->model = new EventModel();
     }
 
     public function index()

@@ -47,6 +47,7 @@ class Database extends \PDO
         $params = func_get_args();
         $stmt = $this->prepare(array_shift($params));
         $stmt->execute($params);
+
         return $stmt->fetchAll();
     }
 

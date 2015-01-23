@@ -74,7 +74,6 @@ class Router
 
         foreach ($this->routes as $route) {
             if ($route->getMethod() != $this->route->getMethod()) {
-                echo $route->getMethod() . ' NOPE ' . $this->route->getMethod() . '<br/>';
                 continue;
             }
 
