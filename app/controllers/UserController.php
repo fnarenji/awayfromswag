@@ -12,8 +12,9 @@ use app\models\UserModel;
 use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Exceptions\NoUserFoundException;
+use SwagFramework\Form\Field\InputField;
+use SwagFramework\Form\Form;
 use SwagFramework\Helpers\Authentication;
-use SwagFramework\Helpers\FormHelper;
 use SwagFramework\Helpers\Input;
 use SwagFramework\mvc\Controller;
 
@@ -98,9 +99,10 @@ class UserController extends Controller
 
     public function register()
     {
-        $form = new FormHelper();
-        $form = $form->generate('user', 'user/register');
+        $form = new Form('/user/register');
+
         $form->setClass('pure-form pure-form-stacked');
+        $form->addField(new InputField('username'));
 
         $formHtml = $form->getFormHTML([
             'username' => 'Nom d\'utilisateur',

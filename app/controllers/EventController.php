@@ -14,7 +14,7 @@ use app\exceptions\NotAuthenticatedException;
 use app\models\EventModel;
 use app\models\UserModel;
 use SwagFramework\Helpers\Authentication;
-use SwagFramework\Helpers\Form;
+use SwagFramework\Helpers\FormHelper;
 use SwagFramework\mvc\Controller;
 
 class EventController extends Controller
@@ -84,7 +84,7 @@ class EventController extends Controller
         if (!Authentication::getInstance()->isAuthenticated())
             throw new NotAuthenticatedException();
 
-        $formHelper = new Form();
+        $formHelper = new FormHelper();
         $form = $formHelper->generate('event', '/event/add');
         $form->setClass('pure-form pure-form-stacked');
 
@@ -105,7 +105,7 @@ class EventController extends Controller
         if (!Authentication::getInstance()->isAuthenticated())
             throw new NotAuthenticatedException();
 
-        $formHelper = new Form();
+        $formHelper = new FormHelper();
         $form = $formHelper->generate('event', '/event/add');
 
         $result = $form->validate([
