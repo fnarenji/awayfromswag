@@ -79,43 +79,13 @@ class EventController extends Controller
         ));
     }
 
-    public function performPOST()
-    {
-        if(!Authentication::getInstance()->isAuthenticated())
-            throw new NotAuthenticatedException();
-
-        $formHelper = new Form();
-        $form = $formHelper->generate('event', '/event/perform');
-
-        $result = $form->validate(array(
-            'name' => 'Nom de l\'évènement',
-            'description' => 'Description',
-            'address' => 'Adresse',
-            'eventtime' => 'Date de l\'évènement',
-            'money' => 'Prix',
-            'personsmax' => 'Nombre maximum de participants'
-        ));
-
-        $this->eventModel->insertEvent(
-            $result['name'],
-            Authentication::getInstance()->getUserId(),
-            $result['personsmax'],
-            $result['description'],
-            $result['address'],
-            $result['eventtime'],
-            $result['money']
-        );
-
-        $this->getView()->redirect('/event');
-    }
-
     public function add()
     {
-        if(!Authentication::getInstance()->isAuthenticated())
+        if (!Authentication::getInstance()->isAuthenticated())
             throw new NotAuthenticatedException();
 
         $formHelper = new Form();
-        $form = $formHelper->generate('event', '/event/perform');
+        $form = $formHelper->generate('event', '/event/add');
         $form->setClass('pure-form pure-form-stacked');
 
         $html = $form->getFormHTML([
@@ -128,5 +98,35 @@ class EventController extends Controller
         ]);
 
         $this->getView()->render('event/add', ['form' => $html]);
+    }
+
+    public function addPOST()
+    {
+        if (!Authentication::getInstance()->isAuthenticated())
+            throw new NotAuthenticatedException();
+
+        $formHelper = new Form();
+        $form = $formHelper->generate('event', '/event/add');
+
+        $result = $form->validate([
+            'name' => 'Nom de l\'évènement',
+            'description' => 'Description',
+            'address' => 'Adresse',
+            'eventtime' => 'Date de l\'évènement',
+            'money' => 'Prix',
+            'personsmax' => 'Nombre maximum de participants'
+        ]);
+
+        $this->eventModel->insertEvent(
+            $result['name'],
+            Authentication::getInstance()->getUserId(),
+            $result['personsmax'],
+            $result['description'],
+            $result['address'],
+            $result['eventtime'],
+            $result['money']
+        );
+
+        $this->getView()->redirect('/event');
     }
 }
