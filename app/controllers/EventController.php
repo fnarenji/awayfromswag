@@ -11,10 +11,11 @@ namespace app\controllers;
 
 use app\exceptions\EventNotFoundException;
 use app\exceptions\NotAuthenticatedException;
+use app\exceptions\NotYourEventException;
 use app\models\EventModel;
 use app\models\UserModel;
 use SwagFramework\Helpers\Authentication;
-use SwagFramework\Helpers\Form;
+use SwagFramework\Helpers\FormHelper;
 use SwagFramework\mvc\Controller;
 
 class EventController extends Controller
@@ -84,7 +85,7 @@ class EventController extends Controller
         if (!Authentication::getInstance()->isAuthenticated())
             throw new NotAuthenticatedException();
 
-        $formHelper = new Form();
+        $formHelper = new FormHelper();
         $form = $formHelper->generate('event', '/event/add');
         $form->setClass('pure-form pure-form-stacked');
 
@@ -105,7 +106,7 @@ class EventController extends Controller
         if (!Authentication::getInstance()->isAuthenticated())
             throw new NotAuthenticatedException();
 
-        $formHelper = new Form();
+        $formHelper = new FormHelper();
         $form = $formHelper->generate('event', '/event/add');
 
         $result = $form->validate([
@@ -117,9 +118,86 @@ class EventController extends Controller
             'personsmax' => 'Nombre maximum de participants'
         ]);
 
-        $this->eventModel->insertEvent(
+        var_dump($result);
+        var_dump(Authentication::getInstance()->getUserId());
+
+        $res = $this->eventModel->insertEvent(
             $result['name'],
             Authentication::getInstance()->getUserId(),
+            $result['personsmax'],
+            $result['description'],
+            $result['address'],
+            $result['eventtime'],
+            $result['money']
+        );
+
+        var_dump($res);
+
+//        $this->getView()->redirect('/event');
+    }
+
+    public function modify()
+    {
+        if (!Authentication::getInstance()->isAuthenticated())
+            throw new NotAuthenticatedException();
+
+        $id = (int)$this->getParams()[0];
+
+        $event = $this->eventModel->get($id);
+
+        if (empty($event)) {
+            throw new EventNotFoundException($id);
+        }
+
+        if($event['user'] != Authentication::getInstance()->getUserId())
+            throw new NotYourEventException($id);
+
+        $form = new FormHelper();
+        $form = $form->generate('event', '/event/modify');
+        $form->setClass('pure-form pure-form-stacked');
+
+        $form->getField('id')->addAttribute('value', $event['id']);
+        $form->getField('name')->addAttribute('value', $event['name']);
+        $form->getField('description')->setContent($event['description']);
+        $form->getField('address')->setContent($event['address']);
+        $form->getField('eventtime')->addAttribute('value', $event['eventtime']);
+        $form->getField('money')->addAttribute('value', $event['money']);
+        $form->getField('personsmax')->addAttribute('value', $event['personsmax']);
+
+        $html = $form->getFormHTML([
+            'name' => 'Nom de l\'évènement',
+            'description' => 'Description',
+            'address' => 'Adresse',
+            'eventtime' => 'Date de l\'évènement',
+            'money' => 'Prix',
+            'personsmax' => 'Nombre maximum de participants'
+        ]);
+
+        $this->getView()->render('event/modify', ['form' => $html]);
+    }
+
+    public function modifyPOST()
+    {
+        if (!Authentication::getInstance()->isAuthenticated())
+            throw new NotAuthenticatedException();
+
+        $form = new FormHelper();
+        $form = $form->generate('event', '/event/modify');
+        $form->setClass('pure-form pure-form-stacked');
+
+        $result = $form->validate([
+            'id' => '',
+            'name' => 'Nom de l\'évènement',
+            'description' => 'Description',
+            'address' => 'Adresse',
+            'eventtime' => 'Date de l\'évènement',
+            'money' => 'Prix',
+            'personsmax' => 'Nombre maximum de participants'
+        ]);
+
+        $this->eventModel->updateEvent(
+            $result['id'],
+            $result['name'],
             $result['personsmax'],
             $result['description'],
             $result['address'],
