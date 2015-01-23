@@ -30,7 +30,7 @@ try {
     $classrouting->addclass('User');
     $classrouting->generateroute($router);
 
-
+    $router->add('/user/auth', new \app\controlers\UserControler(), 'auth', 'POST');
     $router->add('/admin/index', new \app\controlers\admin\EventAdminControler(), 'index');
     $router->add('/errors/err404', new \app\controlers\ErrorsControler(), 'err404');
     $router->add('/admin', new \app\controlers\admin\EventAdminControler(), 'index');
