@@ -73,53 +73,21 @@ class UserModel extends Model
 
     /**
      * Insert in database a new user
-     * @param $username
-     * @param $firstName
-     * @param $lastName
-     * @param $mail
-     * @param $password
-     * @param $birthday
-     * @param $phonenumber
-     * @param $twitter
-     * @param $skype
-     * @param $facebookuri
-     * @param $website
-     * @param $job
-     * @param $description
-     * @param $privacy
-     * @param $mailnotifications
-     * @param $accesslevel
+     * @param $infos
      * @return bool
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function insertUser(
-        $username,
-        $firstName,
-        $lastName,
-        $mail,
-        $password,
-        $birthday,
-        $phonenumber,
-        $twitter,
-        $skype,
-        $facebookuri,
-        $website,
-        $job,
-        $description,
-        $privacy,
-        $mailnotifications,
-        $accesslevel
-    ) {
+    public function insertUser($infos) {
         try {
 
             DatabaseProvider::connection()->beginTransaction();
-            $sql = "INSERT INTO " . self::TABLE_NAME . " ('userName', 'firstname', 'lastname', 'mail', 'password', 'birthday','phonenumber', .
+            $sql = "INTO INTO " . self::TABLE_NAME . " ('username', 'firstname', 'lastname', 'mail', 'password', 'birthday','phonenumber', .
                 'twitter','skype','facebookuri','website','job','description','privacy','mailnotifications','accesslevel')
                      VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
 
-            DatabaseProvider::connection()->execute($sql, $username, $firstName, $lastName, $mail, $password, $birthday,
-                $phonenumber, $twitter, $skype, $facebookuri, $website, $job, $description,
-                $privacy, $mailnotifications, $accesslevel);
+            DatabaseProvider::connection()->execute($sql, $infos['username'], $infos['firstName'], $infos['lastName'], $infos['mail'], $infos['password'], $infos['birthday'],
+                $infos['phonenumber'], $infos['twitter'], $infos['skype'], $infos['facebookuri'], $infos['website'], $infos['job'], $infos['description'],
+                $infos['privacy'], $infos['mailnotifications'], $infos['accesslevel']);
             DatabaseProvider::connection()->commit();
 
             return true;
@@ -156,44 +124,12 @@ class UserModel extends Model
     }
 
     /**
-     * Update the user with id in paramater
-     * @param $id
-     * @param $firstName
-     * @param $lastName
-     * @param $mail
-     * @param $password
-     * @param $birthday
-     * @param $phonenumber
-     * @param $twitter
-     * @param $skype
-     * @param $facebookuri
-     * @param $website
-     * @param $job
-     * @param $description
-     * @param $privacy
-     * @param $mailnotifications
-     * @param $accesslevel
+     * Update the user.
+     * @param $infos
      * @return bool
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function updateUser(
-        $id,
-        $firstName,
-        $lastName,
-        $mail,
-        $password,
-        $birthday,
-        $phonenumber,
-        $twitter,
-        $skype,
-        $facebookuri,
-        $website,
-        $job,
-        $description,
-        $privacy,
-        $mailnotifications,
-        $accesslevel
-    ) {
+    public function updateUser($infos) {
         try {
 
             DatabaseProvider::connection()->beginTransaction();
@@ -201,10 +137,9 @@ class UserModel extends Model
                     'phonenumber' = ?,'twitter' = ?, 'skype' = ?, 'facebookuri' = ?, 'website' = ?, 'job' = ?, 'description' = ?,
                     'privacy' = ?, 'mailnotifications' = ?, 'accesslevel' = ? WHERE id = ? ";
 
-            DatabaseProvider::connection()->update($sql, $firstName, $lastName, $mail, $password, $birthday,
-                $phonenumber, $twitter, $skype, $facebookuri, $website,
-                $job, $description, $privacy, $mailnotifications,
-                $accesslevel, $id);
+            DatabaseProvider::connection()->update($sql, $infos['firstName'], $infos['lastName'], $infos['mail'], $infos['password'], $infos['birthday'],
+                $infos['phonenumber'], $infos['twitter'], $infos['skype'], $infos['facebookuri'], $infos['website'], $infos['job'], $infos['description'],
+                $infos['privacy'], $infos['mailnotifications'], $infos['accesslevel'], $infos['id']);
             DatabaseProvider::connection()->commit();
             return true;
 
@@ -217,45 +152,11 @@ class UserModel extends Model
 
     /**
      * Update user by admin
-     * @param $id
-     * @param $username
-     * @param $firstName
-     * @param $lastName
-     * @param $mail
-     * @param $password
-     * @param $birthday
-     * @param $phonenumber
-     * @param $twitter
-     * @param $skype
-     * @param $facebookuri
-     * @param $website
-     * @param $job
-     * @param $description
-     * @param $privacy
-     * @param $mailnotifications
-     * @param $accesslevel
+     * @param $infos
      * @return bool
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function updateAdminUser(
-        $id,
-        $username,
-        $firstName,
-        $lastName,
-        $mail,
-        $password,
-        $birthday,
-        $phonenumber,
-        $twitter,
-        $skype,
-        $facebookuri,
-        $website,
-        $job,
-        $description,
-        $privacy,
-        $mailnotifications,
-        $accesslevel
-    ) {
+    public function updateAdminUser($infos) {
         try {
 
             DatabaseProvider::connection()->beginTransaction();
@@ -263,10 +164,9 @@ class UserModel extends Model
                     phonenumber = ?,twitter = ?, skype = ?, facebookuri = ?, website = ?, job = ?, description = ?,
                     privacy = ?, mailnotifications = ?, accesslevel = ? WHERE id = ?';
 
-            DatabaseProvider::connection()->update($sql, $username, $firstName, $lastName, $mail, $password, $birthday,
-                $phonenumber, $twitter, $skype, $facebookuri, $website,
-                $job, $description, $privacy, $mailnotifications,
-                $accesslevel, $id);
+            DatabaseProvider::connection()->update($sql, $infos['username'], $infos['firstName'], $infos['lastName'], $infos['mail'], $infos['password'], $infos['birthday'],
+                $infos['phonenumber'], $infos['twitter'], $infos['skype'], $infos['facebookuri'], $infos['website'], $infos['job'], $infos['description'],
+                $infos['privacy'], $infos['mailnotifications'], $infos['accesslevel'], $infos['id']);
             DatabaseProvider::connection()->commit();
             return true;
 
