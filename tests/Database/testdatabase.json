@@ -2,5 +2,6 @@
   "host": "localhost",
   "user": "root",
   "password": "",
-  "database": "afs"
+  "database": "afs",
+  "port": "3306"
 }

@@ -8,6 +8,8 @@
 
 namespace SwagFramework\Database;
 
+use SwagFramework\Config\DatabaseConfig;
+
 class Database extends \PDO
 {
     /**
@@ -17,9 +19,9 @@ class Database extends \PDO
 
     /**
      * default constructor
-     * @param \SwagFramework\Config\DatabaseConfig|DatabaseConfig $config
+     * @param DatabaseConfig|DatabaseConfig $config
      */
-    public function __construct(\SwagFramework\Config\DatabaseConfig $config)
+    public function __construct(DatabaseConfig $config)
     {
         $this->config = $config;
 
@@ -43,8 +45,7 @@ class Database extends \PDO
     public function execute($query, $_)
     {
         $params = func_get_args();
-        array_shift($params);
-        $stmt = $this->prepare($query);
+        $stmt = $this->prepare(array_shift($params));
         $stmt->execute($params);
         return $stmt->fetchAll();
     }
