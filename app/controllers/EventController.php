@@ -9,7 +9,10 @@
 namespace app\controllers;
 
 
+use app\exceptions\EventNotFoundException;
 use app\models\EventModel;
+use SwagFramework\Helpers\Form;
+use SwagFramework\mvc\Controller;
 
 class EventController extends Controller
 {
