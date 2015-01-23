@@ -1,7 +1,7 @@
 {
-  "host": "localhost",
-  "user": "root",
-  "password": "",
+  "host": "5.39.88.66",
+  "user": "afs",
+  "password": "swaggens",
   "database": "afs",
   "port": "3306"
 }
