@@ -49,7 +49,7 @@ class Input
             throw new InputNotSetException('$_SESSION', $key);
         }
         //TODO: Protect input $_SESSION
-        return isset($_SESSION[$key]);
+        return $_SESSION[$key];
     }
 
     /**
