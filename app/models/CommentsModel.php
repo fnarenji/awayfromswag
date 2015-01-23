@@ -66,12 +66,12 @@ class CommentsModel extends Model
         try {
             DatabaseProvider::connection()->beginTransaction();
 
-            $sqlComm = "INSERT INTO comments (`user`,`contents`) VALUES ?,? ;";
+            $sqlComm = "INSERT INTO comments ('user','contents') VALUES ?,? ;";
             DatabaseProvider::connection()->execute($sqlComm, $iduser, $contents);
 
             $tmp = $this->getIdComment();
-            $sqlComm = "INSERT INTO comment_event (`id`,`event`) VALUES ?,?;";
-            DatabaseProvider::connection()->execute($sqlComm,$tmp,$idevent);
+            $sqlComm = "INSERT INTO comment_event ('event','event') VALUES ?,?;";
+            DatabaseProvider::connection()->execute($sqlComm, $tmp, $idevent);
 
             DatabaseProvider::connection()->commit();
 
