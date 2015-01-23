@@ -15,7 +15,7 @@ use SwagFramework\Exceptions\NoUserFoundException;
 use SwagFramework\mvc\Controller;
 use SwagFramework\Helpers\Input;
 
-class UserControler extends Controler
+class UserController extends Controler
 {
     public function index()
     {
