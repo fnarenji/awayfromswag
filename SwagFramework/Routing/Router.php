@@ -11,16 +11,11 @@ use SwagFramework\Exceptions\RoutingException;
 
 class Router
 {
-    public static function getSupportedHttpMethods() {
-        return ['POST', 'PUT', 'DELETE'];
-    }
-
     /**
      * The route in the URI
      * @var Route
      */
     private $route;
-
     /**
      * An array that contains all the routes for this application
      * @var array
@@ -30,6 +25,11 @@ class Router
     public function __construct($routes = array())
     {
         $this->routes = $routes;
+    }
+
+    public static function getSupportedHttpMethods()
+    {
+        return ['POST', 'PUT', 'DELETE'];
     }
 
     /**

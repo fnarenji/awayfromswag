@@ -34,7 +34,7 @@ class NewsModel extends Model
      */
     public function getNews()
     {
-        $sql = "SELECT username, text, postdate " .
+        $sql = "SELECT id, username, text, postdate " .
             "FROM article, user " .
             "WHERE user.id = article.user";
 
@@ -54,7 +54,7 @@ class NewsModel extends Model
         try {
 
             DatabaseProvider::connection()->beginTransaction();
-            $sql = 'INSERT INTO article (`user`,`text`,`postdate`,`category`) VALUE ?,?,?,? ';
+            $sql = "INSERT INTO article ('user','text','postdate','category') VALUE ?,?,?,? ";
 
             DatabaseProvider::connection()->execute($sql, $author, $content, $date, $categorie);
 

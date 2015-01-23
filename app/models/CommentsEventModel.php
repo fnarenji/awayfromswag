@@ -11,7 +11,7 @@ namespace app\models;
 use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\mvc\Model;
 
-class CommentsModel extends Model
+class CommentsEventModel extends Model
 {
 
     /**
@@ -20,7 +20,7 @@ class CommentsModel extends Model
      */
     public function getAllCommentsEvent()
     {
-        $sql = "SELECT name,text,username FROM user,comment_event,comment,event WHERE " .
+        $sql = "SELECT id, name,text,username FROM user,comment_event,comment,event WHERE " .
             "comment_event.event = event.id AND comment_event.id = comment.id AND user.id = comment.user;";
 
         return DatabaseProvider::connection()->execute($sql, null);
@@ -54,24 +54,43 @@ class CommentsModel extends Model
     }
 
     /**
-     * Insert in DB a comment for an event.
-     * @param $idparticip
-     * @param $iduser
-     * @param $contents
-     * @param $mark
+     * Update comment on event
+     * @param $params
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function insertCommentEvent($idevent, $iduser, $contents)
+    public function updateCommentEvent($params)
+    {
+        try {
+            DatabaseProvider::connection()->beginTransaction();
+
+            $sqlComm = "UPDATE comments  SET contents = ? WHERE id = ? ;";
+            DatabaseProvider::connection()->execute($sqlComm, $params['content'], $params['idcomment']);
+
+            DatabaseProvider::connection()->commit();
+
+        } catch (\Exception $e) {
+            DatabaseProvider::connection()->rollBack();
+        }
+
+    }
+
+
+    /**
+     * Insert in DB a comment for an event.
+     * @param $params
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    public function insertCommentEvent($params)
     {
         try {
             DatabaseProvider::connection()->beginTransaction();
 
             $sqlComm = "INSERT INTO comments ('user','contents') VALUES ? , ? ;";
-            DatabaseProvider::connection()->execute($sqlComm, $iduser, $contents);
+            DatabaseProvider::connection()->execute($sqlComm, $params['iduser'], $params['contents']);
 
             $tmp = $this->getIdComment();
-            $sqlComm = "INSERT INTO comment_event ('event','event') VALUES ? , ? ;";
-            DatabaseProvider::connection()->execute($sqlComm, $tmp, $idevent);
+            $sqlComm = "INSERT INTO comment_event ('id','event') VALUES ? , ? ;";
+            DatabaseProvider::connection()->execute($sqlComm, $tmp, $params['idevent']);
 
             DatabaseProvider::connection()->commit();
 
@@ -82,8 +101,8 @@ class CommentsModel extends Model
     }
 
     /**
-     *  Delete a comment of an event
-     * @param $id
+     *  Delete a comment.
+     * @param $id of comment
      * @return bool
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */

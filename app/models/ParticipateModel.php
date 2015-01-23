@@ -20,7 +20,7 @@ class ParticipateModel extends Model
      */
     public function getEventsParticipations()
     {
-        $sql = 'SELECT username,name FROM user,event,event_user WHERE user.id = event_user.user AND event.id = event_user.id; ';
+        $sql = 'SELECT id, username,name FROM user,event,event_user WHERE user.id = event_user.user AND event.id = event_user.id; ';
 
         return DatabaseProvider::connection()->execute($sql, null);
     }

@@ -76,8 +76,9 @@ class ClassRouting
                     continue;
                 } else {
                     foreach (Router::getSupportedHttpMethods() as $httpMethod) {
-                        if (strstr($methodName, $httpMethod))
+                        if (strstr($methodName, $httpMethod)) {
                             continue 2;
+                        }
 
                         if (in_array($methodName . $httpMethod, $classMethods)) {
                             $router->add('/' . strtolower($class) . '/' . $methodName, new $className(), $methodName . $httpMethod, $httpMethod);

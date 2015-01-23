@@ -26,9 +26,16 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase
 
     private function selectTable($table)
     {
-        $sql = 'show fields from ' . $table;
+        $sql = 'SHOW FIELDS FROM ' . $table;
         $res = $this->database->execute($sql, null);
+        $this->assertNotEmpty($res);
+    }
 
+    private function selectUser($userID)
+    {
+        $sql = 'SELECT * FROM user '
+            . 'WHERE id=?';
+        $res = $this->database->execute($sql, $userID);
         $this->assertNotEmpty($res);
     }
 
@@ -36,5 +43,6 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase
     {
         $this->createDatabase();
         $this->selectTable('user');
+        $this->selectUser(1);
     }
 }

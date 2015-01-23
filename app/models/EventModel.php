@@ -20,7 +20,7 @@ class EventModel extends Model
      */
     public function getEvents()
     {
-        $sql = "SELECT name, username, description, address, eventtime, money, personsmax, personsnow " .
+        $sql = "SELECT id, name, username, description, address, eventtime, money, personsmax, personsnow " .
             "FROM event,user " .
             "WHERE event.user = user.id ;";
 
@@ -62,7 +62,7 @@ class EventModel extends Model
 
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql = "INSERT INTO event (`name`,`user`,`description`, `address`, `eventtime`, `money`, `personsmax`) " .
+            $sql = "INSERT INTO event ('name','user','description', 'address', 'eventtime', 'money', 'personsmax') " .
                 " VALUE ?,?,?,?,?,?,?";
 
             DatabaseProvider::connection()->execute($sql, $name, $idCreator, $description, $address, $eventTime, $money,
