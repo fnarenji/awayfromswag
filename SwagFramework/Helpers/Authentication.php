@@ -34,12 +34,20 @@ class Authentication
 
     public function addToContext(array $context = [])
     {
-        return array_merge($context, ['auth' => [
+        $authData = [
             'valid' => $this->isAuthenticated(),
-            'userName' => $this->getUserName(),
-            'userId' => $this->getUserId(),
-            'authDate' => $this->getAuthDate()
-        ]]);
+        ];
+
+        if ($this->isAuthenticated()) {
+            $authData = array_merge($authData,
+                [
+                    'userName' => $this->getUserName(),
+                    'userId' => $this->getUserId(),
+                    'authDate' => $this->getAuthDate()
+                ]);
+        }
+
+        return array_merge($context, ['auth' => $authData]);
     }
 
     public function isAuthenticated()

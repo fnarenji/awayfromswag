@@ -39,6 +39,6 @@ class View extends \Twig_Environment
     {
         //header('Location: ' . $to);
         // Quand ça marche pas, wallhack + aimbot = win.
-        echo '<script>location.href="' . $to . '"</script>';
+        //echo '<script>location.href="' . $to . '"</script>';
     }
 }

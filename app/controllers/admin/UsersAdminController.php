@@ -23,7 +23,7 @@ class UsersAdminController extends Controller
     {
         $this->model = $this->loadModel('User');
         $allUser = $this->model->getAllUsers();
-        $this->getView()->render('admin/users', array('alluser' => $allUser));
+        $this->getView()->render('admin/users', ['alluser' => $allUser]);
     }
 
     public function delete()
@@ -36,11 +36,11 @@ class UsersAdminController extends Controller
     {
 
         $iduser = (int)$this->getParams()[0];
-        $username = $this->helpers->input->get('username');
-        $firstname = $this->helpers->input->get('firstname');
-        $lastname = $this->helpers->input->get('lastname');
-        $mail = $this->helpers->input->get('mail');
-        $password = sha1($this->helpers->input->get('password'));
+        $username = Input::get('username');
+        $firstname = Input::get('firstname');
+        $lastname = Input::get('lastname');
+        $mail = Input::get('mail');
+        $password = sha1(Input::get('password'));
 
         $this->model->updateAdminUser($iduser, ['username' => $username,
             'firstname' => $firstname,
