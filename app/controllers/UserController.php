@@ -142,6 +142,31 @@ class UserController extends Controller
             $registerDate = new \DateTime($user['registerdate']);
             $user['registerDateFormat'] = $registerDate->format('d/m/Y');
 
+
+
+
+            // WOW SUCH ALGORITHM MUCH SKILL
+            $privacy = (int)$user['privacy'];
+
+            // init
+            $x = 14;
+
+            foreach($user as $key => $value){
+                if($key == 'privacy') break;
+
+                $exp = 2**$x;
+
+                if($exp <= $privacy){
+                    $user[$key . 'Privacy'] = true;
+                    $privacy -= $exp;
+                } else {
+                    $user[$key . 'Privacy'] = false;
+                }
+
+                --$x;
+            }
+            var_dump($user);
+
             $this->getView()->render('user/account', $user);
         } catch (MissingParamsException $e) {
             // TODO POPUP
