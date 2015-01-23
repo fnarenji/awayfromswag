@@ -62,7 +62,7 @@ class EventModel extends Model
 
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql = "INSERT INTO event (`name`,`user`,`description`, `address`, `eventtime`, `money`, `personsmax`) " .
+            $sql = "INSERT INTO event ('name','user','description', 'address', 'eventtime', 'money', 'personsmax') " .
                 " VALUE ?,?,?,?,?,?,?";
 
             DatabaseProvider::connection()->execute($sql, $name, $idCreator, $description, $address, $eventTime, $money,
