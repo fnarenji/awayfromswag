@@ -13,6 +13,7 @@ use SwagFramework\Config\DatabaseConfig;
 use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Exceptions\TableNotFoundDatabaseException;
 use SwagFramework\Form\Field\InputField;
+use SwagFramework\Form\Field\TextAreaField;
 
 class Form
 {
@@ -34,11 +35,25 @@ class Form
      */
     private function convertAttributeType($att)
     {
-        $type = $this->getType($att['Type']);
         if ($att['Key'] == 'PRI') {
             return 'hidden';
         }
         return 'text';
+    }
+
+    private function getInput($value)
+    {
+        $field = new InputField($value['Field']);
+        $field->addAttribute('type', $this->convertAttributeType($value));
+
+        return $field;
+    }
+
+    private function getTextArea($value)
+    {
+        $field = new TextAreaField($value['Field']);
+
+        return $field;
     }
 
     /**
@@ -64,8 +79,10 @@ class Form
         $form = new \SwagFramework\Form\Form();
 
         foreach ($res as $value) {
-            $field = new InputField($value['Field']);
-            $field->addAttribute('type', $this->convertAttributeType($value));
+            if($this->getType($value['Type']) == 'text')
+                $field = $this->getTextArea($value);
+            else
+                $field = $this->getInput($value);
             $form->addField($field);
         }
 

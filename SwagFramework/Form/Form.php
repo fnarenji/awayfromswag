@@ -9,6 +9,7 @@
 namespace SwagFramework\Form;
 
 
+use SwagFramework\Exceptions\AttributeNotExistsException;
 use SwagFramework\Form\Field\LabelField;
 use SwagFramework\Helpers\Input;
 
@@ -86,12 +87,16 @@ class Form
             . '>';
 
         foreach ($this->getFields() as $field) {
-            if (!empty($labels) && array_key_exists($field->getName(), $labels)) {
-                $label = new LabelField($field->getName(), $labels[$field->getName()]);
-                $form .= CR . TAB . $label->getHTML();
-                $form .= CR . TAB . $field->getHTML();
-            } elseif($field->getName() == 'submit' || $field->getAttribute('type') == 'hidden')
-                $form .= CR . TAB . $field->getHTML();
+            try{
+                if (!empty($labels) && array_key_exists($field->getName(), $labels)) {
+                    $label = new LabelField($field->getName(), $labels[$field->getName()]);
+                    $form .= CR . TAB . $label->getHTML();
+                    $form .= CR . TAB . $field->getHTML();
+                } elseif($field->getName() == 'submit' || $field->getAttribute('type') == 'hidden')
+                    $form .= CR . TAB . $field->getHTML();
+            } catch(AttributeNotExistsException $e){
+                // fix getAttribute('type') on TextArea
+            }
         }
 
         $form .= CR . '</form>';

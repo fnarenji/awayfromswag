@@ -25,7 +25,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
         $this->form = new Form();
         $this->form->setAction('test');
         $this->form->addField(new InputField('test1'));
-        $this->assertEquals('<form method="POST" action="test">
+        $this->assertEquals('<form method="POST" action="test" id="" class="">
     <label for="test1"></label>
     <input name="test1" />
 </form>', $this->form->getFormHTML(array(
@@ -38,7 +38,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
         $this->form = new Form();
         $this->form->setAction('test');
         $this->form->addField(new InputField('test1'));
-        $this->assertEquals('<form method="POST" action="test">
+        $this->assertEquals('<form method="POST" action="test" id="" class="">
     <label for="test1">Test1</label>
     <input name="test1" />
 </form>', $this->form->getFormHTML(array(

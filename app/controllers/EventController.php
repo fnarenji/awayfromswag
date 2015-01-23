@@ -66,6 +66,7 @@ class EventController extends Controller
         $form = $formHelper->generate('event', '/event/performAdd');
 
         $form->setAction('/event/perfomAdd');
+        $form->setClass('pure-form pure-form-stacked');
 
         $html = $form->getFormHTML(array(
             'name' => 'Nom de l\'évènement',
