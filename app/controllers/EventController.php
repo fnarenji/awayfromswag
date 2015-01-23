@@ -11,9 +11,9 @@ namespace app\controllers;
 
 use app\exceptions\EventNotFoundException;
 use app\exceptions\NotAuthenticatedException;
-use app\helpers\Authentication;
 use app\models\EventModel;
 use app\models\UserModel;
+use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\Form;
 use SwagFramework\mvc\Controller;
 
