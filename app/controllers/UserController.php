@@ -76,9 +76,8 @@ class UserController extends Controller
 
             $validAuth = $this->userModel->validateAuthentication($username, $password);
 
-            if (!empty($validAuth)) {
+            if (!is_null($validAuth)) {
                 Authentication::getInstance()->setAuthenticated($username, $validAuth['id']);
-                //$this->getView()->render('/home/index');
                 $this->getView()->redirect('/');
             } else {
                 // TODO POPUP

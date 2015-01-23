@@ -59,7 +59,7 @@ class UserModel extends Model
      * Return information if the user with the $password and $username was found.
      * @param $username
      * @param $password
-     * @return boolean true if auth valid false otherwise
+     * @return boolean id of the user if valid auth or null otherwise
      */
     public function validateAuthentication($username, $password)
     {
@@ -68,7 +68,8 @@ class UserModel extends Model
             . 'WHERE username = ? '
             . 'AND password = SHA1(?)';
 
-        return DatabaseProvider::connection()->query($sql, [$username, $password])[0];
+        $results = DatabaseProvider::connection()->query($sql, [$username, $password]);
+        return !empty($results) ? $results[0] : null;
     }
 
     /**
