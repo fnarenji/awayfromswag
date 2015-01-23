@@ -1,4 +1,7 @@
 <?php
+
+use SwagFramework\Exceptions\SwagException;
+
 session_start();
 define('CR', "\n");
 define('TAB', '    ');
@@ -26,19 +29,19 @@ try {
     $router = new \SwagFramework\Routing\Router();
 
     $classRouting = new \app\helpers\ClassRouting('\app\controllers\\');
-    $classRouting->addclass('User');
-    $classRouting->addclass('Conversation');
-    $classRouting->addclass('Event');
-    $classRouting->generateroute($router);
+    $classRouting->addClass('User');
+    $classRouting->addClass('Conversation');
+    $classRouting->addClass('Event');
+    $classRouting->generateRoute($router);
 
     $router->add('/admin/index', new \app\controllers\admin\EventAdminController(), 'index');
     $router->add('/errors/err404', new \app\controllers\ErrorsController(), 'err404');
     $router->add('/admin', new \app\controllers\admin\EventAdminController(), 'index');
     $router->add('/', new \app\controllers\HomeController(), 'index');
 
-    $router->matchcurrentrequest();
+    $router->matchCurrentRequest();
 
-} catch (\SwagFramework\Exceptions\SwagException $e) {
+} catch (SwagException $e) {
     echo '<h1>SwagException !</h1>';
     echo '<p>' . $e->getMessage() . '</p>';
 } catch (Exception $e) {

@@ -23,5 +23,4 @@ class CommentAdminController extends Controller
         $allEvents = $this->model->getAllCommentsEvent();
         $this->getView()->render('admin/event', array('allEvents' => $allEvents));
     }
-
 }
