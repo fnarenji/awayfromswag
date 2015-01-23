@@ -25,7 +25,7 @@
                     <label for="job">Profession: </label>
                     <input type="text" name="job" value="{{ job }}" id="job"/>
                     <label for="jobPrivacy">
-                        <input name="jobPrivacy" type="checkbox" id="jobPrivacy"> Public
+                        <input name="jobPrivacy" type="checkbox" id="jobPrivacy" {{ jobPrivacy ? "checked" }}> Public
                     </label>
                 </span>
 
@@ -45,14 +45,14 @@
                         <label for="mail"><i class="fa fa-at"></i></label>
                         <input type="email" name="mail" value="{{ mail }}" id="mail"/>
                          <label for="mailPrivacy">
-                             <input name="mailPrivacy" type="checkbox" id="mailPrivacy"> Public
+                             <input name="mailPrivacy" type="checkbox" id="mailPrivacy" {{ mailPrivacy ? "checked" }}> Public
                          </label>
                     </span>
                     <span class="profile-line">
                         <label for="phonenumber"><i class="fa fa-phone"></i></label>
                         <input type="tel" name="phonenumber" value="{{ phonenumber }}" id="phonenumber"/>
                          <label for="phonePrivacy">
-                             <input name="phonePrivacy" type="checkbox" id="phonePrivacy"> Public
+                             <input name="phonePrivacy" type="checkbox" id="phonePrivacy" {{ phonenumberPrivacy ? "checked" }}> Public
                          </label>
                     </span>
                     <span class="profile-line">
@@ -61,7 +61,7 @@
                         </label>
                         <input type="text" name="twitter" value="{{ twitter }}" id="twitter"/>
                          <label for="twitterPrivacy">
-                             <input name="twitterPrivacy" type="checkbox" id="twitterPrivacy"> Public
+                             <input name="twitterPrivacy" type="checkbox" id="twitterPrivacy" {{ twitterPrivacy ? "checked" }}> Public
                          </label>
                     </span>
                     <span class="profile-line">
@@ -70,7 +70,7 @@
                         </label>
                         <input type="text" name="facebook" value="{{ facebookuri }}" id="facebook"/>
                          <label for="facebookPrivacy">
-                             <input name="facebookPrivacy" type="checkbox" id="facebookPrivacy"> Public
+                             <input name="facebookPrivacy" type="checkbox" id="facebookPrivacy" {{ facebookuriPrivacy ? "checked" }}> Public
                          </label>
                     </span>
                     <span class="profile-line">
@@ -79,7 +79,7 @@
                         </label>
                         <input type="text" name="skype" value="{{ skype }}" id="skype"/>
                          <label for="skypePrivacy">
-                             <input name="skypePrivacy" type="checkbox" id="skypePrivacy"> Public
+                             <input name="skypePrivacy" type="checkbox" id="skypePrivacy" {{ skypePrivacy ? "checked" }}> Public
                          </label>
                     </span>
                     <span class="profile-line">
@@ -88,7 +88,7 @@
                         </label>
                         <input type="text" name="website" value="{{ website }}" id="website"/>
                          <label for="websitePrivacy">
-                             <input name="websitePrivacy" type="checkbox" id="websitePrivacy"> Public
+                             <input name="websitePrivacy" type="checkbox" id="websitePrivacy" {{ websitePrivacy ? "checked" }}> Public
                          </label>
                     </span>
                 </div>
