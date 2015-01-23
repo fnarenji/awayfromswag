@@ -55,7 +55,7 @@ class Form
             . 'FROM ' . $table;
 
         DatabaseProvider::connect(DatabaseConfig::parseFromFile());
-        $res = DatabaseProvider::connection()->execute($sql, $table);
+        $res = DatabaseProvider::connection()->execute($sql, null);
 
         if (empty($res)) {
             throw new TableNotFoundDatabaseException($table);

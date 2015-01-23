@@ -17,6 +17,16 @@ use SwagFramework\mvc\Controller;
 
 class UserController extends Controller
 {
+    /**
+     * @var UserModel the user model duh
+     */
+    private $userModel;
+
+    public function __construct() {
+        $this->userModel = $this->loadModel('User');
+        parent::__construct();
+    }
+    
     public function index()
     {
         $this->getView()->render('user/index');
@@ -26,8 +36,8 @@ class UserController extends Controller
     {
         try {
             $name = $this->getParams();
-            $userModel = $this->loadModel('User');
-            $user = $userModel->getUserByName($name[0]);
+            
+            $user = $this->userModel->getUserByName($name[0]);
 
             if (empty($user)) {
                 throw new NoUserFoundException($name[0]);
@@ -56,22 +66,27 @@ class UserController extends Controller
 
     public function auth()
     {
+        $this->getView()->render('/home/index');
+    }
+
+    public function authPOST()
+    {
         try {
-            $userModel = $this->loadModel('User');
             $input = $this->helpers->input;
 
             $username = $input->post('username');
             $password = sha1($input->post('password'));
 
-            $validAuth = $userModel->validateAuthentication($username, $password);
+            $validAuth = $this->userModel->validateAuthentication($username, $password);
 
             if ($validAuth) {
                 $_SESSION['user'] = $username;
                 $_SESSION['id'] = $validAuth[0]['id'];
                 $_SESSION['authDate'] = new \DateTime();
-                $this->getView()->render('/home/index');
+                die("AUTH");
             } else {
                 // TODO POPUP
+
                 $this->getView()->render('/home/index');
             }
         } catch (InputNotSetException $e) {

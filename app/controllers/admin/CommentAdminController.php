@@ -13,14 +13,13 @@ class CommentAdminController
 {
 
     /**
-     * @var \app\models\CommentsModel
+     * @var \app\models\CommentsEventModel
      */
     private $model;
 
-    // NOT WORKING //
     public function index()
     {
-        $this->model = $this->loadModel('Comments');
+        $this->model = $this->loadModel('CommentsEvent');
         $allEvents = $this->model->getAllCommentsEvent();
         $this->getView()->render('admin/event', array('allEvents' => $allEvents));
     }

@@ -22,7 +22,7 @@ class CommentsArticleModel extends Model
      */
     public function getAllCommentsArticle()
     {
-        $sql = "SELECT title, text, username FROM user,comment_article,comment,article WHERE " .
+        $sql = "SELECT id, title, text, username FROM user,comment_article,comment,article WHERE " .
             "comment_article.article = article.id AND comment_article.id = comment.id AND user.id = comment.user ;";
 
         return DatabaseProvider::connection()->execute($sql, null);

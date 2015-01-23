@@ -8,13 +8,10 @@
 
 namespace SwagFramework\mvc;
 
-use SwagFramework\Config\DatabaseConfig;
-
 class Model
 {
     /**
      * default constructor
-     * @param DatabaseConfig $config
      */
     public function __construct()
     {

@@ -14,6 +14,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $this->getView()->render('home/index', array('logged' => false));
+        $this->getView()->render('home/index', [ 'logged' => false ]);
     }
 }

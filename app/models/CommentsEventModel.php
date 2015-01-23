@@ -20,7 +20,7 @@ class CommentsEventModel extends Model
      */
     public function getAllCommentsEvent()
     {
-        $sql = "SELECT name,text,username FROM user,comment_event,comment,event WHERE " .
+        $sql = "SELECT id, name,text,username FROM user,comment_event,comment,event WHERE " .
             "comment_event.event = event.id AND comment_event.id = comment.id AND user.id = comment.user;";
 
         return DatabaseProvider::connection()->execute($sql, null);

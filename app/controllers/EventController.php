@@ -9,12 +9,7 @@
 namespace app\controllers;
 
 
-use app\exceptions\EventNotFoundException;
 use app\models\EventModel;
-use SwagFramework\Config\DatabaseConfig;
-use SwagFramework\Database\Database;
-use SwagFramework\Helpers\Form;
-use SwagFramework\mvc\Controller;
 
 class EventController extends Controller
 {
@@ -26,8 +21,8 @@ class EventController extends Controller
 
     function __construct()
     {
+        $this->model = new EventModel();
         parent::__construct();
-        $this->model = new EventModel(new Database(DatabaseConfig::parseFromFile()));
     }
 
     public function index()

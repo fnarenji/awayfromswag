@@ -20,7 +20,7 @@ class EventModel extends Model
      */
     public function getEvents()
     {
-        $sql = "SELECT name, username, description, address, eventtime, money, personsmax, personsnow " .
+        $sql = "SELECT id, name, username, description, address, eventtime, money, personsmax, personsnow " .
             "FROM event,user " .
             "WHERE event.user = user.id ;";
 
