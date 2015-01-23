@@ -16,7 +16,7 @@ class ViewHelpers
      */
     public $assets;
     /**
-     * @var \SwagFramework\Helpers\Form
+     * @var \SwagFramework\Helpers\FormHelper
      */
     public $form;
     /**

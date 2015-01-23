@@ -30,19 +30,6 @@ class EventController extends Controller
      */
     private $userModel;
 
-    private function getInfos($event)
-    {
-        $event['user'] = $this->userModel->getUser($event['user']);
-
-        $createtime = new \DateTime($event['createtime']);
-        $event['createtime'] = $createtime->format('d/m/Y à H:i');
-
-        $eventtime = new \DateTime($event['eventtime']);
-        $event['eventtime'] = $eventtime->format('d/m/Y à H:i');
-
-        return $event;
-    }
-
     function __construct()
     {
         $this->eventModel = new EventModel();
@@ -60,6 +47,19 @@ class EventController extends Controller
         $this->getView()->render('event/index', array(
             'events' => $events
         ));
+    }
+
+    private function getInfos($event)
+    {
+        $event['user'] = $this->userModel->getUser($event['user']);
+
+        $createtime = new \DateTime($event['createtime']);
+        $event['createtime'] = $createtime->format('d/m/Y à H:i');
+
+        $eventtime = new \DateTime($event['eventtime']);
+        $event['eventtime'] = $eventtime->format('d/m/Y à H:i');
+
+        return $event;
     }
 
     public function show()
@@ -118,17 +118,15 @@ class EventController extends Controller
         $form = $formHelper->generate('event', '/event/perform');
         $form->setClass('pure-form pure-form-stacked');
 
-        $html = $form->getFormHTML(array(
+        $html = $form->getFormHTML([
             'name' => 'Nom de l\'évènement',
             'description' => 'Description',
             'address' => 'Adresse',
             'eventtime' => 'Date de l\'évènement',
             'money' => 'Prix',
             'personsmax' => 'Nombre maximum de participants'
-        ));
+        ]);
 
-        $this->getView()->render('event/add', array(
-            'form' => $html
-        ));
+        $this->getView()->render('event/add', ['form' => $html]);
     }
 }

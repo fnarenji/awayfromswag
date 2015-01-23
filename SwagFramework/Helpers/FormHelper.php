@@ -15,7 +15,7 @@ use SwagFramework\Exceptions\TableNotFoundDatabaseException;
 use SwagFramework\Form\Field\InputField;
 use SwagFramework\Form\Field\TextAreaField;
 
-class Form
+class FormHelper
 {
     /**
      * generate form for table
