@@ -1,0 +1,62 @@
+{% extends "layout/default" %}
+
+{% block content %}
+    <article class="profile">
+        <h1>Profil de {{ username }} ({{ firstname ~ ' ' ~ lastname }})</h1>
+
+        <form action="#" method="POST">
+            <div class="profile-group">
+                <img src="http://www.gravatar.com/avatar/{{ mailHash }}.png" alt="{{ username ~ ' avatar' }}"
+                     class="profile-avatar"/>
+                <span class="profile-line"><b class="profile-label">Pseudo : </b>{{ username }}</span>
+                <span class="profile-line"><label for="lastname">Nom : </label><input type="text" name="lastname" value="{{ lastname }}"/></span>
+                <span class="profile-line"><label for="firstname">Prénom : </label><input type="text" name="firstname" value="{{ firstname }}"/></span>
+
+                <span class="profile-line"><b class="profile-label">Age : </b>{{ age }} ans</span>
+            </div>
+            <div class="profile-group">
+                <span class="profile-line"><label for="job">Profession: </label><input type="text" name="job" value="{{ job }}"/></span>
+                <span class="profile-line"><b class="profile-label">Inscrit depuis le </b>{{ registerDateFormat }}</span>
+            </div>
+            <div class="profile-group">
+                <span class="profile-line"><label for="description">Description : </label></span>
+                <span class="profile-line"><textarea name="description" cols="80" rows="5">{{ description }}</textarea></span>
+            </div>
+            <div class="profile-group">
+                    <span class="profile-line">
+                        <label for="mail"><i class="fa fa-at"></i></label>
+                        <input type="email" name="mail" value="{{ mail }}"/>
+                    </span>
+                    <span class="profile-line">
+                        <label for="phonenumber"><i
+                                    class="fa fa-phone"></i></label>
+                        <input type="tel" name="phonenumber" value="{{ phonenumber }}"/>
+                    </span>
+                    <span class="profile-line">
+                        <label for="twitter">
+                            <i class="fa fa-twitter"></i>
+                        </label>
+                        <input type="text" name="twitter" value="{{ twitter }}"/>
+                    </span>
+                    <span class="profile-line">
+                        <label for="facebook">
+                            <i class="fa fa-facebook"></i>
+                        </label>
+                        <input type="text" name="facebook" value="{{ facebookuri }}"/>
+                    </span>
+                    <span class="profile-line">
+                        <label for="skype">
+                            <i class="fa fa-skype"></i>
+                        </label>
+                        <input type="text" name="skype" value="{{ skype }}"/>
+                    </span>
+                    <span class="profile-line">
+                        <label for="website">
+                            <i class="fa fa-desktop"></i>
+                        </label>
+                        <input type="text" name="website" value="{{ website }}"/>
+                    </span>
+            </div>
+        </form>
+    </article>
+{% endblock %}

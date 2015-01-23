@@ -13,6 +13,7 @@ use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Exceptions\NoUserFoundException;
 use SwagFramework\mvc\Controler;
+use SwagFramework\Helpers\Input;
 
 class UserControler extends Controler
 {
@@ -75,6 +76,38 @@ class UserControler extends Controler
             }
         } catch (InputNotSetException $e) {
             throw $e;
+        }
+    }
+
+    public function account()
+    {
+        try {
+            $userModel = $this->loadModel('User');
+            $input = new Input();
+            $user = $userModel->getUser($input->session('id'));
+
+            if (empty($user)) {
+                throw new NoUserFoundException($input->session('username'));
+            }
+
+            $user = $user[0];
+
+            $user['mailHash'] = md5($user['mail']);
+
+            $birthday = new \DateTime($user['birthday']);
+            $today = new \DateTime();
+            $user['age'] = $birthday->diff($today)->format('%Y');
+
+            $registerDate = new \DateTime($user['registerdate']);
+            $user['registerDateFormat'] = $registerDate->format('d/m/Y');
+
+            $this->getView()->render('user/account', $user);
+        } catch (MissingParamsException $e) {
+            // TODO POPUP
+            $this->getView()->render('/home/index');
+        } catch (NoUserFoundException $e) {
+            // TODO POPUP
+            $this->getView()->render('/home/index');
         }
     }
 }
