@@ -26,7 +26,7 @@ class UserModel extends Model
             . 'FROM ' . self::TABLE_NAME . ' '
             . 'WHERE id = ?';
 
-        return DatabaseProvider::connection()->query($sql, [$id]);
+        return DatabaseProvider::connection()->selectFirst($sql, [$id]);
     }
 
     /**
@@ -40,7 +40,7 @@ class UserModel extends Model
             . 'FROM ' . self::TABLE_NAME . ' '
             . 'WHERE username = ? ';
 
-        return DatabaseProvider::connection()->query($sql, [$name]);
+        return DatabaseProvider::connection()->selectFirst($sql, [$name]);
     }
 
     /**
@@ -68,8 +68,7 @@ class UserModel extends Model
             . 'WHERE username = ? '
             . 'AND password = SHA1(?)';
 
-        $results = DatabaseProvider::connection()->query($sql, [$username, $password]);
-        return !empty($results) ? $results[0] : null;
+        return DatabaseProvider::connection()->selectFirst($sql, [$username, $password])[0];
     }
 
     /**
