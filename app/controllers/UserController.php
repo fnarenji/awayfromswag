@@ -6,15 +6,16 @@
  * Time: 15:39
  */
 
-namespace app\controllers;
+namespace app\controlers;
 
 
 use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Exceptions\NoUserFoundException;
 use SwagFramework\mvc\Controller;
+use SwagFramework\Helpers\Input;
 
-class UserController extends Controller
+class UserControler extends Controler
 {
     public function index()
     {
@@ -54,11 +55,6 @@ class UserController extends Controller
     }
 
     public function auth()
-    {
-        $this->getView()->render('/home/index');
-    }
-
-    public function authPOST()
     {
         try {
             $userModel = $this->loadModel('User');
