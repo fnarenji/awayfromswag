@@ -195,8 +195,18 @@ class EventController extends Controller
             'personsmax' => 'Nombre maximum de participants'
         ]);
 
+        $id = $result['id'];
+        $event = $this->eventModel->get($id);
+
+        if (empty($event)) {
+            throw new EventNotFoundException($id);
+        }
+
+        if($event['user'] != Authentication::getInstance()->getUserId())
+            throw new NotYourEventException($id);
+
         $this->eventModel->updateEvent(
-            $result['id'],
+            $id,
             $result['name'],
             $result['personsmax'],
             $result['description'],
