@@ -43,10 +43,9 @@ SQL;
 SELECT comment.title, comment.message, user.username
 FROM user, comment_event, comment, event
 JOIN comment_event ON comment_event.id = comment.id
-JOIN user.id = COMMENT.user;
-WHERE EVENT.id = ?
-  AND comment_event.id = COMMENT.id
-  AND USER.id = COMMENT.user;
+JOIN comment ON user.id = comment.user
+JOIN event ON event.id = comment_event.event
+WHERE event.id = ?
 SQL;
 
         return DatabaseProvider::connection()->execute($sql, $id);
