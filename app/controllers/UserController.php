@@ -8,12 +8,11 @@
 
 namespace app\controllers;
 
-
+use app\helpers\Authentication;
 use app\models\UserModel;
 use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Exceptions\NoUserFoundException;
-use SwagFramework\helpers\Authentication;
 use SwagFramework\Helpers\Input;
 use SwagFramework\mvc\Controller;
 
@@ -96,9 +95,7 @@ class UserController extends Controller
     public function account()
     {
         try {
-            $userModel = $this->loadModel('User');
-
-            $user = $userModel->getUser(Authentication::getInstance()->getUserId());
+            $user = $this->userModel->getUser(Authentication::getInstance()->getUserId());
             if (empty($user)) {
                 throw new NoUserFoundException(Authentication::getInstance()->getUserName());
             }
