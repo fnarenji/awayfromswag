@@ -81,6 +81,7 @@ class UserModel extends Model
         try {
 
             DatabaseProvider::connection()->beginTransaction();
+
             $sql = "INTO INTO " . self::TABLE_NAME . " ('username', 'firstname', 'lastname', 'mail', 'password', 'birthday','phonenumber', .
                 'twitter','skype','facebookuri','website','job','description','privacy','mailnotifications','accesslevel')
                      VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
@@ -88,6 +89,7 @@ class UserModel extends Model
             DatabaseProvider::connection()->execute($sql, $infos['username'], $infos['firstName'], $infos['lastName'], $infos['mail'], $infos['password'], $infos['birthday'],
                 $infos['phonenumber'], $infos['twitter'], $infos['skype'], $infos['facebookuri'], $infos['website'], $infos['job'], $infos['description'],
                 $infos['privacy'], $infos['mailnotifications'], $infos['accesslevel']);
+
             DatabaseProvider::connection()->commit();
 
             return true;
@@ -112,6 +114,7 @@ class UserModel extends Model
             $sql = 'DELETE FROM ' . self::TABLE_NAME . ' WHERE id = ?';
 
             DatabaseProvider::connection()->execute($sql, $id);
+
             DatabaseProvider::connection()->commit();
 
             return true;
@@ -133,6 +136,7 @@ class UserModel extends Model
         try {
 
             DatabaseProvider::connection()->beginTransaction();
+
             $sql = 'UPDATE ' . self::TABLE_NAME . " SET 'firstname' = ?, 'lastname' = ?, 'mail' = ?, 'password' = ?, 'birthday' = ?,
                     'phonenumber' = ?,'twitter' = ?, 'skype' = ?, 'facebookuri' = ?, 'website' = ?, 'job' = ?, 'description' = ?,
                     'privacy' = ?, 'mailnotifications' = ?, 'accesslevel' = ? WHERE id = ? ";
@@ -140,7 +144,9 @@ class UserModel extends Model
             DatabaseProvider::connection()->update($sql, $infos['firstName'], $infos['lastName'], $infos['mail'], $infos['password'], $infos['birthday'],
                 $infos['phonenumber'], $infos['twitter'], $infos['skype'], $infos['facebookuri'], $infos['website'], $infos['job'], $infos['description'],
                 $infos['privacy'], $infos['mailnotifications'], $infos['accesslevel'], $infos['id']);
+
             DatabaseProvider::connection()->commit();
+
             return true;
 
         } catch (\Exception $e) {
