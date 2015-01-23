@@ -39,13 +39,12 @@ class Database extends \PDO
     /**
      * execute query
      * @param $query
-     * @param $_
+     * @param $params
      * @return array
      */
-    public function execute($query, $_)
+    public function execute($query, $params)
     {
-        $params = func_get_args();
-        $stmt = $this->prepare(array_shift($params));
+        $stmt = $this->prepare($query);
         $stmt->execute($params);
 
         return $stmt->fetchAll();
@@ -54,13 +53,11 @@ class Database extends \PDO
     /**
      * update query
      * @param $query
-     * @param $_
+     * @param $params array
      * @return bool
      */
-    public function update($query, $_)
+    public function update($query, array $params)
     {
-        $params = func_get_args();
-        array_shift($params);
         $stmt = $this->prepare($query);
         return $stmt->execute($params);
     }
@@ -68,13 +65,11 @@ class Database extends \PDO
     /**
      * select first from query
      * @param $query string query
-     * @param $_ array params
+     * @param $params array
      * @return mixed
      */
-    public function selectFirst($query, $_)
+    public function selectFirst($query, array $params)
     {
-        $params = func_get_args();
-        array_shift($params);
         $stmt = $this->prepare($query);
         $stmt->execute($params);
         return $stmt->fetch();

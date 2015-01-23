@@ -22,7 +22,7 @@ class ParticipateModel extends Model
     {
         $sql = 'SELECT id, username,name FROM user,event,event_user WHERE user.id = event_user.user AND event.id = event_user.id; ';
 
-        return DatabaseProvider::connection()->execute($sql, null);
+        return DatabaseProvider::connection()->execute($sql, []);
     }
 
     /**
@@ -34,7 +34,7 @@ class ParticipateModel extends Model
     {
         $sql = 'SELECT username,name FROM user,event,event_user WHERE user.id = event_user.user AND event.id = event_user.id AND event_user.id = ? ; ';
 
-        return DatabaseProvider::connection()->execute($sql, $id);
+        return DatabaseProvider::connection()->execute($sql, [$id]);
 
     }
 
@@ -47,7 +47,7 @@ class ParticipateModel extends Model
     {
         $sql = 'SELECT name FROM event,event_user WHERE event.id = event_user.id AND event_user.user = ? ; ';
 
-        return DatabaseProvider::connection()->execute($sql, $id);
+        return DatabaseProvider::connection()->execute($sql, [$id]);
     }
 
     /**
@@ -65,7 +65,7 @@ class ParticipateModel extends Model
 
             $sql = 'INSERT INTO event_user VALUES (?,?,?)';
 
-            DatabaseProvider::connection()->execute($sql, $idEvent, $idUser, $joindate);
+            DatabaseProvider::connection()->execute($sql, [$idEvent, $idUser, $joindate]);
 
             DatabaseProvider::connection()->commit();
 
@@ -92,7 +92,7 @@ class ParticipateModel extends Model
             DatabaseProvider::connection()->beginTransaction();
             $sql = 'DELETE FROM event_user WHERE user = ? AND id = ?';
 
-            DatabaseProvider::connection()->execute($sql, $idUser, $idEvent);
+            DatabaseProvider::connection()->execute($sql, [$idUser, $idEvent]);
             DatabaseProvider::connection()->commit();
 
             return true;

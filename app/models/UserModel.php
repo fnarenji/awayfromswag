@@ -26,7 +26,7 @@ class UserModel extends Model
             . 'FROM ' . self::TABLE_NAME . ' '
             . 'WHERE id = ?';
 
-        return DatabaseProvider::connection()->selectFirst($sql, $id);
+        return DatabaseProvider::connection()->execute($sql, [$id]);
     }
 
     /**
@@ -40,7 +40,7 @@ class UserModel extends Model
             . 'FROM ' . self::TABLE_NAME . ' '
             . 'WHERE username = ? ';
 
-        return DatabaseProvider::connection()->selectFirst($sql, $name);
+        return DatabaseProvider::connection()->execute($sql, [$name]);
     }
 
     /**
@@ -52,7 +52,7 @@ class UserModel extends Model
         $sql = 'SELECT *'
             . 'FROM ' . self::TABLE_NAME . ' ';
 
-        return DatabaseProvider::connection()->execute($sql, null);
+        return DatabaseProvider::connection()->execute($sql, []);
     }
 
     /**
@@ -68,7 +68,7 @@ class UserModel extends Model
             . 'WHERE username = ? '
             . 'AND password = SHA1(?)';
 
-        return DatabaseProvider::connection()->selectFirst($sql, $username, $password);
+        return DatabaseProvider::connection()->execute($sql, [$username, $password]);
     }
 
     /**
@@ -87,11 +87,7 @@ class UserModel extends Model
                 'twitter','skype','facebookuri','website','job','description','privacy','mailnotifications','accesslevel')
                      VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
 
-            DatabaseProvider::connection()->execute($sql, $infos['username'], $infos['firstName'], $infos['lastName'],
-                $infos['mail'], $infos['password'], $infos['birthday'],
-                $infos['phonenumber'], $infos['twitter'], $infos['skype'], $infos['facebookuri'], $infos['website'],
-                $infos['job'], $infos['description'],
-                $infos['privacy'], $infos['mailnotifications'], $infos['accesslevel']);
+            DatabaseProvider::connection()->execute($sql, $infos);
 
             DatabaseProvider::connection()->commit();
 
@@ -117,7 +113,7 @@ class UserModel extends Model
 
             $sql = 'DELETE FROM ' . self::TABLE_NAME . ' WHERE id = ?';
 
-            DatabaseProvider::connection()->execute($sql, $id);
+            DatabaseProvider::connection()->execute($sql, [$id]);
 
             DatabaseProvider::connection()->commit();
 
@@ -147,11 +143,7 @@ class UserModel extends Model
                     'phonenumber' = ?,'twitter' = ?, 'skype' = ?, 'facebookuri' = ?, 'website' = ?, 'job' = ?, 'description' = ?,
                     'privacy' = ?, 'mailnotifications' = ?, 'accesslevel' = ? WHERE id = ? ";
 
-            DatabaseProvider::connection()->update($sql, $infos['firstName'], $infos['lastName'], $infos['mail'],
-                $infos['password'], $infos['birthday'],
-                $infos['phonenumber'], $infos['twitter'], $infos['skype'], $infos['facebookuri'], $infos['website'],
-                $infos['job'], $infos['description'],
-                $infos['privacy'], $infos['mailnotifications'], $infos['accesslevel'], $infos['id']);
+            DatabaseProvider::connection()->update($sql, $infos);
 
             DatabaseProvider::connection()->commit();
 
@@ -180,11 +172,7 @@ class UserModel extends Model
                     phonenumber = ?,twitter = ?, skype = ?, facebookuri = ?, website = ?, job = ?, description = ?,
                     privacy = ?, mailnotifications = ?, accesslevel = ? WHERE id = ?';
 
-            DatabaseProvider::connection()->update($sql, $infos['username'], $infos['firstName'], $infos['lastName'],
-                $infos['mail'], $infos['password'], $infos['birthday'],
-                $infos['phonenumber'], $infos['twitter'], $infos['skype'], $infos['facebookuri'], $infos['website'],
-                $infos['job'], $infos['description'],
-                $infos['privacy'], $infos['mailnotifications'], $infos['accesslevel'], $infos['id']);
+            DatabaseProvider::connection()->update($sql, $infos);
             DatabaseProvider::connection()->commit();
             return true;
 
@@ -209,7 +197,7 @@ class UserModel extends Model
 
         $sql = 'SELECT id, username, firstname, lastname FROM ' . self::TABLE_NAME . ' WHERE username LIKE ? ';
 
-        return DatabaseProvider::connection()->execute($sql, $name);
+        return DatabaseProvider::connection()->execute($sql, [$name]);
     }
 
 

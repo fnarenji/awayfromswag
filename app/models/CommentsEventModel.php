@@ -28,7 +28,7 @@ JOIN comment_event ON comment_event.event = event.id
                     AND comment.user = user.id;
 SQL;
 
-        return DatabaseProvider::connection()->execute($sql, null);
+        return DatabaseProvider::connection()->execute($sql, []);
     }
 
 
@@ -48,8 +48,7 @@ JOIN event ON event.id = comment_event.event
 WHERE event.id = ?
 SQL;
 
-        return DatabaseProvider::connection()->execute($sql, $id);
-
+        return DatabaseProvider::connection()->execute($sql, [$id]);
     }
 
     /**
@@ -62,7 +61,7 @@ SQL;
         try {
             DatabaseProvider::connection()->beginTransaction();
 
-            $sqlComm = "UPDATE comments  SET contents = ? WHERE id = ? ;";
+            $sqlComm = "UPDATE comments  SET contents = ? WHERE id = ?;";
             DatabaseProvider::connection()->execute($sqlComm, $params['content'], $params['idcomment']);
 
             DatabaseProvider::connection()->commit();
@@ -84,11 +83,11 @@ SQL;
             DatabaseProvider::connection()->beginTransaction();
 
             $sqlComm = "INSERT INTO comment ('user','contents') VALUES (?, ?);";
-            DatabaseProvider::connection()->execute($sqlComm, $params['iduser'], $params['contents']);
+            DatabaseProvider::connection()->execute($sqlComm, [$params['iduser'], $params['contents']]);
 
             $tmp = $this->getIdComment();
             $sqlComm = "INSERT INTO comment_event ('id','event') VALUES (?, ?) ;";
-            DatabaseProvider::connection()->execute($sqlComm, $tmp, $params['idevent']);
+            DatabaseProvider::connection()->execute($sqlComm, [$tmp, $params['idevent']]);
 
             DatabaseProvider::connection()->commit();
 
@@ -107,7 +106,7 @@ SQL;
     {
         $sql = "SELECT MAX(id) FROM comment";
 
-        return DatabaseProvider::connection()->execute($sql, null)[0];
+        return DatabaseProvider::connection()->execute($sql, [])[0];
     }
 
     /**
@@ -122,7 +121,7 @@ SQL;
             DatabaseProvider::connection()->beginTransaction();
             $sql = "DELETE FROM comment_event WHERE id = ? ";
 
-            DatabaseProvider::connection()->execute($sql, $id);
+            DatabaseProvider::connection()->execute($sql, [$id]);
 
             DatabaseProvider::connection()->commit();
 

@@ -32,20 +32,21 @@ class Authentication
         $_SESSION['authDate'] = new \DateTime();
     }
 
+    public function addToContext(array $context)
+    {
+        return array_merge($context, ['auth' => [
+            'auth' => $this->isAuthenticated(),
+            'userName' => $this->getUserName(),
+            'userId' => $this->getUserId(),
+            'authDate' => $this->getAuthDate()
+        ]]);
+    }
+
     public function isAuthenticated()
     {
         return isset($_SESSION['userName']) && !empty($_SESSION['userName'])
         && isset($_SESSION['userId']) && !empty($_SESSION['userId'])
         && isset($_SESSION['authDate']) && !empty($_SESSION['authDate']);
-    }
-
-    public function addToContext(array $context)
-    {
-        return array_merge($context, ['auth' => [
-            'userName' => $this->getUserName(),
-            'userId' => $this->getUserId(),
-            'authDate' => $this->getAuthDate()
-        ]]);
     }
 
     public function getUserName()

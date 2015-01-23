@@ -8,8 +8,6 @@
 
 namespace SwagFramework\mvc;
 
-use app\helpers\Authentication;
-use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Helpers\ViewHelpers;
 
 class View extends \Twig_Environment
@@ -37,6 +35,6 @@ class View extends \Twig_Environment
     {
         //header('Location: ' . $to);
         // Quand ça marche pas, wallhack + aimbot = win.
-        echo '<script>location.href="' . $to . '"</script>';
+        //echo '<script>location.href="' . $to . '"</script>';
     }
 }
