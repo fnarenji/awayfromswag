@@ -12,8 +12,8 @@ namespace app\controllers;
 use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Exceptions\NoUserFoundException;
-use SwagFramework\mvc\Controller;
 use SwagFramework\Helpers\Input;
+use SwagFramework\mvc\Controller;
 
 class UserController extends Controller
 {

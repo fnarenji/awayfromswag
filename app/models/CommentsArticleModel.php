@@ -12,7 +12,8 @@ namespace app\models;
 use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\mvc\Model;
 
-class CommentsArticleModel extends Model {
+class CommentsArticleModel extends Model
+{
 
     /**
      * Return all comment on all article.

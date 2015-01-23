@@ -12,7 +12,7 @@ namespace SwagFramework\Helpers;
 use SwagFramework\Config\DatabaseConfig;
 use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Exceptions\TableNotFoundDatabaseException;
-use SwagFramework\Form\Field\Input;
+use SwagFramework\Form\Field\InputField;
 
 class Form
 {
@@ -43,8 +43,8 @@ class Form
 
     /**
      * generate form for table
-     * @param $table table
-     * @param $action action
+     * @param $table string
+     * @param $action string
      * @param string $method method form (default = POST)
      * @return \SwagFramework\Form\Form
      * @throws TableNotFoundDatabaseException
@@ -64,10 +64,15 @@ class Form
         $form = new \SwagFramework\Form\Form();
 
         foreach ($res as $value) {
-            $field = new Input($value['Field']);
+            $field = new InputField($value['Field']);
             $field->addAttribute('type', $this->convertAttributeType($value));
             $form->addField($field);
         }
+
+        $submit = new InputField('submit');
+        $submit->addAttribute('type', 'submit');
+        $submit->addAttribute('value', 'Envoyer');
+        $form->addField($submit);
 
         return $form;
     }

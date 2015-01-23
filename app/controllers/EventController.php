@@ -13,6 +13,7 @@ use app\exceptions\EventNotFoundException;
 use app\models\EventModel;
 use SwagFramework\Config\DatabaseConfig;
 use SwagFramework\Database\Database;
+use SwagFramework\Helpers\Form;
 use SwagFramework\mvc\Controller;
 
 class EventController extends Controller
@@ -56,8 +57,29 @@ class EventController extends Controller
         ));
     }
 
+    public function performAdd()
+    {
+
+    }
+
     public function add()
     {
-        //TODO: add new event from user
+        $formHelper = new Form();
+        $form = $formHelper->generate('event', '/event/performAdd');
+
+        $form->setAction('/event/perfomAdd');
+
+        $html = $form->getFormHTML(array(
+            'name' => 'Nom de l\'évènement',
+            'description' => 'Description',
+            'adress' => 'Adresse',
+            'eventtime' => 'Date de l\'évènement',
+            'money' => 'Prix',
+            'personsmax' => 'Nombre maximum de participants'
+        ));
+
+        $this->getView()->render('event/add', array(
+            'form' => $html
+        ));
     }
 }

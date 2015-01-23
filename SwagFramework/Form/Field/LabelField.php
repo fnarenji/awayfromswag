@@ -9,7 +9,7 @@
 namespace SwagFramework\Form\Field;
 
 
-class Label extends Field
+class LabelField extends Field
 {
     private $value;
 

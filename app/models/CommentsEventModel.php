@@ -42,18 +42,6 @@ class CommentsEventModel extends Model
     }
 
     /**
-     * Return id of last comment
-     * @return mixed
-     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
-     */
-    private function getIdComment()
-    {
-        $sql = "SELECT MAX(id) FROM comment";
-
-        return DatabaseProvider::connection()->execute($sql, null)[0];
-    }
-
-    /**
      * Update comment on event
      * @param $params
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
@@ -73,7 +61,6 @@ class CommentsEventModel extends Model
         }
 
     }
-
 
     /**
      * Insert in DB a comment for an event.
@@ -98,6 +85,18 @@ class CommentsEventModel extends Model
             DatabaseProvider::connection()->rollBack();
         }
 
+    }
+
+    /**
+     * Return id of last comment
+     * @return mixed
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    private function getIdComment()
+    {
+        $sql = "SELECT MAX(id) FROM comment";
+
+        return DatabaseProvider::connection()->execute($sql, null)[0];
     }
 
     /**

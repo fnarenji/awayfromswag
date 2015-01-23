@@ -9,7 +9,7 @@
 namespace SwagFramework\Form;
 
 
-use SwagFramework\Form\Field\Label;
+use SwagFramework\Form\Field\LabelField;
 use SwagFramework\Helpers\Input;
 
 class Form
@@ -81,10 +81,11 @@ class Form
 
         foreach ($this->getFields() as $field) {
             if (!empty($labels) && array_key_exists($field->getName(), $labels)) {
-                $label = new Label($field->getName(), $labels[$field->getName()]);
+                $label = new LabelField($field->getName(), $labels[$field->getName()]);
                 $form .= CR . TAB . $label->getHTML();
-            }
-            $form .= CR . TAB . $field->getHTML();
+                $form .= CR . TAB . $field->getHTML();
+            } elseif($field->getName() == 'submit' || $field->getAttribute('type') == 'hidden')
+                $form .= CR . TAB . $field->getHTML();
         }
 
         $form .= CR . '</form>';

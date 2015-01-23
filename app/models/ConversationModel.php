@@ -9,8 +9,8 @@
 namespace app\models;
 
 
-use SwagFramework\mvc\Model;
 use SwagFramework\Database\DatabaseProvider;
+use SwagFramework\mvc\Model;
 
 class ConversationModel extends Model
 {
@@ -59,7 +59,8 @@ class ConversationModel extends Model
      * @return bool
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function insertConversation($idUser){
+    public function insertConversation($idUser)
+    {
 
         try {
             DatabaseProvider::connection()->beginTransaction();
@@ -67,11 +68,11 @@ class ConversationModel extends Model
             $sql = "INSERT INTO conversation_user ('id',''user') VALUES ?,? ;";
             $sqlOther = "INSERT INTO   conversation ('createtime') VALUES ? ;";
 
-            DatabaseProvider::connection()->execute($sqlOther,new \DateTime());
+            DatabaseProvider::connection()->execute($sqlOther, new \DateTime());
 
             $tmp = $this->getIdConversation();
 
-            DatabaseProvider::connection()->execute($sql,$tmp,$idUser);
+            DatabaseProvider::connection()->execute($sql, $tmp, $idUser);
 
             DatabaseProvider::connection()->commit();
 
@@ -89,24 +90,24 @@ class ConversationModel extends Model
      * @return bool
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function deleteConversation($id){
+    public function deleteConversation($id)
+    {
 
-        try{
+        try {
             DatabaseProvider::connection()->beginTransaction();
 
             $sql = "DELETE FROM conversation_user WHERE id = ?";
-            DatabaseProvider::connection()->execute($sql,$id);
+            DatabaseProvider::connection()->execute($sql, $id);
 
             DatabaseProvider::connection()->commit();
 
             return true;
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DatabaseProvider::connection()->rollBack();
         }
 
     }
-
 
 
 }
