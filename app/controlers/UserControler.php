@@ -58,14 +58,19 @@ class UserControler extends Controler
         try {
             $userModel = $this->loadModel('User');
             $input = $this->helpers->input;
+
             $username = $input->post('username');
-            $password = $input->post('password');
+            $password = sha1($input->post('password'));
+
             $validAuth = $userModel->validateAuthentication($username, $password);
+
             if (!$validAuth) {
                 $_SESSION['user'] = $username;
                 $_SESSION['authDate'] = new \DateTime();
+                $this->getParams()->render('/home/index', array("logged" => true));
             } else {
-
+                // TODO POPUP
+                $this->getView()->render('/home/index');
             }
         } catch (InputNotSetException $e) {
             throw $e;

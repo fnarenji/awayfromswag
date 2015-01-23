@@ -63,12 +63,12 @@ class UserModel extends Model
      */
     public function validateAuthentication($username, $password)
     {
-        $sql = 'SELECT 1'
+        $sql = 'SELECT id '
             . 'FROM ' . self::TABLE_NAME . ' '
-            . 'WHERE username = ?'
-            . 'AND password = ?';
+            . 'WHERE username = ? '
+            . 'AND password = ? ';
 
-        return DatabaseProvider::connection()->query($sql, $username, sha1($password))->rowCount() == 1;
+       return !empty(DatabaseProvider::connection()->execute($sql, $username, $password));
     }
 
     /**
