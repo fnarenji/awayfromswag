@@ -34,7 +34,7 @@ class NewsModel extends Model
      */
     public function getNews()
     {
-        $sql = "SELECT username, text, postdate " .
+        $sql = "SELECT id, username, text, postdate " .
             "FROM article, user " .
             "WHERE user.id = article.user";
 
