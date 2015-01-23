@@ -76,17 +76,23 @@ class UserController extends Controller
 
             $validAuth = $this->userModel->validateAuthentication($username, $password);
 
-            if (!$validAuth) {
+            if (!empty($validAuth)) {
                 Authentication::getInstance()->setAuthenticated($username, $validAuth['id']);
                 $this->getView()->redirect('/');
             } else {
-                // TODO POPUP
+                // TODO POPUP WRONG CREDENTIALS MESSAGE
 
-                $this->getView()->render('/home/index');
+                $this->getView()->redirect('/');
             }
         } catch (InputNotSetException $e) {
             throw $e;
         }
+    }
+
+    public function disconnect()
+    {
+        Authentication::getInstance()->disconnect();
+        $this->getView()->redirect('/');
     }
 
     public function account()

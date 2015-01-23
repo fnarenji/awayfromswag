@@ -32,6 +32,14 @@ class Authentication
         $_SESSION['authDate'] = new \DateTime();
     }
 
+    public function disconnect()
+    {
+        unset($_SESSION['userName']);
+        unset($_SESSION['userId']);
+        unset($_SESSION['authDate']);
+        session_destroy();
+    }
+
     public function addToContext(array $context = [])
     {
         $authData = [
