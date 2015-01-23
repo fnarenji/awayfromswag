@@ -11,6 +11,10 @@ use SwagFramework\Exceptions\RoutingException;
 
 class Router
 {
+    public static function getSupportedHttpMethods() {
+        return ['POST', 'PUT', 'DELETE'];
+    }
+
     /**
      * The route in the URI
      * @var Route
@@ -70,6 +74,7 @@ class Router
 
         foreach ($this->routes as $route) {
             if ($route->getMethod() != $this->route->getMethod()) {
+                echo $route->getMethod() . ' NOPE ' . $this->route->getMethod() . '<br/>';
                 continue;
             }
 
@@ -92,29 +97,29 @@ class Router
     }
 
     /**
-     * This method call the right function in the controler
+     * This method call the right function in the controller
      * targeted by the route with the parameters in the URI
      * @param Route $route
      */
     private function dispatch($route)
     {
         $action = $route->getAction();
-        $route->getControler()->setParams($this->route->getParameters());
-        $route->getControler()->$action();
+        $route->getController()->setParams($this->route->getParameters());
+        $route->getController()->$action();
     }
 
     /**
      * This function add a route to the $routes that contains all the routes
      * for this application.
      * @param $url
-     * @param $controler
+     * @param $controller
      * @param $action
      * @param $method
      */
-    public function add($url, $controler, $action, $method = 'GET')
+    public function add($url, $controller, $action, $method = 'GET')
     {
         $route = new Route();
-        $route->setRoute($url, $controler, $action, $method);
+        $route->setRoute($url, $controller, $action, $method);
 
         $this->routes[] = $route;
     }

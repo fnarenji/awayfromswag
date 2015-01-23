@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `afs`.`user` (
   `privacy`            BIT(15)      NOT NULL,
   `mailnotifications`  TINYINT(1)   NOT NULL,
   `accesslevel`        INT UNSIGNED NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`, `lastname`),
+  PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC)
 )
   ENGINE = InnoDB;

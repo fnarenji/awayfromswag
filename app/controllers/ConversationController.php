@@ -6,15 +6,15 @@
  * Time: 10:10
  */
 
-namespace app\controlers;
+namespace app\controllers;
 
 
 use app\exceptions\ConversationNotFoundException;
 use SwagFramework\Config\ConversationConfig;
 use SwagFramework\Exceptions\FileNotFoundException;
-use SwagFramework\mvc\Controler;
+use SwagFramework\mvc\Controller;
 
-class ConversationControler extends Controler
+class ConversationController extends Controller
 {
 
     /**

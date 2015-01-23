@@ -25,11 +25,11 @@ try {
 
     $router = new \SwagFramework\Routing\Router();
 
-    $classrouting = new \app\helpers\ClassRouting('\app\controlers\\');
-    $classrouting->addclass('User');
-    $classrouting->addclass('Conversation');
-    $classrouting->addclass('Event');
-    $classrouting->generateroute($router);
+    $classRouting = new \app\helpers\ClassRouting('\app\controlers\\');
+    $classRouting->addclass('User');
+    $classRouting->addclass('Conversation');
+    $classRouting->addclass('Event');
+    $classRouting->generateroute($router);
 
     $router->add('/user/auth', new \app\controlers\UserControler(), 'auth', 'POST');
     $router->add('/admin/index', new \app\controlers\admin\EventAdminControler(), 'index');
