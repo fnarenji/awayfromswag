@@ -6,7 +6,7 @@
  * Time: 15:39
  */
 
-namespace app\controlers;
+namespace app\controllers;
 
 
 use SwagFramework\Exceptions\InputNotSetException;
@@ -15,7 +15,7 @@ use SwagFramework\Exceptions\NoUserFoundException;
 use SwagFramework\mvc\Controller;
 use SwagFramework\Helpers\Input;
 
-class UserController extends Controler
+class UserController extends Controller
 {
     public function index()
     {
