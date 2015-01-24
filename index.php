@@ -23,11 +23,7 @@ if (DEBUG) {
     ini_set('display_errors', true);
     ini_set('html_errors', true);
     error_reporting(E_ALL);
-    error_reporting(E_ALL);
-    ini_set('display_errors', 'On');
-
 }
-
 
 try {
     \SwagFramework\Database\DatabaseProvider::connect(\SwagFramework\Config\DatabaseConfig::parseFromFile("app/config/database.json"));
@@ -47,9 +43,13 @@ try {
 
     $router->matchCurrentRequest();
 } catch (SwagException $e) {
-    echo '<h1>SwagException !</h1>';
-    echo '<p>' . $e->getMessage() . '</p>';
+    if (DEBUG) {
+        echo '<h1>SwagException !</h1>';
+        echo '<p>' . $e->getMessage() . '</p>';
+    } else echo 'Internal server error.';
 } catch (Exception $e) {
-    echo '<h1>Exception !</h1>';
-    echo $e;
+    if (DEBUG) {
+        echo '<h1>Exception !</h1>';
+        echo $e;
+    } else echo 'Internal server error.';
 }

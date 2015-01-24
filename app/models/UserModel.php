@@ -90,12 +90,10 @@ SQL;
 
             return $success;
 
-        } catch (\Exception $e) {
-
+        } catch (\PDOException $e) {
             DatabaseProvider::connection()->rollBack();
-            var_dump($e);
+            throw $e;
         }
-        return false;
     }
 
     /**

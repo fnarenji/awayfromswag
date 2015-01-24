@@ -129,8 +129,28 @@ class UserController extends Controller
             if (Input::post($privacySettings[$i] . 'Private', true) == 'on')
                 $user['privacy'] |= 0b000000000000001 << $i;
 
-        $this->userModel->insertUser($user);
-        $this->getView()->redirect('/');
+        $errors = [];
+        try {
+            $this->userModel->insertUser($user);
+        } catch (\PDOException $e) {
+            $match = [];
+            if (preg_match('/SQLSTATE\[23000]: Integrity constraint violation: 1062 Duplicate entry \'(?P<value>.*)\' for key \'(?P<field>.*)_UNIQUE\'/', $e->getMessage(), $match)) {
+                switch ($match['field']) {
+                    case 'username':
+                        $errors[] = 'Ce nom d\'utilisateur est déjà pris !';
+                        break;
+                    default:
+                        $errors[] = 'Unknown database error.';
+                }
+            }
+
+        } catch (\Exception $e) {
+
+        }
+        if (!empty($errors))
+            $this->getView()->render('user/register', ['user' => $user, 'errors' => $errors]);
+        else
+            $this->getView()->redirect('/');
     }
 
     public function account()

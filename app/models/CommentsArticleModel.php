@@ -54,34 +54,21 @@ class CommentsArticleModel extends Model
         try {
             DatabaseProvider::connection()->beginTransaction();
 
-            $sqlComm = "INSERT INTO comments ('user','contents') VALUES (? , ?);";
+            $sqlComm = "INSERT INTO comment ('user','contents') VALUES (? , ?);";
             DatabaseProvider::connection()->query($sqlComm, [$param['iduser'], $param['contents']]);
 
-            $tmp = $this->getIdComment();
+            $newCommentId = DatabaseProvider::connection()->lastInsertId();
             $sqlComm = "INSERT INTO comment_event ('id','article') VALUES (? , ?);";
-            DatabaseProvider::connection()->query($sqlComm, [$tmp, $param['idarticle']]);
+            DatabaseProvider::connection()->query($sqlComm, [$newCommentId, $param['idarticle']]);
 
             DatabaseProvider::connection()->commit();
 
             return true;
-
         } catch (\Exception $e) {
             DatabaseProvider::connection()->rollBack();
         }
 
         return false;
-    }
-
-    /**
-     * Return id of last comment
-     * @return mixed
-     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
-     */
-    private function getIdComment()
-    {
-        $sql = "SELECT MAX(id) FROM comment";
-
-        return DatabaseProvider::connection()->query($sql, [])[0];
     }
 
     /**
@@ -132,5 +119,17 @@ class CommentsArticleModel extends Model
         }
 
         return true;
+    }
+
+    /**
+     * Return id of last comment
+     * @return mixed
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    private function getIdComment()
+    {
+        $sql = "SELECT MAX(id) FROM comment";
+
+        return DatabaseProvider::connection()->query($sql, [])[0];
     }
 }

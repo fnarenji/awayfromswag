@@ -10,6 +10,7 @@ namespace app\models;
 
 
 use SwagFramework\Database\DatabaseProvider;
+use SwagFramework\Helpers\Authentication;
 use SwagFramework\mvc\Model;
 
 class ConversationModel extends Model
@@ -35,7 +36,7 @@ class ConversationModel extends Model
      */
     public function getUser($id)
     {
-        $sql = "SELECT id, username FROM conversation_user,user WHERE user.id = conversation_user.user AND conversation_user.user = ? ";
+        $sql = "SELECT conversation_user.id, username FROM conversation_user, user WHERE user.id = conversation_user.user AND conversation_user.user = ? ";
 
         return DatabaseProvider::connection()->query($sql, [$id]);
     }
@@ -59,42 +60,29 @@ class ConversationModel extends Model
      * @return bool
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function insertConversation($idUser)
+    public function insertConversation()
     {
 
         try {
             DatabaseProvider::connection()->beginTransaction();
 
             $sql = "INSERT INTO conversation_user ('id', 'user') VALUES (?,?);";
-            $sqlOther = "INSERT INTO   conversation ('createtime') VALUES (?);";
+            $sqlOther = "INSERT INTO conversation ('user') VALUES (?);";
 
-            DatabaseProvider::connection()->query($sqlOther, [new \DateTime()]);
+            DatabaseProvider::connection()->query($sqlOther, Authentication::getInstance()->getUserId());
 
-            $tmp = $this->getIdConversation();
+            $newConversationId = DatabaseProvider::connection()->lastInsertId();
 
-            DatabaseProvider::connection()->query($sql, [$tmp, $idUser]);
+            DatabaseProvider::connection()->query($sql, [$newConversationId, Authentication::getInstance()->getUserId()]);
 
             DatabaseProvider::connection()->commit();
 
             return true;
-
         } catch (\Exception $e) {
             DatabaseProvider::connection()->rollBack();
         }
 
         return false;
-    }
-
-    /**
-     * Return id of last conversation
-     * @return mixed
-     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
-     */
-    private function getIdConversation()
-    {
-        $sql = "SELECT MAX(id) FROM conversation";
-
-        return DatabaseProvider::connection()->query($sql, [])[0];
     }
 
     /**
