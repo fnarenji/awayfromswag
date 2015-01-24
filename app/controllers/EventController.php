@@ -182,9 +182,10 @@ class EventController extends Controller
         ]);
 
         $formDelete = new Form('/event/delete');
+        $formDelete->setClass('pure-form centered');
         $formDelete->addField(new InputField('id', ['type' => 'hidden', 'value' => $id]));
         $formDelete->addField(new InputField('submit',
-            ['type' => 'submit', 'value' => 'Supprimer', 'class' => 'pure-css-button button-error']));
+            ['type' => 'submit', 'value' => 'Supprimer', 'class' => 'pure-button button-error']));
 
         $this->getView()->render('event/modify', ['form' => $html, 'formDelete' => $formDelete->getFormHTML([])]);
     }
