@@ -41,20 +41,23 @@ WHERE conversation_user.user = ?
 ORDER BY lastmessagetime DESC
 SQL;
     const GET_CONVERSATION = <<<'SQL'
-SELECT conversation.title, creator.username AS creator, createtime, lastmessagetime,
-  CONCAT(lastauthor.username, ' (', lastauthor.firstname, ' ', lastauthor.lastname, ')') AS lastmessageauthorfullname
+SELECT conversation.title,
+  CONCAT(creator.username, ' (', creator.firstname, ' ', creator.lastname, ')') creator,
+  DATE_FORMAT(createtime, '%d/%m/%Y %H:%i:%s') as createtime,
+  DATE_FORMAT(lastmessagetime, '%d/%m/%Y %H:%i:%s') as lastmessagetime,
+  CONCAT(lastmessageauthor.username, ' (', lastmessageauthor.firstname, ' ', lastmessageauthor.lastname, ')') lastmessageauthor
 FROM conversation
 JOIN user creator ON conversation.user = creator.id
-JOIN user lastmessage ON conversation.lastmessageauthor = lastmessage.id
-JOIN conversation_user ON conversation_user.user = user.id
-WHERE user.id = ?
+JOIN user lastmessageauthor ON conversation.lastmessageauthor = lastmessageauthor.id
+JOIN conversation_user ON conversation_user.user = :user
+WHERE conversation.id = :conversation
 SQL;
     private $conversationFolder;
 
     public function __construct()
     {
-        $file = new ConfigFileParser(/*FSROOT . "/*/"app/config/conversation.json");
-        $this->conversationFolder = /*FSROOT . */$file->getEntry("path");
+        $config = new ConfigFileParser(FSROOT . 'app/config/conversation.json');
+        $this->conversationFolder = FSROOT . $config->getEntry("path");
     }
 
     /**
@@ -173,11 +176,18 @@ SQL;
     public function getConversation($conversationId)
     {
         try {
-            $conversation = DatabaseProvider::connection()->selectFirst(self::GET_CONVERSATION, [Authentication::getInstance()->getUserId()]);
-            $conversation = array_merge($conversation, ['messages' => []]);
+            $conversation = DatabaseProvider::connection()->selectFirst(self::GET_CONVERSATION, [
+                'conversation' => $conversationId,
+                'user' => Authentication::getInstance()->getUserId()
+            ]);
+
+            $conversation['messages'] = [];
+
             $doc = new \DOMDocument();
             $doc->load($this->conversationFolder . $conversationId . '.xml');
+
             $xpath = new \DOMXPath($doc);
+
             foreach ($xpath->query('/conversation/message') as $messageNode) {
                 $message = [];
 

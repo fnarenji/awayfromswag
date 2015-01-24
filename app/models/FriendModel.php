@@ -29,16 +29,9 @@ class FriendModel extends Model {
     }
 
     public function insertFriend($params){
+        $sql = 'INSERT INTO user_friend VALUES (LEAST(:user1, :user2), GREATEST(:user1, :user2), FALSE)';
 
-        if($params['user1'] > $params['user2']){
-            $tmp = $params['user1'];
-            $params['user1'] = $params['user2'];
-            $params['user2'] = $tmp;
-        }
-
-        $sql = 'INSERT INTO user_friend VALUES ( ? , ? , ? )';
-
-        return DatabaseProvider::connection()->execute($sql,[$params['user1'],$params['user2'],false]);
+        return DatabaseProvider::connection()->execute($sql, $params);
     }
 
     public function deleteFriend($id1,$id2){

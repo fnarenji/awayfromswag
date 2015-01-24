@@ -3,13 +3,18 @@
     <article>
         <h1>{{ conversation.title }}</h1>
 
-        <p>{{ dump(conversation) }}</p>
 
-        <p>Dernier message posté par <b>{{ conversation.lastmessageauthorfullname }}</b> le
-            <b>{{ conversation.lastmessagetime }}</b>.</p>
+        <p style="text-align: center">
+            Crée par <b>{{ conversation.creator }}</b> le <b>{{ conversation.createtime }}</b><br/>
+            Dernier message posté par <b>{{ conversation.lastmessageauthor }}</b> le
+            <b>{{ conversation.lastmessagetime }}</b>.
+        </p>
 
         <div>
+            {% for message in conversation.messages %}
 
+            {% endfor %}
         </div>
+        <p>{{ dump(conversation) }}</p>
     </article>
 {% endblock %}
