@@ -8,6 +8,8 @@
 
 namespace SwagFramework\mvc;
 
+use app\models\EventModel;
+use app\models\UserModel;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\ViewHelpers;
 use Twig_Extension_Debug;
@@ -37,6 +39,14 @@ class View extends \Twig_Environment
     {
         $context = array_merge(['helpers' => $this->helpers], $context);
         $context = Authentication::getInstance()->addToContext($context);
+
+        $modelEvent = new EventModel();
+        $count['event'] = $modelEvent->count();
+
+        $modelUser = new UserModel();
+        $count['user'] = $modelUser->count();
+
+        $context = array_merge(['count' => $count], $context);
 
         echo parent::render($name, $context);
     }

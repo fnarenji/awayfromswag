@@ -7,27 +7,27 @@
  */
 
 namespace tests\Models;
-use app\models\NewsModel;
 
+use app\models\ArticleModel;
 
 
 class ArticleModelTest extends \PHPUnit_Framework_TestCase {
 
     /**
-     * @var \app\models\NewsModel
+     * @var \app\models\ArticleModel
      */
     private $model;
 
     public function testGetAll()
     {
-        $this->model = new NewsModel();
+        $this->model = new ArticleModel();
         $state = $this->model->getNews();
         $this->assertNotEmpty($state);
     }
 
     public function testAll()
     {
-        $this->model = new NewsModel();
+        $this->model = new ArticleModel();
 
         $array = ['user'=>'1','title'=>'plop','text'=>'test','postdate'=>date('Y-m-d G:i:s'),'category'=>'1'];
         $state = $this->model->insertNews($array);

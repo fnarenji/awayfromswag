@@ -30,7 +30,7 @@
         </form>
         <ul>
             <li><a href="/event/">Événements</a></li>
-            <li><a href="#">Actualité</a></li>
+            <li><a href="/article">Actualités</a></li>
             <li><a href="/user/all">Annuaire</a></li>
             <li><a href="#">Partenaire</a></li>
         </ul>
@@ -44,8 +44,8 @@
     </div>
     <ul class="footer">
         <li><a href="#"><b>{{ events.nbConnect }}</b> connecté(s)</a></li>
-        <li><a href="#"><b>5</b> inscrits</a></li>
-        <li><a href="#"><b>20</b></a> évènements</li>
+        <li><a href="#"><b>{{ count.user.nb }}</b> inscrits</a></li>
+        <li><a href="#"><b>{{ count.event.nb }}</b></a> évènements</li>
     </ul>
 </aside>
 <section class="menu-reduced">

@@ -11,25 +11,25 @@ namespace app\models;
 use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\mvc\Model;
 
-class NewsModel extends Model
+class ArticleModel extends Model
 {
 
     /**
-     * Return a news
+     * Return a article
      * @param $id
      * @return mixed
      */
     public function getOneNewsById($id)
     {
-        $sql = "SELECT article.id,title, username, text, postdate " .
-            "FROM article, user " .
-            "WHERE user.id = article.user AND article.id = ?";
+        $sql = "SELECT * " .
+            "FROM article " .
+            "WHERE id=?";
 
         return DatabaseProvider::connection()->selectFirst($sql, [$id]);
     }
 
     /**
-     * Return a news
+     * Return a article
      * @param $name
      * @return array
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
@@ -45,14 +45,13 @@ class NewsModel extends Model
 
 
     /**
-     * Return all news
+     * Return all article
      * @return array
      */
     public function getNews()
     {
-        $sql = "SELECT article.id, username, text, postdate " .
-            "FROM article, user " .
-            "WHERE user.id = article.user";
+        $sql = "SELECT * " .
+            "FROM article";
 
         return DatabaseProvider::connection()->query($sql);
     }
@@ -87,7 +86,7 @@ SQL;
     }
 
     /**
-     * Delete a news
+     * Delete a article
      * @param $id
      * @return bool
      */
@@ -109,7 +108,7 @@ SQL;
     }
 
     /**
-     * Delete a news
+     * Delete a article
      * @param $id
      * @return bool
      * @throws \Exception
@@ -133,19 +132,18 @@ SQL;
     }
 
     /**
-     * Update a news
-     * @param $id
-     * @param $content
-     * @param $date
+     * @param $infos
      * @return bool
+     * @throws \Exception
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function updateNewsById($id, $content, $date)
+    public function updateNews($infos)
     {
         try {
 
             DatabaseProvider::connection()->beginTransaction();
-            $sql = 'UPDATE article SET text = ?, postdate = ? WHERE id = ?';
-            $state  = DatabaseProvider::connection()->execute($sql, [$content, $date, $id]);
+            $sql = 'UPDATE article SET text=:text, title=:title WHERE id=:id';
+            $state = DatabaseProvider::connection()->execute($sql, $infos);
 
             DatabaseProvider::connection()->commit();
 
@@ -157,8 +155,6 @@ SQL;
         }
 
     }
-
-
 
     public function updateNewsByName($name,$date, $content)
     {
@@ -176,5 +172,33 @@ SQL;
             throw $e;
         }
 
+    }
+
+    public function getCategory($id)
+    {
+        $sql = <<<SQL
+SELECT * FROM article_category WHERE id=?;
+SQL;
+
+        return DatabaseProvider::connection()->selectFirst($sql, [$id]);
+
+    }
+
+    public function getTop()
+    {
+        $sql = <<<SQL
+SELECT * FROM article ORDER BY postdate DESC LIMIT 1;
+SQL;
+
+        return DatabaseProvider::connection()->selectFirst($sql, []);
+    }
+
+    public function getLast()
+    {
+        $sql = <<<SQL
+SELECT * FROM article ORDER BY postdate DESC LIMIT 3;
+SQL;
+
+        return DatabaseProvider::connection()->query($sql, []);
     }
 } 

@@ -52,7 +52,6 @@ class ConversationController extends Controller
         $id = (int)$this->getParams()[0];
 
         $conversation = $this->conversationModel->getConversation($id);
-        die();
         $this->getView()->render('conversation/show', ['conversation' => $conversation]);
     }
 
@@ -93,6 +92,6 @@ class ConversationController extends Controller
         }
 
         $this->conversationModel->newMessage($newConversationId, $message);
-        //$this->getView()->redirect('/');
+        $this->getView()->redirect('/');
     }
 }
