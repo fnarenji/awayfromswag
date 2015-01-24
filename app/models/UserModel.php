@@ -82,7 +82,7 @@ class UserModel extends Model
 
             $sql = <<<SQL
 INSERT INTO user (username, firstname, lastname, mail, password, birthday,phonenumber, twitter, skype, facebookuri, website, job, description, privacy, mailnotifications, accesslevel)
-        VALUES (:username, :firstname, :lastname, :mail, :password, :birthday, :phonenumber, :twitter, :skype, :facebookuri, :website, :job, :description, :privacy, :mailnotifications, :accesslevel)
+        VALUES (:username, :firstname, :lastname, :mail, SHA1(:password), :birthday, :phonenumber, :twitter, :skype, :facebookuri, :website, :job, :description, :privacy, :mailnotifications, :accesslevel)
 SQL;
 
             $success = DatabaseProvider::connection()->execute($sql, $infos);
