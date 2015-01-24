@@ -137,7 +137,7 @@ SQL;
 
             $sql = 'UPDATE user '
                 . 'SET lastname=:lastname, firstname=:firstname, job=:job, description=:description, mail=:mail, phonenumber=:phonenumber, twitter=:twitter, facebookuri=:facebookuri, skype=:skype, website=:website, privacy=:privacy '
-                . 'WHERE id=:id';
+                . 'WHERE id=:id;';
             $state = DatabaseProvider::connection()->execute($sql, $infos);
 
             DatabaseProvider::connection()->commit();

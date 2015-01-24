@@ -6,12 +6,12 @@
  * Time: 15:31
  */
 
-namespace app\controllers\admin;
+namespace app\controllers;
 
 
 use SwagFramework\mvc\Controller;
 
-class EventAdminController extends Controller
+class AdminEventController extends Controller
 {
     /**
      * @var \app\models\EventModel
@@ -21,8 +21,8 @@ class EventAdminController extends Controller
     public function index()
     {
         $this->model = $this->loadModel('Event');
-        $allEvents = $this->model->getEvents();
-        $this->getView()->render('admin/event', array('allEvents' => $allEvents));
+        $allEvents = $this->model->getAll();
+        $this->getView()->render('admin/events', array('allEvents' => $allEvents));
     }
 
     public function delete()
