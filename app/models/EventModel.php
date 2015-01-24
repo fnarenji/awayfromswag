@@ -59,11 +59,12 @@ class EventModel extends Model
 INSERT INTO event (name, user, description, address, eventtime, money, personsmax)
         VALUES (:name, :user, :description, :address, :eventtime, :money, :personsmax);
 SQL;
-            DatabaseProvider::connection()->execute($sql, $params);
+
+            $state = DatabaseProvider::connection()->execute($sql, $params);
 
             DatabaseProvider::connection()->commit();
 
-            return true;
+            return $state;
 
         } catch (\Exception $e) {
             DatabaseProvider::connection()->rollBack();
@@ -72,26 +73,81 @@ SQL;
     }
 
     /**
+     * Update an event
      * @param $params
      * @return bool
-     * @throws \Exception
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function updateEvent($params)
+    public function updateEventById($params)
     {
         try {
 
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql = 'UPDATE event '
-                . 'SET name=:name ,description=:description, address=:address, eventtime=:eventtime, money=:money, personsmax=:personsmax '
-                . 'WHERE id=:id';
 
-            DatabaseProvider::connection()->execute($sql, $params);
+            $str = '';
+
+            foreach($params as $key=>$value){
+                if($key != 'id'){
+                    $str .= ''.$key.' = \''.$value.'\' ,';
+                }
+            }
+
+            $str  = substr($str, 0, -1);
+
+            $sql = 'UPDATE event '
+                . 'SET '. $str . ' WHERE id = ?';
+
+            var_dump($sql);
+            var_dump($params);
+
+            $state = DatabaseProvider::connection()->execute($sql, [$params['id']]);
 
             DatabaseProvider::connection()->commit();
 
-            return true;
+            return $state;
+
+        } catch (\Exception $e) {
+            DatabaseProvider::connection()->rollBack();
+            throw $e;
+        }
+    }
+
+    /**
+     * Update Event by name
+     * @param $params
+     * @return bool
+     * @throws \Exception
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    public function updateEventByName($params)
+    {
+        try {
+
+            DatabaseProvider::connection()->beginTransaction();
+
+
+            $str = '';
+
+            foreach($params as $key=>$value){
+                if($key != 'id'){
+                    $str .= ''.$key.' = \''.$value.'\' ,';
+                }
+            }
+
+            $str  = substr($str, 0, -1);
+
+            $sql = 'UPDATE event '
+                . 'SET '. $str . ' WHERE name = ?';
+
+            var_dump($sql);
+            var_dump($params);
+
+            $state = DatabaseProvider::connection()->execute($sql, [$params['name']]);
+
+            DatabaseProvider::connection()->commit();
+
+            return $state;
 
         } catch (\Exception $e) {
             DatabaseProvider::connection()->rollBack();
@@ -104,13 +160,26 @@ SQL;
      * @param $id
      * @return bool
      */
-    public function deleteEvent($id)
+    public function deleteEventId($id)
     {
         $sql = "DELETE FROM event WHERE id = ?";
 
-        DatabaseProvider::connection()->query($sql, [$id]);
+        DatabaseProvider::connection()->execute($sql, [$id]);
 
         return true;
+    }
+
+    /**
+     * Delete event by name
+     * @param $name
+     * @return bool
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    public function deleteEventName($name)
+    {
+        $sql = "DELETE FROM event WHERE name = ?";
+
+        return DatabaseProvider::connection()->execute($sql, [$name]);
     }
 
     /**
@@ -141,5 +210,37 @@ SQL;
     public function unparticipate($id, $userId)
     {
         //TODO
+    }
+
+    /**
+     * get events with max participation
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    public function getTop()
+    {
+        $sql = <<<SQL
+SELECT * FROM event
+        JOIN event_user ON event.id = event_user.id
+        LIMIT 3;
+SQL;
+
+        DatabaseProvider::connection()->query($sql);
+    }
+
+    /**
+     * get last events
+     * @return array
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    public function getLast()
+    {
+        $sql = <<<SQL
+SELECT * FROM event
+  ORDER BY createtime DESC
+  LIMIT 3;
+SQL;
+
+        return DatabaseProvider::connection()->query($sql);
+
     }
 }

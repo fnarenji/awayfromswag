@@ -79,7 +79,7 @@ class UserModel extends Model
      */
     public function validateAuthentication($username, $password)
     {
-        $sql = 'SELECT id, MD5(mail) as mailHash '
+        $sql = 'SELECT id, firstname, lastname, MD5(mail) as mailHash '
             . 'FROM user '
             . 'WHERE username = ? '
             . 'AND password = SHA1(?)';
@@ -152,10 +152,19 @@ SQL;
 
             DatabaseProvider::connection()->beginTransaction();
 
+            $str = '';
+
+            foreach($infos as $key=>$value){
+                if($key != 'id'){
+                    $str .= ''.$key.' = \''.$value.'\' ,';
+                }
+            }
+
+            $str  = substr($str, 0, -1);
+
             $sql = 'UPDATE user '
-                . 'SET lastname=:lastname, firstname=:firstname, job=:job, description=:description, mail=:mail, phonenumber=:phonenumber, twitter=:twitter, facebookuri=:facebookuri, skype=:skype, website=:website, privacy=:privacy '
-                . 'WHERE id=:id;';
-            $state = DatabaseProvider::connection()->execute($sql, $infos);
+                . 'SET '.$str.' WHERE id= ?;';
+            $state = DatabaseProvider::connection()->execute($sql, [$infos['id']]);
 
             DatabaseProvider::connection()->commit();
 

@@ -55,6 +55,10 @@ class UserModelTest extends \PHPUnit_Framework_TestCase {
         $array =    ['id'=>1,'firstname'=>'OMG'];
         $ok = $this->model->updateUser($array);
         $this->assertEquals(true,$ok);
+
+        $array =    ['id'=>1,'firstname'=>'Thomas'];
+        $ok = $this->model->updateUser($array);
+        $this->assertEquals(true,$ok);
     }
 
 }

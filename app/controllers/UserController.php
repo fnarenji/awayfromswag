@@ -82,7 +82,13 @@ class UserController extends Controller
             $accesslevel = $this->userModel->getAccessLevel($username);
 
             if (!empty($validAuth)) {
-                Authentication::getInstance()->setAuthenticated($username, $validAuth['id'], $accesslevel[0]['accesslevel'], ['mailHash' => $validAuth['mailHash']]);
+
+                Authentication::getInstance()->setAuthenticated($username, $validAuth['id'], $accesslevel[0]['accesslevel'],
+                    ['mailHash' => $validAuth['mailHash'],
+                    'lastname' => $validAuth['lastname'],
+                    'firstname' => $validAuth['firstname']
+                ]);
+
                 $this->getView()->redirect('/');
             } else {
                 // TODO POPUP WRONG CREDENTIALS MESSAGE

@@ -47,7 +47,7 @@ function main()
             $classRouting->addClass('Admin');
         }
     }
-    
+
 
     $classRouting->generateRoute($router);
 

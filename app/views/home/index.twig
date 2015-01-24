@@ -75,6 +75,10 @@
                 <h4>Évènements les plus populaires</h4>
             </div>
             <ul>
+                {% if events.top is empty %}
+                    <p>Il n'y a pas d'évènement populaire.</p>
+                {% else %}
+                    {% for event in events.top %}
                 <li>
                     <h5><a href="#">Évènement A</a></h5>
 
@@ -83,52 +87,25 @@
                         in your crotch is wrong, hey I don't wanna be right.
                     </p>
                 </li>
-                <li>
-                    <h5><a href="#">Évènement B</a></h5>
-
-                    <p>
-                        Now Fry, it's been a few years since medical school,
-                        so remind me.
-                    </p>
-                </li>
-                <li>
-                    <h5><a href="#">Évènement C</a></h5>
-
-                    <p>
-                        Alright, let's mafia things up a bit.
-                        Joey, burn down the ship. Clamps, burn down the crew.
-                    </p>
-                </li>
+                    {% endfor %}
+                {% endif %}
             </ul>
         </div>
         <div class="part_block grid">
             {{ helpers.assets.img('défis-argent.png', 'Défis de la semaine') }}
             <h4>Les derniers évènements</h4>
             <ul>
+                {% if events.last is empty %}
+                    <p>Il n'y a pas d'évènements récents.</p>
+                {% else %}
+                    {% for event in events.last %}
                 <li>
-                    <h5><a href="#">Évènement A</a></h5>
+                    <h5><a href="/event/show/{{ event.id }}">{{ event.name }}</a></h5>
 
-                    <p>
-                        She also liked to shut up! If rubbin' frozen dirt
-                        in your crotch is wrong, hey I don't wanna be right.
-                    </p>
+                    <p>{{ event.description }}</p>
                 </li>
-                <li>
-                    <h5><a href="#">Évènement B</a></h5>
-
-                    <p>
-                        Now Fry, it's been a few years since medical school,
-                        so remind me.
-                    </p>
-                </li>
-                <li>
-                    <h5><a href="#">Évènement C</a></h5>
-
-                    <p>
-                        Alright, let's mafia things up a bit.
-                        Joey, burn down the ship. Clamps, burn down the crew.
-                    </p>
-                </li>
+                    {% endfor %}
+                {% endif %}
             </ul>
         </div>
     </article>
