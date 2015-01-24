@@ -11,9 +11,8 @@
         <ul>
             {% for conversation in conversations %}
             <li>
-                <h1>{{ conversation.title }}</h1>
                 <p>
-                    {{ conversation.username }}
+                    <b>{{ conversation.title }}</b><i>{{ conversation.snippet }}</i>
                 </p>
             </li>
             {% endfor %}

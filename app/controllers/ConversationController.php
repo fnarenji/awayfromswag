@@ -44,7 +44,7 @@ class ConversationController extends Controller
         }
 
         $conversations = $this->conversationModel->getForUser(Authentication::getInstance()->getUserId());
-
+        var_dump($conversations);
         $this->getView()->render('conversation/index', ['conversations' => $conversations]);
     }
 
@@ -89,6 +89,8 @@ class ConversationController extends Controller
 
             $this->conversationModel->addUserToConversation($newConversationId, $userId);
         }
+
+        $this->conversationModel->newMessage($newConversationId, $message);
         //$this->getView()->redirect('/');
     }
 }
