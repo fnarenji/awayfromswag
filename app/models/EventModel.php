@@ -130,8 +130,8 @@ class EventModel extends Model
 
     /**
      * get if the user participate at the event $id
-     * @param $id event id
-     * @param $userId user id
+     * @param $id string event id
+     * @param $userId string user id
      */
     public function getParticipateUser($id, $userId)
     {
@@ -140,8 +140,8 @@ class EventModel extends Model
 
     /**
      * create participation of the user $userId at the event $id
-     * @param $id event id
-     * @param $userId user
+     * @param $id string event id
+     * @param $userId string user
      */
     public function participate($id, $userId)
     {
@@ -150,8 +150,8 @@ class EventModel extends Model
 
     /**
      * remove participation of the user $userId at the event $id
-     * @param $id event id
-     * @param $userId user id
+     * @param $id string event id
+     * @param $userId string user id
      */
     public function unparticipate($id, $userId)
     {
