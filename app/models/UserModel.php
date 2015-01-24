@@ -13,8 +13,6 @@ use SwagFramework\mvc\Model;
 
 class UserModel extends Model
 {
-    const TABLE_NAME = 'user';
-
     /**
      *  Return all information with the id
      * @param $id
@@ -23,7 +21,7 @@ class UserModel extends Model
     public function getUser($id)
     {
         $sql = 'SELECT * '
-            . 'FROM ' . self::TABLE_NAME . ' '
+            . 'FROM user'
             . 'WHERE id = ?';
 
         return DatabaseProvider::connection()->selectFirst($sql, [$id]);
@@ -37,7 +35,7 @@ class UserModel extends Model
     public function getUserByName($name)
     {
         $sql = 'SELECT * '
-            . 'FROM ' . self::TABLE_NAME . ' '
+            . 'FROM user '
             . 'WHERE username = ? ';
 
         return DatabaseProvider::connection()->selectFirst($sql, [$name]);
@@ -50,7 +48,7 @@ class UserModel extends Model
     public function getAllUsers()
     {
         $sql = 'SELECT *'
-            . 'FROM ' . self::TABLE_NAME . ' ';
+            . 'FROM user ';
 
         return DatabaseProvider::connection()->query($sql, []);
     }
@@ -64,7 +62,7 @@ class UserModel extends Model
     public function validateAuthentication($username, $password)
     {
         $sql = 'SELECT id '
-            . 'FROM ' . self::TABLE_NAME . ' '
+            . 'FROM user '
             . 'WHERE username = ? '
             . 'AND password = SHA1(?)';
 
@@ -73,22 +71,22 @@ class UserModel extends Model
 
     /**
      * Insert in database a new user
-     * @param $infos
-     * @return bool
+     * @param $infos array each field name with its value
+     * @return bool return success
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function insertUser($infos)
+    public function insertUser(array $infos)
     {
         try {
-
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql = "INTO INTO " . self::TABLE_NAME . " ('username', 'firstname', 'lastname', 'mail', 'password', 'birthday','phonenumber', .
+            var_dump($infos);
+
+            $sql = "INTO INTO user ('username', 'firstname', 'lastname', 'mail', 'password', 'birthday','phonenumber', .
                 'twitter','skype','facebookuri','website','job','description','privacy','mailnotifications','accesslevel')
-                     VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+                     VALUES (:username, :firstname, :lastname, :mail, :password, :birthday, :phonenumber, :twitter, :skype, :facebookuri, :website, :job, :description, :privacy, :mailnotifications, :accesslevel)";
 
-            DatabaseProvider::connection()->query($sql, $infos);
-
+            DatabaseProvider::connection()->execute($sql, $infos);
             DatabaseProvider::connection()->commit();
 
             return true;
@@ -111,7 +109,7 @@ class UserModel extends Model
 
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql = 'DELETE FROM ' . self::TABLE_NAME . ' WHERE id = ?';
+            $sql = 'DELETE FROM user WHERE id = ?';
 
             DatabaseProvider::connection()->query($sql, [$id]);
 
@@ -139,10 +137,16 @@ class UserModel extends Model
 
             DatabaseProvider::connection()->beginTransaction();
 
+<<<<<<< HEAD
             $sql = 'UPDATE ' . self::TABLE_NAME . " SET 'lastname' = ?, 'firstname' = ?, 'job' = ?, 'description' = ?, 'mail' = ?, 'phonenumber' = ?,
              'twitter' = ?, 'facebookuri' = ?, 'skype'= ?, 'website' = ?, 'privacy' = ? WHERE id = ? ";
+=======
+            $sql = 'UPDATE user SET firstname = ?, lastname = ?, mail = ?, password = ?, birthday = ?,
+                    phonenumber = ?,twitter = ?, skype = ?, facebookuri = ?, website = ?, job = ?, description = ?,
+                    privacy = ?, mailnotifications = ?, accesslevel = ? WHERE id = ?';
+>>>>>>> cc436665447e7a279ee45bf25d427faaa539e760
 
-            DatabaseProvider::connection()->update($sql, $infos);
+            DatabaseProvider::connection()->execute($sql, $infos);
 
             DatabaseProvider::connection()->commit();
 
@@ -167,11 +171,11 @@ class UserModel extends Model
         try {
 
             DatabaseProvider::connection()->beginTransaction();
-            $sql = 'UPDATE ' . self::TABLE_NAME . ' SET username = :username, firstname = :firstname, lastname = :lastname, mail = :mail, password = :password, birthday = :birthday,
+            $sql = 'UPDATE user SET username = :username, firstname = :firstname, lastname = :lastname, mail = :mail, password = :password, birthday = :birthday,
                     phonenumber = :phonenumber,twitter = :twitter, skype = :skype, facebookuri = :facebookuri, website = :website, job = :job, description = :description,
                     privacy = :privacy, mailnotifications = :mailnotifications, accesslevel = :accesslevel WHERE id = ?';
 
-            DatabaseProvider::connection()->update($sql, $infos);
+            DatabaseProvider::connection()->execute($sql, $infos);
             DatabaseProvider::connection()->commit();
             return true;
 
@@ -194,7 +198,7 @@ class UserModel extends Model
 
         $name = '%' . $name . '%';
 
-        $sql = 'SELECT id, username, firstname, lastname FROM ' . self::TABLE_NAME . ' WHERE username LIKE ? ';
+        $sql = 'SELECT id, username, firstname, lastname FROM user WHERE username LIKE ? ';
 
         return DatabaseProvider::connection()->query($sql, [$name]);
     }

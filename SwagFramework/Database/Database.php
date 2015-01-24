@@ -56,7 +56,7 @@ class Database extends \PDO
      * @param $params array
      * @return bool whether it succeeded
      */
-    public function update($query, array $params)
+    public function execute($query, array $params)
     {
         $stmt = $this->prepare($query);
         var_dump($params);

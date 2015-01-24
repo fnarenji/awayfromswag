@@ -4,7 +4,7 @@
 $(document).ready(function () {
     $('aside').height($(document).height());
 
-    console.log($('section').height());
+    //console.log($('section').height());
     $('.wrapper_menu').on('click', function () {
         $('.menu-reduced').toggleClass('menu-extend');
         $('section').height($(document).width() - 260);

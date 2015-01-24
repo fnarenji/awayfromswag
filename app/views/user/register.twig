@@ -3,6 +3,119 @@
 {% block content %}
     <article class="register">
         <h1>Inscrivez-vous aujourd'hui et bénéficiez de 10% de remise sur tout troll !</h1>
-        {{ formHtml|raw }}
+
+        <form method="POST" action="/user/register" class="pure-form pure-form-stacked">
+            <span>
+                <label>Nom d'utilisateur
+                    <input required name="username">
+                </label>
+            </span><br/>
+
+            <span>
+                <label>Mot de passe
+                    <input required type="password" name="password">
+                </label>
+            </span><br/>
+
+            <span>
+                <label>Prénom
+                    <input required name="firstname">
+                </label>
+            </span><br/>
+
+            <span>
+                <label>Nom
+                    <input required name="lastname">
+                </label>
+            </span><br/>
+
+            <span>
+                <label>Date de naissance
+                    <input required class="datepicker" name="birthday">
+                </label>
+
+                <label>Date de naissance privée
+                    <input type="checkbox" name="birthdayPrivate">
+                </label>
+            </span><br/>
+
+            <span>
+                <label>Mail
+                    <input required type="email" name="mail">
+                </label>
+
+                <label>Mail privé
+                    <input type="checkbox" name="mailPrivate">
+                </label>
+            </span><br/>
+
+            <span>
+                <label>Numéro de téléphone
+                    <input type="tel" name="phonenumber">
+                </label>
+
+                <label>Numéro de téléphone privé
+                    <input type="checkbox" name="phonenumberPrivate">
+                </label>
+            </span><br/>
+
+            <span>
+                <label>Twitter
+                    <input name="twitter">
+                </label>
+
+                <label>Twitter privée
+                    <input type="checkbox" name="twitterPrivate">
+                </label>
+            </span><br/>
+
+            <span>
+                <label>Skype
+                    <input name="skype">
+                </label>
+
+                <label>Skype privé
+                    <input type="checkbox" name="skypePrivate">
+                </label>
+            </span><br/>
+
+            <span>
+                <label>Facebook
+                    <input type="url" name="facebookuri">
+                </label>
+
+                <label>Facebook privé
+                    <input type="checkbox" name="facebookPrivate">
+                </label>
+            </span><br/>
+
+            <span>
+                <label>Site web
+                    <input type="url" name="website">
+                </label>
+
+                <label>Site web privé
+                    <input type="checkbox" name="websitePrivate">
+                </label>
+            </span><br/>
+
+            <span>
+                <label>Activité
+                    <input name="job">
+                </label>
+
+                <label>Activité privée
+                    <input type="checkbox" name="jobPrivate">
+                </label>
+            </span><br/>
+
+            <span>
+                <label>Description
+                    <textarea required name="description"></textarea>
+                </label>
+            </span><br/>
+
+            <input type="submit" value="Valider !" name="submit">
+        </form>
     </article>
 {% endblock %}
