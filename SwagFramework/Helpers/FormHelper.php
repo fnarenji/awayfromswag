@@ -26,7 +26,7 @@ class FormHelper
      * @return \SwagFramework\Form\Form
      * @throws TableNotFoundDatabaseException
      */
-    public function generate($table, $action, $method = 'POST')
+    public static function generate($table, $action, $method = 'POST')
     {
         $sql = 'SHOW FIELDS '
             . 'FROM ' . $table;
@@ -41,10 +41,10 @@ class FormHelper
         $form = new Form($action, $method);
 
         foreach ($res as $value) {
-            if ($this->getType($value['Type']) == 'text') {
-                $field = $this->getTextArea($value);
+            if (self::getType($value['Type']) == 'text') {
+                $field = self::getTextArea($value);
             } else {
-                $field = $this->getInput($value);
+                $field = self::getInput($value);
             }
             $form->addField($field);
         }
@@ -57,7 +57,7 @@ class FormHelper
         return $form;
     }
 
-    private function getType($type)
+    private static function getType($type)
     {
         $tmp = explode('(', $type);
         if (!empty($tmp)) {
@@ -66,17 +66,17 @@ class FormHelper
         return $type;
     }
 
-    private function getTextArea($value)
+    private static function getTextArea($value)
     {
         $field = new TextAreaField($value['Field']);
 
         return $field;
     }
 
-    private function getInput($value)
+    private static function getInput($value)
     {
         $field = new InputField($value['Field']);
-        $field->addAttribute('type', $this->convertAttributeType($value));
+        $field->addAttribute('type', self::convertAttributeType($value));
 
         return $field;
     }
@@ -88,7 +88,7 @@ class FormHelper
      * @param $att
      * @return string
      */
-    private function convertAttributeType($att)
+    private static function convertAttributeType($att)
     {
         if ($att['Key'] == 'PRI') {
             return 'hidden';
