@@ -424,7 +424,27 @@ article.profile
     margin-right: 10px;
     margin-bottom: 10px;
 }
+form.centered
+{
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+}
 
+p.error_message
+{
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    background-color: rgba(255, 0, 0, 0.9);
+    opacity: 0.8;
+    padding: 7px;
+    color: white;
+    border: 1px solid rgba(0, 0, 0, 0.9);
+    border-radius: 3px;
+}
 /* WOW MEDIA QUERIES, SUCH RESPONSIVE, MUCH SKILLS */
 @media only screen and (min-width: 780px)
 {
