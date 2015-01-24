@@ -8,7 +8,7 @@
     <li><a href="/user/calendar"><i class="fa fa-calendar"></i>Calendrier</a></li>
     <li><a href="#"><i class="fa fa-users"></i>Mes amis</a></li>
     <li><a href="/conversation"><i class="fa fa-comments-o"></i>Messagerie</a></li>
-    {% if auth.accesslevel %}
+    {% if auth.options.accessLevel %}
         <li><a href="/adminusers">Gestion des utilisateurs</a></li>
         <li><a href="/adminevents">Gestion des évènements</a></li>
     {% endif %}
