@@ -59,12 +59,13 @@ class Input
 
     public static function getPost()
     {
-        if(empty($_POST)){
+        if (empty($_POST)) {
             throw new InputNotSetException('$_POST', '');
         }
 
         return $_POST;
     }
+
     /**
      * get user ip
      * @return mixed

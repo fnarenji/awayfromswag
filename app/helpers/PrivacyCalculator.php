@@ -17,8 +17,9 @@ class PrivacyCalculator
 
     public static function calculate($id)
     {
-        if(!empty(self::$privacy))
+        if (!empty(self::$privacy)) {
             return self::$privacy;
+        }
 
         $model = new UserModel();
         $user = $model->getUser($id);
@@ -27,12 +28,14 @@ class PrivacyCalculator
 
         $x = 14;
         $user['privacy'] = array();
-        foreach($user as $key => $value){
-            if($key == 'privacy') break;
+        foreach ($user as $key => $value) {
+            if ($key == 'privacy') {
+                break;
+            }
 
-            $exp = 2**$x;
+            $exp = 2 ** $x;
 
-            if($exp <= $privacy){
+            if ($exp <= $privacy) {
                 $user['privacy'][$key . 'Privacy'] = true;
                 $privacy -= $exp;
             } else {

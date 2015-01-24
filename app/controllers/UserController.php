@@ -26,11 +26,12 @@ class UserController extends Controller
      */
     private $userModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->userModel = $this->loadModel('User');
         parent::__construct();
     }
-    
+
     public function index()
     {
         $this->getView()->render('user/index');
@@ -40,7 +41,7 @@ class UserController extends Controller
     {
         try {
             $name = $this->getParams();
-            
+
             $user = $this->userModel->getUserByName($name[0]);
 
             if (empty($user)) {

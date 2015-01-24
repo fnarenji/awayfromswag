@@ -81,7 +81,8 @@ class ClassRouting
                         }
 
                         if (in_array($methodName . $httpMethod, $classMethods)) {
-                            $router->add('/' . strtolower($class) . '/' . $methodName, new $className(), $methodName . $httpMethod, $httpMethod);
+                            $router->add('/' . strtolower($class) . '/' . $methodName, new $className(),
+                                $methodName . $httpMethod, $httpMethod);
 
                             unset($classMethods[$methodName . $httpMethod]);
                         }

@@ -13,6 +13,11 @@ class TextAreaField extends Field
 {
     private $content;
 
+    public function getHTML()
+    {
+        return '<textarea' . $this->getAttributesHTML() . '>' . $this->getContent() . '</textarea>';
+    }
+
     /**
      * @return mixed
      */
@@ -27,10 +32,5 @@ class TextAreaField extends Field
     public function setContent($content)
     {
         $this->content = $content;
-    }
-
-    public function getHTML()
-    {
-        return '<textarea' . $this->getAttributesHTML() . '>' . $this->getContent() . '</textarea>';
     }
 }
