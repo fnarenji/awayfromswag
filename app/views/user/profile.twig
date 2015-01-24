@@ -28,7 +28,7 @@
             {% if profile.mailPrivacy %}
                 <span class="profile-line">
                     <b class="profile-label"><i class="fa fa-at"></i>
-                    </b>{{ profile.mail }}</span>
+                    </b><a href="mailto:{{ profile.mail }}">{{ profile.mail }}</a></span>
             {% endif %}
             {% if profile.phonenumberPrivacy %}
                 <span class="profile-line"><b class="profile-label"><i
