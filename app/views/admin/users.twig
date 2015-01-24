@@ -12,7 +12,7 @@
 
     {% for user in users %}
         <p class="user-list-item">
-            <b><a href="#">{{ user.username }}</a></b>
+            <b><a href="/user/account/{{ user.id }}">{{ user.username }}</a></b>
             {{ user.firstname ~ ' ' ~ user.lastname }}
         </p>
     {% endfor %}
