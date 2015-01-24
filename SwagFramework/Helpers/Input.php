@@ -19,10 +19,12 @@ class Input
      * @return mixed
      * @throws InputNotSetException
      */
-    public static function get($key)
+    public static function get($key, $optional = false)
     {
         if (!isset($_GET[$key]) || empty($_GET[$key])) {
-            throw new InputNotSetException('$_GET', $key);
+            if (!$optional)
+                throw new InputNotSetException('$_GET', $key);
+            return null;
         }
         //TODO: Protect input $_GET
         return $_GET[$key];
@@ -34,10 +36,12 @@ class Input
      * @return mixed
      * @throws InputNotSetException
      */
-    public static function post($key)
+    public static function post($key, $optional = false)
     {
         if (!isset($_POST[$key]) || empty($_POST[$key])) {
-            throw new InputNotSetException('$_POST', $key);
+            if (!$optional)
+                throw new InputNotSetException('$_POST', $key);
+            return null;
         }
         //TODO: Protect input $_GET
         return $_POST[$key];
@@ -48,10 +52,12 @@ class Input
      * @return mixed
      * @throws InputNotSetException
      */
-    public static function session($key)
+    public static function session($key, $optional = false)
     {
         if (!isset($_SESSION[$key]) || empty($_SESSION[$key])) {
-            throw new InputNotSetException('$_SESSION', $key);
+            if (!$optional)
+                throw new InputNotSetException('$_SESSION', $key);
+            return null;
         }
 
         return $_SESSION[$key];

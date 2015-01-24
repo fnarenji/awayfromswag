@@ -31,9 +31,11 @@ class Database extends \PDO
             $this->config->getPassword(),
             array(
                 \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-                \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8'
+                \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8',
+                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
             )
         );
+        $this->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
     /**

@@ -80,20 +80,20 @@ class UserModel extends Model
         try {
             DatabaseProvider::connection()->beginTransaction();
 
-            var_dump($infos);
+            $sql = <<<SQL
+INSERT INTO user (username, firstname, lastname, mail, password, birthday,phonenumber, twitter, skype, facebookuri, website, job, description, privacy, mailnotifications, accesslevel)
+        VALUES (:username, :firstname, :lastname, :mail, :password, :birthday, :phonenumber, :twitter, :skype, :facebookuri, :website, :job, :description, :privacy, :mailnotifications, :accesslevel)
+SQL;
 
-            $sql = "INTO INTO user ('username', 'firstname', 'lastname', 'mail', 'password', 'birthday','phonenumber', .
-                'twitter','skype','facebookuri','website','job','description','privacy','mailnotifications','accesslevel')
-                     VALUES (:username, :firstname, :lastname, :mail, :password, :birthday, :phonenumber, :twitter, :skype, :facebookuri, :website, :job, :description, :privacy, :mailnotifications, :accesslevel)";
-
-            DatabaseProvider::connection()->execute($sql, $infos);
+            $success = DatabaseProvider::connection()->execute($sql, $infos);
             DatabaseProvider::connection()->commit();
 
-            return true;
+            return $success;
 
         } catch (\Exception $e) {
 
             DatabaseProvider::connection()->rollBack();
+            var_dump($e);
         }
         return false;
     }

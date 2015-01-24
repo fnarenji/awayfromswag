@@ -13,9 +13,6 @@ use app\models\UserModel;
 use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Exceptions\NoUserFoundException;
-use SwagFramework\Form\Field\InputField;
-use SwagFramework\Form\Field\TextAreaField;
-use SwagFramework\Form\Form;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\Input;
 use SwagFramework\mvc\Controller;
@@ -102,76 +99,66 @@ class UserController extends Controller
 
     public function register()
     {
-        $formHtml = $this->getRegisterForm()->getFormHTML([
-            'username' => 'Nom d\'utilisateur',
-            'password' => 'Mot de passe',
-            'firstname' => 'Prénom',
-            'lastname' => 'Nom',
-            'birthday' => 'Date de naissance',
-            'mail' => 'Adresse e-mail',
-            'phonenumber' => 'Téléphone',
-            'twitter' => 'Twitter',
-            'skype' => 'Skype',
-            'facebookuri' => 'Facebook',
-            'website' => 'Site web',
-            'job' => 'Activité',
-            'description' => 'Description',
-            'privacy' => 'Options de vie privée',
-            'mailnotifications' => 'Recevoir les emails',
-            'submit' => 'S\'inscrire !'
-        ]);
-
-        $this->getView()->render('user/register', ['formHtml' => $formHtml]);
-    }
-
-    private function getRegisterForm()
-    {
-        $form = new Form('/user/register');
-
-        $f = function ($field, array $attr = []) use ($form) {
-            $form->addField(new InputField($field, $attr));
-        };
-
-        $form->setClass('pure-form pure-form-stacked');
-        $f('username', ['required' => null]);
-        $f('password', ['required' => null, 'type' => 'password']);
-        $f('firstname', ['required' => null]);
-        $f('lastname', ['required' => null]);
-        $f('birthday', ['required' => null, 'class' => 'datepicker']);
-        $f('mail', ['required' => null, 'type' => 'email']);
-        $f('phonenumber', ['type' => 'tel']);
-        $f('twitter');
-        $f('skype');
-        $f('facebookuri', ['type' => 'url']);
-        $f('website', ['type' => 'url']);
-        $f('job');
-        $form->addField(new TextAreaField('description', ['required' => null]));
-        $f('submit', ['type' => 'submit', 'value' => 'Valider !']);
-
-        return $form;
+        $this->getView()->render('user/register');
     }
 
     public function registerPOST()
     {
-        $form = $this->getRegisterForm();
-        $safeInput = $form->validate(['username' => true,
-            'password' => true,
-            'firstname' => true,
-            'lastname' => true,
-            'birthday' => true,
-            'mail' => true,
-            'phonenumber' => false,
-            'twitter' => false,
-            'skype' => false,
-            'facebookuri' => false,
-            'website' => false,
-            'job' => true,
-            'description' => true,
-            'privacy' => false,
-            'mailnotifications' => false,
-            'submit' => 'S\'inscrire !']);
+        var_dump($_POST);
 
-        $this->userModel->insertUser($safeInput);
+        $user = [
+            'username' => Input::post('username'),
+            'password' => Input::post('password'),
+            'firstname' => Input::post('firstname'),
+            'lastname' => Input::post('lastname'),
+            'birthday' => Input::post('birthday'),
+            'mail' => Input::post('mail'),
+            'phonenumber' => Input::post('phonenumber', true),
+            'twitter' => Input::post('twitter', true),
+            'skype' => Input::post('skype', true),
+            'facebookuri' => Input::post('facebookuri', true),
+            'website' => Input::post('website', true),
+            'job' => Input::post('job'),
+            'description' => Input::post('description'),
+            'privacy' => 0,
+            'mailnotifications' => Input::post('mailnotifications', true) == 'on' ? 1 : 0,
+            'accesslevel' => 0
+        ];
+
+        $privacySettings = ['birthday', 'mail', 'phonenumber', 'twitter', 'skype', 'facebookuri', 'website', 'job'];
+        for ($i = 0; $i < sizeof($privacySettings); ++$i)
+            if (Input::post($privacySettings[$i] . 'Private', true) == 'on') {
+                $user['privacy'] = 0b000000000000001 << $i;
+                echo 'ADDING ' . $privacySettings[$i] . '<br/>';
+            }
+
+        var_dump($user);
+
+//        if (Input::post('birthdayPrivate') == 'on')
+//            $user['privacy'] |= 0b000000000000001;
+//
+//        if (Input::post('mailPrivate') == 'on')
+//            $user['privacy'] |= 0b000000000000010;
+//
+//        if (Input::post('phonenumberPrivate') == 'on')
+//            $user['privacy'] |= 0b000000000000100;
+//
+//        if (Input::post('twitterPrivate') == 'on')
+//            $user['privacy'] |= 0b000000000001000;
+//
+//        if (Input::post('skypePrivate') == 'on')
+//            $user['privacy'] |= 0b000000000010000;
+//
+//        if (Input::post('facebookuriPrivate') == 'on')
+//            $user['privacy'] |= 0b000000000100000;
+//
+//        if (Input::post('websitePrivate') == 'on')
+//            $user['privacy'] |= 0b000000001000000;
+//
+//        if (Input::post('jobPrivate') == 'on')
+//            $user['privacy'] |= 0b000000010000000;
+
+        echo $this->userModel->insertUser($user) ? 'true' : 'false';
     }
 
     public function account()
