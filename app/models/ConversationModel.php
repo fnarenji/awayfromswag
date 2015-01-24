@@ -62,57 +62,22 @@ class ConversationModel extends Model
      */
     public function createConversation()
     {
-
-        try {
-            DatabaseProvider::connection()->beginTransaction();
-
-            DatabaseProvider::connection()->execute(self::CREATE_CONVERSATION, Authentication::getInstance()->getUserId());
-
-            $newConversationId = DatabaseProvider::connection()->lastInsertId();
-
-            DatabaseProvider::connection()->execute(self::ADD_USER_TO_CONVERSATION, [$newConversationId, Authentication::getInstance()->getUserId()]);
-
-            DatabaseProvider::connection()->commit();
-
-            return $newConversationId;
-        } catch (\Exception $e) {
-            DatabaseProvider::connection()->rollBack();
-            throw $e;
-        }
+        DatabaseProvider::connection()->execute(self::CREATE_CONVERSATION, Authentication::getInstance()->getUserId());
+        return DatabaseProvider::connection()->lastInsertId();
     }
 
     /**
      * Delete a conversation
      * @param $id
      * @return bool
-     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function deleteConversation($id)
     {
-        try {
-            DatabaseProvider::connection()->beginTransaction();
-
-            DatabaseProvider::connection()->execute(self::DELETE_CONVERSATION, [$id]);
-
-            DatabaseProvider::connection()->commit();
-
-            return true;
-
-        } catch (\Exception $e) {
-            DatabaseProvider::connection()->rollBack();
-            throw $e;
-        }
+        return DatabaseProvider::connection()->execute(self::DELETE_CONVERSATION, [$id]);
     }
 
     public function addUserToConversation($id, $userId)
     {
-        try {
-            DatabaseProvider::connection()->beginTransaction();
-
-            DatabaseProvider::connection()->execute(self::ADD_USER_TO_CONVERSATION, [$id, $userId]);
-        } catch (\Exception $e) {
-            DatabaseProvider::connection()->rollBack();
-            throw $e;
-        }
+        return DatabaseProvider::connection()->execute(self::ADD_USER_TO_CONVERSATION, [$id, $userId]);
     }
 }

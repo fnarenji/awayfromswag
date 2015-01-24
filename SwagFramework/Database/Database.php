@@ -32,7 +32,8 @@ class Database extends \PDO
             array(
                 \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
                 \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8',
-                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
+                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                \PDO::ATTR_AUTOCOMMIT => 1
             )
         );
         $this->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
