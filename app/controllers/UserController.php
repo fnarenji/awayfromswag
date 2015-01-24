@@ -270,6 +270,10 @@ class UserController extends Controller
 
     public function all()
     {
+        $page = 0;
+        if (!empty($this->getParams(true)))
+            $page = (int)$this->getParams()[0];
 
+        $this->getView()->render('user/all', ['users' => $this->userModel->getAllUsers($page * 10, 10)]);
     }
 }
