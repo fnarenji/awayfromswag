@@ -26,7 +26,7 @@ class ConversationModel extends Model
 
     const UPDATE_MESSAGE_POSTED = <<<SQL
 UPDATE conversation_user, conversation
-SET messagecount = messagecount + 1, lastmessagesnippet = :message
+SET messagecount = messagecount + 1, lastmessagesnippet = :message, lastmessageauthor = :user
 WHERE conversation.id = :conversation
   AND conversation.id = conversation_user.id
   AND conversation_user.user = :user
@@ -49,8 +49,9 @@ SELECT conversation.id, conversation.title,
 FROM conversation
 JOIN user creator ON conversation.user = creator.id
 JOIN user lastmessageauthor ON conversation.lastmessageauthor = lastmessageauthor.id
-JOIN conversation_user ON conversation_user.user = :user
+JOIN conversation_user ON conversation_user.id = conversation.id
 WHERE conversation.id = :conversation
+  AND conversation_user.user = :user
 SQL;
     private $conversationFolder;
 
@@ -180,8 +181,6 @@ SQL;
                 'conversation' => $conversationId,
                 'user' => Authentication::getInstance()->getUserId()
             ]);
-
-            var_dump($conversation);
 
             $conversation['messages'] = [];
 
