@@ -8,11 +8,9 @@
 
 namespace app\controllers;
 
-use app\exceptions\ConversationNotFoundException;
 use app\exceptions\NotAuthenticatedException;
 use app\models\ConversationModel;
 use SwagFramework\Config\ConversationConfig;
-use SwagFramework\Exceptions\FileNotFoundException;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\Input;
 use SwagFramework\mvc\Controller;
@@ -25,16 +23,10 @@ class ConversationController extends Controller
      */
     private $conversationModel;
 
-    /**
-     * @var \SwagFramework\Config\ConversationConfig
-     */
-    private $conversationConfig;
-
     function __construct()
     {
         parent::__construct();
         $this->conversationModel = $this->loadModel('Conversation');
-        $this->conversationConfig = ConversationConfig::parseFromFile();
     }
 
     public function index()
@@ -55,21 +47,10 @@ class ConversationController extends Controller
         }
 
         $id = (int)$this->getParams()[0];
-        $conversation = $this->conversationModel->get($id);
 
-        if (empty($conversation)) {
-            throw new ConversationNotFoundException($id);
-        }
-
-        $file = $this->conversationConfig->getPath() . $id . '.xml';
-
-        if (!file_exists($file)) {
-            throw new FileNotFoundException($file);
-        }
-
-        $messages = new \SimpleXMLElement(file_get_contents($file));
-
-        $this->getView()->render('conversation/show', ['conversation' => $conversation, 'messages' => $messages]);
+        $conversation = $this->conversationModel->getConversation($id);
+        die();
+        $this->getView()->render('conversation/show', ['conversation' => $conversation]);
     }
 
     public function create()
