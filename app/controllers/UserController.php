@@ -192,14 +192,16 @@ class UserController extends Controller
                     unset($toModify[$key]);
 
             }
-            var_dump($toModify);
 
             foreach($toModify as $key => $value){
                 if($user[$key] != $value)
                     $user[$key] = $value;
             }
 
-            $this->userModel->updateUser($user);
+            $toModify['privacy'] = $user['privacy'];
+            $toModify['id'] = $user['id'];
+
+            $this->userModel->updateUser($toModify);
             $this->getView()->render('home/index');
         } catch (NoUserFoundException $e){
             $e->getMessage();

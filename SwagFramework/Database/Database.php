@@ -59,6 +59,7 @@ class Database extends \PDO
     public function update($query, array $params)
     {
         $stmt = $this->prepare($query);
+        var_dump($params);
         return $stmt->execute($params);
     }
 

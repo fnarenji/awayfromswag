@@ -139,9 +139,8 @@ class UserModel extends Model
 
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql = 'UPDATE ' . self::TABLE_NAME . " SET 'firstname' = ?, 'lastname' = ?, 'mail' = ?, 'password' = ?, 'birthday' = ?,
-                    'phonenumber' = ?,'twitter' = ?, 'skype' = ?, 'facebookuri' = ?, 'website' = ?, 'job' = ?, 'description' = ?,
-                    'privacy' = ?, 'mailnotifications' = ?, 'accesslevel' = ? WHERE id = ? ";
+            $sql = 'UPDATE ' . self::TABLE_NAME . " SET 'lastname' = ?, 'firstname' = ?, 'job' = ?, 'description' = ?, 'mail' = ?, 'phonenumber' = ?,
+             'twitter' = ?, 'facebookuri' = ?, 'skype'= ?, 'website' = ?, 'privacy' = ? WHERE id = ? ";
 
             DatabaseProvider::connection()->update($sql, $infos);
 
