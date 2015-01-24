@@ -1,21 +1,21 @@
 {% extends "layout/default" %}
 {% block content %}
     <article>
-        <h1>Articles</h1>
+        <h1>Actualités</h1>
 
         {% if auth.valid %}
-            <a href="/article/add" class="pure-button add-article">Ajouter un article</a>
+            <a href="/article/add" class="pure-button add-article">Ajouter une Actualité</a>
         {% endif %}
 
         {% if articles is empty %}
-            <p>Il n'y a pas d'articles.</p>
+            <p>Il n'y a pas d'Actualités.</p>
         {% else %}
             <ul id="events">
                 {% for article in articles %}
                     <li>
                         <a href="/article/show/{{ article.id }}"><h1>{{ article.title }}</h1>, </a>
                         <span class="mini-text">le {{ article.postdate }}, </span>
-                        <span class="mini-text">Catégorie : {{ article.category }}</span>
+                        <span class="mini-text">Catégorie : {{ article.category.name }}</span>
 
                         <p>
                             {{ article.text }}

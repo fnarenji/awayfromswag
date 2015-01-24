@@ -132,19 +132,18 @@ SQL;
     }
 
     /**
-     * Update a article
-     * @param $id
-     * @param $content
-     * @param $date
+     * @param $infos
      * @return bool
+     * @throws \Exception
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function updateNewsById($id, $content, $date)
+    public function updateNews($infos)
     {
         try {
 
             DatabaseProvider::connection()->beginTransaction();
-            $sql = 'UPDATE article SET text = ?, postdate = ? WHERE id = ?';
-            $state  = DatabaseProvider::connection()->execute($sql, [$content, $date, $id]);
+            $sql = 'UPDATE article SET text=:text, title=:title WHERE id=:id';
+            $state = DatabaseProvider::connection()->execute($sql, $infos);
 
             DatabaseProvider::connection()->commit();
 
@@ -156,8 +155,6 @@ SQL;
         }
 
     }
-
-
 
     public function updateNewsByName($name,$date, $content)
     {
@@ -174,6 +171,16 @@ SQL;
             DatabaseProvider::connection()->rollBack();
             throw $e;
         }
+
+    }
+
+    public function getCategory($id)
+    {
+        $sql = <<<SQL
+SELECT * FROM article_category WHERE id=?;
+SQL;
+
+        return DatabaseProvider::connection()->selectFirst($sql, [$id]);
 
     }
 } 

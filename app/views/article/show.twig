@@ -11,11 +11,16 @@
                         {{ article.user.firstname ~ ' ' ~ article.user.lastname }}
                     </a>,
                 </span>
-                <span class="mini-text">Catégorie : {{ article.category }}</span>
+                <span class="mini-text">Catégorie : {{ article.category.name }}</span>
 
                 <p>
                     {{ article.text }}
                 </p>
+
+                {% if article.user.id == auth.userId %}
+                    <a href="/article/modify/{{ article.id }}" class="pure-button pure-button-primary">Modifier</a>
+                {% endif %}
+
             </li>
         </ul>
     </article>
