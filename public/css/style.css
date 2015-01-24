@@ -527,6 +527,11 @@ ul#events li a h1 {
 {
     width: 90%;
 }
+.profile-group h5
+{
+    font-weight: bold;
+    font-size: 1.3rem;
+}
 
 
 /* WOW MEDIA QUERIES, SUCH RESPONSIVE, MUCH SKILLS */

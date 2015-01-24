@@ -61,6 +61,10 @@ class UserController extends Controller
             $model = new EventModel();
             $events = $model->getEventsForUser($user['id']);
 
+            foreach($events as $key => $value){
+                $events[$key]['eventtime'] = substr($events[$key]['eventtime'], 0, 10);
+            }
+
             $this->getView()->render('user/profile', ['profile' => $user, 'events' => $events ]);
 
         } catch (MissingParamsException $e) {
