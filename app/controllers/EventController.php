@@ -16,6 +16,8 @@ use app\exceptions\NotParticipateEventException;
 use app\exceptions\NotYourEventException;
 use app\models\EventModel;
 use app\models\UserModel;
+use SwagFramework\Form\Field\InputField;
+use SwagFramework\Form\Form;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\FormHelper;
 use SwagFramework\mvc\Controller;
@@ -178,8 +180,14 @@ class EventController extends Controller
             'money' => 'Prix',
             'personsmax' => 'Nombre maximum de participants'
         ]);
-        
-        $this->getView()->render('event/modify', ['form' => $html]);
+
+        $formDelete = new Form('/event/delete');
+        $formDelete->setClass('pure-form centered');
+        $formDelete->addField(new InputField('id', ['type' => 'hidden', 'value' => $id]));
+        $formDelete->addField(new InputField('submit',
+            ['type' => 'submit', 'value' => 'Supprimer', 'class' => 'pure-button button-error']));
+
+        $this->getView()->render('event/modify', ['form' => $html, 'formDelete' => $formDelete->getFormHTML([])]);
     }
 
     public function modifyPOST()

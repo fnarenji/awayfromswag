@@ -83,6 +83,9 @@ class ConversationController extends Controller
         $message = Input::post('message');
 
         $newConversationId = $this->conversationModel->createConversation(Input::post('title'));
+
+        $this->conversationModel->addUserToConversation($newConversationId, Authentication::getInstance()->getUserId());
+
         $userModel = $this->loadModel('User');
 
         foreach (explode(', ', Input::post('participations')) as $participation) {
@@ -92,6 +95,6 @@ class ConversationController extends Controller
         }
 
         $this->conversationModel->newMessage($newConversationId, $message);
-        $this->getView()->redirect('/');
+        $this->getView()->redirect('/conversation/show/' . $newConversationId);
     }
 }
