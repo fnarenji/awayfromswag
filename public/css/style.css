@@ -57,6 +57,22 @@ body
     -webkit-font-smoothing: antialiased;
 }
 
+.button-success {
+    background: rgb(28, 184, 65);
+}
+
+.button-error {
+    background-color: #e9322d;
+}
+
+.button-warning {
+    background: rgb(223, 117, 20);
+}
+
+.button-secondary {
+    background: rgb(66, 184, 221); /* this is a light blue */
+}
+
 /* BASE MENU RELATED */
 .wrapper_menu
 {

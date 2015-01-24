@@ -64,7 +64,8 @@ class EventModel extends Model
             $sql = "INSERT INTO event ('name','user','description', 'address', 'eventtime', 'money', 'personsmax') " .
                 " VALUE (?,?,?,?,?,?,?)";
 
-            DatabaseProvider::connection()->query($sql, [$name, $idCreator, $description, $address, $eventTime, $money, $nbMaxPart]);
+            DatabaseProvider::connection()->query($sql,
+                [$name, $idCreator, $description, $address, $eventTime, $money, $nbMaxPart]);
 
             DatabaseProvider::connection()->commit();
 
@@ -100,7 +101,8 @@ class EventModel extends Model
                 "SET name = ? ,description = ?, address = ?, eventtime = ?, money = ?, personsmax = ? " .
                 "WHERE id = ?";
 
-            DatabaseProvider::connection()->query($sql, [$name, $description, $address, $eventTime, $money, $nbMaxPart, $idEvent]);
+            DatabaseProvider::connection()->query($sql,
+                [$name, $description, $address, $eventTime, $money, $nbMaxPart, $idEvent]);
 
             DatabaseProvider::connection()->commit();
 

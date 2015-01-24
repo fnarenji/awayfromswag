@@ -38,8 +38,9 @@ class ConversationController extends Controller
 
     public function index()
     {
-        if(!Authentication::getInstance()->isAuthenticated())
+        if (!Authentication::getInstance()->isAuthenticated()) {
             throw new NotAuthenticatedException();
+        }
 
         $conversations = $this->conversationModel->getUser(Authentication::getInstance()->getUserId());
 
@@ -48,8 +49,9 @@ class ConversationController extends Controller
 
     public function show()
     {
-        if(!Authentication::getInstance()->isAuthenticated())
+        if (!Authentication::getInstance()->isAuthenticated()) {
             throw new NotAuthenticatedException();
+        }
 
         $id = (int)$this->getParams()[0];
         $conversation = $this->conversationModel->get($id);

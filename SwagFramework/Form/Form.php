@@ -65,14 +65,15 @@ class Form
             . '>';
 
         foreach ($this->getFields() as $field) {
-            try{
+            try {
                 if (!empty($labels) && array_key_exists($field->getName(), $labels)) {
                     $label = new LabelField($field->getName(), $labels[$field->getName()]);
                     $form .= CR . TAB . $label->getHTML();
                     $form .= CR . TAB . $field->getHTML();
-                } elseif($field->getName() == 'submit' || $field->getAttribute('type') == 'hidden')
+                } elseif ($field->getName() == 'submit' || $field->getAttribute('type') == 'hidden') {
                     $form .= CR . TAB . $field->getHTML();
-            } catch(AttributeNotExistsException $e){
+                }
+            } catch (AttributeNotExistsException $e) {
                 // fix getAttribute('type') on TextArea
             }
         }
@@ -82,19 +83,24 @@ class Form
         return $form;
     }
 
-    public function validate($inputs)
+    public function getMethod()
     {
-        $result = [];
-        foreach($this->getFields() as $field) {
-            if(array_key_exists($field->getName(), $inputs)) {
-                if($this->getMethod() == 'POST')
-                    $result[$field->getName()] = Input::post($field->getName());
-                elseif($this->getMethod() == 'GET')
-                    $result[$field->getName()] = Input::get($field->getName());
-            }
-        }
+        return $this->method;
+    }
 
-        return $result;
+    public function setMethod($method)
+    {
+        $this->method = $method;
+    }
+
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    public function setAction($action)
+    {
+        $this->action = $action;
     }
 
     /**
@@ -129,31 +135,27 @@ class Form
         $this->class = $class;
     }
 
-    public function getMethod()
-    {
-        return $this->method;
-    }
-
-    public function setMethod($method)
-    {
-        $this->method = $method;
-    }
-
-    public function getAction()
-    {
-        return $this->action;
-    }
-
-    public function setAction($action)
-    {
-        $this->action = $action;
-    }
-
     /**
      * @return Field[]
      */
     public function getFields()
     {
         return $this->fields;
+    }
+
+    public function validate($inputs)
+    {
+        $result = [];
+        foreach ($this->getFields() as $field) {
+            if (array_key_exists($field->getName(), $inputs)) {
+                if ($this->getMethod() == 'POST') {
+                    $result[$field->getName()] = Input::post($field->getName());
+                } elseif ($this->getMethod() == 'GET') {
+                    $result[$field->getName()] = Input::get($field->getName());
+                }
+            }
+        }
+
+        return $result;
     }
 }

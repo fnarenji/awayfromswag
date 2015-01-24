@@ -42,10 +42,12 @@ class UsersAdminController extends Controller
         $mail = Input::get('mail');
         $password = sha1(Input::get('password'));
 
-        $this->model->updateAdminUser($iduser, ['username' => $username,
+        $this->model->updateAdminUser($iduser, [
+            'username' => $username,
             'firstname' => $firstname,
             'lastname' => $lastname,
             'mail' => $mail,
-            'password' => $password]);
+            'password' => $password
+        ]);
     }
 }

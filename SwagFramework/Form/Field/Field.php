@@ -46,8 +46,9 @@ abstract class Field
 
     public function getAttribute($att)
     {
-        if(!isset($this->attributes[$att]))
+        if (!isset($this->attributes[$att])) {
             throw new AttributeNotExistsException($att);
+        }
         return $this->attributes[$att];
     }
 

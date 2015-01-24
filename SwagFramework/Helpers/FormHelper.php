@@ -41,10 +41,11 @@ class FormHelper
         $form = new Form($action, $method);
 
         foreach ($res as $value) {
-            if ($this->getType($value['Type']) == 'text')
+            if ($this->getType($value['Type']) == 'text') {
                 $field = $this->getTextArea($value);
-            else
+            } else {
                 $field = $this->getInput($value);
+            }
             $form->addField($field);
         }
 

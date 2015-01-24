@@ -44,8 +44,9 @@ class EventController extends Controller
     {
         $events = $this->eventModel->getAll();
 
-        foreach($events as &$event)
+        foreach ($events as &$event) {
             $event = $this->getInfos($event);
+        }
 
         $this->getView()->render('event/index', array(
             'events' => $events
@@ -76,16 +77,21 @@ class EventController extends Controller
         }
 
         $event = $this->getInfos($event);
+        $participate = (Authentication::getInstance()->isAuthenticated()) ? $this->eventModel->getParticipateUser($id,
+            Authentication::getInstance()->getUserId()) : null;
+        $event['mine'] = (Authentication::getInstance()->isAuthenticated()) ? $event['user']['id'] == Authentication::getInstance()->getUserId() : false;
 
         $this->getView()->render('event/show', array(
-            'event' => $event
+            'event' => $event,
+            'participate' => $participate
         ));
     }
 
     public function add()
     {
-        if (!Authentication::getInstance()->isAuthenticated())
+        if (!Authentication::getInstance()->isAuthenticated()) {
             throw new NotAuthenticatedException();
+        }
 
         $formHelper = new FormHelper();
         $form = $formHelper->generate('event', '/event/add');
@@ -105,8 +111,9 @@ class EventController extends Controller
 
     public function addPOST()
     {
-        if (!Authentication::getInstance()->isAuthenticated())
+        if (!Authentication::getInstance()->isAuthenticated()) {
             throw new NotAuthenticatedException();
+        }
 
         $formHelper = new FormHelper();
         $form = $formHelper->generate('event', '/event/add');
@@ -140,8 +147,9 @@ class EventController extends Controller
 
     public function modify()
     {
-        if (!Authentication::getInstance()->isAuthenticated())
+        if (!Authentication::getInstance()->isAuthenticated()) {
             throw new NotAuthenticatedException();
+        }
 
         $id = (int)$this->getParams()[0];
 
@@ -151,8 +159,9 @@ class EventController extends Controller
             throw new EventNotFoundException($id);
         }
 
-        if($event['user'] != Authentication::getInstance()->getUserId())
+        if ($event['user'] != Authentication::getInstance()->getUserId()) {
             throw new NotYourEventException($id);
+        }
 
         $form = new FormHelper();
         $form = $form->generate('event', '/event/modify');
@@ -180,8 +189,9 @@ class EventController extends Controller
 
     public function modifyPOST()
     {
-        if (!Authentication::getInstance()->isAuthenticated())
+        if (!Authentication::getInstance()->isAuthenticated()) {
             throw new NotAuthenticatedException();
+        }
 
         $form = new FormHelper();
         $form = $form->generate('event', '/event/modify');
@@ -204,8 +214,9 @@ class EventController extends Controller
             throw new EventNotFoundException($id);
         }
 
-        if($event['user'] != Authentication::getInstance()->getUserId())
+        if ($event['user'] != Authentication::getInstance()->getUserId()) {
             throw new NotYourEventException($id);
+        }
 
         $this->eventModel->updateEvent(
             $id,
@@ -222,8 +233,9 @@ class EventController extends Controller
 
     public function participate()
     {
-        if (!Authentication::getInstance()->isAuthenticated())
+        if (!Authentication::getInstance()->isAuthenticated()) {
             throw new NotAuthenticatedException();
+        }
 
         $id = (int)$this->getParams()[0];
 
@@ -235,8 +247,9 @@ class EventController extends Controller
 
         $participate = $this->eventModel->getParticipateUser($id, Authentication::getInstance()->getUserId());
 
-        if(empty($participate))
+        if (empty($participate)) {
             throw new AlreadyParticipateEventException($id, Authentication::getInstance()->getUserId());
+        }
 
         $this->eventModel->participate($id, Authentication::getInstance()->getUserId());
 
@@ -245,8 +258,9 @@ class EventController extends Controller
 
     public function unparticipate()
     {
-        if (!Authentication::getInstance()->isAuthenticated())
+        if (!Authentication::getInstance()->isAuthenticated()) {
             throw new NotAuthenticatedException();
+        }
 
         $id = (int)$this->getParams()[0];
 
@@ -258,8 +272,9 @@ class EventController extends Controller
 
         $participate = $this->eventModel->getParticipateUser($id, Authentication::getInstance()->getUserId());
 
-        if(!empty($participate))
+        if (!empty($participate)) {
             throw new NotParticipateEventException($id, Authentication::getInstance()->getUserId());
+        }
 
         $this->eventModel->unparticipate($id, Authentication::getInstance()->getUserId());
 
