@@ -190,7 +190,9 @@ SQL;
      */
     public function getParticipateUser($id, $userId)
     {
-        //TODO
+        $sql = "SELECT * FROM event_user WHERE event_user.id = ? AND event_user.user = ? ;";
+
+        return DatabaseProvider::connection()->query($sql,[$id,$userId]);
     }
 
     /**

@@ -15,12 +15,12 @@ class AdminCommentController extends Controller
     /**
      * @var \app\models\CommentsEventModel
      */
-    private $model;
+    private $modelComment;
 
     public function index()
     {
-        $this->model = $this->loadModel('CommentsEvent');
-        $allEvents = $this->model->getAllCommentsEvent();
-        $this->getView()->render('admin/event', array('allEvents' => $allEvents));
+        $this->modelComment = $this->loadModel('CommentsEvent');
+        $allComments = $this->modelComment->getAllCommentsEvent();
+        $this->getView()->render('admin/comments', array('allComments' => $allComments));
     }
 }
