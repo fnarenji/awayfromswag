@@ -467,6 +467,26 @@ p.user-list-item b
     display: block;
     margin: 15px 0;
 }
+ul#events li {
+    margin-top: 20px;
+}
+
+ul#events li h1 {
+    display: block;
+}
+
+ul#events li p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+ul#events li a h1 {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #0078e7;
+}
+
 /* WOW MEDIA QUERIES, SUCH RESPONSIVE, MUCH SKILLS */
 
 @media only screen and (min-width: 780px) {
