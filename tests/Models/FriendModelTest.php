@@ -32,6 +32,9 @@ class FriendModelTest extends \PHPUnit_Framework_TestCase {
         $state = $this->model->insertFriend($array['user1'],$array['user2']);
         $this->assertEquals(true,$state);
 
+        $state = $this->model->updateFriend(1,42);
+        $this->assertEquals(true,$state);
+
         $state = $this->model->deleteFriend(1,42);
         $this->assertEquals(true,$state);
     }
