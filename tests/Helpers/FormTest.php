@@ -24,13 +24,21 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
     private function userForm()
     {
-        $result = '<form method="POST" action="#" id="" class="">
-    <input name="id" type="hidden" />
-    <label for="username">Nom d\'utilisateur</label>
-    <input name="username" type="text" />
-    <label for="firstname">Prénom</label>
-    <input name="firstname" type="text" />
-    <input name="submit" type="submit" value="Envoyer" />
+        $result = '<form method="POST" action="#" id="" class="pure-form pure-form-aligned centered">
+    <div class="pure-controls">
+        <input name="id" type="hidden" />
+    </div>
+    <div class="pure-control-group">
+        <label for="username">Nom d\'utilisateur</label>
+        <input name="username" type="text" />
+    </div>
+    <div class="pure-control-group">
+        <label for="firstname">Prénom</label>
+        <input name="firstname" type="text" />
+    </div>
+    <div class="pure-controls">
+        <input name="submit" type="submit" value="Envoyer" class="pure-button pure-button-primary" />
+    </div>
 </form>';
 
         $form = FormHelper::generate('user', '#');
