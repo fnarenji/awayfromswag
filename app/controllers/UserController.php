@@ -81,7 +81,11 @@ class UserController extends Controller
             $validAuth = $this->userModel->validateAuthentication($username, $password);
 
             if (!empty($validAuth)) {
-                Authentication::getInstance()->setAuthenticated($username, $validAuth['id'], ['mailHash' => $validAuth['mailHash']]);
+                Authentication::getInstance()->setAuthenticated($username, $validAuth['id'], [
+                    'mailHash' => $validAuth['mailHash'],
+                    'lastname' => $validAuth['lastname'],
+                    'firstname' => $validAuth['firstname']
+                ]);
                 $this->getView()->redirect('/');
             } else {
                 // TODO POPUP WRONG CREDENTIALS MESSAGE

@@ -1,7 +1,7 @@
-<a href="/user/profile/thomas" class="avatar-menu">
+<a href="/user/profile/{{ auth.userName }}" class="avatar-menu">
     <img src="https://www.gravatar.com/avatar/{{ auth.options.mailHash }}.png" alt="avatar"/>
 </a>
-<b class="nav-pseudo">Thomas Munoz</b>
+<b class="nav-pseudo">{{ auth.options.firstname ~ ' ' ~ auth.options.lastname }}</b>
 <ul>
     <li><a href="/user/account"><i class="fa fa-cog"></i>Mon profil</a></li>
     <li><a href="#"><i class="fa fa-bicycle"></i>Mes évènements</a></li>
