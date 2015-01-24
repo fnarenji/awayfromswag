@@ -13,6 +13,8 @@ use SwagFramework\mvc\Model;
 
 class UserModel extends Model
 {
+    const GET_USER_FULL_NAME_LIKE = 'SELECT id FROM user WHERE CONCAT(username, \' (\', firstname, \' \', UPPER(lastname), \')\') LIKE ?';
+
     /**
      *  Return all information with the id
      * @param $id
@@ -206,5 +208,10 @@ SQL;
         return DatabaseProvider::connection()->query($sql, [$name]);
     }
 
+    public function getUserFullNameLike($fullName)
+    {
+        $fullName = '%' . $fullName . '%';
 
+        return DatabaseProvider::connection()->execute(self::GET_USER_FULL_NAME_LIKE, [$fullName]);
+    }
 } 

@@ -95,6 +95,8 @@ class EventController extends Controller
 
         $form = FormHelper::generate('event', '/event/add');
 
+        $form->getField('eventtime')->addAttribute('class', 'datepicker');
+
         $html = $form->getFormHTML([
             'name' => 'Nom de l\'évènement',
             'description' => 'Description',
@@ -126,6 +128,7 @@ class EventController extends Controller
         ]);
 
         $result['user'] = Authentication::getInstance()->getUserId();
+
 
         $res = $this->eventModel->insertEvent($result);
 

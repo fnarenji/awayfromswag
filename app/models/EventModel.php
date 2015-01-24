@@ -59,8 +59,7 @@ class EventModel extends Model
 INSERT INTO event (name, user, description, address, eventtime, money, personsmax)
         VALUES (:name, :user, :description, :address, :eventtime, :money, :personsmax);
 SQL;
-
-            DatabaseProvider::connection()->query($sql, $params);
+            DatabaseProvider::connection()->execute($sql, $params);
 
             DatabaseProvider::connection()->commit();
 

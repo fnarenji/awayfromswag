@@ -2,7 +2,6 @@
 
 require 'vendor/autoload.php';
 use app\helpers\ClassRouting;
-use SwagFramework\Exceptions\SwagException;
 
 session_start();
 
@@ -25,7 +24,8 @@ if (DEBUG) {
     error_reporting(E_ALL);
 }
 
-try {
+function main()
+{
     \SwagFramework\Database\DatabaseProvider::connect(\SwagFramework\Config\DatabaseConfig::parseFromFile("app/config/database.json"));
 
     $router = new \SwagFramework\Routing\Router();
@@ -44,14 +44,14 @@ try {
     $router->add('/', new \app\controllers\HomeController(), 'index');
 
     $router->matchCurrentRequest();
-} catch (SwagException $e) {
-    if (DEBUG) {
-        echo '<h1>SwagException !</h1>';
-        echo '<p>' . $e->getMessage() . '</p>';
-    } else echo 'Internal server error.';
-} catch (Exception $e) {
-    if (DEBUG) {
-        echo '<h1>Exception !</h1>';
-        echo $e;
-    } else echo 'Internal server error.';
+}
+
+if (DEBUG) {
+    main();
+} else {
+    try {
+        main();
+    } catch (Exception $e) {
+        echo 'Internal server error.';
+    }
 }
