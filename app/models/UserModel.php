@@ -21,7 +21,7 @@ class UserModel extends Model
     public function getUser($id)
     {
         $sql = 'SELECT * '
-            . 'FROM user'
+            . 'FROM user '
             . 'WHERE id = ?';
 
         return DatabaseProvider::connection()->selectFirst($sql, [$id]);
