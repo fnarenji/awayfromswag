@@ -125,18 +125,9 @@ class EventController extends Controller
             'personsmax' => 'Nombre maximum de participants'
         ]);
 
-        var_dump($result);
-        var_dump(Authentication::getInstance()->getUserId());
+        $result['user'] = Authentication::getInstance()->getUserId();
 
-        $res = $this->eventModel->insertEvent(
-            $result['name'],
-            Authentication::getInstance()->getUserId(),
-            $result['personsmax'],
-            $result['description'],
-            $result['address'],
-            $result['eventtime'],
-            $result['money']
-        );
+        $res = $this->eventModel->insertEvent($result);
 
         var_dump($res);
 

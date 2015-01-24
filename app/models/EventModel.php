@@ -44,28 +44,23 @@ class EventModel extends Model
     }
 
     /**
-     * Insert in DB a new event
-     * @param $name
-     * @param $idCreator
-     * @param $nbMaxPart
-     * @param $description
-     * @param $address
-     * @param $eventTime
-     * @param $money
+     * @param $params
      * @return bool
+     * @throws \Exception
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function insertEvent($name, $idCreator, $nbMaxPart, $description, $address, $eventTime, $money)
+    public function insertEvent($params)
     {
         try {
 
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql = "INSERT INTO event ('name','user','description', 'address', 'eventtime', 'money', 'personsmax') " .
-                " VALUE (?,?,?,?,?,?,?)";
+            $sql = <<<SQL
+INSERT INTO event (name, user, description, address, eventtime, money, personsmax)
+        VALUES (:name, :user, :description, :address, :eventtime, :money, :personsmax);
+SQL;
 
-            DatabaseProvider::connection()->query($sql,
-                [$name, $idCreator, $description, $address, $eventTime, $money, $nbMaxPart]);
+            DatabaseProvider::connection()->query($sql, $params);
 
             DatabaseProvider::connection()->commit();
 
