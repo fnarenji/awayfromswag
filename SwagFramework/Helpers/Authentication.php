@@ -26,12 +26,11 @@ class Authentication
         return self::$instance;
     }
 
-    public function setAuthenticated($userName, $userId, $accesslevel, array $options = [])
+    public function setAuthenticated($userName, $userId, array $options = [])
     {
         $_SESSION['userName'] = $userName;
         $_SESSION['userId'] = $userId;
         $_SESSION['authDate'] = new \DateTime();
-        $_SESSION['accesslevel'] = $accesslevel;
         $_SESSION['options'] = $options;
     }
 
@@ -40,7 +39,6 @@ class Authentication
         unset($_SESSION['userName']);
         unset($_SESSION['userId']);
         unset($_SESSION['authDate']);
-        unset($_SESSION['accesslevel']);
         unset($_SESSION['options']);
         session_destroy();
     }
@@ -57,7 +55,6 @@ class Authentication
                     'userName' => $this->getUserName(),
                     'userId' => $this->getUserId(),
                     'authDate' => $this->getAuthDate(),
-                    'accesslevel' => $this->getAccessLevel(),
                     'options' => $this->getOptions()
                 ]);
         }
@@ -87,14 +84,14 @@ class Authentication
         return $_SESSION['authDate'];
     }
 
-    public function getAccessLevel()
-    {
-        return $_SESSION['accesslevel'];
-    }
-
     public function getOptions()
     {
         return $_SESSION['options'];
+    }
+
+    public function getOptionOr($key, $else)
+    {
+        return isset($_SESSION['options'][$key]) ? $_SESSION['options'][$key] : $else;
     }
 
     private function __clone()
