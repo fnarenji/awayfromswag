@@ -31,6 +31,7 @@ class ConfigFileParser
      */
     public function __construct($fileName)
     {
+        $this->fileName = $fileName;
         if (!file_exists($fileName)) {
             throw new FileNotFoundException($fileName);
         }
