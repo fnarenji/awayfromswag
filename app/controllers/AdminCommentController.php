@@ -23,4 +23,23 @@ class AdminCommentController extends Controller
         $allComments = $this->modelComment->getAllCommentsEvent();
         $this->getView()->render('admin/comments', array('allComments' => $allComments));
     }
+
+    public function view()
+    {
+        $id = (int)$this->getParams()[0];
+        $this->modelComment = $this->loadModel('CommentsEvent');
+
+        $comment = $this->modelComment->getCommentEvent($id);
+        print_r($comment)[0];
+        //$this->getView()->render('admin/comment', array('comments' => $comment));
+    }
+
+    public function delete()
+    {
+        {
+            $id = (int)$this->getParams()[0];
+            $this->modelComment = $this->loadModel('CommentsEvent');
+
+            $this->modelComment->deleteCommentEvent($id);
+    }
 }

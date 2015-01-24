@@ -21,7 +21,7 @@ class CommentsEventModel extends Model
     public function getAllCommentsEvent()
     {
         $sql = <<<'SQL'
-SELECT comment.id, comment.message, user.id, user.username, event.name
+SELECT comment.id as commid, comment.message, user.id as useid, user.username, event.name
 FROM comment
 JOIN user           ON comment.user = user.id
 JOIN comment_event  ON comment.id = comment_event.id
@@ -40,7 +40,7 @@ SQL;
     public function getCommentEvent($id)
     {
         $sql = <<<SQL
-SELECT comment.id, comment.message, user.id, user.username, event.name
+SELECT comment.id as commid, comment.message, user.id as useid, user.username, event.name
 FROM comment
 JOIN user           ON comment.user = user.id
 JOIN comment_event  ON comment.id = comment_event.id
