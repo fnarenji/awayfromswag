@@ -140,7 +140,7 @@ class EventController extends Controller
 
     public function modify()
     {
-        if (!Authentication::getInstance()->isAuthenticated()) {
+        if (!Authentication::getInstance()->isAuthenticated() && !Authentication::getInstance()->getAccessLevel()) {
             throw new NotAuthenticatedException();
         }
 

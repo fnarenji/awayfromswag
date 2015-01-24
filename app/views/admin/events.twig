@@ -12,7 +12,7 @@
 
         {% for event in allEvents %}
             <p class="user-list-item">
-                <b>- <a href="/admievent/event/{{ event.id }}">{{ event.name|e }}</a></b>
+                <b>- <a href="/event/modify/{{ event.id }}">{{ event.name|e }}</a></b>
                 {{ event.personsnow  ~ ' personnes sur ' ~ event.personsmax }}
                 {{ event.description ~ ' ...' }}
             </p>
