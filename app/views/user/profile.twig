@@ -23,16 +23,16 @@
             <p class="profile-description"><span class="profile-line">{{ profile.description }}</span></p>
         </div>
         <div class="profile-group">
-            {% if profile.mail %}
+            {% if profile.mailPrivacy %}
                 <span class="profile-line">
                     <b class="profile-label"><i class="fa fa-at"></i>
                     </b>{{ profile.mail }}</span>
             {% endif %}
-            {% if profile.phonenumber %}
+            {% if profile.phonenumberPrivacy %}
                 <span class="profile-line"><b class="profile-label"><i
                                 class="fa fa-phone"></i></b>{{ profile.phonenumber }}</span>
             {% endif %}
-            {% if profile.twitter %}
+            {% if profile.twitterPrivacy %}
                 <span class="profile-line">
                     <b class="profile-label">
                         <i class="fa fa-twitter"></i>
@@ -40,7 +40,7 @@
                     <a href="https://twitter.com/{{ profile.twitter }}">{{ profile.twitter }}</a>
                 </span>
             {% endif %}
-            {% if profile.facebookuri %}
+            {% if profile.facebookuriPrivacy %}
                 <span class="profile-line">
                     <b class="profile-label">
                         <i class="fa fa-facebook"></i>
@@ -48,7 +48,7 @@
                     <a href="https://www.facebook.com/{{ profile.facebookuri }}">{{ profile.facebookuri }}</a>
                 </span>
             {% endif %}
-            {% if profile.skype %}
+            {% if profile.skypePrivacy %}
                 <span class="profile-line">
                     <b class="profile-label">
                         <i class="fa fa-skype"></i>
@@ -56,7 +56,7 @@
                     <a href="skype:{{ profile.skype }}?">{{ profile.skype }}</a>
                 </span>
             {% endif %}
-            {% if profile.website %}
+            {% if profile.websitePrivacy %}
                 <span class="profile-line">
                     <b class="profile-label"><i class="fa fa-desktop"></i>
                     </b>
