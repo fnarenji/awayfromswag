@@ -80,6 +80,8 @@ class UserModel extends Model
         try {
             DatabaseProvider::connection()->beginTransaction();
 
+            var_dump($infos);
+
             $sql = "INTO INTO user ('username', 'firstname', 'lastname', 'mail', 'password', 'birthday','phonenumber', .
                 'twitter','skype','facebookuri','website','job','description','privacy','mailnotifications','accesslevel')
                      VALUES (:username, :firstname, :lastname, :mail, :password, :birthday, :phonenumber, :twitter, :skype, :facebookuri, :website, :job, :description, :privacy, :mailnotifications, :accesslevel)";
