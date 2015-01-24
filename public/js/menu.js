@@ -22,4 +22,13 @@ $(document).ready(function () {
         $('.menu-reduced').toggleClass('menu-extend');
         $('section').height($(document).width() - 260);
     });
+
+    if(window.location.pathname == '/user/calendar'){
+        $.get( "/user/getcalendar", function(data) {
+        })
+            .done(function(data) {
+                $('#calendar-to-display').html(data);
+            })
+    }
+
 });

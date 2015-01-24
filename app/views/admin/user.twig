@@ -4,11 +4,14 @@
     <article class="profile">
         <h1>Profil de {{ username }} ({{ firstname ~ ' ' ~ lastname }})</h1>
 
-        <form action="/user/account" method="POST" class="pure-form responsive-profile">
+        <form action="/adminusers/user" method="POST" class="pure-form responsive-profile">
             <div class="profile-group">
                 <img src="http://www.gravatar.com/avatar/{{ mailHash }}.png" alt="{{ username ~ ' avatar' }}"
                      class="profile-avatar"/>
-                <span class="profile-line"><b class="profile-label">Pseudo : </b>{{ username }}</span>
+                <span class="profile-line">
+                    <label for="username">Pseudo : </label>
+                     <input type="text" name="username" value="{{ username }}" id="username"/>
+                </span>
                 <span class="profile-line"><b class="profile-label">Age : </b>{{ age }} ans</span>
                 <span class="profile-line">
                     <label for="lastname">Nom : </label>

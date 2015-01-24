@@ -8,12 +8,13 @@
         {% if conversations is empty %}
         <p>Vous n'avez pas de conversations en cours.</p>
         {% else %}
-        <ul>
+        <ul class="conversation-list">
             {% for conversation in conversations %}
-            <li>
-                <h1>{{ conversation.title }}</h1>
+
+            <li class="conversation-list-item">
+                <a href="/conversation/show/{{ conversation.id }}"><b>{{ conversation.title }}</b></a>
                 <p>
-                    {{ conversation.username }}
+                    {{ conversation.lastmessagesnippet }}
                 </p>
             </li>
             {% endfor %}

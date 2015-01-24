@@ -1,7 +1,7 @@
 {% extends "layout/default" %}
 
 {% block content %}
-    <article class="register">
+    <article class="conversation">
         <h1>Création de conversation</h1>
 
         {% for error in errors %}
@@ -10,7 +10,7 @@
             </p>
         {% endfor %}
 
-        <form method="POST" action="/conversation/create" class="pure-form pure-form-aligned">
+        <form method="POST" action="/conversation/create" class="pure-form pure-form-aligned conversation-creation">
             <div class="pure-control-group">
                 <label for="title">Intitulé</label>
                 <input required name="title" placeholder="Ma conversation stylée"/>

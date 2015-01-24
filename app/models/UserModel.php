@@ -13,7 +13,11 @@ use SwagFramework\mvc\Model;
 
 class UserModel extends Model
 {
+    const SALT = 'LEPHPCESTLOLMDRswagyolo564654465465464//@Êø@Â@ÛÂøîôâåÊøîÂÊÔÎÊÂåÊâÎ';
     const GET_USER_FULL_NAME_LIKE = 'SELECT id FROM user WHERE CONCAT(username, \' (\', firstname, \' \', UPPER(lastname), \')\') LIKE ?';
+
+    const GET_ALL_USER_FULL_NAME = 'SELECT CONCAT(username, \' (\', firstname, \' \', UPPER(lastname), \')\') AS userFullName FROM user';
+    const GET_USER_FULL_NAME = 'SELECT CONCAT(username, \' (\', firstname, \' \', UPPER(lastname), \')\') AS userFullName FROM user WHERE id = ?';
 
     /**
      *  Return all information with the id
@@ -61,15 +65,25 @@ class UserModel extends Model
      */
     public function getAllUsersFullNames()
     {
-        $sql = 'SELECT CONCAT(username, \' (\', firstname, \' \', UPPER(lastname), \')\') AS userFullName FROM user';
-
         $fullNames = [];
-        foreach (DatabaseProvider::connection()->query($sql) as $row) {
+        foreach (DatabaseProvider::connection()->query(self::GET_ALL_USER_FULL_NAME) as $row) {
             $fullNames[] = $row['userFullName'];
         }
 
         return $fullNames;
     }
+
+    /**
+     * Return full name for user
+     * @param $id int user id
+     * @return string the full name
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    public function getUserFullName($id)
+    {
+        return DatabaseProvider::connection()->selectFirst(self::GET_USER_FULL_NAME, [$id])['userFullName'];
+    }
+
 
     /**
      * Return information if the user with the $password and $username was found.
@@ -82,7 +96,7 @@ class UserModel extends Model
         $sql = 'SELECT id, firstname, lastname, MD5(mail) as mailHash '
             . 'FROM user '
             . 'WHERE username = ? '
-            . 'AND password = SHA1(?)';
+            . 'AND password = SHA1(CONCAT(?, \'' . self::SALT . '\'))';
 
         return DatabaseProvider::connection()->selectFirst($sql, [$username, $password]);
     }
@@ -98,9 +112,11 @@ class UserModel extends Model
         try {
             DatabaseProvider::connection()->beginTransaction();
 
+            $salt = self::SALT;
+
             $sql = <<<SQL
 INSERT INTO user (username, firstname, lastname, mail, password, birthday,phonenumber, twitter, skype, facebookuri, website, job, description, privacy, mailnotifications, accesslevel)
-        VALUES (:username, :firstname, :lastname, :mail, SHA1(:password), :birthday, :phonenumber, :twitter, :skype, :facebookuri, :website, :job, :description, :privacy, :mailnotifications, :accesslevel)
+        VALUES (:username, :firstname, :lastname, :mail, SHA1(CONCAT(:password, '$salt')), :birthday, :phonenumber, :twitter, :skype, :facebookuri, :website, :job, :description, :privacy, :mailnotifications, :accesslevel)
 SQL;
 
             $success = DatabaseProvider::connection()->execute($sql, $infos);
@@ -115,9 +131,10 @@ SQL;
     }
 
     /**
-     *  Delete an user
      * @param $id
      * @return bool
+     * @throws \Exception
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function deleteUser($id)
     {
@@ -140,9 +157,9 @@ SQL;
     }
 
     /**
-     * Update the user.
      * @param $infos
      * @return bool
+     * @throws \Exception
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function updateUser($infos)
@@ -177,9 +194,9 @@ SQL;
     }
 
     /**
-     * Update user by admin
      * @param $infos
      * @return bool
+     * @throws \Exception
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function updateAdminUser($infos)
@@ -187,7 +204,7 @@ SQL;
         try {
 
             DatabaseProvider::connection()->beginTransaction();
-            $sql = 'UPDATE user SET username = :username, firstname = :firstname, lastname = :lastname, mail = :mail, password = :password, birthday = :birthday,
+            $sql = 'UPDATE user SET username = :username, firstname = :firstname, lastname = :lastname, mail = :mail, password = SHA1(CONCAT(:password, \'' . self::SALT . '\')), birthday = :birthday,
                     phonenumber = :phonenumber,twitter = :twitter, skype = :skype, facebookuri = :facebookuri, website = :website, job = :job, description = :description,
                     privacy = :privacy, mailnotifications = :mailnotifications, accesslevel = :accesslevel WHERE id = ?';
 
@@ -201,6 +218,17 @@ SQL;
         }
     }
 
+    /**
+     * @param $username
+     * @return array
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    public function getAccessLevel($username)
+    {
+        $sql = 'SELECT accesslevel FROM user WHERE username = ?';
+
+        return DatabaseProvider::connection()->query($sql, array($username));
+    }
 
     /**
      * Return data for username like param

@@ -16,6 +16,7 @@ use SwagFramework\Exceptions\NoUserFoundException;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\Input;
 use SwagFramework\mvc\Controller;
+use app\helpers\Date;
 
 class UserController extends Controller
 {
@@ -79,13 +80,16 @@ class UserController extends Controller
             $password = Input::post('password');
 
             $validAuth = $this->userModel->validateAuthentication($username, $password);
+            $accesslevel = $this->userModel->getAccessLevel($username);
 
             if (!empty($validAuth)) {
-                Authentication::getInstance()->setAuthenticated($username, $validAuth['id'], [
-                    'mailHash' => $validAuth['mailHash'],
+
+                Authentication::getInstance()->setAuthenticated($username, $validAuth['id'], $accesslevel[0]['accesslevel'],
+                    ['mailHash' => $validAuth['mailHash'],
                     'lastname' => $validAuth['lastname'],
                     'firstname' => $validAuth['firstname']
                 ]);
+
                 $this->getView()->redirect('/');
             } else {
                 // TODO POPUP WRONG CREDENTIALS MESSAGE
@@ -148,21 +152,28 @@ class UserController extends Controller
                     default:
                         $errors[] = 'Unknown database error.';
                 }
-            }
-
-        } catch (\Exception $e) {
+            } else throw $e;
 
         }
+
         if (!empty($errors))
             $this->getView()->render('user/register', ['user' => $user, 'errors' => $errors]);
-        else
-            $this->getView()->redirect('/');
+        else {
+            //$this->getView()->redirect('/');
+        }
     }
 
     public function account()
     {
         try {
-            $user = $this->userModel->getUser(Authentication::getInstance()->getUserId());
+            $params = $this->getParams(true);
+
+            if(!empty($params) && Authentication::getInstance()->getAccessLevel()) {
+                $user = $this->userModel->getUser($params[0]);
+            } else {
+                $user = $this->userModel->getUser(Authentication::getInstance()->getUserId());
+            }
+
             if (empty($user)) {
                 throw new NoUserFoundException(Authentication::getInstance()->getUserName());
             }
@@ -176,9 +187,10 @@ class UserController extends Controller
             $registerDate = new \DateTime($user['registerdate']);
             $user['registerDateFormat'] = $registerDate->format('d/m/Y');
 
-            $user = array_merge($user, PrivacyCalculator::calculate(Authentication::getInstance()->getUserId()));
+            $user = array_merge($user, PrivacyCalculator::calculate($user['id']));
 
             $this->getView()->render('user/account', $user);
+
         } catch (NoUserFoundException $e) {
             // TODO POPUP
             $e->getMessage();
@@ -203,7 +215,12 @@ class UserController extends Controller
 
         try {
 
-            $user = $this->userModel->getUser(Authentication::getInstance()->getUserId());
+            if(!empty($params) && Authentication::getInstance()->getAccessLevel()) {
+                $user = $this->userModel->getUser($toModify['id']);
+            } else {
+                $user = $this->userModel->getUser(Authentication::getInstance()->getUserId());
+            }
+
             if (empty($user)) {
                 throw new NoUserFoundException(Authentication::getInstance()->getUserName());
             }
@@ -229,7 +246,8 @@ class UserController extends Controller
             $toModify['id'] = $user['id'];
 
             $this->userModel->updateUser($toModify);
-            $this->getView()->render('home/index');
+            $this->getView()->redirect('/user/profile/' . $toModify['username']);
+            //$this->getView()->render('home/index');
         } catch (NoUserFoundException $e){
             $e->getMessage();
             $this->getView()->render('/home/index');
@@ -239,5 +257,14 @@ class UserController extends Controller
     public function search()
     {
         echo json_encode($this->userModel->getAllUsersFullNames());
+    }
+
+    public function calendar()
+    {
+        $this->getView()->render('/user/calendar');
+    }
+    public function getcalendar()
+    {
+        include ('app/views/user/calendarDisplay.php');
     }
 }

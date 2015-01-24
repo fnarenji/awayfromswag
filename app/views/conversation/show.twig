@@ -1,7 +1,20 @@
 {% extends "layout/default" %}
 {% block content %}
     <article>
-        <h1>Conversation</h1>
-        <h2>Loick - Thomas</h2>
+        <h1>{{ conversation.title }}</h1>
+
+
+        <p style="text-align: center">
+            Crée par <b>{{ conversation.creator }}</b> le <b>{{ conversation.createtime }}</b><br/>
+            Dernier message posté par <b>{{ conversation.lastmessageauthor }}</b> le
+            <b>{{ conversation.lastmessagetime }}</b>.
+        </p>
+
+        <div>
+            {% for message in conversation.messages %}
+
+            {% endfor %}
+        </div>
+        <p>{{ dump(conversation) }}</p>
     </article>
 {% endblock %}

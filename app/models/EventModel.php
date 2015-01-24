@@ -9,6 +9,7 @@
 namespace app\models;
 
 use SwagFramework\Database\DatabaseProvider;
+use SwagFramework\Helpers\Authentication;
 use SwagFramework\mvc\Model;
 
 class EventModel extends Model
@@ -242,5 +243,25 @@ SQL;
 
         return DatabaseProvider::connection()->query($sql);
 
+    }
+
+    /**
+     * @param int $year
+     * @return array
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    public function getEventsByYear($year = 2015)
+    {
+        $sql = 'SELECT event.id, name, eventtime FROM event ' .
+               'LEFT JOIN event_user ' .
+               'ON event_user.id = event.id '.
+               'WHERE event.user = ? ' .
+               'AND YEAR(eventtime) = ? ' .
+               'OR event_user.user = ? ' .
+               'AND YEAR(eventtime)= ? ';
+
+        $user = Authentication::getInstance()->getUserId();
+
+        return DatabaseProvider::connection()->query($sql, array($user, $year, $user, $year));
     }
 }

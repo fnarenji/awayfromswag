@@ -22,7 +22,7 @@ class CommentsArticleModel extends Model
      */
     public function getAllCommentsArticle()
     {
-        $sql = "SELECT article.id, comment.title, text, username FROM user, comment_article, comment, article WHERE " .
+        $sql = "SELECT comment.id, article.id, article.title, text, username FROM user, comment_article, comment, article WHERE " .
             "comment_article.article = article.id AND comment_article.id = comment.id AND user.id = comment.user ;";
 
         return DatabaseProvider::connection()->query($sql);
@@ -36,7 +36,7 @@ class CommentsArticleModel extends Model
      */
     public function getCommentArticle($id)
     {
-        $sql = "SELECT title, text, username FROM user,comment_article,comment,article WHERE " .
+        $sql = "SELECT comment.id, article.id, article.title, text, username FROM user,comment_article,comment,article WHERE " .
             "comment_article.article = ? AND comment_article.id = comment.id AND user.id = comment.user ;";
 
         return DatabaseProvider::connection()->query($sql, [$id]);
@@ -55,15 +55,16 @@ class CommentsArticleModel extends Model
             DatabaseProvider::connection()->beginTransaction();
 
             $sqlComm = "INSERT INTO comment (user, message) VALUES (? , ?);";
-            DatabaseProvider::connection()->query($sqlComm, [$param['iduser'], $param['contents']]);
+            DatabaseProvider::connection()->execute($sqlComm, [$param['iduser'], $param['contents']]);
 
             $newCommentId = DatabaseProvider::connection()->lastInsertId();
-            $sqlComm = "INSERT INTO comment_event (id, event) VALUES (? , ?);";
-            DatabaseProvider::connection()->query($sqlComm, [$newCommentId, $param['idarticle']]);
+            $sqlComm = "INSERT INTO comment_article (id, article) VALUES (? , ?);";
+            DatabaseProvider::connection()->execute($sqlComm, [$newCommentId, $param['idarticle']]);
 
             DatabaseProvider::connection()->commit();
 
             return true;
+
         } catch (\Exception $e) {
             DatabaseProvider::connection()->rollBack();
             throw $e;
@@ -82,7 +83,7 @@ class CommentsArticleModel extends Model
             DatabaseProvider::connection()->beginTransaction();
 
             $sqlComm = "UPDATE comment SET message = ? WHERE id = ?";
-            DatabaseProvider::connection()->query($sqlComm, [$params['content'], $params['idcomment']]);
+            DatabaseProvider::connection()->execute($sqlComm, [$params['content'], $params['idcomment']]);
 
             DatabaseProvider::connection()->commit();
 
@@ -100,13 +101,17 @@ class CommentsArticleModel extends Model
      * @return bool
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function deleteCommentEvent($id)
+    public function deleteCommentArticle($id)
     {
         try {
             DatabaseProvider::connection()->beginTransaction();
             $sql = "DELETE FROM comment_article WHERE id = ? ";
 
-            DatabaseProvider::connection()->query($sql, [$id]);
+            DatabaseProvider::connection()->execute($sql, [$id]);
+
+            $sql = "DELETE FROM comment WHERE id = ? ";
+
+            DatabaseProvider::connection()->execute($sql, [$id]);
 
             DatabaseProvider::connection()->commit();
 

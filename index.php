@@ -2,6 +2,7 @@
 
 require 'vendor/autoload.php';
 use app\helpers\ClassRouting;
+use SwagFramework\Helpers\Authentication;
 
 session_start();
 
@@ -32,13 +33,22 @@ function main()
 
     $classRouting = new ClassRouting('\app\controllers\\');
     $classRouting->addClass('User');
-    $classRouting->addClass('Conversation');
     $classRouting->addClass('Event');
-    $classRouting->addClass('News');
-    $classRouting->addClass('AdminUsers');
-    $classRouting->addClass('AdminEvent');
-    $classRouting->addClass('AdminComment');
-    $classRouting->addClass('Admin');
+
+    if(Authentication::getInstance()->isAuthenticated())
+    {
+        $classRouting->addClass('Conversation');
+
+        if(Authentication::getInstance()->getAccessLevel() == 1)
+        {
+            $classRouting->addClass('AdminUsers');
+            $classRouting->addClass('AdminEvent');
+            $classRouting->addClass('AdminComment');
+            $classRouting->addClass('Admin');
+        }
+    }
+
+
     $classRouting->generateRoute($router);
 
     $router->add('/errors/err404', new \app\controllers\ErrorsController(), 'err404');
