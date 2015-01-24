@@ -1,0 +1,104 @@
+{% extends "layout/default" %}
+
+{% block content %}
+    <article class="profile">
+        <h1>Profil de {{ username }} ({{ firstname ~ ' ' ~ lastname }})</h1>
+
+        <form action="/adminusers/user" method="POST" class="pure-form responsive-profile">
+            <div class="profile-group">
+                <img src="http://www.gravatar.com/avatar/{{ mailHash }}.png" alt="{{ username ~ ' avatar' }}"
+                     class="profile-avatar"/>
+                <span class="profile-line">
+                    <label for="username">Pseudo : </label>
+                     <input type="text" name="username" value="{{ username }}" id="username"/>
+                </span>
+                <span class="profile-line"><b class="profile-label">Age : </b>{{ age }} ans</span>
+                <span class="profile-line">
+                    <label for="lastname">Nom : </label>
+                    <input type="text" name="lastname" value="{{ lastname }}" id="lastname"/>
+                </span>
+                <span class="profile-line">
+                    <label for="firstname">Prénom : </label>
+                    <input type="text" name="firstname" value="{{ firstname }}" id="firstname"/>
+                </span>
+
+            </div>
+            <div class="profile-group">
+                <span class="profile-line">
+                    <label for="job">Profession: </label>
+                    <input type="text" name="job" value="{{ job }}" id="job"/>
+                    <label for="jobPrivacy">
+                        <input name="jobPrivacy" type="checkbox" id="jobPrivacy" {{ jobPrivacy ? "checked" }}> Public
+                    </label>
+                </span>
+
+                <span class="profile-line"><b class="profile-label">Inscrit depuis le </b>{{ registerDateFormat }}</span>
+            </div>
+            <div class="profile-group">
+                <span class="profile-line">
+                    <label for="description">Description : </label>
+                </span>
+                <span class="profile-line">
+                    <textarea name="description" cols="40" rows="5" id="description">{{ description }}</textarea>
+                </span>
+            </div>
+            <div class="profile-group">
+                <div class="pure-control-group">
+                    <span class="profile-line">
+                        <label for="mail"><i class="fa fa-at"></i></label>
+                        <input type="email" name="mail" value="{{ mail }}" id="mail"/>
+                         <label for="mailPrivacy">
+                             <input name="mailPrivacy" type="checkbox" id="mailPrivacy" {{ mailPrivacy ? "checked" }}> Public
+                         </label>
+                    </span>
+                    <span class="profile-line">
+                        <label for="phonenumber"><i class="fa fa-phone"></i></label>
+                        <input type="tel" name="phonenumber" value="{{ phonenumber }}" id="phonenumber"/>
+                         <label for="phonePrivacy">
+                             <input name="phonenumberPrivacy" type="checkbox" id="phonenumberPrivacy" {{ phonenumberPrivacy ? "checked" }}> Public
+                         </label>
+                    </span>
+                    <span class="profile-line">
+                        <label for="twitter">
+                            <i class="fa fa-twitter"></i>
+                        </label>
+                        <input type="text" name="twitter" value="{{ twitter }}" id="twitter"/>
+                         <label for="twitterPrivacy">
+                             <input name="twitterPrivacy" type="checkbox" id="twitterPrivacy" {{ twitterPrivacy ? "checked" }}> Public
+                         </label>
+                    </span>
+                    <span class="profile-line">
+                        <label for="facebook">
+                            <i class="fa fa-facebook"></i>
+                        </label>
+                        <input type="text" name="facebookuri" value="{{ facebookuri }}" id="facebookuri"/>
+                         <label for="facebookuriPrivacy">
+                             <input name="facebookuriPrivacy" type="checkbox" id="facebookuriPrivacy" {{ facebookuriPrivacy ? "checked" }}> Public
+                         </label>
+                    </span>
+                    <span class="profile-line">
+                        <label for="skype">
+                            <i class="fa fa-skype"></i>
+                        </label>
+                        <input type="text" name="skype" value="{{ skype }}" id="skype"/>
+                         <label for="skypePrivacy">
+                             <input name="skypePrivacy" type="checkbox" id="skypePrivacy" {{ skypePrivacy ? "checked" }}> Public
+                         </label>
+                    </span>
+                    <span class="profile-line">
+                        <label for="website">
+                            <i class="fa fa-desktop"></i>
+                        </label>
+                        <input type="text" name="website" value="{{ website }}" id="website"/>
+                         <label for="websitePrivacy">
+                             <input name="websitePrivacy" type="checkbox" id="websitePrivacy" {{ websitePrivacy ? "checked" }}> Public
+                         </label>
+                    </span>
+                </div>
+            </div>
+            <input type="hidden" name="id" value="{{ id }}"/>
+            <input type="hidden" name="username" value="{{ username }}"/>
+            <input type="submit" value="envoyer"/>
+        </form>
+    </article>
+{% endblock %}
