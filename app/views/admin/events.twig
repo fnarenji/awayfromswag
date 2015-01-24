@@ -1,0 +1,14 @@
+{% extends "layout/default" %}
+ 
+{% block content %}
+    <article>
+        <h1>Gestion Event !</h1>
+        <b>Bienvenue !</b>
+    </article>
+    <h1>Evenements :</h1>
+    <ul>
+        {% for event in allEvents %}
+            <li><a id={{ event.id }} href="event/{{ event.id }}">{{ event.name|e }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
