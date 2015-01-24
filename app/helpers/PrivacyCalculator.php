@@ -17,8 +17,9 @@ class PrivacyCalculator
 
     public static function calculate($id)
     {
-        if (!empty(self::$privacy)) {
+        if (!empty(self::$privacy) && self::$privacy['id'] == $id) {
             return self::$privacy;
+
         }
 
         $model = new UserModel();

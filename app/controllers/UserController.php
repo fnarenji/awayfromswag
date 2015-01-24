@@ -55,7 +55,9 @@ class UserController extends Controller
             $registerDate = new \DateTime($user['registerdate']);
             $user['registerDateFormat'] = $registerDate->format('d/m/Y');
 
+            $user = array_merge($user, PrivacyCalculator::calculate($user['id']));
             $this->getView()->render('user/profile', ['profile' => $user]);
+
         } catch (MissingParamsException $e) {
             // TODO POPUP
             $this->getView()->render('/home/index');
@@ -157,7 +159,7 @@ class UserController extends Controller
     {
         try {
             $user = $this->userModel->getUser(Authentication::getInstance()->getUserId());
-            if (!empty($user)) {
+            if (empty($user)) {
                 throw new NoUserFoundException(Authentication::getInstance()->getUserName());
             }
 
@@ -173,10 +175,6 @@ class UserController extends Controller
             $user = array_merge($user, PrivacyCalculator::calculate(Authentication::getInstance()->getUserId()));
 
             $this->getView()->render('user/account', $user);
-        } catch (MissingParamsException $e) {
-            // TODO POPUP
-            $e->getMessage();
-            $this->getView()->render('/home/index');
         } catch (NoUserFoundException $e) {
             // TODO POPUP
             $e->getMessage();
