@@ -12,6 +12,7 @@
                 <th>Prénom</th>
                 <th>Nom</th>
                 <th>Inscrit depuis</th>
+                <th>Actions</th>
             </tr>
             </thead>
 
@@ -19,13 +20,23 @@
             {% for user in users %}
                 <tr>
                     <td>{{ user.id }}</td>
-                    <td><a href="/user/profile/{{ user.username }}"><img
-                                    src="https://www.gravatar.com/avatar/{{ user.mailhash }}.png" alt="avatar"/></a>
+                    <td>
+                        <a href="/user/profile/{{ user.username }}">
+                            <img src="https://www.gravatar.com/avatar/{{ user.mailhash }}.png" alt="avatar"/>
+                        </a>
                     </td>
-                    <td>{{ user.username }}</td>
+                    <td>
+                        <a href="/user/profile/{{ user.username }}">
+                            {{ user.username }}
+                        </a>
+                    </td>
                     <td>{{ user.firstname }}</td>
                     <td>{{ user.lastname }}</td>
                     <td>{{ user.registerdate }}</td>
+                    <td>
+                        <a href="/conversation/create/{{ user.id }}">Envoyer MP</a><br/>
+                        <a href="/user/profile/{{ user.id }}">Voir profile</a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
