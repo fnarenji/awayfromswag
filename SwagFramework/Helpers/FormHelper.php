@@ -32,7 +32,7 @@ class FormHelper
             . 'FROM ' . $table;
 
         DatabaseProvider::connect(DatabaseConfig::parseFromFile());
-        $res = DatabaseProvider::connection()->query($sql, []);
+        $res = DatabaseProvider::connection()->query($sql);
 
         if (empty($res)) {
             throw new TableNotFoundDatabaseException($table);

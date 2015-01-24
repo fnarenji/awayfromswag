@@ -50,7 +50,23 @@ class UserModel extends Model
         $sql = 'SELECT *'
             . 'FROM user ';
 
-        return DatabaseProvider::connection()->query($sql, []);
+        return DatabaseProvider::connection()->query($sql);
+    }
+
+    /**
+     * Return all information for all users
+     * @return array
+     */
+    public function getAllUsersFullNames()
+    {
+        $sql = 'SELECT CONCAT(username, \' (\', firstname, \' \', UPPER(lastname), \')\') AS userFullName FROM user';
+
+        $fullNames = [];
+        foreach (DatabaseProvider::connection()->query($sql) as $row) {
+            $fullNames[] = $row['userFullName'];
+        }
+
+        return $fullNames;
     }
 
     /**

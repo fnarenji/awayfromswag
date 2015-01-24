@@ -20,9 +20,9 @@ class ParticipateModel extends Model
      */
     public function getEventsParticipations()
     {
-        $sql = 'SELECT id, username,name FROM user,event,event_user WHERE user.id = event_user.user AND event.id = event_user.id; ';
+        $sql = 'SELECT event_user.id, username, name FROM user,event,event_user WHERE user.id = event_user.user AND event.id = event_user.id;';
 
-        return DatabaseProvider::connection()->query($sql, []);
+        return DatabaseProvider::connection()->query($sql);
     }
 
     /**
@@ -32,7 +32,7 @@ class ParticipateModel extends Model
      */
     public function getEventParticipation($id)
     {
-        $sql = 'SELECT username,name FROM user,event,event_user WHERE user.id = event_user.user AND event.id = event_user.id AND event_user.id = ? ; ';
+        $sql = 'SELECT username,name FROM user,event,event_user WHERE user.id = event_user.user AND event.id = event_user.id AND event_user.id = ? ;';
 
         return DatabaseProvider::connection()->query($sql, [$id]);
 

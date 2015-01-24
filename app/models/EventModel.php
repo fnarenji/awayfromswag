@@ -23,7 +23,7 @@ class EventModel extends Model
         $sql = "SELECT * " .
             "FROM event ";
 
-        return DatabaseProvider::connection()->query($sql, []);
+        return DatabaseProvider::connection()->query($sql);
 
     }
 

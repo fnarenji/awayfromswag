@@ -22,10 +22,10 @@ class CommentsArticleModel extends Model
      */
     public function getAllCommentsArticle()
     {
-        $sql = "SELECT id, title, text, username FROM user,comment_article,comment,article WHERE " .
+        $sql = "SELECT article.id, comment.title, text, username FROM user, comment_article, comment, article WHERE " .
             "comment_article.article = article.id AND comment_article.id = comment.id AND user.id = comment.user ;";
 
-        return DatabaseProvider::connection()->query($sql, []);
+        return DatabaseProvider::connection()->query($sql);
     }
 
     /**
@@ -54,11 +54,11 @@ class CommentsArticleModel extends Model
         try {
             DatabaseProvider::connection()->beginTransaction();
 
-            $sqlComm = "INSERT INTO comment ('user','contents') VALUES (? , ?);";
+            $sqlComm = "INSERT INTO comment (user, message) VALUES (? , ?);";
             DatabaseProvider::connection()->query($sqlComm, [$param['iduser'], $param['contents']]);
 
             $newCommentId = DatabaseProvider::connection()->lastInsertId();
-            $sqlComm = "INSERT INTO comment_event ('id','article') VALUES (? , ?);";
+            $sqlComm = "INSERT INTO comment_event (id, event) VALUES (? , ?);";
             DatabaseProvider::connection()->query($sqlComm, [$newCommentId, $param['idarticle']]);
 
             DatabaseProvider::connection()->commit();
@@ -82,7 +82,7 @@ class CommentsArticleModel extends Model
         try {
             DatabaseProvider::connection()->beginTransaction();
 
-            $sqlComm = "UPDATE comments  SET contents = ? WHERE id = ? ;";
+            $sqlComm = "UPDATE comment SET message = ? WHERE id = ?";
             DatabaseProvider::connection()->query($sqlComm, [$params['content'], $params['idcomment']]);
 
             DatabaseProvider::connection()->commit();
@@ -119,17 +119,5 @@ class CommentsArticleModel extends Model
         }
 
         return true;
-    }
-
-    /**
-     * Return id of last comment
-     * @return mixed
-     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
-     */
-    private function getIdComment()
-    {
-        $sql = "SELECT MAX(id) FROM comment";
-
-        return DatabaseProvider::connection()->query($sql, [])[0];
     }
 }

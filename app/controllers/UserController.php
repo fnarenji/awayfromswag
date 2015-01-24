@@ -234,4 +234,9 @@ class UserController extends Controller
             $this->getView()->render('/home/index');
         }
     }
+
+    public function search()
+    {
+        echo json_encode($this->userModel->getAllUsersFullNames());
+    }
 }

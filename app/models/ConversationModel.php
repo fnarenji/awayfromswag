@@ -23,9 +23,9 @@ class ConversationModel extends Model
      */
     public function getAll()
     {
-        $sql = "SELECT id, username FROM conversation_user,user WHERE user.id = conversation_user.user";
+        $sql = "SELECT conversation_user.id, username FROM conversation_user,user WHERE user.id = conversation_user.user";
 
-        return DatabaseProvider::connection()->query($sql, []);
+        return DatabaseProvider::connection()->query($sql);
     }
 
     /**
@@ -49,7 +49,7 @@ class ConversationModel extends Model
      */
     public function get($id)
     {
-        $sql = "SELECT id, username FROM conversation_user,user WHERE user.id = conversation_user.user AND conversation_user.id = ? ";
+        $sql = "SELECT conversation_user.id, username FROM conversation_user, user WHERE user.id = conversation_user.user AND conversation_user.id = ? ";
 
         return DatabaseProvider::connection()->query($sql, [$id]);
     }
@@ -66,8 +66,8 @@ class ConversationModel extends Model
         try {
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql = "INSERT INTO conversation_user ('id', 'user') VALUES (?,?);";
-            $sqlOther = "INSERT INTO conversation ('user') VALUES (?);";
+            $sql = "INSERT INTO conversation_user (id, user) VALUES (?,?);";
+            $sqlOther = "INSERT INTO conversation VALUES ();";
 
             DatabaseProvider::connection()->query($sqlOther, Authentication::getInstance()->getUserId());
 

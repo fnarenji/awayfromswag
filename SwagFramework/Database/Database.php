@@ -41,10 +41,10 @@ class Database extends \PDO
     /**
      * execute query
      * @param $query
-     * @param $params
+     * @param $params array
      * @return array Rows
      */
-    public function query($query, $params)
+    public function query($query, array $params = [])
     {
         $stmt = $this->prepare($query);
         $stmt->execute($params);
@@ -58,7 +58,7 @@ class Database extends \PDO
      * @param $params array
      * @return bool whether it succeeded
      */
-    public function execute($query, array $params)
+    public function execute($query, array $params = [])
     {
         $stmt = $this->prepare($query);
         return $stmt->execute($params);
@@ -70,7 +70,7 @@ class Database extends \PDO
      * @param $params array
      * @return mixed
      */
-    public function selectFirst($query, array $params)
+    public function selectFirst($query, array $params = [])
     {
         $stmt = $this->prepare($query);
         $stmt->execute($params);
