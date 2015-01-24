@@ -21,11 +21,11 @@ class CommentsEventModel extends Model
     public function getAllCommentsEvent()
     {
         $sql = <<<'SQL'
-SELECT comment.id, comment.title, comment.message, username
-FROM user
-JOIN comment_event ON comment_event.event = event.id
-                    AND comment_event.id = comment.id
-                    AND comment.user = user.id;
+SELECT comment.id, comment.message, user.id, user.username, event.name
+FROM comment
+JOIN user           ON comment.user = user.id
+JOIN comment_event  ON comment.id = comment_event.id
+JOIN event          ON event.id = comment_event.event
 SQL;
 
         return DatabaseProvider::connection()->query($sql);
@@ -107,19 +107,8 @@ SQL;
      */
     public function deleteCommentEvent($id)
     {
-        try {
-            DatabaseProvider::connection()->beginTransaction();
-            $sql = "DELETE FROM comment_event WHERE id = ? ";
+        $sql = "DELETE FROM comment_event WHERE id = ? ";
 
-            DatabaseProvider::connection()->query($sql, [$id]);
-
-            DatabaseProvider::connection()->commit();
-
-        } catch (\Exception $e) {
-            DatabaseProvider::connection()->rollBack();
-            throw $e;
-        }
-
-        return true;
+        return DatabaseProvider::connection()->execute($sql, [$id]);
     }
 } 
