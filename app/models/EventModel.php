@@ -262,9 +262,9 @@ SQL;
             'WHERE event.user = ? ' .
             'OR event_user.user = ? ' .
             'ORDER BY event.id ' .
-            'LIMIT ?,?';
+            'LIMIT ' . $min . ','. $max . '';
 
-        return DatabaseProvider::connection()->query($sql, array(1, 1, $min, $max));
+        return DatabaseProvider::connection()->query($sql, array($id, $id));
     }
     /**
      * @param int $year
