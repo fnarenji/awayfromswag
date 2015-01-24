@@ -95,6 +95,6 @@ class ConversationController extends Controller
         }
 
         $this->conversationModel->newMessage($newConversationId, $message);
-        //$this->getView()->redirect('/conversation/show/' . $newConversationId);
+        $this->getView()->redirect('/conversation/show/' . $newConversationId);
     }
 }
