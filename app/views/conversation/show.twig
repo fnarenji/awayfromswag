@@ -4,17 +4,32 @@
         <h1>{{ conversation.title }}</h1>
 
 
-        <p style="text-align: center">
+        <p class="subtitle">
             Crée par <b>{{ conversation.creator }}</b> le <b>{{ conversation.createtime }}</b><br/>
             Dernier message posté par <b>{{ conversation.lastmessageauthor }}</b> le
             <b>{{ conversation.lastmessagetime }}</b>.
         </p>
 
-        <div>
-            {% for message in conversation.messages %}
-
-            {% endfor %}
+        {% for message in conversation.messages %}
+        <div class="">
+            <b>{{ message.authorName }}</b> le {{ message.date }}
+            <p>
+                {{ message.content }}
+            </p>
         </div>
-        <p>{{ dump(conversation) }}</p>
+        {% endfor %}
+
+        <hr/>
+
+        <form method="POST" action="/conversation/show/{{ conversation.id }}" class="pure-form pure-form-aligned conversation-creation">
+            <div class="pure-control-group">
+                <label for="title">Message</label>
+                <textarea required name="message" placeholder="Ici un message qualitatif"></textarea>
+            </div>
+
+            <div class="pure-controls">
+                <input type="submit" value="Valider !" name="submit" class="pure-button pure-button-primary"/>
+            </div>
+        </form>
     </article>
 {% endblock %}
