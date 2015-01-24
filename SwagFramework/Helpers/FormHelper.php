@@ -44,6 +44,10 @@ class FormHelper
         foreach ($res as $value) {
             if (self::getType($value['Type']) == 'text') {
                 $field = self::getTextArea($value);
+            } elseif (self::getType($value['Type']) == 'datetime') {
+                $field = self::getInput($value);
+                $field->addAttribute('class', 'datepicker');
+                $field->addAttribute('placeholder', '01/01/2014');
             } else {
                 $field = self::getInput($value);
             }
