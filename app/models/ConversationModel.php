@@ -15,6 +15,12 @@ use SwagFramework\mvc\Model;
 
 class ConversationModel extends Model
 {
+    const ADD_USER_TO_CONVERSATION = "INSERT INTO conversation_user (id, user) VALUES (?, ?);";
+    const DELETE_CONVERSATION = "DELETE FROM conversation_user WHERE id = ?";
+    const CREATE_CONVERSATION = "INSERT INTO conversation VALUES ();";
+    const GET_CONVERSATION = "SELECT conversation_user.id, username FROM conversation_user, user WHERE user.id = conversation_user.user AND conversation_user.id = ? ";
+    const GET_CONVERSATIONS_FOR_USER = "SELECT conversation_user.id, username FROM conversation_user, user WHERE user.id = conversation_user.user AND conversation_user.user = ? ";
+    const GET_ALL_CONVERSATIONS = "SELECT conversation_user.id, username FROM conversation_user,user WHERE user.id = conversation_user.user";
 
     /**
      * Get all conversation
@@ -23,9 +29,7 @@ class ConversationModel extends Model
      */
     public function getAll()
     {
-        $sql = "SELECT conversation_user.id, username FROM conversation_user,user WHERE user.id = conversation_user.user";
-
-        return DatabaseProvider::connection()->query($sql);
+        return DatabaseProvider::connection()->query(self::GET_ALL_CONVERSATIONS);
     }
 
     /**
@@ -36,9 +40,7 @@ class ConversationModel extends Model
      */
     public function getUser($id)
     {
-        $sql = "SELECT conversation_user.id, username FROM conversation_user, user WHERE user.id = conversation_user.user AND conversation_user.user = ? ";
-
-        return DatabaseProvider::connection()->query($sql, [$id]);
+        return DatabaseProvider::connection()->query(self::GET_CONVERSATIONS_FOR_USER, [$id]);
     }
 
     /**
@@ -49,40 +51,34 @@ class ConversationModel extends Model
      */
     public function get($id)
     {
-        $sql = "SELECT conversation_user.id, username FROM conversation_user, user WHERE user.id = conversation_user.user AND conversation_user.id = ? ";
-
-        return DatabaseProvider::connection()->query($sql, [$id]);
+        return DatabaseProvider::connection()->query(self::GET_CONVERSATION, [$id]);
     }
 
     /**
      * Insert a new conversation
-     * @param $idUser
      * @return bool
+     * @throws \Exception
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function insertConversation()
+    public function createConversation()
     {
 
         try {
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql = "INSERT INTO conversation_user (id, user) VALUES (?,?);";
-            $sqlOther = "INSERT INTO conversation VALUES ();";
-
-            DatabaseProvider::connection()->query($sqlOther, Authentication::getInstance()->getUserId());
+            DatabaseProvider::connection()->execute(self::CREATE_CONVERSATION, Authentication::getInstance()->getUserId());
 
             $newConversationId = DatabaseProvider::connection()->lastInsertId();
 
-            DatabaseProvider::connection()->query($sql, [$newConversationId, Authentication::getInstance()->getUserId()]);
+            DatabaseProvider::connection()->execute(self::ADD_USER_TO_CONVERSATION, [$newConversationId, Authentication::getInstance()->getUserId()]);
 
             DatabaseProvider::connection()->commit();
 
-            return true;
+            return $newConversationId;
         } catch (\Exception $e) {
             DatabaseProvider::connection()->rollBack();
+            throw $e;
         }
-
-        return false;
     }
 
     /**
@@ -93,12 +89,10 @@ class ConversationModel extends Model
      */
     public function deleteConversation($id)
     {
-
         try {
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql = "DELETE FROM conversation_user WHERE id = ?";
-            DatabaseProvider::connection()->query($sql, [$id]);
+            DatabaseProvider::connection()->execute(self::DELETE_CONVERSATION, [$id]);
 
             DatabaseProvider::connection()->commit();
 
@@ -106,10 +100,19 @@ class ConversationModel extends Model
 
         } catch (\Exception $e) {
             DatabaseProvider::connection()->rollBack();
+            throw $e;
         }
-
-        return false;
     }
 
+    public function addUserToConversation($id, $userId)
+    {
+        try {
+            DatabaseProvider::connection()->beginTransaction();
 
+            DatabaseProvider::connection()->execute(self::ADD_USER_TO_CONVERSATION, [$id, $userId]);
+        } catch (\Exception $e) {
+            DatabaseProvider::connection()->rollBack();
+            throw $e;
+        }
+    }
 }
