@@ -247,6 +247,26 @@ SQL;
     }
 
     /**
+     * Get the last events of an user (with min and max)
+     * @param $id
+     * @param int $min
+     * @param int $max
+     * @return array
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    public function getEventsForUser($id, $min = 0, $max = 5)
+    {
+        $sql = 'SELECT event.id, name, eventtime FROM event ' .
+            'LEFT JOIN event_user ' .
+            'ON event_user.id = event.id '.
+            'WHERE event.user = ? ' .
+            'OR event_user.user = ? ' .
+            'ORDER BY event.id ' .
+            'LIMIT ?,?';
+
+        return DatabaseProvider::connection()->query($sql, array(1, 1, $min, $max));
+    }
+    /**
      * @param int $year
      * @return array
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException

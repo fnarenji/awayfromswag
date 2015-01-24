@@ -9,6 +9,7 @@
 namespace app\controllers;
 
 use app\helpers\PrivacyCalculator;
+use app\models\EventModel;
 use app\models\UserModel;
 use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\MissingParamsException;
@@ -56,7 +57,11 @@ class UserController extends Controller
             $user['registerDateFormat'] = $registerDate->format('d/m/Y');
 
             $user = array_merge($user, PrivacyCalculator::calculate($user['id']));
-            $this->getView()->render('user/profile', ['profile' => $user]);
+
+            $model = new EventModel();
+            $events = $model->getEventsForUser($user['id']);
+
+            $this->getView()->render('user/profile', ['profile' => $user, 'events' => $events ]);
 
         } catch (MissingParamsException $e) {
             // TODO POPUP
