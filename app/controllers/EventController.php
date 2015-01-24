@@ -76,9 +76,11 @@ class EventController extends Controller
         }
 
         $event = $this->getInfos($event);
+        $participate = $this->eventModel->getParticipateUser($id, Authentication::getInstance()->getUserId());
 
         $this->getView()->render('event/show', array(
-            'event' => $event
+            'event' => $event,
+            'participate' => $participate
         ));
     }
 
