@@ -28,10 +28,11 @@ class FriendModel extends Model {
         return DatabaseProvider::connection()->query($sql,[$id]);
     }
 
-    public function insertFriend($params){
+    public function insertFriend($id1, $id2)
+    {
         $sql = 'INSERT INTO user_friend VALUES (LEAST(:user1, :user2), GREATEST(:user1, :user2), FALSE)';
 
-        return DatabaseProvider::connection()->execute($sql, $params);
+        return DatabaseProvider::connection()->execute($sql, ['user1' => $id1, 'user2' => $id2]);
     }
 
     public function deleteFriend($id1,$id2){
