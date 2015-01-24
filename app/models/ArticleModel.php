@@ -183,4 +183,22 @@ SQL;
         return DatabaseProvider::connection()->selectFirst($sql, [$id]);
 
     }
+
+    public function getTop()
+    {
+        $sql = <<<SQL
+SELECT * FROM article ORDER BY postdate DESC LIMIT 1;
+SQL;
+
+        return DatabaseProvider::connection()->selectFirst($sql, []);
+    }
+
+    public function getLast()
+    {
+        $sql = <<<SQL
+SELECT * FROM article ORDER BY postdate DESC LIMIT 3;
+SQL;
+
+        return DatabaseProvider::connection()->query($sql, []);
+    }
 } 
