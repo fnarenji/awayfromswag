@@ -104,8 +104,6 @@ class UserController extends Controller
 
     public function registerPOST()
     {
-        var_dump($_POST);
-
         $user = [
             'username' => Input::post('username'),
             'password' => Input::post('password'),
@@ -125,40 +123,14 @@ class UserController extends Controller
             'accesslevel' => 0
         ];
 
+        // LES FLAGS C TROP SWAG
         $privacySettings = ['birthday', 'mail', 'phonenumber', 'twitter', 'skype', 'facebookuri', 'website', 'job'];
         for ($i = 0; $i < sizeof($privacySettings); ++$i)
-            if (Input::post($privacySettings[$i] . 'Private', true) == 'on') {
-                $user['privacy'] = 0b000000000000001 << $i;
-                echo 'ADDING ' . $privacySettings[$i] . '<br/>';
-            }
+            if (Input::post($privacySettings[$i] . 'Private', true) == 'on')
+                $user['privacy'] |= 0b000000000000001 << $i;
 
-        var_dump($user);
-
-//        if (Input::post('birthdayPrivate') == 'on')
-//            $user['privacy'] |= 0b000000000000001;
-//
-//        if (Input::post('mailPrivate') == 'on')
-//            $user['privacy'] |= 0b000000000000010;
-//
-//        if (Input::post('phonenumberPrivate') == 'on')
-//            $user['privacy'] |= 0b000000000000100;
-//
-//        if (Input::post('twitterPrivate') == 'on')
-//            $user['privacy'] |= 0b000000000001000;
-//
-//        if (Input::post('skypePrivate') == 'on')
-//            $user['privacy'] |= 0b000000000010000;
-//
-//        if (Input::post('facebookuriPrivate') == 'on')
-//            $user['privacy'] |= 0b000000000100000;
-//
-//        if (Input::post('websitePrivate') == 'on')
-//            $user['privacy'] |= 0b000000001000000;
-//
-//        if (Input::post('jobPrivate') == 'on')
-//            $user['privacy'] |= 0b000000010000000;
-
-        echo $this->userModel->insertUser($user) ? 'true' : 'false';
+        $this->userModel->insertUser($user);
+        $this->getView()->redirect('/');
     }
 
     public function account()
