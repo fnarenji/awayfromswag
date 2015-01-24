@@ -2,6 +2,7 @@
 
 require 'vendor/autoload.php';
 use app\helpers\ClassRouting;
+use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Helpers\Authentication;
 
 session_start();
@@ -27,7 +28,7 @@ if (DEBUG) {
 
 function main()
 {
-    \SwagFramework\Database\DatabaseProvider::connect(\SwagFramework\Config\DatabaseConfig::parseFromFile("app/config/database.json"));
+    DatabaseProvider::connect("app/config/database.json");
 
     $router = new \SwagFramework\Routing\Router();
 
