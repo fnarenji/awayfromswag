@@ -41,12 +41,13 @@ class Controller
     }
 
     /**
+     * @param bool $ignore
      * @return mixed
      * @throws MissingParamsException
      */
-    public function getParams()
+    public function getParams($ignore = false)
     {
-        if (empty($this->params)) {
+        if (empty($this->params) && !$ignore) {
             throw new MissingParamsException();
         }
         return $this->params;

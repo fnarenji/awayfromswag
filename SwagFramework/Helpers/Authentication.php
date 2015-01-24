@@ -57,6 +57,7 @@ class Authentication
                     'userName' => $this->getUserName(),
                     'userId' => $this->getUserId(),
                     'authDate' => $this->getAuthDate(),
+                    'accesslevel' => $this->getAccessLevel(),
                     'options' => $this->getOptions()
                 ]);
         }
