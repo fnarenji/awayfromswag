@@ -97,10 +97,14 @@ SQL;
      */
     public function validateAuthentication($username, $password)
     {
-        $sql = 'SELECT id, firstname, lastname, MD5(mail) mailHash, accesslevel'
-            . 'FROM user '
-            . 'WHERE username = ? '
-            . 'AND password = SHA1(CONCAT(?, \'' . self::SALT . '\'))';
+        $salt = self::SALT;
+
+        $sql = <<<SQL
+SELECT id, firstname, lastname, MD5(mail) mailHash, accesslevel
+FROM user
+WHERE username = ?
+  AND password = SHA1(CONCAT(?, '$salt'))
+SQL;
 
         return DatabaseProvider::connection()->selectFirst($sql, [$username, $password]);
     }

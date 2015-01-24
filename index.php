@@ -18,6 +18,7 @@ if (dirname($_SERVER['SCRIPT_NAME']) != '/') {
 } else {
     define('WEBROOT', dirname($_SERVER['SCRIPT_NAME']));
 }
+
 define('DEBUG', true);
 
 if (DEBUG) {

@@ -83,8 +83,9 @@ class UserController extends Controller
             if (!empty($validAuth)) {
 
                 Authentication::getInstance()->setAuthenticated($username, $validAuth['id'],
-                    ['mailHash' => $validAuth['mailHash'],
-                    'lastname' => $validAuth['lastname'],
+                    [
+                        'mailHash' => $validAuth['mailHash'],
+                        'lastname' => $validAuth['lastname'],
                         'firstname' => $validAuth['firstname'],
                         'accessLevel' => $validAuth['accesslevel']
                 ]);
