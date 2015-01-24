@@ -6,11 +6,11 @@
  * Time: 10:33
  */
 
-namespace app\controllers\admin;
+namespace app\controllers;
 
 use SwagFramework\mvc\Controller;
 
-class CommentAdminController extends Controller
+class AdminCommentController extends Controller
 {
     /**
      * @var \app\models\CommentsEventModel

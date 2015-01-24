@@ -34,11 +34,13 @@ try {
     $classRouting->addClass('User');
     $classRouting->addClass('Conversation');
     $classRouting->addClass('Event');
+    $classRouting->addClass('AdminUsers');
+    $classRouting->addClass('AdminEvent');
+    $classRouting->addClass('AdminComment');
+    $classRouting->addClass('Admin');
     $classRouting->generateRoute($router);
 
-    $router->add('/admin/index', new \app\controllers\admin\EventAdminController(), 'index');
     $router->add('/errors/err404', new \app\controllers\ErrorsController(), 'err404');
-    $router->add('/admin', new \app\controllers\admin\EventAdminController(), 'index');
     $router->add('/', new \app\controllers\HomeController(), 'index');
 
     $router->matchCurrentRequest();

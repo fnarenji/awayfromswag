@@ -6,7 +6,7 @@
  * Time: 09:31
  */
 
-namespace app\controllers\admin;
+namespace app\controllers;
 
 
 use SwagFramework\mvc\Controller;
