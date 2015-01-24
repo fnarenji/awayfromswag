@@ -248,7 +248,12 @@ class UserController extends Controller
             $toModify['privacy'] = $user['privacy'];
             $toModify['id'] = $user['id'];
 
-            $this->userModel->updateUser($toModify);
+            $mod = [];
+            foreach ($toModify as $m) {
+                array_push($mod, $m);
+            }
+
+            $this->userModel->updateUser($mod);
             $this->getView()->render('home/index');
         } catch (NoUserFoundException $e){
             $e->getMessage();

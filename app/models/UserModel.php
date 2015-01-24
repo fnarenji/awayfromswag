@@ -21,8 +21,8 @@ class UserModel extends Model
     public function getUser($id)
     {
         $sql = 'SELECT * '
-            . 'FROM user'
-            . 'WHERE id = ?';
+            . 'FROM user '
+            . 'WHERE id=?';
 
         return DatabaseProvider::connection()->selectFirst($sql, [$id]);
     }
@@ -137,9 +137,9 @@ class UserModel extends Model
 
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql = 'UPDATE ' . self::TABLE_NAME . " SET 'lastname' = ?, 'firstname' = ?, 'job' = ?, 'description' = ?, 'mail' = ?, 'phonenumber' = ?,
-             'twitter' = ?, 'facebookuri' = ?, 'skype'= ?, 'website' = ?, 'privacy' = ? WHERE id = ? ";
-
+            $sql = 'UPDATE user '
+                . 'SET lastname=?, firstname=?, job=?, description=?, mail=?, phonenumber=?, twitter=?, facebookuri=?, skype=?, website=?, privacy=? '
+                . 'WHERE id=?';
             DatabaseProvider::connection()->execute($sql, $infos);
 
             DatabaseProvider::connection()->commit();
