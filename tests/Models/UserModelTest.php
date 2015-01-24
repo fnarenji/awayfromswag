@@ -32,7 +32,7 @@ class UserModelTest extends \PHPUnit_Framework_TestCase {
         $this->assertNotNull($array);
     }
 
-    public function insertDelete()
+    public function testInsertDelete()
     {
         $this->model = new UserModel();
 
@@ -47,7 +47,7 @@ class UserModelTest extends \PHPUnit_Framework_TestCase {
         //$this->assertEquals(true,$ok);
     }
 
-    public function updateUser()
+    public function testUpdateUser()
     {
         $this->model = new UserModel();
 
