@@ -23,7 +23,7 @@ class AdminUsersController extends Controller
     {
         $this->model = $this->loadModel('User');
         $allUser = $this->model->getAllUsers();
-        $this->getView()->render('admin/users', ['alluser' => $allUser]);
+        $this->getView()->render('admin/users', ['users' => $allUser]);
     }
 
     public function delete()

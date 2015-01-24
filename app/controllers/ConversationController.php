@@ -43,7 +43,7 @@ class ConversationController extends Controller
             throw new NotAuthenticatedException();
         }
 
-        $conversations = $this->conversationModel->getUser(Authentication::getInstance()->getUserId());
+        $conversations = $this->conversationModel->getForUser(Authentication::getInstance()->getUserId());
 
         $this->getView()->render('conversation/index', ['conversations' => $conversations]);
     }
@@ -79,13 +79,16 @@ class ConversationController extends Controller
 
     public function createPOST()
     {
-        $conversation = [
-            'title' => Input::post('title'),
-            'message' => Input::post('message')
-        ];
+        $message = Input::post('message');
 
-        $newConversationId = $this->conversationModel->insertConversation();
+        $newConversationId = $this->conversationModel->createConversation(Input::post('title'));
+        $userModel = $this->loadModel('User');
 
+        foreach (explode(', ', Input::post('participations')) as $participation) {
+            $userId = $userModel->getUserFullNameLike($participation);
+
+            $this->conversationModel->addUserToConversation($newConversationId, $userId);
+        }
         //$this->getView()->redirect('/');
     }
 }

@@ -5,14 +5,15 @@
             <li>
                 <h1>{{ event.name }}</h1>
 
-                <h2>Prix : {{ event.money }}€</h2>
-                <h2>le {{ event.eventtime }}</h2>
-                <h2>ajouté le {{ event.createtime }}</h2>
-                <h2>par : <a href="/user/profile/{{ event.user.username }}">{{ event.user.firstname ~ ' ' ~ event.user.lastname }}</a></h2>
+                <span class="mini-text">Prix : {{ event.money }}€, </span>
+                <span class="mini-text">le {{ event.eventtime }}, </span>
+                <span class="mini-text">ajouté le {{ event.createtime }}, </span>
+                <span class="mini-text">par : <a
+                            href="/user/profile/{{ event.user.username }}">{{ event.user.firstname ~ ' ' ~ event.user.lastname }}</a></span>
 
-                <h3>Adresse : {{ event.address }}</h3>
-                <h3>Participants : {{ event.personsnow }}</h3>
-                <h3>Participants Maximum : {{ event.personsmax }}</h3>
+                <h6>Adresse : {{ event.address }}</h6>
+                <h6>Participants : {{ event.personsnow }}</h6>
+                <h6>Participants Maximum : {{ event.personsmax }}</h6>
                 <p>
                     {{ event.description }}
                 </p>
