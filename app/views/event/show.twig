@@ -22,6 +22,10 @@
                 {% else %}
                 <a href="/event/unparticipate/{{ event.id }}" class="pure-button button-error">Annuler Participation</a>
                 {% endif %}
+
+                {% if event.mine %}
+                <a href="/event/modify/{{ event.id }}" class="pure-button button-secondary">Modifier</a>
+                {% endif %}
             </li>
         </ul>
     </article>

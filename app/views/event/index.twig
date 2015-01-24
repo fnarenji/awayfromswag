@@ -2,6 +2,11 @@
 {% block content %}
     <article>
         <h1>Évènements</h1>
+
+        {% if auth.valid %}
+        <a href="/event/add" class="pure-button add-event">Ajouter un évènement</a>
+        {% endif %}
+
         {% if events is empty %}
         <p>Il n'y a pas d'évènements.</p>
         {% else %}
