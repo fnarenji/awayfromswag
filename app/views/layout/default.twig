@@ -7,10 +7,11 @@
     <title>AFS - Accueil</title>
     {{ helpers.assets.css('forms-min') }}
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href='//fonts.googleapis.com/css?family=Roboto:900,700,400' rel='stylesheet' type='text/css'>
+    <link href="//fonts.googleapis.com/css?family=Roboto:900,700,400" rel='stylesheet' type='text/css'>
+    <link href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" rel='stylesheet' type='text/css'>
     {{ helpers.assets.css('style') }}
     <!--[if lt IE 9]>
-    <script src="html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
 </head>
@@ -53,6 +54,8 @@
     {% endblock %}
 </section>
 <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
 {{ helpers.assets.js('menu') }}
+{{ helpers.assets.js('register') }}
 </body>
 </html>

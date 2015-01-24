@@ -73,22 +73,22 @@ class UserModel extends Model
 
     /**
      * Insert in database a new user
-     * @param $infos
-     * @return bool
+     * @param $infos array each field name with its value
+     * @return bool return success
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function insertUser($infos)
+    public function insertUser(array $infos)
     {
         try {
-
             DatabaseProvider::connection()->beginTransaction();
+
+            var_dump($infos);
 
             $sql = "INTO INTO " . self::TABLE_NAME . " ('username', 'firstname', 'lastname', 'mail', 'password', 'birthday','phonenumber', .
                 'twitter','skype','facebookuri','website','job','description','privacy','mailnotifications','accesslevel')
-                     VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+                     VALUES (:username, :firstname, :lastname, :mail, :password, :birthday, :phonenumber, :twitter, :skype, :facebookuri, :website, :job, :description, :privacy, :mailnotifications, :accesslevel)";
 
-            DatabaseProvider::connection()->query($sql, $infos);
-
+            DatabaseProvider::connection()->execute($sql, $infos);
             DatabaseProvider::connection()->commit();
 
             return true;
@@ -143,7 +143,7 @@ class UserModel extends Model
                     'phonenumber' = ?,'twitter' = ?, 'skype' = ?, 'facebookuri' = ?, 'website' = ?, 'job' = ?, 'description' = ?,
                     'privacy' = ?, 'mailnotifications' = ?, 'accesslevel' = ? WHERE id = ? ";
 
-            DatabaseProvider::connection()->update($sql, $infos);
+            DatabaseProvider::connection()->execute($sql, $infos);
 
             DatabaseProvider::connection()->commit();
 
@@ -172,7 +172,7 @@ class UserModel extends Model
                     phonenumber = :phonenumber,twitter = :twitter, skype = :skype, facebookuri = :facebookuri, website = :website, job = :job, description = :description,
                     privacy = :privacy, mailnotifications = :mailnotifications, accesslevel = :accesslevel WHERE id = ?';
 
-            DatabaseProvider::connection()->update($sql, $infos);
+            DatabaseProvider::connection()->execute($sql, $infos);
             DatabaseProvider::connection()->commit();
             return true;
 

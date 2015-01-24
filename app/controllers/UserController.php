@@ -14,6 +14,7 @@ use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Exceptions\NoUserFoundException;
 use SwagFramework\Form\Field\InputField;
+use SwagFramework\Form\Field\TextAreaField;
 use SwagFramework\Form\Form;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\Input;
@@ -101,12 +102,7 @@ class UserController extends Controller
 
     public function register()
     {
-        $form = new Form('/user/register');
-
-        $form->setClass('pure-form pure-form-stacked');
-        $form->addField(new InputField('username'));
-
-        $formHtml = $form->getFormHTML([
+        $formHtml = $this->getRegisterForm()->getFormHTML([
             'username' => 'Nom d\'utilisateur',
             'password' => 'Mot de passe',
             'firstname' => 'Prénom',
@@ -121,10 +117,61 @@ class UserController extends Controller
             'job' => 'Activité',
             'description' => 'Description',
             'privacy' => 'Options de vie privée',
-            'mailnotifications' => 'Recevoir les emails'
+            'mailnotifications' => 'Recevoir les emails',
+            'submit' => 'S\'inscrire !'
         ]);
 
         $this->getView()->render('user/register', ['formHtml' => $formHtml]);
+    }
+
+    private function getRegisterForm()
+    {
+        $form = new Form('/user/register');
+
+        $f = function ($field, array $attr = []) use ($form) {
+            $form->addField(new InputField($field, $attr));
+        };
+
+        $form->setClass('pure-form pure-form-stacked');
+        $f('username', ['required' => null]);
+        $f('password', ['required' => null, 'type' => 'password']);
+        $f('firstname', ['required' => null]);
+        $f('lastname', ['required' => null]);
+        $f('birthday', ['required' => null, 'class' => 'datepicker']);
+        $f('mail', ['required' => null, 'type' => 'email']);
+        $f('phonenumber', ['type' => 'tel']);
+        $f('twitter');
+        $f('skype');
+        $f('facebookuri', ['type' => 'url']);
+        $f('website', ['type' => 'url']);
+        $f('job');
+        $form->addField(new TextAreaField('description', ['required' => null]));
+        $f('submit', ['type' => 'submit', 'value' => 'Valider !']);
+
+        return $form;
+    }
+
+    public function registerPOST()
+    {
+        $form = $this->getRegisterForm();
+        $safeInput = $form->validate(['username' => true,
+            'password' => true,
+            'firstname' => true,
+            'lastname' => true,
+            'birthday' => true,
+            'mail' => true,
+            'phonenumber' => false,
+            'twitter' => false,
+            'skype' => false,
+            'facebookuri' => false,
+            'website' => false,
+            'job' => true,
+            'description' => true,
+            'privacy' => false,
+            'mailnotifications' => false,
+            'submit' => 'S\'inscrire !']);
+
+        $this->userModel->insertUser($safeInput);
     }
 
     public function account()

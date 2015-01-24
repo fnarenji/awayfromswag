@@ -106,7 +106,7 @@ class NewsModel extends Model
 
             DatabaseProvider::connection()->beginTransaction();
             $sql = 'UPDATE article SET text = ?, postdate = ? WHERE id = ?';
-            DatabaseProvider::connection()->update($sql, [$content, $date, $id]);
+            DatabaseProvider::connection()->execute($sql, [$content, $date, $id]);
 
             DatabaseProvider::connection()->commit();
         } catch (\Exception $e) {
