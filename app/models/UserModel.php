@@ -51,7 +51,7 @@ class UserModel extends Model
      * Return all information for all users
      * @return array
      */
-    public function getAllUsers($start, $end)
+    public function getAllUsers($start = 0, $end = 10)
     {
         $end += $start;
         $sql = <<<SQL
