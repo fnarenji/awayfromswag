@@ -63,10 +63,9 @@ class NewsModel extends Model
             return true;
 
         } catch (\Exception $e) {
-
             DatabaseProvider::connection()->rollBack();
+            throw $e;
         }
-        return false;
     }
 
     /**
@@ -86,11 +85,9 @@ class NewsModel extends Model
 
             return true;
         } catch (\Exception $e) {
-
             DatabaseProvider::connection()->rollBack();
+            throw $e;
         }
-
-        return false;
     }
 
     /**
@@ -110,8 +107,8 @@ class NewsModel extends Model
 
             DatabaseProvider::connection()->commit();
         } catch (\Exception $e) {
-
             DatabaseProvider::connection()->rollBack();
+            throw $e;
         }
 
     }

@@ -68,6 +68,7 @@ SQL;
 
         } catch (\Exception $e) {
             DatabaseProvider::connection()->rollBack();
+            throw $e;
         }
 
     }
@@ -93,6 +94,7 @@ SQL;
 
         } catch (\Exception $e) {
             DatabaseProvider::connection()->rollBack();
+            throw $e;
         }
 
     }
@@ -115,6 +117,7 @@ SQL;
 
         } catch (\Exception $e) {
             DatabaseProvider::connection()->rollBack();
+            throw $e;
         }
 
         return true;

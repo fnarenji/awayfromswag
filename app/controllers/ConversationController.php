@@ -14,6 +14,7 @@ use app\models\ConversationModel;
 use SwagFramework\Config\ConversationConfig;
 use SwagFramework\Exceptions\FileNotFoundException;
 use SwagFramework\Helpers\Authentication;
+use SwagFramework\Helpers\Input;
 use SwagFramework\mvc\Controller;
 
 class ConversationController extends Controller
@@ -74,5 +75,17 @@ class ConversationController extends Controller
     public function create()
     {
         $this->getView()->render('conversation/create');
+    }
+
+    public function createPOST()
+    {
+        $conversation = [
+            'title' => Input::post('title'),
+            'message' => Input::post('message')
+        ];
+
+        $newConversationId = $this->conversationModel->insertConversation();
+
+        //$this->getView()->redirect('/');
     }
 }

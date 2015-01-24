@@ -157,7 +157,7 @@ class UserController extends Controller
     {
         try {
             $user = $this->userModel->getUser(Authentication::getInstance()->getUserId());
-            if (empty($user)) {
+            if (!empty($user)) {
                 throw new NoUserFoundException(Authentication::getInstance()->getUserName());
             }
 
@@ -187,14 +187,14 @@ class UserController extends Controller
     public function accountPOST()
     {
         // HARDCODE
-        $privacyValues = array(
+        $privacyValues = [
             "jobPrivacy" => 1,
             "websitePrivacy" => 2,
             "facebookuriPrivacy" => 4,
             "skypePrivacy" => 8,
             "twitterPrivacy" => 16,
             "phonenumberPrivacy" => 32,
-            "mailPrivacy" => 64);
+            "mailPrivacy" => 64];
 
         $input = new Input();
         $toModify = $input->getPost();
@@ -216,7 +216,6 @@ class UserController extends Controller
                 }
                 if (isset($toModify[$key]))
                     unset($toModify[$key]);
-
             }
 
             foreach($toModify as $key => $value){

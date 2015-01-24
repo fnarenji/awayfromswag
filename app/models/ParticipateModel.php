@@ -72,10 +72,9 @@ class ParticipateModel extends Model
             return true;
 
         } catch (\Exception $e) {
-
             DatabaseProvider::connection()->rollBack();
+            throw $e;
         }
-        return false;
     }
 
 
@@ -98,10 +97,9 @@ class ParticipateModel extends Model
             return true;
 
         } catch (\Exception $e) {
-
             DatabaseProvider::connection()->rollBack();
+            throw $e;
         }
-        return false;
     }
 
     /**
