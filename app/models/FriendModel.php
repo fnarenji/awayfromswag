@@ -43,4 +43,12 @@ class FriendModel extends Model {
 
     }
 
+    public function updateFriend($id1,$id2){
+
+        $sql = 'UPDATE user_friend SET valid = TRUE WHERE user1 = ? AND user2 = ?';
+
+        return DatabaseProvider::connection()->execute($sql,[$id1,$id2]);
+
+    }
+
 }
