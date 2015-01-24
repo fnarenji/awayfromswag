@@ -129,12 +129,13 @@ class EventController extends Controller
 
         $result['user'] = Authentication::getInstance()->getUserId();
 
+        $eventtime = new \DateTime();
+        $eventtime = $eventtime->createFromFormat('d/m/Y', $result['eventtime']);
+        $result['eventtime'] = $eventtime->format('Y-m-d H:i:s');
 
-        $res = $this->eventModel->insertEvent($result);
+        $this->eventModel->insertEvent($result);
 
-        var_dump($res);
-
-//        $this->getView()->redirect('/event');
+        $this->getView()->redirect('/event');
     }
 
     public function modify()
@@ -161,7 +162,11 @@ class EventController extends Controller
         $form->getField('name')->addAttribute('value', $event['name']);
         $form->getField('description')->setContent($event['description']);
         $form->getField('address')->setContent($event['address']);
-        $form->getField('eventtime')->addAttribute('value', $event['eventtime']);
+
+        $eventtime = new \DateTime();
+        $eventtime = $eventtime->createFromFormat('Y-m-d H:i:s', $event['eventtime']);
+
+        $form->getField('eventtime')->addAttribute('value', $eventtime->format('d/m/Y'));
         $form->getField('money')->addAttribute('value', $event['money']);
         $form->getField('personsmax')->addAttribute('value', $event['personsmax']);
 
@@ -206,6 +211,10 @@ class EventController extends Controller
         if ($event['user'] != Authentication::getInstance()->getUserId()) {
             throw new NotYourEventException($id);
         }
+
+        $eventtime = new \DateTime();
+        $eventtime = $eventtime->createFromFormat('d/m/Y', $result['eventtime']);
+        $result['eventtime'] = $eventtime->format('Y-m-d H:i:s');
 
         $this->eventModel->updateEvent($result);
 
