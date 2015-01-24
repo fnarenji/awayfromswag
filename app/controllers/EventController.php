@@ -94,7 +94,6 @@ class EventController extends Controller
         }
 
         $form = FormHelper::generate('event', '/event/add');
-        $form->setClass('pure-form pure-form-stacked');
 
         $html = $form->getFormHTML([
             'name' => 'Nom de l\'évènement',
@@ -115,6 +114,7 @@ class EventController extends Controller
         }
 
         $form = FormHelper::generate('event', '/event/add');
+        $form->setClass('pure-form pure-form-aligned centered');
 
         $result = $form->validate([
             'name' => 'Nom de l\'évènement',
@@ -162,7 +162,6 @@ class EventController extends Controller
         }
 
         $form = FormHelper::generate('event', '/event/modify');
-        $form->setClass('pure-form pure-form-stacked');
 
         $form->getField('id')->addAttribute('value', $event['id']);
         $form->getField('name')->addAttribute('value', $event['name']);

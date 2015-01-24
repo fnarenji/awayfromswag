@@ -67,11 +67,15 @@ class Form
         foreach ($this->getFields() as $field) {
             try {
                 if (!empty($labels) && array_key_exists($field->getName(), $labels)) {
+                    $form .= CR . TAB . '<div class="pure-control-group">';
                     $label = new LabelField($field->getName(), $labels[$field->getName()]);
-                    $form .= CR . TAB . $label->getHTML();
-                    $form .= CR . TAB . $field->getHTML();
+                    $form .= CR . TAB . TAB . $label->getHTML();
+                    $form .= CR . TAB . TAB . $field->getHTML();
+                    $form .= CR . TAB . '</div>';
                 } elseif ($field->getName() == 'submit' || $field->getAttribute('type') == 'hidden') {
-                    $form .= CR . TAB . $field->getHTML();
+                    $form .= CR . TAB . '<div class="pure-controls">';
+                    $form .= CR . TAB . TAB . $field->getHTML();
+                    $form .= CR . TAB . '</div>';
                 }
             } catch (AttributeNotExistsException $e) {
                 // fix getAttribute('type') on TextArea

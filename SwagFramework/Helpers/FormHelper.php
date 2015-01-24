@@ -39,6 +39,7 @@ class FormHelper
         }
 
         $form = new Form($action, $method);
+        $form->setClass('pure-form pure-form-aligned centered');
 
         foreach ($res as $value) {
             if (self::getType($value['Type']) == 'text') {
@@ -52,6 +53,7 @@ class FormHelper
         $submit = new InputField('submit');
         $submit->addAttribute('type', 'submit');
         $submit->addAttribute('value', 'Envoyer');
+        $submit->addAttribute('class', 'pure-button pure-button-primary');
         $form->addField($submit);
 
         return $form;

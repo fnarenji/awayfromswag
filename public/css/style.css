@@ -432,6 +432,11 @@ form.centered
     margin-top: 15px;
 }
 
+form textarea {
+    width: 100%;
+    height: 100px;
+}
+
 p.error_message
 {
     display: table;
