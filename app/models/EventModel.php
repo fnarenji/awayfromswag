@@ -72,9 +72,9 @@ SQL;
     }
 
     /**
-     * Update an event
      * @param $params
      * @return bool
+     * @throws \Exception
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function updateEvent($params)
@@ -87,10 +87,7 @@ SQL;
                 . 'SET name=:name ,description=:description, address=:address, eventtime=:eventtime, money=:money, personsmax=:personsmax '
                 . 'WHERE id=:id';
 
-            var_dump($sql);
-            var_dump($params);
-
-            DatabaseProvider::connection()->query($sql, $params);
+            DatabaseProvider::connection()->execute($sql, $params);
 
             DatabaseProvider::connection()->commit();
 
