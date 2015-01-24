@@ -111,11 +111,11 @@ SQL;
 
             $sql = 'DELETE FROM user WHERE id = ?';
 
-            DatabaseProvider::connection()->query($sql, [$id]);
+            $state = DatabaseProvider::connection()->execute($sql, [$id]);
 
             DatabaseProvider::connection()->commit();
 
-            return true;
+            return $state;
 
         } catch (\Exception $e) {
 
@@ -140,11 +140,12 @@ SQL;
             $sql = 'UPDATE user '
                 . 'SET lastname=:lastname, firstname=:firstname, job=:job, description=:description, mail=:mail, phonenumber=:phonenumber, twitter=:twitter, facebookuri=:facebookuri, skype=:skype, website=:website, privacy=:privacy '
                 . 'WHERE id=:id';
-            DatabaseProvider::connection()->execute($sql, $infos);
+            $state = DatabaseProvider::connection()->execute($sql, $infos);
 
             DatabaseProvider::connection()->commit();
 
-            return true;
+            return $state;
+
 
         } catch (\Exception $e) {
 
@@ -169,9 +170,9 @@ SQL;
                     phonenumber = :phonenumber,twitter = :twitter, skype = :skype, facebookuri = :facebookuri, website = :website, job = :job, description = :description,
                     privacy = :privacy, mailnotifications = :mailnotifications, accesslevel = :accesslevel WHERE id = ?';
 
-            DatabaseProvider::connection()->execute($sql, $infos);
+            $state = DatabaseProvider::connection()->execute($sql, $infos);
             DatabaseProvider::connection()->commit();
-            return true;
+            return $state;
 
         } catch (\Exception $e) {
 

@@ -71,7 +71,7 @@ class DatabaseConfig
     public function dsn()
     {
         $dsn = 'mysql:';
-        $dsn .= 'host=' . $this->host . ':' . $this->port;
+        $dsn .= 'host=' . $this->host . ';port=' . $this->port;
         $dsn .= ';';
         $dsn .= 'dbname=' . $this->database;
 
