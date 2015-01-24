@@ -41,7 +41,7 @@ WHERE conversation_user.user = ?
 ORDER BY lastmessagetime DESC
 SQL;
     const GET_CONVERSATION = <<<'SQL'
-SELECT conversation.title,
+SELECT conversation.id, conversation.title,
   CONCAT(creator.username, ' (', creator.firstname, ' ', creator.lastname, ')') creator,
   DATE_FORMAT(createtime, '%d/%m/%Y %H:%i:%s') as createtime,
   DATE_FORMAT(lastmessagetime, '%d/%m/%Y %H:%i:%s') as lastmessagetime,
