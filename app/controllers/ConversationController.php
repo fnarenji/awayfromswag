@@ -9,9 +9,11 @@
 namespace app\controllers;
 
 use app\exceptions\ConversationNotFoundException;
+use app\exceptions\NotAuthenticatedException;
 use app\models\ConversationModel;
 use SwagFramework\Config\ConversationConfig;
 use SwagFramework\Exceptions\FileNotFoundException;
+use SwagFramework\Helpers\Authentication;
 use SwagFramework\mvc\Controller;
 
 class ConversationController extends Controller
@@ -36,25 +38,23 @@ class ConversationController extends Controller
 
     public function index()
     {
-        $discussions = $this->conversationModel->getAll();
+        if(!Authentication::getInstance()->isAuthenticated())
+            throw new NotAuthenticatedException();
 
-        $message = '';
-        if (empty($discussions)) {
-            $message = 'Vous n\'avez pas de conversation';
-        }
+        $conversations = $this->conversationModel->getUser(Authentication::getInstance()->getUserId());
 
-        $this->getView()->render('conversation/index', array(
-            'conversation' => $discussions,
-            'message' => $message
-        ));
+        $this->getView()->render('conversation/index', ['conversations' => $conversations]);
     }
 
     public function show()
     {
-        $id = (int)$this->getParams()[0];
-        $convers = $this->conversationModel->get($id);
+        if(!Authentication::getInstance()->isAuthenticated())
+            throw new NotAuthenticatedException();
 
-        if (empty($convers)) {
+        $id = (int)$this->getParams()[0];
+        $conversation = $this->conversationModel->get($id);
+
+        if (empty($conversation)) {
             throw new ConversationNotFoundException($id);
         }
 
@@ -64,10 +64,8 @@ class ConversationController extends Controller
             throw new FileNotFoundException($file);
         }
 
-        $conversation = new \SimpleXMLElement(file_get_contents($file));
+        $messages = new \SimpleXMLElement(file_get_contents($file));
 
-        $this->getView()->render('conversation/show', array(
-            'conversation' => $conversation
-        ));
+        $this->getView()->render('conversation/show', ['conversation' => $conversation, 'messages' => $messages]);
     }
 }

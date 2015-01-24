@@ -3,6 +3,21 @@
     <article>
         <h1>Messagerie</h1>
         <h2>Liste des dicussions</h2>
-        <a href="/conversation/new"><h3>Nouvelle discussion</h3></a>
+        <a href="/conversation/new"><p>Nouvelle discussion</p></a>
+
+        {% if conversations is empty %}
+        <p>Vous n'avez pas de conversations en cours.</p>
+        {% else %}
+        <ul>
+            {% for conversation in conversations %}
+            <li>
+                <h1></h1>
+                <p>
+
+                </p>
+            </li>
+            {% endfor %}
+        </ul>
+            {% endif %}
     </article>
 {% endblock %}

@@ -28,6 +28,19 @@ class ConversationModel extends Model
     }
 
     /**
+     * Get conversation by user id.
+     * @param $id
+     * @return array
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    public function getUser($id)
+    {
+        $sql = "SELECT id, username FROM conversation_user,user WHERE user.id = conversation_user.user AND conversation_user.user = ? ";
+
+        return DatabaseProvider::connection()->query($sql, [$id]);
+    }
+
+    /**
      * Get conversation.
      * @param $id
      * @return array

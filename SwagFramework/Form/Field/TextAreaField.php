@@ -11,8 +11,26 @@ namespace SwagFramework\Form\Field;
 
 class TextAreaField extends Field
 {
+    private $content;
+
+    /**
+     * @return mixed
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param mixed $content
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
     public function getHTML()
     {
-        return '<textarea' . $this->getAttributesHTML() . '></textarea>';
+        return '<textarea' . $this->getAttributesHTML() . '>' . $this->getContent() . '</textarea>';
     }
 }
