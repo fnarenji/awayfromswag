@@ -250,4 +250,13 @@ SQL;
 
         return DatabaseProvider::connection()->execute(self::GET_USER_FULL_NAME_LIKE, [$fullName]);
     }
+
+    public function count()
+    {
+        $sql = <<<SQL
+SELECT COUNT(id) as nb FROM user;
+SQL;
+
+        return DatabaseProvider::connection()->selectFirst($sql, []);
+    }
 } 

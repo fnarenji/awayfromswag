@@ -36,6 +36,7 @@ class HomeController extends Controller
     {
         // EVENT
         $modelEvent = new EventModel();
+        $events['count'] = $modelEvent->count();
         $events['top'] = $modelEvent->getTop();
         $events['last'] = $modelEvent->getLast();
 
