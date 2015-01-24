@@ -184,8 +184,9 @@ SQL;
 
             $conversation['messages'] = [];
 
-            if (!file_exists($this->conversationFolder . $conversationId . '.xml'))
+            if (!file_exists($this->conversationFolder . $conversationId . '.xml')) {
                 throw new FileNotFoundException($this->conversationFolder . $conversationId . '.xml');
+            }
 
             $doc = new \DOMDocument();
             $doc->load($this->conversationFolder . $conversationId . '.xml');

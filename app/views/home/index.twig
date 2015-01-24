@@ -18,51 +18,27 @@
 
             <div class="first-news">
                 <div class="first-news-description-block">
-                    <h6><a href="#">The Impossible Planet</a></h6>
-                    <span class="mini-text">3 janvier 2015</span>
-                    <span class="mini-text"><a href="#">Hack divers</a></span>
-                    <span class="mini-text"><a href="#">Paulethug</a></span>
+                    <h6><a href="/article/show/{{ article.top.id }}">{{ article.top.title }}</a></h6>
+                    <span class="mini-text">{{ article.top.postdate }}</span>
+                    <span class="mini-text"><a href="#">{{ article.top.category.name }}</a></span>
+                    <span class="mini-text"><a href="#">{{ article.top.user.firstname }}</a></span>
                 </div>
-                <a href="#"><img src="http://lorempicsum.com/futurama/500/350/1" alt="News"/></a>
 
                 <div class="first-news-text">
-                    Stop talking, brain thinking. Hush. You know how I sometimes have really brilliant ideas? I am the
-                    last of my species, and I know how that weighs on the heart so don't lie to me! Father Christmas.
-                    Santa Claus. Or as I've always known him: Jeff. All I've got to do is pass as an ordinary human
-                    being.
-                    Simple. What could possibly go wrong? Annihilate? No. No violence. I won't stand for it. Not now,
-                    not
-                    ever, do you understand me?! I'm the Doctor, the Oncoming Storm - and you basically meant beat them
-                    in
-                    a football match, didn't you?<a href="#" id="more"> Lire la suite</a>
+                    {{ article.top.text }}
                 </div>
             </div>
-            <div class="last-news">
-                <div class="litle-news">
-                    <span class="mini-text">2 janvier 2015</span>
-                    <span class="mini-text"><a href="#">Actu site</a></span>
-                    <span class="mini-text"><a href="#">Narenjlol</a></span>
-                    <span class="mini-title"><a href="#">Allons y !</a></span>
-                    <span class="little-news-text"><a href="#">Did I mention we have comfy chairs? You know when
-                            grown-ups ...</a></span>
-                </div>
-                <div class="litle-news">
-                    <span class="mini-text">2 janvier 2015</span>
-                    <span class="mini-text"><a href="#">Actu site</a></span>
-                    <span class="mini-text"><a href="#">Narenjlol</a></span>
-                    <span class="mini-title"><a href="#">Allons y !</a></span>
-                    <span class="little-news-text"><a href="#">Did I mention we have comfy chairs? You know when
-                            grown-ups ...</a></span>
-                </div>
-                <div class="litle-news">
-                    <span class="mini-text">2 janvier 2015</span>
-                    <span class="mini-text"><a href="#">Actu site</a></span>
-                    <span class="mini-text"><a href="#">Narenjlol</a></span>
-                    <span class="mini-title"><a href="#">Allons y !</a></span>
-                    <span class="little-news-text"><a href="#">Did I mention we have comfy chairs? You know when
-                            grown-ups ...</a></span>
-                </div>
 
+            <div class="last-news">
+                {% for art in article.last %}
+                <div class="litle-news">
+                    <span class="mini-text">{{ art.postdate }}</span>
+                    <span class="mini-text"><a href="#">{{ art.category.name }}</a></span>
+                    <span class="mini-text"><a href="#">{{ art.user.firstname }}</a></span>
+                    <span class="mini-title"><a href="#">{{ art.title }}</a></span>
+                    <span class="little-news-text"><a href="#">{{ art.text }}</a></span>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </article>

@@ -265,4 +265,13 @@ SQL;
 
         return DatabaseProvider::connection()->query($sql, array($user, $year, $user, $year));
     }
+
+    public function count()
+    {
+        $sql = <<<SQL
+SELECT COUNT(id) AS nb FROM event;
+SQL;
+
+        return DatabaseProvider::connection()->selectFirst($sql, []);
+    }
 }

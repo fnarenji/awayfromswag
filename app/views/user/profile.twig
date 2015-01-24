@@ -28,7 +28,7 @@
             {% if profile.mailPrivacy and profile.mail is not empty %}
                 <span class="profile-line">
                     <b class="profile-label"><i class="fa fa-at"></i>
-                    </b>{{ profile.mail }}</span>
+                    </b><a href="mailto:{{ profile.mail }}">{{ profile.mail }}</a></span>
             {% endif %}
             {% if profile.phonenumberPrivacy and profile.phonenumber is not empty %}
                 <span class="profile-line"><b class="profile-label"><i

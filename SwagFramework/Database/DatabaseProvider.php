@@ -27,8 +27,9 @@ class DatabaseProvider
     public static function connection()
     {
         if (!(self::$database instanceof Database)) {
-            if (empty(self::$databaseConfigFile))
+            if (empty(self::$databaseConfigFile)) {
                 throw new DatabaseConfigurationNotLoadedException();
+            }
 
             self::$database = new Database(DatabaseConfig::parseFromFile(self::$databaseConfigFile));
         }
