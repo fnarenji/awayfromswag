@@ -17,10 +17,12 @@
                     {{ event.description }}
                 </p>
 
+                {% if auth.valid %}
                 {% if participate is empty %}
                 <a href="/event/participate/{{ event.id }}" class="pure-button button-success">Participer</a>
                 {% else %}
                 <a href="/event/unparticipate/{{ event.id }}" class="pure-button button-error">Annuler Participation</a>
+                {% endif %}
                 {% endif %}
 
                 {% if event.mine %}

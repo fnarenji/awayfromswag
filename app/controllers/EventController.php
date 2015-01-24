@@ -77,8 +77,9 @@ class EventController extends Controller
         }
 
         $event = $this->getInfos($event);
-        $participate = $this->eventModel->getParticipateUser($id, Authentication::getInstance()->getUserId());
-        $event['mine'] = $event['user']['id'] == Authentication::getInstance()->getUserId();
+        $participate = (Authentication::getInstance()->isAuthenticated()) ? $this->eventModel->getParticipateUser($id,
+            Authentication::getInstance()->getUserId()) : null;
+        $event['mine'] = (Authentication::getInstance()->isAuthenticated()) ? $event['user']['id'] == Authentication::getInstance()->getUserId() : false;
 
         $this->getView()->render('event/show', array(
             'event' => $event,
