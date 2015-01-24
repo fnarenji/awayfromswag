@@ -3,10 +3,11 @@
     <article>
         <h1>Annuaire des utilisateurs</h1>
 
-        <table class="pure-table pure-table-horizontal">
+        <table class="pure-table pure-table-horizontal pure-table-striped">
             <thead>
             <tr>
                 <th>#</th>
+                <th>Avatar</th>
                 <th>Pseudo</th>
                 <th>Prénom</th>
                 <th>Nom</th>
@@ -17,9 +18,10 @@
             <tbody>
             {% for user in users %}
                 <tr>
-                    <td></td>
-                    <td></td>
                     <td>{{ user.id }}</td>
+                    <td><a href="/user/profile/{{ user.username }}"><img
+                                    src="https://www.gravatar.com/avatar/{{ user.mailhash }}.png" alt="avatar"/></a>
+                    </td>
                     <td>{{ user.username }}</td>
                     <td>{{ user.firstname }}</td>
                     <td>{{ user.lastname }}</td>

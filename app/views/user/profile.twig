@@ -13,7 +13,7 @@
             <span class="profile-line"><b class="profile-label">Age : </b>{{ profile.age }} ans</span>
         </div>
         <div class="profile-group">
-            {% if profile.jobPrivacy %}
+            {% if profile.jobPrivacy and profile.job is not empty %}
                 <span class="profile-line"><b class="profile-label">Profession : </b>{{ profile.job }}</span>
             {% endif %}
             <span class="profile-line"><b class="profile-label">Inscrit depuis
@@ -25,16 +25,16 @@
             <p class="profile-description"><span class="profile-line">{{ profile.description }}</span></p>
         </div>
         <div class="profile-group">
-            {% if profile.mailPrivacy %}
+            {% if profile.mailPrivacy and profile.mail is not empty %}
                 <span class="profile-line">
                     <b class="profile-label"><i class="fa fa-at"></i>
                     </b><a href="mailto:{{ profile.mail }}">{{ profile.mail }}</a></span>
             {% endif %}
-            {% if profile.phonenumberPrivacy %}
+            {% if profile.phonenumberPrivacy and profile.phonenumber is not empty %}
                 <span class="profile-line"><b class="profile-label"><i
                                 class="fa fa-phone"></i></b>{{ profile.phonenumber }}</span>
             {% endif %}
-            {% if profile.twitterPrivacy %}
+            {% if profile.twitterPrivacy and profile.twitter is not empty %}
                 <span class="profile-line">
                     <b class="profile-label">
                         <i class="fa fa-twitter"></i>
@@ -42,7 +42,7 @@
                     <a href="https://twitter.com/{{ profile.twitter }}">{{ profile.twitter }}</a>
                 </span>
             {% endif %}
-            {% if profile.facebookuriPrivacy %}
+            {% if profile.facebookuriPrivacy and profile.facebookuri is not empty %}
                 <span class="profile-line">
                     <b class="profile-label">
                         <i class="fa fa-facebook"></i>
@@ -50,7 +50,7 @@
                     <a href="https://www.facebook.com/{{ profile.facebookuri }}">{{ profile.facebookuri }}</a>
                 </span>
             {% endif %}
-            {% if profile.skypePrivacy %}
+            {% if profile.skypePrivacy and profile.skype is not empty %}
                 <span class="profile-line">
                     <b class="profile-label">
                         <i class="fa fa-skype"></i>
@@ -58,7 +58,7 @@
                     <a href="skype:{{ profile.skype }}?">{{ profile.skype }}</a>
                 </span>
             {% endif %}
-            {% if profile.websitePrivacy %}
+            {% if profile.websitePrivacy and profile.website is not empty %}
                 <span class="profile-line">
                     <b class="profile-label"><i class="fa fa-desktop"></i>
                     </b>

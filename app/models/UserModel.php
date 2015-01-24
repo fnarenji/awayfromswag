@@ -51,9 +51,14 @@ class UserModel extends Model
      * Return all information for all users
      * @return array
      */
-    public function getAllUsers($start, $end)
+    public function getAllUsers($start = 0, $end = 10)
     {
-        $sql = 'SELECT *, DATE_FORMAT(registerdate, \'%d/%m/%Y\') AS registerdate FROM user LIMIT ' . $start . ',' . ((int)$start + (int)$end);
+        $end += $start;
+        $sql = <<<SQL
+SELECT *, MD5(mail) mailhash, DATE_FORMAT(registerdate, '%d/%m/%Y') registerdate
+FROM user
+LIMIT $start, $end;
+SQL;
 
         return DatabaseProvider::connection()->query($sql);
     }
@@ -92,10 +97,14 @@ class UserModel extends Model
      */
     public function validateAuthentication($username, $password)
     {
-        $sql = 'SELECT id, firstname, lastname, MD5(mail) as mailHash '
-            . 'FROM user '
-            . 'WHERE username = ? '
-            . 'AND password = SHA1(CONCAT(?, \'' . self::SALT . '\'))';
+        $salt = self::SALT;
+
+        $sql = <<<SQL
+SELECT id, firstname, lastname, MD5(mail) mailHash, accesslevel
+FROM user
+WHERE username = ?
+  AND password = SHA1(CONCAT(?, '$salt'))
+SQL;
 
         return DatabaseProvider::connection()->selectFirst($sql, [$username, $password]);
     }
@@ -215,18 +224,6 @@ SQL;
             DatabaseProvider::connection()->rollBack();
             throw $e;
         }
-    }
-
-    /**
-     * @param $username
-     * @return array
-     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
-     */
-    public function getAccessLevel($username)
-    {
-        $sql = 'SELECT accesslevel FROM user WHERE username = ?';
-
-        return DatabaseProvider::connection()->query($sql, array($username));
     }
 
     /**

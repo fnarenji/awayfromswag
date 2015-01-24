@@ -2,6 +2,7 @@
 
 require 'vendor/autoload.php';
 use app\helpers\ClassRouting;
+use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Helpers\Authentication;
 
 session_start();
@@ -17,6 +18,7 @@ if (dirname($_SERVER['SCRIPT_NAME']) != '/') {
 } else {
     define('WEBROOT', dirname($_SERVER['SCRIPT_NAME']));
 }
+
 define('DEBUG', true);
 
 if (DEBUG) {
@@ -27,7 +29,7 @@ if (DEBUG) {
 
 function main()
 {
-    \SwagFramework\Database\DatabaseProvider::connect(\SwagFramework\Config\DatabaseConfig::parseFromFile("app/config/database.json"));
+    DatabaseProvider::connect("app/config/database.json");
 
     $router = new \SwagFramework\Routing\Router();
 
@@ -40,7 +42,7 @@ function main()
     {
         $classRouting->addClass('Conversation');
 
-        if(Authentication::getInstance()->getAccessLevel() == 1)
+        if (Authentication::getInstance()->getOptionOr('accessLevel', 0))
         {
             $classRouting->addClass('AdminUsers');
             $classRouting->addClass('AdminEvent');
@@ -48,7 +50,6 @@ function main()
             $classRouting->addClass('Admin');
         }
     }
-
 
     $classRouting->generateRoute($router);
 

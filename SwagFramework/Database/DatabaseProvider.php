@@ -18,25 +18,30 @@ class DatabaseProvider
      */
     static private $database;
 
-    private function __construct()
-    {
-    }
+    static private $databaseConfigFile;
 
-    private function __clone()
+    private function __construct()
     {
     }
 
     public static function connection()
     {
         if (!(self::$database instanceof Database)) {
-            throw new DatabaseConfigurationNotLoadedException();
+            if (empty(self::$databaseConfigFile))
+                throw new DatabaseConfigurationNotLoadedException();
+
+            self::$database = new Database(DatabaseConfig::parseFromFile(self::$databaseConfigFile));
         }
 
         return self::$database;
     }
 
-    public static function connect(DatabaseConfig $databaseConfig)
+    public static function connect($databaseConfigFile)
     {
-        self::$database = new Database($databaseConfig);
+        self::$databaseConfigFile = $databaseConfigFile;
+    }
+
+    private function __clone()
+    {
     }
 }

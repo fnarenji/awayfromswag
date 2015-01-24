@@ -79,14 +79,15 @@ class UserController extends Controller
             $password = Input::post('password');
 
             $validAuth = $this->userModel->validateAuthentication($username, $password);
-            $accesslevel = $this->userModel->getAccessLevel($username);
 
             if (!empty($validAuth)) {
 
-                Authentication::getInstance()->setAuthenticated($username, $validAuth['id'], $accesslevel[0]['accesslevel'],
-                    ['mailHash' => $validAuth['mailHash'],
-                    'lastname' => $validAuth['lastname'],
-                    'firstname' => $validAuth['firstname']
+                Authentication::getInstance()->setAuthenticated($username, $validAuth['id'],
+                    [
+                        'mailHash' => $validAuth['mailHash'],
+                        'lastname' => $validAuth['lastname'],
+                        'firstname' => $validAuth['firstname'],
+                        'accessLevel' => $validAuth['accesslevel']
                 ]);
 
                 $this->getView()->redirect('/');
@@ -167,7 +168,7 @@ class UserController extends Controller
         try {
             $params = $this->getParams(true);
 
-            if(!empty($params) && Authentication::getInstance()->getAccessLevel()) {
+            if (!empty($params) && Authentication::getInstance()->getOptionOr('accessLevel', 0)) {
                 $user = $this->userModel->getUser($params[0]);
             } else {
                 $user = $this->userModel->getUser(Authentication::getInstance()->getUserId());
@@ -214,7 +215,7 @@ class UserController extends Controller
 
         try {
 
-            if(!empty($params) && Authentication::getInstance()->getAccessLevel()) {
+            if (!empty($params) && Authentication::getInstance()->getOptionOr('accessLevel', 0)) {
                 $user = $this->userModel->getUser($toModify['id']);
             } else {
                 $user = $this->userModel->getUser(Authentication::getInstance()->getUserId());

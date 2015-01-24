@@ -140,7 +140,7 @@ class EventController extends Controller
 
     public function modify()
     {
-        if (!Authentication::getInstance()->isAuthenticated()) {
+        if (!Authentication::getInstance()->isAuthenticated() && !Authentication::getInstance()->getAccessLevel()) {
             throw new NotAuthenticatedException();
         }
 
@@ -152,7 +152,7 @@ class EventController extends Controller
             throw new EventNotFoundException($id);
         }
 
-        if ($event['user'] != Authentication::getInstance()->getUserId()) {
+        if ($event['user'] != Authentication::getInstance()->getUserId() && !Authentication::getInstance()->getAccessLevel()) {
             throw new NotYourEventException($id);
         }
 
