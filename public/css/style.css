@@ -445,21 +445,51 @@ p.error_message
     border: 1px solid rgba(0, 0, 0, 0.9);
     border-radius: 3px;
 }
+
 /* WOW MEDIA QUERIES, SUCH RESPONSIVE, MUCH SKILLS */
-@media only screen and (min-width: 780px)
-{
-    .profile-group
-    {
+
+@media only screen and (min-width: 780px) {
+    .profile-group {
         display: inline-block;
         width: 47%;
         margin-right: 15px;
     }
 
-    article.profile, article.register
-    {
-        width: 90%;
+    article.profile, article.register {
+        /*width: 90%;*/
+        display: table;
+        margin-right: auto;
+        margin-left: 100px ;
         margin-right: auto;
         margin-left: auto;
+    }
+
+}
+@media only screen and (min-width: 1600px)
+{
+    article, article.profile
+    {
+        margin-left: 100px;
+    }
+    .responsive-profile
+    {
+        margin-left: 200px;
+    }
+
+}
+@media only screen and (min-width: 1300px) and (max-width: 1599px)
+{
+    article, article.profile
+    {
+        margin-left: 50px;
+    }
+
+    /* It was at this moment Thomas knew : he fucked up.*/
+    .responsive-profile
+    {
+        display: table;
+        margin-right: auto;
+        margin-left: 100px;
     }
 }
 @media only screen and (min-width:  1050px)
@@ -483,6 +513,12 @@ p.error_message
     {
         transform: translateX(260px);
         -webkit-transform: translateX(260px);
+    }
+    article
+    {
+        display: table;
+        /*margin-right: auto;
+        margin-left: auto;*/
     }
     article .first-news img
     {
