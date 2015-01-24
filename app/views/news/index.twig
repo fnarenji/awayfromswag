@@ -1,0 +1,27 @@
+{% extends "layout/default" %}
+{% block content %}
+    <article>
+        <h1>Actualités</h1>
+
+        {% if auth.valid %}
+            <a href="/new/add" class="pure-button add-new">Ajouter une actualité</a>
+        {% endif %}
+
+        {% if news is empty %}
+            <p>Il n'y a pas d'actualités.</p>
+        {% else %}
+            <ul id="news">
+                {% for new in news %}
+                    <li>
+                        <a href="/new/show/{{ new.id }}"><h1>{{ new.category }}</h1>, </a>
+                        <span class="mini-text">le {{ new.postdate }}, </span>
+
+                        <p>
+                            {{ new.text }}
+                        </p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </article>
+{% endblock %}

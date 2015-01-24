@@ -34,6 +34,7 @@ function main()
     $classRouting->addClass('User');
     $classRouting->addClass('Conversation');
     $classRouting->addClass('Event');
+    $classRouting->addClass('News');
     $classRouting->addClass('AdminUsers');
     $classRouting->addClass('AdminEvent');
     $classRouting->addClass('AdminComment');
