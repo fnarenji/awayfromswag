@@ -66,9 +66,8 @@ class CommentsArticleModel extends Model
             return true;
         } catch (\Exception $e) {
             DatabaseProvider::connection()->rollBack();
+            throw $e;
         }
-
-        return false;
     }
 
     /**
@@ -91,9 +90,8 @@ class CommentsArticleModel extends Model
 
         } catch (\Exception $e) {
             DatabaseProvider::connection()->rollBack();
+            throw $e;
         }
-
-        return false;
     }
 
     /**
@@ -116,8 +114,7 @@ class CommentsArticleModel extends Model
 
         } catch (\Exception $e) {
             DatabaseProvider::connection()->rollBack();
+            throw $e;
         }
-
-        return true;
     }
 }

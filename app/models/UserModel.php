@@ -132,11 +132,9 @@ SQL;
             return $state;
 
         } catch (\Exception $e) {
-
             DatabaseProvider::connection()->rollBack();
+            throw $e;
         }
-
-        return false;
     }
 
     /**
@@ -162,11 +160,9 @@ SQL;
 
 
         } catch (\Exception $e) {
-
             DatabaseProvider::connection()->rollBack();
+            throw $e;
         }
-
-        return false;
     }
 
     /**
@@ -189,11 +185,9 @@ SQL;
             return $state;
 
         } catch (\Exception $e) {
-
             DatabaseProvider::connection()->rollBack();
+            throw $e;
         }
-
-        return false;
     }
 
 
