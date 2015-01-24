@@ -27,18 +27,18 @@ class CommentsModelTest extends \PHPUnit_Framework_TestCase {
     {
         $this->modelEvent = new CommentsEventModel();
         $state = $this->modelEvent->getAllCommentsEvent();
-        $this->assertEmpty($state);
+        $this->assertNotEmpty($state);
     }
 
     public function testAllEvent()
     {
         $this->modelEvent = new CommentsEventModel();
 
-        $array = ['idevent'=>1,'iduser'=>1,'contents'=>'Trop SWAG'];
+        $array = ['idevent'=>2,'iduser'=>1,'contents'=>'Trop SWAG'];
         $state = $this->modelEvent->insertCommentEvent($array);
         $this->assertEquals(true,$state);
 
-        $array = $this->modelEvent->getCommentEvent(1);
+        $array = $this->modelEvent->getCommentEvent(2);
         $this->assertNotEmpty($array);
 
         $state = $this->modelEvent->deleteCommentEvent(0);
