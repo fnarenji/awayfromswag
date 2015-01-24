@@ -2,26 +2,42 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="fr">
 	<title>Articles about Unicorn - Unicorn are real!</title>
 	<atom:link href="http://unicorn.ovh" rel="self" type="application/rss+xml"/>
+<<<<<<< HEAD
+	<updated>2015-01-24T11:35:58Z</updated>
+=======
 	<updated>2015-01-24T12:01:04Z</updated>
+>>>>>>> 51333bbe5a14483dd4ecf8882063105bf43424ea
 	<author>
 		<name>AFS</name>
 	</author>
 	<entry>
 		<title>Proof that unicorn exists</title>
 		<link href="https://www.youtube.com/watch?v=HHQIXCs4d98"/>
+<<<<<<< HEAD
+		<updated>2015-01-24T11:35:58Z</updated>
+=======
 		<updated>2015-01-24T12:01:04Z</updated>
+>>>>>>> 51333bbe5a14483dd4ecf8882063105bf43424ea
 		<summary>This is a legit proof that unicorn are real, they exist I have a proof now !</summary>
 	</entry>
 	<entry>
 		<title>A new Unicorn has been seen!</title>
 		<link href="http://www.iflscience.com/plants-and-animals/rare-unicorn-deer-found-slovenia"/>
+<<<<<<< HEAD
+		<updated>2015-01-24T11:35:58Z</updated>
+=======
 		<updated>2015-01-24T12:01:04Z</updated>
+>>>>>>> 51333bbe5a14483dd4ecf8882063105bf43424ea
 		<summary>In Slovenia an unicorn has been discovered!</summary>
 	</entry>
 	<entry>
 		<title>Listen this new song about unicorn!</title>
 		<link href="https://www.youtube.com/watch?v=aOYRj9jCGtE"/>
+<<<<<<< HEAD
+		<updated>2015-01-24T11:35:58Z</updated>
+=======
 		<updated>2015-01-24T12:01:04Z</updated>
+>>>>>>> 51333bbe5a14483dd4ecf8882063105bf43424ea
 		<summary>This is a new french song about unicorns, you'll love it !</summary>
 	</entry>
 </feed>

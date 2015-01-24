@@ -5,12 +5,12 @@
         <h1>Inscrivez-vous aujourd'hui et bénéficiez de 10% de remise sur tout troll !</h1>
 
         {% for error in errors %}
-            <p class="">
+            <p class="error_message">
                 {{ error }}
             </p>
         {% endfor %}
-
-        <form method="POST" action="/user/register" class="pure-form pure-form-aligned">
+        
+        <form method="POST" action="/user/register" class="pure-form pure-form-aligned centered">
             <div class="pure-control-group">
                 <label for="username">Nom d'utilisateur</label>
                 <input required name="username" placeholder="Nom d'utilisateur"/>
