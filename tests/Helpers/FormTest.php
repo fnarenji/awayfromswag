@@ -13,15 +13,8 @@ use SwagFramework\Helpers\FormHelper;
 
 class FormTest extends \PHPUnit_Framework_TestCase
 {
-
-    /**
-     * @var FormHelper
-     */
-    private $helper;
-
     function __construct()
     {
-        $this->helper = new FormHelper();
     }
 
     public function testForm()
@@ -40,7 +33,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
     <input name="submit" type="submit" value="Envoyer" />
 </form>';
 
-        $form = $this->helper->generate('user', '#');
+        $form = FormHelper::generate('user', '#');
         $this->assertEquals($form->getFormHTML(array(
             'username' => 'Nom d\'utilisateur',
             'firstname' => 'Prénom'

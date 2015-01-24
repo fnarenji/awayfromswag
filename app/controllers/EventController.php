@@ -93,8 +93,7 @@ class EventController extends Controller
             throw new NotAuthenticatedException();
         }
 
-        $formHelper = new FormHelper();
-        $form = $formHelper->generate('event', '/event/add');
+        $form = FormHelper::generate('event', '/event/add');
         $form->setClass('pure-form pure-form-stacked');
 
         $html = $form->getFormHTML([
@@ -115,8 +114,7 @@ class EventController extends Controller
             throw new NotAuthenticatedException();
         }
 
-        $formHelper = new FormHelper();
-        $form = $formHelper->generate('event', '/event/add');
+        $form = FormHelper::generate('event', '/event/add');
 
         $result = $form->validate([
             'name' => 'Nom de l\'évènement',
@@ -163,8 +161,7 @@ class EventController extends Controller
             throw new NotYourEventException($id);
         }
 
-        $form = new FormHelper();
-        $form = $form->generate('event', '/event/modify');
+        $form = FormHelper::generate('event', '/event/modify');
         $form->setClass('pure-form pure-form-stacked');
 
         $form->getField('id')->addAttribute('value', $event['id']);
@@ -193,8 +190,7 @@ class EventController extends Controller
             throw new NotAuthenticatedException();
         }
 
-        $form = new FormHelper();
-        $form = $form->generate('event', '/event/modify');
+        $form = FormHelper::generate('event', '/event/modify');
         $form->setClass('pure-form pure-form-stacked');
 
         $result = $form->validate([

@@ -70,4 +70,9 @@ class ConversationController extends Controller
 
         $this->getView()->render('conversation/show', ['conversation' => $conversation, 'messages' => $messages]);
     }
+
+    public function create()
+    {
+        $this->getView()->render('conversation/create');
+    }
 }

@@ -16,10 +16,6 @@ class ViewHelpers
      */
     public $assets;
     /**
-     * @var \SwagFramework\Helpers\FormHelper
-     */
-    public $form;
-    /**
      * @var \SwagFramework\Helpers\Popup
      */
     public $popup;
@@ -27,7 +23,6 @@ class ViewHelpers
     function __construct()
     {
         $this->assets = new Assets();
-//        $this->form = new Form();
         $this->popup = new Popup();
     }
 }

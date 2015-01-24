@@ -14,6 +14,7 @@ abstract class Field
 {
     private $name;
     private $attributes = [];
+    private $content;
 
     function __construct($name, $attributes = [])
     {
@@ -55,6 +56,16 @@ abstract class Field
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    public function setContent()
+    {
+        return $this->content;
     }
 
     public abstract function getHTML();
