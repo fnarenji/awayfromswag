@@ -60,9 +60,7 @@ class Database extends \PDO
      */
     public function execute($query, array $params)
     {
-        var_dump($query);
         $stmt = $this->prepare($query);
-        var_dump($stmt);
         return $stmt->execute($params);
     }
 
