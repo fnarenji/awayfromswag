@@ -81,28 +81,24 @@ class EventModel extends Model
 
     /**
      * Update an event
-     * @param $idEvent
-     * @param $name
-     * @param $nbMaxPart
-     * @param $description
-     * @param $address
-     * @param $eventTime
-     * @param $money
+     * @param $params
      * @return bool
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function updateEvent($idEvent, $name, $nbMaxPart, $description, $address, $eventTime, $money)
+    public function updateEvent($params)
     {
         try {
 
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql = "UPDATE event " .
-                "SET name = ? ,description = ?, address = ?, eventtime = ?, money = ?, personsmax = ? " .
-                "WHERE id = ?";
+            $sql = 'UPDATE event '
+                . 'SET name=:name ,description=:description, address=:address, eventtime=:eventtime, money=:money, personsmax=:personsmax '
+                . 'WHERE id=:id';
 
-            DatabaseProvider::connection()->query($sql,
-                [$name, $description, $address, $eventTime, $money, $nbMaxPart, $idEvent]);
+            var_dump($sql);
+            var_dump($params);
+
+            DatabaseProvider::connection()->query($sql, $params);
 
             DatabaseProvider::connection()->commit();
 

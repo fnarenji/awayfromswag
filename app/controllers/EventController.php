@@ -214,15 +214,7 @@ class EventController extends Controller
             throw new NotYourEventException($id);
         }
 
-        $this->eventModel->updateEvent(
-            $id,
-            $result['name'],
-            $result['personsmax'],
-            $result['description'],
-            $result['address'],
-            $result['eventtime'],
-            $result['money']
-        );
+        $this->eventModel->updateEvent($result);
 
         $this->getView()->redirect('/event');
     }
