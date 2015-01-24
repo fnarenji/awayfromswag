@@ -151,15 +151,15 @@ class UserController extends Controller
                     default:
                         $errors[] = 'Unknown database error.';
                 }
-            }
-
-        } catch (\Exception $e) {
+            } else throw $e;
 
         }
+
         if (!empty($errors))
             $this->getView()->render('user/register', ['user' => $user, 'errors' => $errors]);
-        else
-            $this->getView()->redirect('/');
+        else {
+            //$this->getView()->redirect('/');
+        }
     }
 
     public function account()

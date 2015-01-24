@@ -9,6 +9,9 @@
 namespace app\models;
 
 
+use DOMDocument;
+use SebastianBergmann\Exporter\Exception;
+use SwagFramework\Config\ConfigFileParser;
 use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\mvc\Model;
@@ -17,10 +20,32 @@ class ConversationModel extends Model
 {
     const ADD_USER_TO_CONVERSATION = "REPLACE INTO conversation_user (id, user) VALUES (?, ?);";
     const DELETE_CONVERSATION = "DELETE FROM conversation_user WHERE id = ?";
-    const CREATE_CONVERSATION = "INSERT INTO conversation (user) VALUES (?);";
+    const CREATE_CONVERSATION = "INSERT INTO conversation (user, title) VALUES (?, ?);";
     const GET_CONVERSATION = "SELECT conversation_user.id, username FROM conversation_user, user WHERE user.id = conversation_user.user AND conversation_user.id = ? ";
-    const GET_CONVERSATIONS_FOR_USER = "SELECT conversation_user.id, conversation.title, username FROM conversation_user, user, conversation WHERE conversation_user.id = conversation.id AND user.id = conversation_user.user AND conversation_user.user = ? ";
     const GET_ALL_CONVERSATIONS = "SELECT conversation_user.id, username FROM conversation_user,user WHERE user.id = conversation_user.user";
+    const UPDATE_MESSAGE_POSTED = "UPDATE conversation_user SET messagecount = messagecount + 1, lastmessagesnippet = ? WHERE id = ? AND user = ?";
+    const GET_CONVERSATIONS_FOR_USER = <<<SQL
+SELECT conversation_user.id, conversation.title, snippet
+FROM conversation_user
+JOIN (SELECT conversation_user.id, lastmessagesnippet AS snippet
+      FROM conversation_user
+      GROUP BY id
+      ORDER BY lastmessagedate DESC
+      LIMIT 0,1) snippetTable ON snippetTable.id = conversation_user.id
+JOIN user ON conversation_user.id = user.id
+JOIN conversation ON conversation_user.id = conversation.id
+WHERE conversation_user.user = ?
+ORDER BY lastmessagedate DESC
+SQL;
+
+    private $conversationFolder;
+
+
+    public function __construct()
+    {
+        $file = new ConfigFileParser(FSROOT . "/app/config/conversation.json");
+        $this->conversationFolder = FSROOT . $file->getEntry("path");
+    }
 
     /**
      * Get all conversation
@@ -60,10 +85,27 @@ class ConversationModel extends Model
      * @throws \Exception
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function createConversation()
+    public function createConversation($title)
     {
-        DatabaseProvider::connection()->execute(self::CREATE_CONVERSATION, [Authentication::getInstance()->getUserId()]);
-        return DatabaseProvider::connection()->lastInsertId();
+        try {
+            DatabaseProvider::connection()->beginTransaction();
+            DatabaseProvider::connection()->execute(self::CREATE_CONVERSATION, [Authentication::getInstance()->getUserId(), $title]);
+            $conversationId = DatabaseProvider::connection()->lastInsertId();
+
+            $doc = new \DOMDocument();
+            $conversation = $doc->createElement("conversation");
+            $conversationIdNode = $doc->createElement("id", $conversationId);
+            $conversation->appendChild($conversationIdNode);
+
+            $doc->appendChild($conversation);
+
+            $doc->save($this->conversationFolder . $conversationId . '.xml');
+            DatabaseProvider::connection()->commit();
+            return $conversationId;
+        } catch (\Exception $e) {
+            DatabaseProvider::connection()->rollBack();
+            throw $e;
+        }
     }
 
     /**
@@ -86,5 +128,36 @@ class ConversationModel extends Model
     public function addUserToConversation($id, $userId)
     {
         return DatabaseProvider::connection()->execute(self::ADD_USER_TO_CONVERSATION, [$id, $userId]);
+    }
+
+    /**
+     * Posts a new message to the conversation
+     * @param $conversationId int the id of the conversation
+     * @param $message string the content of the message
+     */
+    public function newMessage($conversationId, $message)
+    {
+        try {
+            DatabaseProvider::connection()->beginTransaction();
+            DatabaseProvider::connection()->execute(self::UPDATE_MESSAGE_POSTED, [$message, $conversationId, Authentication::getInstance()->getUserId()]);
+
+            $userModel = new UserModel();
+            $doc = new \DOMDocument();
+            $doc->load($this->conversationFolder . $conversationId . '.xml');
+            $messageNode = $doc->createElement('message');
+            $messageNode->appendChild($doc->createElement('author', Authentication::getInstance()->getUserId()));
+            $messageNode->appendChild($doc->createElement('authorName', $userModel->getUserFullName(Authentication::getInstance()->getUserId())));
+            $messageNode->appendChild($doc->createElement('date', date('c')));
+            $messageNode->appendChild($doc->createElement('content', $message));
+
+            $doc->firstChild->appendChild($messageNode);
+
+            $doc->save($this->conversationFolder . $conversationId . '.xml');
+
+            DatabaseProvider::connection()->commit();
+        } catch (Exception $e) {
+            DatabaseProvider::connection()->rollBack();
+            throw $e;
+        }
     }
 }

@@ -10,10 +10,11 @@
         {% else %}
         <ul class="conversation-list">
             {% for conversation in conversations %}
+                
             <li class="conversation-list-item">
                 <b>{{ conversation.title }}</b>
                 <p>
-                    {{ conversation.username }}
+                    <b>{{ conversation.title }}</b><i>{{ conversation.snippet }}</i>
                 </p>
             </li>
             {% endfor %}
