@@ -39,7 +39,7 @@ function main()
     {
         $classRouting->addClass('Conversation');
 
-        if (Authentication::getInstance()->getOptionOr('accessLevel', 0) == 1)
+        if (Authentication::getInstance()->getOptionOr('accessLevel', 0))
         {
             $classRouting->addClass('AdminUsers');
             $classRouting->addClass('AdminEvent');

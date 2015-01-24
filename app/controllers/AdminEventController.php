@@ -39,7 +39,7 @@ class AdminEventController extends Controller
 
         $this->getView()->render('admin/events', array('allEvents' => $allEvents));
     }
-    
+
     public function delete()
     {
         $this->eventModel = $this->loadModel('Event');
