@@ -1,0 +1,22 @@
+{% extends "layout/default" %}
+{% block content %}
+    <article>
+        <ul id="events">
+            <li>
+                <h1>{{ article.title }}</h1>
+
+                <span class="mini-text">ajouté le {{ article.postdate }}, </span>
+                <span class="mini-text">par :
+                    <a href="/user/profile/{{ article.user.username }}">
+                        {{ article.user.firstname ~ ' ' ~ article.user.lastname }}
+                    </a>,
+                </span>
+                <span class="mini-text">Catégorie : {{ article.category }}</span>
+
+                <p>
+                    {{ article.text }}
+                </p>
+            </li>
+        </ul>
+    </article>
+{% endblock %}

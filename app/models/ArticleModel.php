@@ -11,25 +11,25 @@ namespace app\models;
 use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\mvc\Model;
 
-class NewsModel extends Model
+class ArticleModel extends Model
 {
 
     /**
-     * Return a news
+     * Return a article
      * @param $id
      * @return mixed
      */
     public function getOneNewsById($id)
     {
-        $sql = "SELECT article.id,title, username, text, postdate " .
-            "FROM article, user " .
-            "WHERE user.id = article.user AND article.id = ?";
+        $sql = "SELECT * " .
+            "FROM article " .
+            "WHERE id=?";
 
         return DatabaseProvider::connection()->selectFirst($sql, [$id]);
     }
 
     /**
-     * Return a news
+     * Return a article
      * @param $name
      * @return array
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
@@ -45,14 +45,13 @@ class NewsModel extends Model
 
 
     /**
-     * Return all news
+     * Return all article
      * @return array
      */
     public function getNews()
     {
-        $sql = "SELECT article.id, username, text, postdate " .
-            "FROM article, user " .
-            "WHERE user.id = article.user";
+        $sql = "SELECT * " .
+            "FROM article";
 
         return DatabaseProvider::connection()->query($sql);
     }
@@ -87,7 +86,7 @@ SQL;
     }
 
     /**
-     * Delete a news
+     * Delete a article
      * @param $id
      * @return bool
      */
@@ -109,7 +108,7 @@ SQL;
     }
 
     /**
-     * Delete a news
+     * Delete a article
      * @param $id
      * @return bool
      * @throws \Exception
@@ -133,7 +132,7 @@ SQL;
     }
 
     /**
-     * Update a news
+     * Update a article
      * @param $id
      * @param $content
      * @param $date

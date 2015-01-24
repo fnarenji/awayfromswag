@@ -34,6 +34,7 @@ function main()
     $classRouting = new ClassRouting('\app\controllers\\');
     $classRouting->addClass('User');
     $classRouting->addClass('Event');
+    $classRouting->addClass('Article');
 
     if(Authentication::getInstance()->isAuthenticated())
     {
