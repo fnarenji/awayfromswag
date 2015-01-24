@@ -9,8 +9,10 @@
 namespace app\controllers;
 
 
+use app\exceptions\AlreadyParticipateEventException;
 use app\exceptions\EventNotFoundException;
 use app\exceptions\NotAuthenticatedException;
+use app\exceptions\NotParticipateEventException;
 use app\exceptions\NotYourEventException;
 use app\models\EventModel;
 use app\models\UserModel;
@@ -216,5 +218,51 @@ class EventController extends Controller
         );
 
         $this->getView()->redirect('/event');
+    }
+
+    public function participate()
+    {
+        if (!Authentication::getInstance()->isAuthenticated())
+            throw new NotAuthenticatedException();
+
+        $id = (int)$this->getParams()[0];
+
+        $event = $this->eventModel->get($id);
+
+        if (empty($event)) {
+            throw new EventNotFoundException($id);
+        }
+
+        $participate = $this->eventModel->getParticipateUser($id, Authentication::getInstance()->getUserId());
+
+        if(empty($participate))
+            throw new AlreadyParticipateEventException($id, Authentication::getInstance()->getUserId());
+
+        $this->eventModel->participate($id, Authentication::getInstance()->getUserId());
+
+        $this->getView()->redirect('/event/show/' . $id);
+    }
+
+    public function unparticipate()
+    {
+        if (!Authentication::getInstance()->isAuthenticated())
+            throw new NotAuthenticatedException();
+
+        $id = (int)$this->getParams()[0];
+
+        $event = $this->eventModel->get($id);
+
+        if (empty($event)) {
+            throw new EventNotFoundException($id);
+        }
+
+        $participate = $this->eventModel->getParticipateUser($id, Authentication::getInstance()->getUserId());
+
+        if(!empty($participate))
+            throw new NotParticipateEventException($id, Authentication::getInstance()->getUserId());
+
+        $this->eventModel->unparticipate($id, Authentication::getInstance()->getUserId());
+
+        $this->getView()->redirect('/event/show/' . $id);
     }
 }
