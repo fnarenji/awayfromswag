@@ -172,6 +172,8 @@ class EventController extends Controller
         $form->getField('money')->addAttribute('value', $event['money']);
         $form->getField('personsmax')->addAttribute('value', $event['personsmax']);
 
+        var_dump($form->getFields());
+
         $html = $form->getFormHTML([
             'name' => 'Nom de l\'évènement',
             'description' => 'Description',

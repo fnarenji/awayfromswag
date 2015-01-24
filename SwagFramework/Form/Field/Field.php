@@ -63,9 +63,9 @@ abstract class Field
         return $this->content;
     }
 
-    public function setContent()
+    public function setContent($content)
     {
-        return $this->content;
+        $this->content = $content;
     }
 
     public abstract function getHTML();
