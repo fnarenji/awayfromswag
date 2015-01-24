@@ -142,4 +142,36 @@ SQL;
     {
         //TODO
     }
+
+    /**
+     * get events with max participation
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    public function getTop()
+    {
+        $sql = <<<SQL
+SELECT * FROM event
+        JOIN event_user ON event.id = event_user.id
+        LIMIT 3;
+SQL;
+
+        DatabaseProvider::connection()->query($sql);
+    }
+
+    /**
+     * get last events
+     * @return array
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    public function getLast()
+    {
+        $sql = <<<SQL
+SELECT * FROM event
+  ORDER BY createtime DESC
+  LIMIT 3;
+SQL;
+
+        return DatabaseProvider::connection()->query($sql);
+
+    }
 }
