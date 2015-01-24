@@ -9,6 +9,8 @@
 namespace app\controllers;
 
 
+use SwagFramework\Helpers\Authentication;
+use SwagFramework\Helpers\Input;
 use SwagFramework\mvc\Controller;
 
 class AdminUsersController extends Controller
@@ -23,6 +25,8 @@ class AdminUsersController extends Controller
     {
         $this->model = $this->loadModel('User');
         $allUser = $this->model->getAllUsers();
+        $input = new Input();
+
         $this->getView()->render('admin/users', ['users' => $allUser]);
     }
 

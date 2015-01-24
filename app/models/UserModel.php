@@ -115,9 +115,10 @@ SQL;
     }
 
     /**
-     *  Delete an user
      * @param $id
      * @return bool
+     * @throws \Exception
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function deleteUser($id)
     {
@@ -140,9 +141,9 @@ SQL;
     }
 
     /**
-     * Update the user.
      * @param $infos
      * @return bool
+     * @throws \Exception
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function updateUser($infos)
@@ -168,9 +169,9 @@ SQL;
     }
 
     /**
-     * Update user by admin
      * @param $infos
      * @return bool
+     * @throws \Exception
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function updateAdminUser($infos)
@@ -192,6 +193,17 @@ SQL;
         }
     }
 
+    /**
+     * @param $username
+     * @return array
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    public function getAccessLevel($username)
+    {
+        $sql = 'SELECT accesslevel FROM user WHERE username = ?';
+
+        return DatabaseProvider::connection()->query($sql, array($username));
+    }
 
     /**
      * Return data for username like param
