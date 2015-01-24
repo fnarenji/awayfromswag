@@ -3,6 +3,11 @@
     <article>
         <h1>{{ conversation.title }}</h1>
 
+        <p>{{ dump(conversation) }}</p>
+
+        <p>Dernier message posté par <b>{{ conversation.lastmessageauthorfullname }}</b> le
+            <b>{{ conversation.lastmessagetime }}</b>.</p>
+
         <div>
 
         </div>

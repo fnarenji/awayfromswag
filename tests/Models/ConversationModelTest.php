@@ -16,6 +16,11 @@ class ConversationModelTest extends \PHPUnit_Framework_TestCase {
      */
     private $model;
 
+    public static function setUpBeforeClass()
+    {
+        define('FSROOT', realpath('.'));
+    }
+
     public function testGetAll()
     {
         $this->model = new ConversationModel();

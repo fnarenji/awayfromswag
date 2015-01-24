@@ -40,9 +40,16 @@ JOIN conversation ON conversation_user.id = conversation.id
 WHERE conversation_user.user = ?
 ORDER BY lastmessagetime DESC
 SQL;
-
+    const GET_CONVERSATION = <<<'SQL'
+SELECT conversation.title, creator.username AS creator, createtime, lastmessagetime,
+  CONCAT(lastauthor.username, ' (', lastauthor.firstname, ' ', lastauthor.lastname, ')') AS lastmessageauthorfullname
+FROM conversation
+JOIN user creator ON conversation.user = creator.id
+JOIN user lastmessage ON conversation.lastmessageauthor = lastmessage.id
+JOIN conversation_user ON conversation_user.user = user.id
+WHERE user.id = ?
+SQL;
     private $conversationFolder;
-
 
     public function __construct()
     {
@@ -166,23 +173,22 @@ SQL;
     public function getConversation($conversationId)
     {
         try {
-            $conversation = ['messages' => []];
+            $conversation = DatabaseProvider::connection()->selectFirst(self::GET_CONVERSATION, [Authentication::getInstance()->getUserId()]);
+            $conversation = array_merge($conversation, ['messages' => []]);
             $doc = new \DOMDocument();
             $doc->load($this->conversationFolder . $conversationId . '.xml');
             $xpath = new \DOMXPath($doc);
             foreach ($xpath->query('/conversation/message') as $messageNode) {
                 $message = [];
 
-                foreach ($messageNode->childNodes as $node) {
-//                    var_dump($node);
+                foreach ($messageNode->childNodes as $node)
                     $message[$node->nodeName] = $node->nodeValue;
-                }
 
                 $message['date'] = (new \DateTime($message['date']))->format('d/m/Y H:i:s');
                 $conversation['messages'][] = $message;
             }
 
-            var_dump($conversation);
+            return $conversation;
         } catch (Exception $e) {
 
         }
