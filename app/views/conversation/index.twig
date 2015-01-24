@@ -12,9 +12,9 @@
             {% for conversation in conversations %}
 
             <li class="conversation-list-item">
-                <b>{{ conversation.title }}</b>
+                <a href="/conversation/show/{{ conversation.id }}"><b>{{ conversation.title }}</b></a>
                 <p>
-                    <b>{{ conversation.title }}</b><i>{{ conversation.snippet }}</i>
+                    {{ conversation.lastmessagesnippet }}
                 </p>
             </li>
             {% endfor %}

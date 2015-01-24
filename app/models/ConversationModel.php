@@ -23,19 +23,22 @@ class ConversationModel extends Model
     const CREATE_CONVERSATION = "INSERT INTO conversation (user, title) VALUES (?, ?);";
     const GET_CONVERSATION = "SELECT conversation_user.id, username FROM conversation_user, user WHERE user.id = conversation_user.user AND conversation_user.id = ? ";
     const GET_ALL_CONVERSATIONS = "SELECT conversation_user.id, username FROM conversation_user,user WHERE user.id = conversation_user.user";
-    const UPDATE_MESSAGE_POSTED = "UPDATE conversation_user SET messagecount = messagecount + 1, lastmessagesnippet = ? WHERE id = ? AND user = ?";
+
+    const UPDATE_MESSAGE_POSTED = <<<SQL
+UPDATE conversation_user, conversation
+SET messagecount = messagecount + 1, lastmessagesnippet = :message
+WHERE conversation.id = :conversation
+  AND conversation.id = conversation_user.id
+  AND conversation_user.user = :user
+SQL;
+
     const GET_CONVERSATIONS_FOR_USER = <<<SQL
-SELECT conversation_user.id, conversation.title, snippet
+SELECT conversation.id, conversation.title, lastmessagesnippet, lastmessagetime
 FROM conversation_user
-JOIN (SELECT conversation_user.id, lastmessagesnippet AS snippet
-      FROM conversation_user
-      GROUP BY id
-      ORDER BY lastmessagedate DESC
-      LIMIT 0,1) snippetTable ON snippetTable.id = conversation_user.id
-JOIN user ON conversation_user.id = user.id
+JOIN user ON conversation_user.user = user.id
 JOIN conversation ON conversation_user.id = conversation.id
 WHERE conversation_user.user = ?
-ORDER BY lastmessagedate DESC
+ORDER BY lastmessagetime DESC
 SQL;
 
     private $conversationFolder;
@@ -139,7 +142,11 @@ SQL;
     {
         try {
             DatabaseProvider::connection()->beginTransaction();
-            DatabaseProvider::connection()->execute(self::UPDATE_MESSAGE_POSTED, [$message, $conversationId, Authentication::getInstance()->getUserId()]);
+            DatabaseProvider::connection()->execute(self::UPDATE_MESSAGE_POSTED, [
+                'message' => $message,
+                'conversation' => $conversationId,
+                'user' => Authentication::getInstance()->getUserId()
+            ]);
 
             $userModel = new UserModel();
             $doc = new \DOMDocument();
