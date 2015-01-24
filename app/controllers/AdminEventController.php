@@ -31,6 +31,12 @@ class AdminEventController extends Controller
     {
         $this->eventModel = $this->loadModel('Event');
         $allEvents = $this->eventModel->getAll();
+
+        foreach($allEvents as $key => $value)
+        {
+            $allEvents[$key]['description'] = substr($allEvents[$key]['description'], 0, 15);
+        }
+
         $this->getView()->render('admin/events', array('allEvents' => $allEvents));
     }
 
