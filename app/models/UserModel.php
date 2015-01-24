@@ -80,8 +80,6 @@ class UserModel extends Model
         try {
             DatabaseProvider::connection()->beginTransaction();
 
-            var_dump($infos);
-
             $sql = "INTO INTO user ('username', 'firstname', 'lastname', 'mail', 'password', 'birthday','phonenumber', .
                 'twitter','skype','facebookuri','website','job','description','privacy','mailnotifications','accesslevel')
                      VALUES (:username, :firstname, :lastname, :mail, :password, :birthday, :phonenumber, :twitter, :skype, :facebookuri, :website, :job, :description, :privacy, :mailnotifications, :accesslevel)";
@@ -138,8 +136,8 @@ class UserModel extends Model
             DatabaseProvider::connection()->beginTransaction();
 
             $sql = 'UPDATE user '
-                . 'SET lastname=?, firstname=?, job=?, description=?, mail=?, phonenumber=?, twitter=?, facebookuri=?, skype=?, website=?, privacy=? '
-                . 'WHERE id=?';
+                . 'SET lastname=:lastname, firstname=:firstname, job=:job, description=:description, mail=:mail, phonenumber=:phonenumber, twitter=:twitter, facebookuri=:facebookuri, skype=:skype, website=:website, privacy=:privacy '
+                . 'WHERE id=:id';
             DatabaseProvider::connection()->execute($sql, $infos);
 
             DatabaseProvider::connection()->commit();
