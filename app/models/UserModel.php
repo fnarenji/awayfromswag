@@ -15,6 +15,8 @@ class UserModel extends Model
 {
     const SALT = 'LEPHPCESTLOLMDRswagyolo564654465465464//@Êø@Â@ÛÂøîôâåÊøîÂÊÔÎÊÂåÊâÎ';
     const GET_USER_FULL_NAME_LIKE = 'SELECT id FROM user WHERE CONCAT(username, \' (\', firstname, \' \', UPPER(lastname), \')\') LIKE ?';
+
+    const GET_ALL_USER_FULL_NAME = 'SELECT CONCAT(username, \' (\', firstname, \' \', UPPER(lastname), \')\') AS userFullName FROM user';
     const GET_USER_FULL_NAME = 'SELECT CONCAT(username, \' (\', firstname, \' \', UPPER(lastname), \')\') AS userFullName FROM user WHERE id = ?';
 
     /**
@@ -63,10 +65,8 @@ class UserModel extends Model
      */
     public function getAllUsersFullNames()
     {
-        $sql = self::GET_USER_FULL_NAME;
-
         $fullNames = [];
-        foreach (DatabaseProvider::connection()->query($sql) as $row) {
+        foreach (DatabaseProvider::connection()->query(self::GET_ALL_USER_FULL_NAME) as $row) {
             $fullNames[] = $row['userFullName'];
         }
 
