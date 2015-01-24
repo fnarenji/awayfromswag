@@ -514,7 +514,10 @@ ul#events li a h1 {
 {
     background-color: rgba(0, 0, 0, 0.1);
 }
-
+.conversation-list-item a:hover
+{
+    color: #42A5F5;
+}
 .conversation-creation textarea
 {
     width: 90%;
