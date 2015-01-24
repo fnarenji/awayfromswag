@@ -3,7 +3,7 @@
     <article>
         <h1>Annuaire des utilisateurs</h1>
 
-        <table class="pure-table">
+        <table class="pure-table pure-table-horizontal">
             <thead>
             <tr>
                 <th>#</th>
@@ -17,6 +17,8 @@
             <tbody>
             {% for user in users %}
                 <tr>
+                    <td></td>
+                    <td></td>
                     <td>{{ user.id }}</td>
                     <td>{{ user.username }}</td>
                     <td>{{ user.firstname }}</td>
