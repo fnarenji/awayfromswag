@@ -36,10 +36,9 @@ class AdminCommentController extends Controller
 
     public function delete()
     {
-        {
-            $id = (int)$this->getParams()[0];
-            $this->modelComment = $this->loadModel('CommentsEvent');
+        $id = (int)$this->getParams()[0];
+        $this->modelComment = $this->loadModel('CommentsEvent');
 
-            $this->modelComment->deleteCommentEvent($id);
+        $this->modelComment->deleteCommentEvent($id);
     }
 }
