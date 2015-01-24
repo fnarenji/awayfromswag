@@ -127,7 +127,6 @@ SQL;
 
             DatabaseProvider::connection()->beginTransaction();
 
-
             $str = '';
 
             foreach($params as $key=>$value){
