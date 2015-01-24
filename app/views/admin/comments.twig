@@ -12,8 +12,9 @@
 
         {% for comment in allComments %}
             <p class="user-list-item">
-                <b><a href="/admincomments/comment/{{ comment.id }}">{{ comment.name }}</a></b>
+                <b><a href="/admincomment/view/{{ comment.commid }}">{{ comment.name }}</a></b>
                 {{ comment.username ~ ' ' ~ comment.message }}
+                <input type="button" name="" value="Supprimer ce commentaire" onclick="self.location.href='/admincomment/delete/{{ comment.commid }}'" style="background-color:#b2b1ad" style="color:white; font-weight:bold" size="20%" onclick>
             </p>
         {% endfor %}
 
