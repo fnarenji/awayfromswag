@@ -1,7 +1,15 @@
 {% extends "layout/default" %}
 {% block content %}
     <article>
-        <h1>Conversation</h1>
-        <h2>Loick - Thomas</h2>
+        <h1>{{ conversation.title }}</h1>
+
+        <p>{{ dump(conversation) }}</p>
+
+        <p>Dernier message posté par <b>{{ conversation.lastmessageauthorfullname }}</b> le
+            <b>{{ conversation.lastmessagetime }}</b>.</p>
+
+        <div>
+
+        </div>
     </article>
 {% endblock %}

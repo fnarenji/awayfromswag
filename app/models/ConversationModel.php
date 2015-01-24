@@ -15,13 +15,13 @@ use SwagFramework\Config\ConfigFileParser;
 use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\mvc\Model;
+use const FSROOT;
 
 class ConversationModel extends Model
 {
     const ADD_USER_TO_CONVERSATION = "REPLACE INTO conversation_user (id, user) VALUES (?, ?);";
     const DELETE_CONVERSATION = "DELETE FROM conversation_user WHERE id = ?";
     const CREATE_CONVERSATION = "INSERT INTO conversation (user, title) VALUES (?, ?);";
-    const GET_CONVERSATION = "SELECT conversation_user.id, username FROM conversation_user, user WHERE user.id = conversation_user.user AND conversation_user.id = ? ";
     const GET_ALL_CONVERSATIONS = "SELECT conversation_user.id, username FROM conversation_user,user WHERE user.id = conversation_user.user";
 
     const UPDATE_MESSAGE_POSTED = <<<SQL
@@ -40,9 +40,16 @@ JOIN conversation ON conversation_user.id = conversation.id
 WHERE conversation_user.user = ?
 ORDER BY lastmessagetime DESC
 SQL;
-
+    const GET_CONVERSATION = <<<'SQL'
+SELECT conversation.title, creator.username AS creator, createtime, lastmessagetime,
+  CONCAT(lastauthor.username, ' (', lastauthor.firstname, ' ', lastauthor.lastname, ')') AS lastmessageauthorfullname
+FROM conversation
+JOIN user creator ON conversation.user = creator.id
+JOIN user lastmessage ON conversation.lastmessageauthor = lastmessage.id
+JOIN conversation_user ON conversation_user.user = user.id
+WHERE user.id = ?
+SQL;
     private $conversationFolder;
-
 
     public function __construct()
     {
@@ -69,17 +76,6 @@ SQL;
     public function getForUser($id)
     {
         return DatabaseProvider::connection()->query(self::GET_CONVERSATIONS_FOR_USER, [$id]);
-    }
-
-    /**
-     * Get conversation.
-     * @param $id
-     * @return array
-     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
-     */
-    public function get($id)
-    {
-        return DatabaseProvider::connection()->query(self::GET_CONVERSATION, [$id]);
     }
 
     /**
@@ -151,11 +147,17 @@ SQL;
             $userModel = new UserModel();
             $doc = new \DOMDocument();
             $doc->load($this->conversationFolder . $conversationId . '.xml');
+
             $messageNode = $doc->createElement('message');
+
             $messageNode->appendChild($doc->createElement('author', Authentication::getInstance()->getUserId()));
             $messageNode->appendChild($doc->createElement('authorName', $userModel->getUserFullName(Authentication::getInstance()->getUserId())));
             $messageNode->appendChild($doc->createElement('date', date('c')));
-            $messageNode->appendChild($doc->createElement('content', $message));
+
+            $contentNode = $doc->createElement('content');
+            $contentNode->appendChild($doc->createCDATASection($message));
+
+            $messageNode->appendChild($contentNode);
 
             $doc->firstChild->appendChild($messageNode);
 
@@ -165,6 +167,30 @@ SQL;
         } catch (Exception $e) {
             DatabaseProvider::connection()->rollBack();
             throw $e;
+        }
+    }
+
+    public function getConversation($conversationId)
+    {
+        try {
+            $conversation = DatabaseProvider::connection()->selectFirst(self::GET_CONVERSATION, [Authentication::getInstance()->getUserId()]);
+            $conversation = array_merge($conversation, ['messages' => []]);
+            $doc = new \DOMDocument();
+            $doc->load($this->conversationFolder . $conversationId . '.xml');
+            $xpath = new \DOMXPath($doc);
+            foreach ($xpath->query('/conversation/message') as $messageNode) {
+                $message = [];
+
+                foreach ($messageNode->childNodes as $node)
+                    $message[$node->nodeName] = $node->nodeValue;
+
+                $message['date'] = (new \DateTime($message['date']))->format('d/m/Y H:i:s');
+                $conversation['messages'][] = $message;
+            }
+
+            return $conversation;
+        } catch (Exception $e) {
+
         }
     }
 }

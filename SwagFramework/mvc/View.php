@@ -10,6 +10,7 @@ namespace SwagFramework\mvc;
 
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\ViewHelpers;
+use Twig_Extension_Debug;
 
 class View extends \Twig_Environment
 {
@@ -17,7 +18,12 @@ class View extends \Twig_Environment
 
     public function __construct(\Twig_LoaderInterface $loader = null, $options = [])
     {
+        if (DEBUG)
+            $options = array_merge($options, ['debug' => true]);
+
         parent::__construct($loader, $options);
+        $this->addExtension(new Twig_Extension_Debug());
+
         $this->helpers = new ViewHelpers();
     }
 

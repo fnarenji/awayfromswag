@@ -21,11 +21,11 @@ class CommentsEventModel extends Model
     public function getAllCommentsEvent()
     {
         $sql = <<<'SQL'
-SELECT comment.id, comment.title, comment.message, username
-FROM user
-JOIN comment_event ON comment_event.event = event.id
-                    AND comment_event.id = comment.id
-                    AND comment.user = user.id;
+SELECT comment.id, comment.message, user.id, user.username, event.name
+FROM comment
+JOIN user           ON comment.user = user.id
+JOIN comment_event  ON comment.id = comment_event.id
+JOIN event          ON event.id = comment_event.event
 SQL;
 
         return DatabaseProvider::connection()->query($sql);
@@ -40,12 +40,12 @@ SQL;
     public function getCommentEvent($id)
     {
         $sql = <<<SQL
-SELECT comment.title, comment.message, user.username
-FROM user, comment_event, comment, event
-JOIN comment_event ON comment_event.id = comment.id
-JOIN comment ON user.id = comment.user
-JOIN event ON event.id = comment_event.event
-WHERE event.id = ?
+SELECT comment.id, comment.message, user.id, user.username, event.name
+FROM comment
+JOIN user           ON comment.user = user.id
+JOIN comment_event  ON comment.id = comment_event.id
+JOIN event          ON event.id = comment_event.event
+                    AND event.id = ?
 SQL;
 
         return DatabaseProvider::connection()->query($sql, [$id]);
@@ -83,14 +83,16 @@ SQL;
         try {
             DatabaseProvider::connection()->beginTransaction();
 
-            $sqlComm = "INSERT INTO comment (user, message) VALUES (?, ?);";
-            DatabaseProvider::connection()->query($sqlComm, [$params['iduser'], $params['contents']]);
+            $sqlComm = "INSERT INTO comment (user, message) VALUES (? , ?);";
+            DatabaseProvider::connection()->execute($sqlComm, [$params['iduser'], $params['contents']]);
 
             $tmp = DatabaseProvider::connection()->lastInsertId();
-            $sqlComm = "INSERT INTO comment_event (id,event) VALUES (?, ?);";
-            DatabaseProvider::connection()->query($sqlComm, [$tmp, $params['idevent']]);
+            $sqlComm = "INSERT INTO comment_event (id, event) VALUES (?, ?)";
+            DatabaseProvider::connection()->execute($sqlComm, [$tmp, $params['idevent']]);
 
             DatabaseProvider::connection()->commit();
+
+            return true;
 
         } catch (\Exception $e) {
             DatabaseProvider::connection()->rollBack();
@@ -107,19 +109,10 @@ SQL;
      */
     public function deleteCommentEvent($id)
     {
-        try {
-            DatabaseProvider::connection()->beginTransaction();
-            $sql = "DELETE FROM comment_event WHERE id = ? ";
+        $sql = "DELETE FROM comment_event WHERE id = ? ";
+        $sql2 = "DELETE FROM comment WHERE id = ? ";
 
-            DatabaseProvider::connection()->query($sql, [$id]);
-
-            DatabaseProvider::connection()->commit();
-
-        } catch (\Exception $e) {
-            DatabaseProvider::connection()->rollBack();
-            throw $e;
-        }
-
-        return true;
+        DatabaseProvider::connection()->execute($sql, [$id]);
+        return DatabaseProvider::connection()->execute($sql2, [$id]);
     }
 } 

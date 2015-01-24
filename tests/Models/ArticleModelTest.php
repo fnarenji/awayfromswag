@@ -22,7 +22,7 @@ class ArticleModelTest extends \PHPUnit_Framework_TestCase {
     {
         $this->model = new NewsModel();
         $state = $this->model->getNews();
-        $this->assertEmpty($state);
+        $this->assertNotEmpty($state);
     }
 
     public function testAll()
