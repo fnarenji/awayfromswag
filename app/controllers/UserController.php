@@ -215,7 +215,7 @@ class UserController extends Controller
                 if (isset($toModify[$key]))
                     unset($toModify[$key]);
             }
-            
+
             foreach($toModify as $key => $value){
                 if($user[$key] != $value)
                     $user[$key] = $value;

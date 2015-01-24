@@ -13,7 +13,9 @@
             <span class="profile-line"><b class="profile-label">Age : </b>{{ profile.age }} ans</span>
         </div>
         <div class="profile-group">
-            <span class="profile-line"><b class="profile-label">Profession : </b>{{ profile.job }}</span>
+            {% if profile.jobPrivacy %}
+                <span class="profile-line"><b class="profile-label">Profession : </b>{{ profile.job }}</span>
+            {% endif %}
             <span class="profile-line"><b class="profile-label">Inscrit depuis
                     le </b>{{ profile.registerDateFormat }}</span>
         </div>
