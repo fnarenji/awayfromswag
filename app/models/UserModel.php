@@ -13,8 +13,6 @@ use SwagFramework\mvc\Model;
 
 class UserModel extends Model
 {
-    const TABLE_NAME = 'user';
-
     /**
      *  Return all information with the id
      * @param $id
@@ -23,7 +21,7 @@ class UserModel extends Model
     public function getUser($id)
     {
         $sql = 'SELECT * '
-            . 'FROM ' . self::TABLE_NAME . ' '
+            . 'FROM user'
             . 'WHERE id = ?';
 
         return DatabaseProvider::connection()->selectFirst($sql, [$id]);
@@ -37,7 +35,7 @@ class UserModel extends Model
     public function getUserByName($name)
     {
         $sql = 'SELECT * '
-            . 'FROM ' . self::TABLE_NAME . ' '
+            . 'FROM user '
             . 'WHERE username = ? ';
 
         return DatabaseProvider::connection()->selectFirst($sql, [$name]);
@@ -50,7 +48,7 @@ class UserModel extends Model
     public function getAllUsers()
     {
         $sql = 'SELECT *'
-            . 'FROM ' . self::TABLE_NAME . ' ';
+            . 'FROM user ';
 
         return DatabaseProvider::connection()->query($sql, []);
     }
@@ -64,7 +62,7 @@ class UserModel extends Model
     public function validateAuthentication($username, $password)
     {
         $sql = 'SELECT id '
-            . 'FROM ' . self::TABLE_NAME . ' '
+            . 'FROM user '
             . 'WHERE username = ? '
             . 'AND password = SHA1(?)';
 
@@ -84,7 +82,7 @@ class UserModel extends Model
 
             var_dump($infos);
 
-            $sql = "INTO INTO " . self::TABLE_NAME . " ('username', 'firstname', 'lastname', 'mail', 'password', 'birthday','phonenumber', .
+            $sql = "INTO INTO user ('username', 'firstname', 'lastname', 'mail', 'password', 'birthday','phonenumber', .
                 'twitter','skype','facebookuri','website','job','description','privacy','mailnotifications','accesslevel')
                      VALUES (:username, :firstname, :lastname, :mail, :password, :birthday, :phonenumber, :twitter, :skype, :facebookuri, :website, :job, :description, :privacy, :mailnotifications, :accesslevel)";
 
@@ -111,7 +109,7 @@ class UserModel extends Model
 
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql = 'DELETE FROM ' . self::TABLE_NAME . ' WHERE id = ?';
+            $sql = 'DELETE FROM user WHERE id = ?';
 
             DatabaseProvider::connection()->query($sql, [$id]);
 
@@ -139,9 +137,9 @@ class UserModel extends Model
 
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql = 'UPDATE ' . self::TABLE_NAME . " SET 'firstname' = ?, 'lastname' = ?, 'mail' = ?, 'password' = ?, 'birthday' = ?,
-                    'phonenumber' = ?,'twitter' = ?, 'skype' = ?, 'facebookuri' = ?, 'website' = ?, 'job' = ?, 'description' = ?,
-                    'privacy' = ?, 'mailnotifications' = ?, 'accesslevel' = ? WHERE id = ? ";
+            $sql = 'UPDATE user SET firstname = ?, lastname = ?, mail = ?, password = ?, birthday = ?,
+                    phonenumber = ?,twitter = ?, skype = ?, facebookuri = ?, website = ?, job = ?, description = ?,
+                    privacy = ?, mailnotifications = ?, accesslevel = ? WHERE id = ?';
 
             DatabaseProvider::connection()->execute($sql, $infos);
 
@@ -168,7 +166,7 @@ class UserModel extends Model
         try {
 
             DatabaseProvider::connection()->beginTransaction();
-            $sql = 'UPDATE ' . self::TABLE_NAME . ' SET username = :username, firstname = :firstname, lastname = :lastname, mail = :mail, password = :password, birthday = :birthday,
+            $sql = 'UPDATE user SET username = :username, firstname = :firstname, lastname = :lastname, mail = :mail, password = :password, birthday = :birthday,
                     phonenumber = :phonenumber,twitter = :twitter, skype = :skype, facebookuri = :facebookuri, website = :website, job = :job, description = :description,
                     privacy = :privacy, mailnotifications = :mailnotifications, accesslevel = :accesslevel WHERE id = ?';
 
@@ -195,7 +193,7 @@ class UserModel extends Model
 
         $name = '%' . $name . '%';
 
-        $sql = 'SELECT id, username, firstname, lastname FROM ' . self::TABLE_NAME . ' WHERE username LIKE ? ';
+        $sql = 'SELECT id, username, firstname, lastname FROM user WHERE username LIKE ? ';
 
         return DatabaseProvider::connection()->query($sql, [$name]);
     }
