@@ -56,7 +56,7 @@ SQL;
 
     public function __construct()
     {
-        $config = new ConfigFileParser(FSROOT . 'app/config/conversation.json');
+        $config = new ConfigFileParser(FSROOT . '/app/config/conversation.json');
         $this->conversationFolder = FSROOT . $config->getEntry("path");
     }
 
