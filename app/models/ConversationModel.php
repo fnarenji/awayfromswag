@@ -15,7 +15,6 @@ use SwagFramework\Config\ConfigFileParser;
 use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\mvc\Model;
-use const FSROOT;
 
 class ConversationModel extends Model
 {

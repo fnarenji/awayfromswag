@@ -263,7 +263,7 @@ class UserController extends Controller
         $this->getView()->render('/user/calendar');
     }
 
-    public function getCalendar()
+    public function getcalendar()
     {
         include 'app/views/user/calendarDisplay.php';
     }
