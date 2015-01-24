@@ -13,6 +13,7 @@ use DOMDocument;
 use SebastianBergmann\Exporter\Exception;
 use SwagFramework\Config\ConfigFileParser;
 use SwagFramework\Database\DatabaseProvider;
+use SwagFramework\Exceptions\FileNotFoundException;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\mvc\Model;
 
@@ -180,7 +181,12 @@ SQL;
                 'user' => Authentication::getInstance()->getUserId()
             ]);
 
+            var_dump($conversation);
+
             $conversation['messages'] = [];
+
+            if (!file_exists($this->conversationFolder . $conversationId . '.xml'))
+                throw new FileNotFoundException($this->conversationFolder . $conversationId . '.xml');
 
             $doc = new \DOMDocument();
             $doc->load($this->conversationFolder . $conversationId . '.xml');

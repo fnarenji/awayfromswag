@@ -9,7 +9,6 @@
 namespace SwagFramework\Helpers;
 
 
-use SwagFramework\Config\DatabaseConfig;
 use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Exceptions\TableNotFoundDatabaseException;
 use SwagFramework\Form\Field\InputField;
@@ -31,7 +30,6 @@ class FormHelper
         $sql = 'SHOW FIELDS '
             . 'FROM ' . $table;
 
-        DatabaseProvider::connect(DatabaseConfig::parseFromFile());
         $res = DatabaseProvider::connection()->query($sql);
 
         if (empty($res)) {
