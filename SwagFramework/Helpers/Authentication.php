@@ -26,11 +26,12 @@ class Authentication
         return self::$instance;
     }
 
-    public function setAuthenticated($userName, $userId)
+    public function setAuthenticated($userName, $userId, array $options = [])
     {
         $_SESSION['userName'] = $userName;
         $_SESSION['userId'] = $userId;
         $_SESSION['authDate'] = new \DateTime();
+        $_SESSION['options'] = $options;
     }
 
     public function disconnect()
@@ -38,6 +39,7 @@ class Authentication
         unset($_SESSION['userName']);
         unset($_SESSION['userId']);
         unset($_SESSION['authDate']);
+        unset($_SESSION['options']);
         session_destroy();
     }
 
@@ -52,7 +54,8 @@ class Authentication
                 [
                     'userName' => $this->getUserName(),
                     'userId' => $this->getUserId(),
-                    'authDate' => $this->getAuthDate()
+                    'authDate' => $this->getAuthDate(),
+                    'options' => $this->getOptions()
                 ]);
         }
 
@@ -79,6 +82,11 @@ class Authentication
     public function getAuthDate()
     {
         return $_SESSION['authDate'];
+    }
+
+    public function getOptions()
+    {
+        return $_SESSION['options'];
     }
 
     private function __clone()

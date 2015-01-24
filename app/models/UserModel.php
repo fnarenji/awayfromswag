@@ -61,7 +61,7 @@ class UserModel extends Model
      */
     public function validateAuthentication($username, $password)
     {
-        $sql = 'SELECT id '
+        $sql = 'SELECT id, MD5(mail) as mailHash '
             . 'FROM user '
             . 'WHERE username = ? '
             . 'AND password = SHA1(?)';

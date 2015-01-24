@@ -55,7 +55,7 @@ class UserController extends Controller
             $registerDate = new \DateTime($user['registerdate']);
             $user['registerDateFormat'] = $registerDate->format('d/m/Y');
 
-            $this->getView()->render('user/profile', $user);
+            $this->getView()->render('user/profile', ['profile' => $user]);
         } catch (MissingParamsException $e) {
             // TODO POPUP
             $this->getView()->render('/home/index');
@@ -79,7 +79,7 @@ class UserController extends Controller
             $validAuth = $this->userModel->validateAuthentication($username, $password);
 
             if (!empty($validAuth)) {
-                Authentication::getInstance()->setAuthenticated($username, $validAuth['id']);
+                Authentication::getInstance()->setAuthenticated($username, $validAuth['id'], ['mailHash' => $validAuth['mailHash']]);
                 $this->getView()->redirect('/');
             } else {
                 // TODO POPUP WRONG CREDENTIALS MESSAGE

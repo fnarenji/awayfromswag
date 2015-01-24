@@ -2,64 +2,65 @@
 
 {% block content %}
     <article class="profile">
-        <h1>Profil de {{ username }} ({{ firstname ~ ' ' ~ lastname }})</h1>
+        <h1>Profil de {{ profile.username }} ({{ profile.firstname ~ ' ' ~ profile.lastname }})</h1>
 
         <div class="profile-group">
-            <img src="http://www.gravatar.com/avatar/{{ mailHash }}.png" alt="{{ username ~ ' avatar' }}"
+            <img src="http://www.gravatar.com/avatar/{{ profile.mailHash }}.png" alt="{{ username ~ ' avatar' }}"
                  class="profile-avatar"/>
-            <span class="profile-line"><b class="profile-label">Nom : </b>{{ lastname }}</span>
-            <span class="profile-line"><b class="profile-label">Prénom : </b>{{ firstname }}</span>
-            <span class="profile-line"><b class="profile-label">Pseudo : </b>{{ username }}</span>
-            <span class="profile-line"><b class="profile-label">Age : </b>{{ age }} ans</span>
+            <span class="profile-line"><b class="profile-label">Nom : </b>{{ profile.lastname }}</span>
+            <span class="profile-line"><b class="profile-label">Prénom : </b>{{ profile.firstname }}</span>
+            <span class="profile-line"><b class="profile-label">Pseudo : </b>{{ profile.username }}</span>
+            <span class="profile-line"><b class="profile-label">Age : </b>{{ profile.age }} ans</span>
         </div>
         <div class="profile-group">
-            <span class="profile-line"><b class="profile-label">Profession : </b>{{ job }}</span>
-            <span class="profile-line"><b class="profile-label">Inscrit depuis le </b>{{ registerDateFormat }}</span>
+            <span class="profile-line"><b class="profile-label">Profession : </b>{{ profile.job }}</span>
+            <span class="profile-line"><b class="profile-label">Inscrit depuis
+                    le </b>{{ profile.registerDateFormat }}</span>
         </div>
         <div class="profile-group">
             <span class="profile-line"><b class="profile-label">Description : </b></span>
 
-            <p class="profile-description"><span class="profile-line">{{ description }}</span></p>
+            <p class="profile-description"><span class="profile-line">{{ profile.description }}</span></p>
         </div>
         <div class="profile-group">
-            {% if mail %}
+            {% if profile.mail %}
                 <span class="profile-line">
                     <b class="profile-label"><i class="fa fa-at"></i>
-                    </b>{{ mail }}</span>
+                    </b>{{ profile.mail }}</span>
             {% endif %}
-            {% if phonenumber %}
+            {% if profile.phonenumber %}
                 <span class="profile-line"><b class="profile-label"><i
-                                class="fa fa-phone"></i></b>{{ phonenumber }}</span>
+                                class="fa fa-phone"></i></b>{{ profile.phonenumber }}</span>
             {% endif %}
-            {% if twitter %}
+            {% if profile.twitter %}
                 <span class="profile-line">
                     <b class="profile-label">
                         <i class="fa fa-twitter"></i>
                     </b>
-                    <a href="https://twitter.com/{{ twitter }}">{{ twitter }}</a>
+                    <a href="https://twitter.com/{{ profile.twitter }}">{{ profile.twitter }}</a>
                 </span>
             {% endif %}
-            {% if facebookuri %}
+            {% if profile.facebookuri %}
                 <span class="profile-line">
                     <b class="profile-label">
                         <i class="fa fa-facebook"></i>
                     </b>
-                    <a href="https://www.facebook.com/{{ facebookuri }}">{{ facebookuri }}</a>
+                    <a href="https://www.facebook.com/{{ profile.facebookuri }}">{{ profile.facebookuri }}</a>
                 </span>
             {% endif %}
-            {% if skype %}
+            {% if profile.skype %}
                 <span class="profile-line">
                     <b class="profile-label">
                         <i class="fa fa-skype"></i>
                     </b>
-                    {{ skype }}
+                    <a href="skype:{{ profile.skype }}?">{{ profile.skype }}</a>
                 </span>
             {% endif %}
-            {% if website %}
+            {% if profile.website %}
                 <span class="profile-line">
                     <b class="profile-label"><i class="fa fa-desktop"></i>
                     </b>
-                    <a href="{{ website }}">{{ website }}</a>
+                    <a href="{{ profile.website }}">{{ profile.website }}</a>
                 </span>
             {% endif %}
         </div>
