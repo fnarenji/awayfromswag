@@ -38,7 +38,7 @@ class NewsModel extends Model
             "FROM article, user " .
             "WHERE user.id = article.user";
 
-        return DatabaseProvider::connection()->query($sql, []);
+        return DatabaseProvider::connection()->query($sql);
     }
 
     /**

@@ -109,4 +109,3 @@ WHERE IS THE SWAG ?
     - Request helpers (Loick)
     - Gestion BD (Loick)
       
-### Date finale 18 janvier 2015 ###

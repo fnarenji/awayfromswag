@@ -28,7 +28,7 @@ JOIN comment_event ON comment_event.event = event.id
                     AND comment.user = user.id;
 SQL;
 
-        return DatabaseProvider::connection()->query($sql, []);
+        return DatabaseProvider::connection()->query($sql);
     }
 
 
@@ -61,7 +61,7 @@ SQL;
         try {
             DatabaseProvider::connection()->beginTransaction();
 
-            $sqlComm = "UPDATE comments  SET contents = ? WHERE id = ?;";
+            $sqlComm = "UPDATE comment SET message = ? WHERE id = ?;";
             DatabaseProvider::connection()->query($sqlComm, $params['content'], $params['idcomment']);
 
             DatabaseProvider::connection()->commit();
@@ -82,11 +82,11 @@ SQL;
         try {
             DatabaseProvider::connection()->beginTransaction();
 
-            $sqlComm = "INSERT INTO comment ('user','contents') VALUES (?, ?);";
+            $sqlComm = "INSERT INTO comment (user, message) VALUES (?, ?);";
             DatabaseProvider::connection()->query($sqlComm, [$params['iduser'], $params['contents']]);
 
-            $tmp = $this->getIdComment();
-            $sqlComm = "INSERT INTO comment_event ('id','event') VALUES (?, ?) ;";
+            $tmp = DatabaseProvider::connection()->lastInsertId();
+            $sqlComm = "INSERT INTO comment_event (id,event) VALUES (?, ?);";
             DatabaseProvider::connection()->query($sqlComm, [$tmp, $params['idevent']]);
 
             DatabaseProvider::connection()->commit();
@@ -95,18 +95,6 @@ SQL;
             DatabaseProvider::connection()->rollBack();
         }
 
-    }
-
-    /**
-     * Return id of last comment
-     * @return mixed
-     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
-     */
-    private function getIdComment()
-    {
-        $sql = "SELECT MAX(id) FROM comment";
-
-        return DatabaseProvider::connection()->query($sql, [])[0];
     }
 
     /**
