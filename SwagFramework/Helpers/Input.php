@@ -43,16 +43,28 @@ class Input
         return $_POST[$key];
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     * @throws InputNotSetException
+     */
     public static function session($key)
     {
         if (!isset($_SESSION[$key]) || empty($_SESSION[$key])) {
             throw new InputNotSetException('$_SESSION', $key);
         }
-        //TODO: Protect input $_SESSION
-        //TODO: is $_SESSION even unsafe ?
+
         return $_SESSION[$key];
     }
 
+    public static function getPost()
+    {
+        if(empty($_POST)){
+            throw new InputNotSetException('$_POST', '');
+        }
+
+        return $_POST;
+    }
     /**
      * get user ip
      * @return mixed
