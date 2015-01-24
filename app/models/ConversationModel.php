@@ -53,8 +53,8 @@ SQL;
 
     public function __construct()
     {
-        $file = new ConfigFileParser(FSROOT . "/app/config/conversation.json");
-        $this->conversationFolder = FSROOT . $file->getEntry("path");
+        $file = new ConfigFileParser(/*FSROOT . "/*/"app/config/conversation.json");
+        $this->conversationFolder = /*FSROOT . */$file->getEntry("path");
     }
 
     /**
