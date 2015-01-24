@@ -178,7 +178,7 @@ class EventController extends Controller
             'money' => 'Prix',
             'personsmax' => 'Nombre maximum de participants'
         ]);
-
+        
         $this->getView()->render('event/modify', ['form' => $html]);
     }
 
