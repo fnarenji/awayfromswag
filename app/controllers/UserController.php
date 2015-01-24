@@ -16,6 +16,7 @@ use SwagFramework\Exceptions\NoUserFoundException;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\Input;
 use SwagFramework\mvc\Controller;
+use app\helpers\Date;
 
 class UserController extends Controller
 {
@@ -256,5 +257,14 @@ class UserController extends Controller
     public function search()
     {
         echo json_encode($this->userModel->getAllUsersFullNames());
+    }
+
+    public function calendar()
+    {
+        $this->getView()->render('/user/calendar');
+    }
+    public function getcalendar()
+    {
+        include ('app/views/user/calendarDisplay.php');
     }
 }
