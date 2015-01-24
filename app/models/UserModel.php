@@ -79,7 +79,7 @@ class UserModel extends Model
      */
     public function validateAuthentication($username, $password)
     {
-        $sql = 'SELECT id, MD5(mail) as mailHash '
+        $sql = 'SELECT id, firstname, lastname, MD5(mail) as mailHash '
             . 'FROM user '
             . 'WHERE username = ? '
             . 'AND password = SHA1(?)';
@@ -115,9 +115,10 @@ SQL;
     }
 
     /**
-     *  Delete an user
      * @param $id
      * @return bool
+     * @throws \Exception
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function deleteUser($id)
     {
@@ -140,9 +141,9 @@ SQL;
     }
 
     /**
-     * Update the user.
      * @param $infos
      * @return bool
+     * @throws \Exception
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function updateUser($infos)
@@ -177,9 +178,9 @@ SQL;
     }
 
     /**
-     * Update user by admin
      * @param $infos
      * @return bool
+     * @throws \Exception
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function updateAdminUser($infos)
@@ -201,6 +202,17 @@ SQL;
         }
     }
 
+    /**
+     * @param $username
+     * @return array
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    public function getAccessLevel($username)
+    {
+        $sql = 'SELECT accesslevel FROM user WHERE username = ?';
+
+        return DatabaseProvider::connection()->query($sql, array($username));
+    }
 
     /**
      * Return data for username like param
