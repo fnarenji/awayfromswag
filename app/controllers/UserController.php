@@ -16,7 +16,6 @@ use SwagFramework\Exceptions\NoUserFoundException;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\Input;
 use SwagFramework\mvc\Controller;
-use app\helpers\Date;
 
 class UserController extends Controller
 {
@@ -202,13 +201,13 @@ class UserController extends Controller
     {
         // HARDCODE
         $privacyValues = [
-            "jobPrivacy" => 1,
-            "websitePrivacy" => 2,
-            "facebookuriPrivacy" => 4,
-            "skypePrivacy" => 8,
-            "twitterPrivacy" => 16,
-            "phonenumberPrivacy" => 32,
-            "mailPrivacy" => 64];
+            'jobPrivacy' => 1,
+            'websitePrivacy' => 2,
+            'facebookuriPrivacy' => 4,
+            'skypePrivacy' => 8,
+            'twitterPrivacy' => 16,
+            'phonenumberPrivacy' => 32,
+            'mailPrivacy' => 64];
 
         $input = new Input();
         $toModify = $input->getPost();
@@ -263,8 +262,18 @@ class UserController extends Controller
     {
         $this->getView()->render('/user/calendar');
     }
+
     public function getcalendar()
     {
-        include ('app/views/user/calendarDisplay.php');
+        include 'app/views/user/calendarDisplay.php';
+    }
+
+    public function all()
+    {
+        $page = 0;
+        if (!empty($this->getParams(true)))
+            $page = (int)$this->getParams()[0];
+
+        $this->getView()->render('user/all', ['users' => $this->userModel->getAllUsers($page * 10, 10)]);
     }
 }

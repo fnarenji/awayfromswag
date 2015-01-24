@@ -1,0 +1,22 @@
+{% extends "layout/default" %}
+
+{% block content %}
+    <article class="user-list">
+        <h1>Gestion Commentaire</h1>
+
+        <form class="pure-form" action="#">
+            <input class="pure-input-1-1 search_input" type="text" placeholder="Rechercher ..."/>
+            <button type="submit" class="search-button"><i class="fa fa-search"></i></button>
+        </form>
+        <h3>Modifier un Commentaire</h3>
+
+        {% for comment in allComments %}
+            <p class="user-list-item">
+                <b><a href="/admincomment/view/{{ comment.commid }}">{{ comment.name }}</a></b>
+                {{ comment.username ~ ' ' ~ comment.message }}
+                <input type="button" name="" value="Supprimer ce commentaire" onclick="self.location.href='/admincomment/delete/{{ comment.commid }}'" style="background-color:#b2b1ad" style="color:white; font-weight:bold" size="20%" onclick>
+            </p>
+        {% endfor %}
+
+    </article>
+{% endblock %}

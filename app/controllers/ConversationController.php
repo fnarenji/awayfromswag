@@ -46,10 +46,31 @@ class ConversationController extends Controller
             throw new NotAuthenticatedException();
         }
 
+        if (empty($this->getParams(true)))
+            $this->getView()->redirect('/conversation');
+
         $id = (int)$this->getParams()[0];
 
         $conversation = $this->conversationModel->getConversation($id);
         $this->getView()->render('conversation/show', ['conversation' => $conversation]);
+    }
+
+    public function showPOST()
+    {
+        if (!Authentication::getInstance()->isAuthenticated()) {
+            throw new NotAuthenticatedException();
+        }
+
+        if (empty($this->getParams(true)))
+            $this->getView()->redirect('/conversation');
+
+        $id = (int)$this->getParams()[0];
+        $message = Input::post('message', true);
+
+        if (!empty($message))
+            $this->conversationModel->newMessage($this->getParams()[0], $message);
+
+        $this->getView()->redirect('/conversation/show/' . $id);
     }
 
     public function create()

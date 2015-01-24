@@ -51,10 +51,9 @@ class UserModel extends Model
      * Return all information for all users
      * @return array
      */
-    public function getAllUsers()
+    public function getAllUsers($start, $end)
     {
-        $sql = 'SELECT *'
-            . 'FROM user ';
+        $sql = 'SELECT *, DATE_FORMAT(registerdate, \'%d/%m/%Y\') AS registerdate FROM user LIMIT ' . $start . ',' . ((int)$start + (int)$end);
 
         return DatabaseProvider::connection()->query($sql);
     }

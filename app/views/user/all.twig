@@ -1,0 +1,32 @@
+{% extends "layout/default" %}
+{% block content %}
+    <article>
+        <h1>Annuaire des utilisateurs</h1>
+
+        <table class="pure-table pure-table-horizontal">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Pseudo</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Inscrit depuis</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.firstname }}</td>
+                    <td>{{ user.lastname }}</td>
+                    <td>{{ user.registerdate }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </article>
+{% endblock %}

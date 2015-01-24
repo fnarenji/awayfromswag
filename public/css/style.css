@@ -158,6 +158,11 @@ article .first-news-text, article .last-news
     text-align: justify;
 }
 
+article .subtitle
+{
+    text-align: center;
+}
+
 article .first-news h6
 {
     font-size: 1.5rem;

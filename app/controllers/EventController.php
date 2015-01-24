@@ -216,7 +216,7 @@ class EventController extends Controller
         $eventtime = $eventtime->createFromFormat('d/m/Y', $result['eventtime']);
         $result['eventtime'] = $eventtime->format('Y-m-d H:i:s');
 
-        $this->eventModel->updateEvent($result);
+        $this->eventModel->updateEventById($result);
 
         $this->getView()->redirect('/event');
     }
