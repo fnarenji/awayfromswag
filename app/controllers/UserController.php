@@ -144,7 +144,7 @@ class UserController extends Controller
             $user['registerDateFormat'] = $registerDate->format('d/m/Y');
 
             $user = array_merge($user, PrivacyCalculator::calculate(Authentication::getInstance()->getUserId()));
-            var_dump($user);
+
             $this->getView()->render('user/account', $user);
         } catch (MissingParamsException $e) {
             // TODO POPUP
@@ -159,9 +159,50 @@ class UserController extends Controller
 
     public function accountPOST()
     {
+        // HARDCODE
+        $privacyValues = array(
+            "jobPrivacy" => 1,
+            "websitePrivacy" => 2,
+            "facebookuriPrivacy" => 4,
+            "skypePrivacy" => 8,
+            "twitterPrivacy" => 16,
+            "phonenumberPrivacy" => 32,
+            "mailPrivacy" => 64);
+
         $input = new Input();
         $toModify = $input->getPost();
 
-        var_dump($toModify);
+        try {
+
+            $user = $this->userModel->getUser(Authentication::getInstance()->getUserId());
+            if (empty($user)) {
+                throw new NoUserFoundException(Authentication::getInstance()->getUserName());
+            }
+
+            $privacyUser = PrivacyCalculator::calculate($user['id']);
+
+            foreach($privacyValues as $key => $value){
+                if (!isset($toModify[$key]) && $privacyUser[$key] == true)
+                    $user['privacy'] -= $value;
+                else if (isset($toModify[$key]) && $privacyUser[$key] == false){
+                    $user['privacy'] += $value;
+                }
+                if (isset($toModify[$key]))
+                    unset($toModify[$key]);
+
+            }
+            var_dump($toModify);
+
+            foreach($toModify as $key => $value){
+                if($user[$key] != $value)
+                    $user[$key] = $value;
+            }
+
+            $this->userModel->updateUser($user);
+            $this->getView()->render('home/index');
+        } catch (NoUserFoundException $e){
+            $e->getMessage();
+            $this->getView()->render('/home/index');
+        }
     }
 }
