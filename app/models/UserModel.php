@@ -107,7 +107,7 @@ SQL;
 
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql = 'DELETE FROM user WHERE id = ?';
+            $sql = 'DELETE FROM user WHERE username = ?';
 
             $state = DatabaseProvider::connection()->execute($sql, [$id]);
 

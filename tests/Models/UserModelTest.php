@@ -42,6 +42,10 @@ class UserModelTest extends \PHPUnit_Framework_TestCase {
 
         $ok = $this->model->insertUser($array);
         $this->assertEquals(true,$ok);
+
+        $ok = $this->model->deleteUser('lol');
+        $this->assertEquals(true,$ok);
+
     }
 
     public function testUpdateUser()
