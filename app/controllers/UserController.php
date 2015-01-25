@@ -471,6 +471,7 @@ class UserController extends Controller
             throw new PasswordNotSameExceptionException();
         }
 
+        $this->userModel->deleteReset($result['id']);
         $this->userModel->updatePassword($result['id'], $result['passwd1']);
 
         $this->getView()->redirect('/');
