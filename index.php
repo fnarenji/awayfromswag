@@ -5,6 +5,7 @@ use app\helpers\ClassRouting;
 use app\models\ConversationModel;
 use app\models\EventModel;
 use app\models\UserModel;
+use app\models\LittleModel;
 use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\BaseViewContextProvider;
@@ -38,7 +39,8 @@ function main()
         return [
             'count' => [
                 'event' => (new EventModel())->count()['nb'],
-                'user' => (new UserModel())->count()['nb']
+                'user' => (new UserModel())->count()['nb'],
+                'online' => (new LittleModel())->checkConnect()['COUNT(*)']
             ],
             'newmessages' => Authentication::getInstance()->isAuthenticated()
                 ? (new ConversationModel())->countUnreadMessages()
