@@ -13,27 +13,27 @@
         <form method="POST" action="/user/register" class="pure-form pure-form-aligned centered">
             <div class="pure-control-group">
                 <label for="username" >Nom d'utilisateur</label>
-                <input required name="username" placeholder="Nom d'utilisateur"/>
+                <input required name="username" id="username" placeholder="Nom d'utilisateur"/>
             </div>
 
             <div class="pure-control-group">
                 <label for="password">Mot de passe</label>
-                <input required type="password"  name="password" placeholder="Mot de passe"/>
+                <input required type="password" id="password" name="password" placeholder="Mot de passe"/>
             </div>
 
             <div class="pure-control-group">
                 <label for="firstname">Prénom</label>
-                <input required name="firstname" placeholder="Jean"/>
+                <input required name="firstname" id="firstname" placeholder="Jean"/>
             </div>
 
             <div class="pure-control-group">
                 <label for="lastname">Nom</label>
-                <input required name="lastname" placeholder="Dupont"/>
+                <input required name="lastname" id="lastname" placeholder="Dupont"/>
             </div>
 
             <div class="pure-control-group">
                 <label for="birthday">Date de naissance</label>
-                <input required class="datepicker" name="birthday" placeholder="01/01/1970"/>
+                <input required class="datepicker" id="birthday" name="birthday" placeholder="01/01/1970"/>
 
                 <label for="birthdayPrivate" class="pure-checkbox">
                     Privé
