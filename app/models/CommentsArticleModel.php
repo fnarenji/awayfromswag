@@ -36,8 +36,13 @@ class CommentsArticleModel extends Model
      */
     public function getCommentArticle($id)
     {
-        $sql = "SELECT comment.id, article.id, article.title, text, username FROM user,comment_article,comment,article WHERE " .
-            "comment_article.article = ? AND comment_article.id = comment.id AND user.id = comment.user ;";
+        $sql = <<<SQL
+SELECT comment.id, article.id, article.title, text, username
+FROM user, comment_article, comment, article
+WHERE comment_article.article = ?
+  AND comment_article.id = comment.id
+  AND user.id = comment.user ;
+SQL;
 
         return DatabaseProvider::connection()->query($sql, [$id]);
 

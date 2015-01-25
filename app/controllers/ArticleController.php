@@ -14,6 +14,7 @@ use app\exceptions\NewsNotFoundException;
 use app\exceptions\NotAuthenticatedException;
 use app\exceptions\NotYourArticleException;
 use app\models\ArticleModel;
+use app\models\CommentsArticleModel;
 use app\models\UserModel;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\FormHelper;
@@ -31,10 +32,16 @@ class ArticleController extends Controller
      */
     private $articleModel;
 
+    /**
+     * @var CommentsArticleModel
+     */
+    private $articleCommentModel;
+
     function __construct()
     {
-        $this->articleModel = new ArticleModel();
-        $this->userModel = new UserModel();
+        $this->articleModel = $this->loadModel('Article');
+        $this->userModel = $this->loadModel('User');
+        $this->articleCommentModel = $this->loadModel('CommentsArticle');
         parent::__construct();
     }
 
@@ -73,10 +80,13 @@ class ArticleController extends Controller
         }
 
         $article = $this->getInfos($article);
+        $comments = $this->articleCommentModel->getCommentArticle($id);
+        var_dump($comments);
 
-        $this->getView()->render('article/show', array(
-            'article' => $article
-        ));
+        $this->getView()->render('article/show', [
+            'article' => $article,
+            'comments' => $comments
+        ]);
     }
 
     public function add()
@@ -90,6 +100,7 @@ class ArticleController extends Controller
 
         $html = $form->getFormHTML([
             'title' => 'Titre de l\'Actualité',
+            'image' => 'URL Image',
             'text' => 'Contenu'
         ]);
 
@@ -106,6 +117,7 @@ class ArticleController extends Controller
 
         $result = $form->validate([
             'title' => 'Titre de l\'Actualité',
+            'image' => 'URL Image',
             'text' => 'Contenu'
         ]);
 
@@ -113,7 +125,7 @@ class ArticleController extends Controller
 
         $this->articleModel->insertNews($result);
 
-        $this->getView()->redirect('/event');
+        $this->getView()->redirect('/article');
     }
 
     public function modify()

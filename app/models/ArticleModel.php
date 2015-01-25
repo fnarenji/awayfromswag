@@ -25,7 +25,20 @@ WHERE MATCH(article.title, article.text) AGAINST (:query)
 SQL;
 
     const INSERT_ARTICLE = <<<SQL
-INSERT INTO article (user,title,text,postdate,category) VALUES (:user, :title, :text, :postdate, :category);
+INSERT INTO article (user,title,text,image,postdate,category) VALUES (:user, :title, :text, :image, :postdate, :category);
+SQL;
+    const DELETE_ARTICLE = 'DELETE FROM article WHERE id = ?';
+    const DELETE_ARTICLE_BY_NAME = 'DELETE FROM article WHERE title = ?';
+    const UPDATE_ARTICLE_TEXT = 'UPDATE article SET text=:text, title=:title WHERE id=:id';
+    const UPDATE_ARTICLE_TEXT_BY_NAME = 'UPDATE article SET text = ?, postdate = ? WHERE title = ?';
+    const GET_CATEGORY = <<<SQL
+SELECT * FROM article_category WHERE id=?;
+SQL;
+    const SELECT_TOP_ARTICLES = <<<SQL
+SELECT * FROM article ORDER BY postdate DESC LIMIT 1;
+SQL;
+    const SELECT_LATEST_ARTICLES = <<<SQL
+SELECT * FROM article ORDER BY postdate DESC LIMIT 3;
 SQL;
 
     /**
@@ -80,19 +93,7 @@ SQL;
      */
     public function insertNews($infos)
     {
-        try {
-
-            DatabaseProvider::connection()->beginTransaction();
-            DatabaseProvider::connection()->execute(self::INSERT_ARTICLE, $infos);
-
-            DatabaseProvider::connection()->commit();
-
-            return true;
-
-        } catch (\Exception $e) {
-            DatabaseProvider::connection()->rollBack();
-            throw $e;
-        }
+        return DatabaseProvider::connection()->execute(self::INSERT_ARTICLE, $infos);
     }
 
     /**
@@ -102,19 +103,7 @@ SQL;
      */
     public function deleteNewsById($id)
     {
-        try {
-
-            DatabaseProvider::connection()->beginTransaction();
-            $sql = 'DELETE FROM article WHERE id = ?';
-
-            DatabaseProvider::connection()->execute($sql, [$id]);
-            DatabaseProvider::connection()->commit();
-
-            return true;
-        } catch (\Exception $e) {
-            DatabaseProvider::connection()->rollBack();
-            throw $e;
-        }
+        return DatabaseProvider::connection()->execute(self::DELETE_ARTICLE, [$id]);
     }
 
     /**
@@ -126,19 +115,7 @@ SQL;
      */
     public function deleteNewsByName($name)
     {
-        try {
-
-            DatabaseProvider::connection()->beginTransaction();
-            $sql = 'DELETE FROM article WHERE title = ?';
-
-            DatabaseProvider::connection()->execute($sql, [$name]);
-            DatabaseProvider::connection()->commit();
-
-            return true;
-        } catch (\Exception $e) {
-            DatabaseProvider::connection()->rollBack();
-            throw $e;
-        }
+        return DatabaseProvider::connection()->execute(self::DELETE_ARTICLE_BY_NAME, [$name]);
     }
 
     /**
@@ -149,67 +126,28 @@ SQL;
      */
     public function updateNews($infos)
     {
-        try {
-
-            DatabaseProvider::connection()->beginTransaction();
-            $sql = 'UPDATE article SET text=:text, title=:title WHERE id=:id';
-            $state = DatabaseProvider::connection()->execute($sql, $infos);
-
-            DatabaseProvider::connection()->commit();
-
-            return $state;
-
-        } catch (\Exception $e) {
-            DatabaseProvider::connection()->rollBack();
-            throw $e;
-        }
-
+        return DatabaseProvider::connection()->execute(self::UPDATE_ARTICLE_TEXT, $infos);
     }
 
     public function updateNewsByName($name,$date, $content)
     {
-        try {
-
-            DatabaseProvider::connection()->beginTransaction();
-            $sql = 'UPDATE article SET text = ?, postdate = ? WHERE title = ?';
-            $state = DatabaseProvider::connection()->execute($sql, [$content,$date, $name]);
-
-            DatabaseProvider::connection()->commit();
-
-            return $state;
-        } catch (\Exception $e) {
-            DatabaseProvider::connection()->rollBack();
-            throw $e;
-        }
-
+        return DatabaseProvider::connection()->execute(self::UPDATE_ARTICLE_TEXT_BY_NAME, [$content, $date, $name]);
     }
 
     public function getCategory($id)
     {
-        $sql = <<<SQL
-SELECT * FROM article_category WHERE id=?;
-SQL;
-
-        return DatabaseProvider::connection()->selectFirst($sql, [$id]);
+        return DatabaseProvider::connection()->selectFirst(self::GET_CATEGORY, [$id]);
 
     }
 
     public function getTop()
     {
-        $sql = <<<SQL
-SELECT * FROM article ORDER BY postdate DESC LIMIT 1;
-SQL;
-
-        return DatabaseProvider::connection()->selectFirst($sql, []);
+        return DatabaseProvider::connection()->selectFirst(self::SELECT_TOP_ARTICLES);
     }
 
     public function getLast()
     {
-        $sql = <<<SQL
-SELECT * FROM article ORDER BY postdate DESC LIMIT 3;
-SQL;
-
-        return DatabaseProvider::connection()->query($sql, []);
+        return DatabaseProvider::connection()->query(self::SELECT_LATEST_ARTICLES, []);
     }
 
     public function search($query)

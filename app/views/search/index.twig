@@ -6,9 +6,9 @@
     <h4>Utilisateurs</h4>
     <div>
     <ul>
-    {% if not users %}
+        {% if not users %}
         Aucun utilisateurs.
-        {% end if %}
+        {% endif %}
 
         {% for user in users %}
             <li>
@@ -23,9 +23,9 @@
         <h4>Article</h4>
         <div>
         <ul>
-        {% if not articles %}
+            {% if not articles %}
             Aucun articles.
-            {% end if %}
+            {% endif %}
 
             {% for article in articles %}
                 <li>
@@ -40,9 +40,9 @@
             <h4>Evenements</h4>
             <div>
             <ul>
-            {% if not events %}
+                {% if not events %}
                 Aucun évènements.
-                {% end if %}
+                {% endif %}
                 {% for event in events %}
                     <li>
                         <a href="/event/show/{{ event.id }}">
