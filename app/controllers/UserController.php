@@ -360,9 +360,4 @@ class UserController extends Controller
         $myevent = $model->getEventsForUser(Authentication::getInstance()->getUserId());
         $this->getView()->render('user/myevent',['events' => $myevent]);
     }
-
-    public function getserver()
-    {
-        include 'server.php';
-    }
 }
