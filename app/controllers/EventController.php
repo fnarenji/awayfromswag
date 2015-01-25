@@ -349,7 +349,7 @@ class EventController extends Controller
 
         $id = (int)$this->getParams()[0];
 
-        $this->eventCommentModel->insertCommentArticle(Authentication::getInstance()->getUserId(), $id, Input::post('message'));
+        $this->eventCommentModel->insertCommentEvent(Authentication::getInstance()->getUserId(), $id, Input::post('message'));
 
         $this->getView()->redirect('/event/show/' . $id);
     }
