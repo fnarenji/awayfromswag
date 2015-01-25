@@ -11,7 +11,8 @@
   ],
   "require": {
     "phpunit/phpunit": "4.4.0",
-    "twig/twig": "~1.0"
+    "twig/twig": "~1.0",
+    "swiftmailer/swiftmailer": "@stable"
   },
   "autoload": {
     "psr-4": {
