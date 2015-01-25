@@ -646,6 +646,12 @@ img.article-img
 .event-show .mini-text {display: block;}
 .event-show .pure-button {margin-right: 5px;}
 
+.event-highlight
+{
+    background-color: rgba(35, 155, 255, 0.58);
+    border-radius: 4px;
+    padding: 10px;
+}
 /* WOW MEDIA QUERIES, SUCH RESPONSIVE, MUCH SKILLS */
 @media only screen and (min-width: 780px) {
     .profile-group {
