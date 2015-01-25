@@ -56,6 +56,7 @@ JOIN user ON user.id = article.user
 ORDER BY postdate DESC
 LIMIT 1,4;
 SQL;
+
     const SELECT_ARTICLES = <<<SQL
 SELECT article.*, CONCAT(user.username, ' (', user.firstname, ' ', user.lastname, ')') AS authorFullName
 FROM article

@@ -18,6 +18,7 @@ use app\models\CommentsArticleModel;
 use app\models\UserModel;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\FormHelper;
+use SwagFramework\Helpers\Input;
 use SwagFramework\mvc\Controller;
 
 class ArticleController extends Controller
@@ -80,8 +81,7 @@ class ArticleController extends Controller
         }
 
         $article = $this->getInfos($article);
-        $comments = $this->articleCommentModel->getCommentArticle($id);
-        var_dump($comments);
+        $comments = $this->articleCommentModel->getCommentsForArticle($id);
 
         $this->getView()->render('article/show', [
             'article' => $article,
@@ -90,7 +90,6 @@ class ArticleController extends Controller
     }
 
     public function add()
-
     {
         if (!Authentication::getInstance()->isAuthenticated()) {
             throw new NotAuthenticatedException();
@@ -191,5 +190,28 @@ class ArticleController extends Controller
         $this->articleModel->updateNews($result);
 
         $this->getView()->redirect('/article/show/' . $result['id']);
+    }
+
+    public function comment()
+    {
+        if (!Authentication::getInstance()->isAuthenticated()) {
+            throw new NotAuthenticatedException();
+        }
+
+        $id = (int)$this->getParams()[0];
+        $this->getView()->redirect('/article/show/' . $id);
+    }
+
+    public function commentPOST()
+    {
+        if (!Authentication::getInstance()->isAuthenticated()) {
+            throw new NotAuthenticatedException();
+        }
+
+        $id = (int)$this->getParams()[0];
+
+        $this->articleCommentModel->insertCommentArticle(Authentication::getInstance()->getUserId(), $id, Input::post('message'));
+
+        $this->getView()->redirect('/article/show/' . $id);
     }
 }
