@@ -316,12 +316,21 @@ SQL;
         return DatabaseProvider::connection()->execute($sql, [$id, $token]);
     }
 
-    public function getReset($id)
+    public function getReset($token)
     {
         $sql = <<<SQL
-DELETE FROM user_reset WHERE id=?;
+SELECT id FROM user_reset WHERE token=?;
 SQL;
 
-        return DatabaseProvider::connection()->execute($sql, [$id]);
+        return DatabaseProvider::connection()->selectFirst($sql, [$token]);
+    }
+
+    public function updatePassword($id, $passwd)
+    {
+        $sql = <<<SQL
+UPDATE user SET password=SHA1(CONCAT(?, ?)) WHERE id=?;
+SQL;
+
+        return DatabaseProvider::connection()->execute($sql, [$passwd, self::SALT, $id]);
     }
 }

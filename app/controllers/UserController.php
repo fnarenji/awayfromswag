@@ -8,6 +8,8 @@
 
 namespace app\controllers;
 
+use app\exceptions\PasswordNotSameExceptionException;
+use app\helpers\MailUtil;
 use app\helpers\PrivacyCalculator;
 use app\models\EventModel;
 use app\models\FriendModel;
@@ -15,6 +17,9 @@ use app\models\UserModel;
 use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Exceptions\NoUserFoundException;
+use SwagFramework\Form\Field\InputField;
+use SwagFramework\Form\Field\LabelField;
+use SwagFramework\Form\Form;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\Input;
 use SwagFramework\mvc\Controller;
@@ -376,5 +381,104 @@ class UserController extends Controller
 
         $token = $this->getParams()[0];
         $this->userModel->validateToken($token);
+    }
+
+    public function reset()
+    {
+        $form = new Form('/user/reset');
+        $form->addField(new LabelField('mail'));
+        $form->addField(new InputField('mail', ['type' => 'text']));
+        $form->addField(new InputField('submit', ['type' => 'submit']));
+
+        $html = $form->getFormHTML([
+            'mail' => 'Adresse mail'
+        ]);
+
+        $this->getView()->render('user/reset', ['form' => $html]);
+    }
+
+    public function resetPOST()
+    {
+        $form = new Form('/user/reset');
+        $form->addField(new LabelField('mail'));
+        $form->addField(new InputField('mail', ['type' => 'text']));
+        $form->addField(new InputField('submit', ['type' => 'submit']));
+
+        $result = $form->validate([
+            'mail' => 'Adresse mail'
+        ]);
+
+        $user = $this->userModel->getUserByMail($result['mail']);
+
+        if (empty($user)) {
+            throw new NoUserFoundException($result['mail']);
+        }
+
+        $token = hash('md5', uniqid());
+
+        $this->userModel->setReset($user['id'], $token);
+
+        $message = 'Cliquez ici pour changer votre mot de passe : ';
+        $message .= CR . 'http://srv0.sknz.info/user/resetpasswd/' . $token;
+
+        MailUtil::send($user['mail'], 'AwayFromSecurity : RESET PASSWORD', $message);
+
+        $this->getView()->redirect('/');
+    }
+
+    public function resetpasswd()
+    {
+        $token = $this->getParams()[0];
+
+        $id = $this->userModel->getReset($token);
+
+        if (empty($id)) {
+            throw new NoUserFoundException($token);
+        }
+
+        $form = new Form('/user/resetpasswd');
+        $form->addField(new LabelField('passwd1'));
+        $form->addField(new LabelField('passwd2'));
+        $form->addField(new InputField('passwd1', ['type' => 'password']));
+        $form->addField(new InputField('passwd2', ['type' => 'password']));
+        $form->addField(new InputField('submit', ['type' => 'submit']));
+
+        $html = $form->getFormHTML([
+            'passwd1' => 'Nouveau mot de passe',
+            'passwd2' => 'Confirmier le mot de passe'
+        ]);
+
+        $this->getView()->render('user/resetpasswd', ['form' => $html]);
+    }
+
+    public function resetpasswdPOST()
+    {
+        $token = $this->getParams()[0];
+
+        $id = $this->userModel->getReset($token);
+
+        if (empty($id)) {
+            throw new NoUserFoundException($token);
+        }
+
+        $form = new Form('/user/resetpasswd');
+        $form->addField(new LabelField('passwd1'));
+        $form->addField(new LabelField('passwd2'));
+        $form->addField(new InputField('passwd1', ['type' => 'password']));
+        $form->addField(new InputField('passwd2', ['type' => 'password']));
+        $form->addField(new InputField('submit', ['type' => 'submit']));
+
+        $result = $form->validate([
+            'passwd1' => 'Nouveau mot de passe',
+            'passwd2' => 'Confirmier le mot de passe'
+        ]);
+
+        if ($result['passwd1'] != $result['passwd2']) {
+            throw new PasswordNotSameExceptionException();
+        }
+
+        $this->userModel->updatePassword($id, $result['passwd1']);
+
+        $this->getView()->redirect('/');
     }
 }
