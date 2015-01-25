@@ -199,19 +199,19 @@ TEXT;
      */
     public function updateUser($infos)
     {
-        $str = \'\';
+        $str = '';
 
         foreach ($infos as $key => $value) {
-            if ($key != \'id\') {
-                $str .= \'\' . $key . \' = \\\'\' . $value . \'\\\' ,\';
+            if ($key != 'id') {
+                $str .= '' . $key . ' = \'' . $value . '\' ,';
             }
         }
 
         $str = substr($str, 0, -1);
 
-        $sql = \'UPDATE user \'
-            . \'SET \' . $str . \' WHERE id= ?;\';
-        return DatabaseProvider::connection()->execute($sql, [$infos[\'id\']]);
+        $sql = 'UPDATE user '
+            . 'SET ' . $str . ' WHERE id= ?;';
+        return DatabaseProvider::connection()->execute($sql, [$infos['id']]);
     }
 
     /**
@@ -222,7 +222,7 @@ TEXT;
      */
     public function updateAdminUser($infos)
     {
-        $infos = array_merge($infos, [\'salt\' => self::SALT]);
+        $infos = array_merge($infos, ['salt' => self::SALT]);
         return DatabaseProvider::connection()->execute(self::UPDATE_ADMIN_USER, $infos);
     }
 
@@ -233,14 +233,14 @@ TEXT;
      */
     public function getUserLike($name)
     {
-        $name = \'%\' . $name . \'%\';
+        $name = '%' . $name . '%';
 
         return DatabaseProvider::connection()->query(self::SELECT_BY_USERNAME_LIKE, [$name]);
     }
 
     public function getUserFullNameLike($fullName)
     {
-        $fullName = \'%\' . $fullName . \'%\';
+        $fullName = '%' . $fullName . '%';
 
         return DatabaseProvider::connection()->selectFirst(self::GET_USER_FULL_NAME_LIKE, [$fullName]);
     }
@@ -256,8 +256,8 @@ TEXT;
     {
         if (Authentication::getInstance()->isAuthenticated()) {
             return DatabaseProvider::connection()->query(self::GET_ALL_FRIENDS, [
-                \'user1\' => Authentication::getInstance()->getUserId(),
-                \'user2\' => Authentication::getInstance()->getUserId()
+                'user1' => Authentication::getInstance()->getUserId(),
+                'user2' => Authentication::getInstance()->getUserId()
             ]);
         }
         return [];
@@ -270,6 +270,6 @@ TEXT;
 
     public function search($query)
     {
-        return DatabaseProvider::connection()->query(self::SEARCH, [\'query\' => $query]);
+        return DatabaseProvider::connection()->query(self::SEARCH, ['query' => $query]);
     }
-} '
+}
