@@ -30,7 +30,7 @@ WHERE MATCH(article.title, article.text) AGAINST (:query)
   OR MATCH(article_category.name) AGAINST (:query)
 SQL;
     const SELECT_ARTICLE = <<<SQL
-SELECT article.*, CONCAT(user.username, ' (', user.firstname, ' ', user.lastname, ')') as fullName
+SELECT article.*, CONCAT(user.username, ' (', user.firstname, ' ', user.lastname, ')') as authorFullName
 FROM article
 JOIN user ON user.id = article.user
 WHERE id = ?
