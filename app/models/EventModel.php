@@ -204,12 +204,14 @@ SQL;
     public function getTop()
     {
         $sql = <<<SQL
-SELECT * FROM event
-        JOIN event_user ON event.id = event_user.id
+SELECT *
+        FROM event
+        WHERE id IN (SELECT DISTINCT id
+                      FROM event_user)
         LIMIT 3;
 SQL;
 
-        DatabaseProvider::connection()->query($sql);
+        return DatabaseProvider::connection()->query($sql);
     }
 
     /**
