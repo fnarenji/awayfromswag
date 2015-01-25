@@ -316,4 +316,31 @@ TEXT;
     {
         return DatabaseProvider::connection()->query(self::SEARCH, ['query' => $query]);
     }
+
+    public function setReset($id, $token)
+    {
+        $sql = <<<SQL
+INSERT INTO user_reset (id, token) VALUES (?, ?);
+SQL;
+
+        return DatabaseProvider::connection()->execute($sql, [$id, $token]);
+    }
+
+    public function getReset($token)
+    {
+        $sql = <<<SQL
+SELECT id FROM user_reset WHERE token=?;
+SQL;
+
+        return DatabaseProvider::connection()->selectFirst($sql, [$token]);
+    }
+
+    public function updatePassword($id, $passwd)
+    {
+        $sql = <<<SQL
+UPDATE user SET password=SHA1(CONCAT(?, ?)) WHERE id=?;
+SQL;
+
+        return DatabaseProvider::connection()->execute($sql, [$passwd, self::SALT, $id]);
+    }
 }
