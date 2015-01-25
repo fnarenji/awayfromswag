@@ -12,46 +12,48 @@
             </span>
             <span class="mini-text">Catégorie : {{ article.category.name }}</span>
         </div>
-        {%  if article.image != empty %}
-            <img src="{{ article.image }}" alt="Article image" class="article-img"/>
-        {%  endif  %}
+        <div class="article-content">
+            {%  if article.image != empty %}
+                <img src="{{ article.image }}" alt="Article image" class="article-img"/>
+            {%  endif  %}
 
-        <p>
-            {{ article.text }}
-        </p>
-
+            <p>
+                {{ article.text }}
+            </p>
+        </div>
         {% if article.user.id == auth.userId or auth.options.accessLevel %}
             <a href="/article/modify/{{ article.id }}" class="pure-button pure-button-primary">Modifier</a>
         {% endif %}
 
         <hr/>
-        <form method="POST" action="/article/comment/{{ article.id }}"
-              class="pure-form pure-form-aligned conversation-creation">
-            <div class="pure-control-group">
-                <label for="title">Commentaire</label>
-                <textarea required id="message" name="message"
-                          placeholder="Un commentaire constructif, sans trolls."></textarea>
-            </div>
-
-            <div class="pure-controls">
-                <input type="submit" value="Commenter !" name="submit"
-                       class="pure-button pure-button-primary"/>
-            </div>
-        </form>
-
-        <hr/>
         <div>
-            <ul>
+            <ul class="article-comments">
                 {% for comment in comments %}
-                    <li>
-                        <b>Par {{ comment.authorFullName }} le {{ comment.postdate }}</b>
+                    <li class="article-comment">
+                        <b class="article-comment-author">Par {{ comment.authorFullName }} le {{ comment.postdate }}</b>
 
-                        <p>
+                        <p class="article-comment-message">
                             {{ comment.message }}
                         </p>
                     </li>
                 {% endfor %}
             </ul>
+        </div>
+        <hr/>
+        <div>
+            <form method="POST" action="/article/comment/{{ article.id }}"
+                  class="pure-form pure-form-aligned conversation-creation">
+                <div class="pure-control-group">
+                    <label for="title">Commentaire</label>
+                    <textarea required id="message" name="message"
+                              placeholder="Un commentaire constructif, sans trolls."></textarea>
+                </div>
+
+                <div class="pure-controls">
+                    <input type="submit" value="Commenter !" name="submit"
+                           class="pure-button pure-button-primary"/>
+                </div>
+            </form>
         </div>
     </article>
 {% endblock %}
