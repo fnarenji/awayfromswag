@@ -17,7 +17,7 @@
                     {{ article.text }}
                 </p>
 
-                {% if article.user.id == auth.userId %}
+                {% if article.user.id == auth.userId or auth.options.accessLevel %}
                     <a href="/article/modify/{{ article.id }}" class="pure-button pure-button-primary">Modifier</a>
                 {% endif %}
 
