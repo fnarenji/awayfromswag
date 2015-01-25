@@ -78,7 +78,10 @@ class ConversationController extends Controller
         if (!empty($this->getParams(true))) {
             $dest = $this->getParams()[0];
             $userModel = $this->loadModel('User');
-            $dest = $userModel->getUserFullName($dest) . ', ';
+            $idByUserName = $userModel->getUserByUserName($dest);
+            if ($idByUserName)
+                $dest = $userModel->getUserFullName($idByUserName['id']) . ', ';
+            else $dest = null;
         }
         $this->getView()->render('conversation/create', ['dest' => $dest]);
     }

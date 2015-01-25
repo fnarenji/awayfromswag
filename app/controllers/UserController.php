@@ -41,7 +41,7 @@ class UserController extends Controller
         try {
             $name = $this->getParams();
 
-            $user = $this->userModel->getUserByName($name[0]);
+            $user = $this->userModel->getUserByUserName($name[0]);
 
             if (empty($user)) {
                 throw new NoUserFoundException($name[0]);

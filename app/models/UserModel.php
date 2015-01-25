@@ -39,7 +39,7 @@ class UserModel extends Model
      * @param $name
      * @return array
      */
-    public function getUserByName($name)
+    public function getUserByUserName($name)
     {
         $sql = 'SELECT * '
             . 'FROM user '
