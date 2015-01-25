@@ -15,6 +15,7 @@ use app\exceptions\EventNotFoundException;
 use app\exceptions\NotAuthenticatedException;
 use app\exceptions\NotParticipateEventException;
 use app\exceptions\NotYourEventException;
+use app\models\CommentsEventModel;
 use app\models\EventModel;
 use app\models\ParticipateModel;
 use app\models\UserModel;
@@ -43,11 +44,17 @@ class EventController extends Controller
      */
     private $participateModel;
 
+    /**
+     * @var CommentsEventModel
+     */
+    private $eventCommentModel;
+
     function __construct()
     {
-        $this->eventModel = new EventModel();
-        $this->userModel = new UserModel();
-        $this->participateModel = new ParticipateModel();
+        $this->eventModel = $this->loadModel('Event');
+        $this->userModel = $this->loadModel('User');
+        $this->participateModel = $this->loadModel('Participate');
+        $this->eventCommentModel = $this->loadModel('CommentsEvent');
         parent::__construct();
     }
 
@@ -99,9 +106,12 @@ class EventController extends Controller
             Authentication::getInstance()->getUserId()) : null;
         $event['mine'] = (Authentication::getInstance()->isAuthenticated()) ? $event['user']['id'] == Authentication::getInstance()->getUserId() : false;
 
+        $comments = $this->eventCommentModel->getCommentsForEvent($id);
+
         $this->getView()->render('event/show', array(
             'event' => $event,
-            'participate' => $participate
+            'participate' => $participate,
+            'comments' => $comments
         ));
     }
 
@@ -161,7 +171,7 @@ class EventController extends Controller
 
     public function modify()
     {
-        if (!Authentication::getInstance()->isAuthenticated() && !Authentication::getInstance()->getAccessLevel()) {
+        if (!Authentication::getInstance()->isAuthenticated() && !Authentication::getInstance()->getOptionOr('accessLevel', 0)) {
             throw new NotAuthenticatedException();
         }
 
@@ -302,7 +312,11 @@ class EventController extends Controller
         $this->getView()->redirect('/event/show/' . $id);
     }
 
-    public function delete(){}
+    public function delete()
+    {
+        $this->getView()->redirect('/event/');
+    }
+
     public function deletePOST(){
         $input = new Input();
         $eventId = $input->post('id');
@@ -315,5 +329,28 @@ class EventController extends Controller
         }
 
         $this->getView()->redirect('/');
+    }
+
+    public function comment()
+    {
+        if (!Authentication::getInstance()->isAuthenticated()) {
+            throw new NotAuthenticatedException();
+        }
+
+        $id = (int)$this->getParams()[0];
+        $this->getView()->redirect('/event/show/' . $id);
+    }
+
+    public function commentPOST()
+    {
+        if (!Authentication::getInstance()->isAuthenticated()) {
+            throw new NotAuthenticatedException();
+        }
+
+        $id = (int)$this->getParams()[0];
+
+        $this->eventCommentModel->insertCommentArticle(Authentication::getInstance()->getUserId(), $id, Input::post('message'));
+
+        $this->getView()->redirect('/event/show/' . $id);
     }
 }

@@ -616,7 +616,21 @@ img.article-img
     display: block;
     margin-bottom: 5px;
 }
+.article-comment-message
+{
+    display: block;
+    max-width: 1000px;
+}
+.article-modify textarea
+{
+    width: 360px;
+    height: 360px;
+}
 
+.article-modify input[type="text"]
+{
+    width: 360px;
+}
 
 /* WOW MEDIA QUERIES, SUCH RESPONSIVE, MUCH SKILLS */
 @media only screen and (min-width: 780px) {
@@ -624,6 +638,12 @@ img.article-img
         display: inline-block;
         width: 47%;
         margin-right: 15px;
+    }
+
+    .article-modify textarea
+    {
+        width: 700px;
+        height: 500px;
     }
 
     article.profile, article.register {
@@ -651,6 +671,10 @@ img.article-img
     {
         margin-left: 200px;
     }
+    .article-modify input[type="text"]
+    {
+        width: 800px;
+    }
 
 }
 @media only screen and (min-width: 1300px) and (max-width: 1599px)
@@ -667,11 +691,20 @@ img.article-img
         margin-right: auto;
         margin-left: 100px;
     }
+    .article-modify input[type="text"]
+    {
+        width: 600px;
+    }
 }
 @media only screen and (min-width:  1050px)
 {
     .wrapper_menu {display:none;}
 
+    .article-modify textarea
+    {
+        width: 900px;
+        height: 500px;
+    }
     section
     {
         width: 75%;
