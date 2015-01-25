@@ -57,11 +57,10 @@ class CommentsModelTest extends \PHPUnit_Framework_TestCase {
     {
         $this->modelArticle = new CommentsArticleModel();
 
-        $array = ['idarticle'=>46,'iduser'=>1,'contents'=>'Trop SWAG'];
-        $state = $this->modelArticle->insertCommentArticle($array);
+        $state = $this->modelArticle->insertCommentArticle(46, 1, 'Trop SWAG');
         $this->assertEquals(true,$state);
 
-        $state = $this->modelArticle->getCommentArticle(46);
+        $state = $this->modelArticle->getCommentsForArticle(46);
         $this->assertNotEmpty($state);
 
         $state = $this->modelArticle->deleteCommentArticle(0);

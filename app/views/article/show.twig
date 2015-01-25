@@ -18,12 +18,28 @@
         {% if article.user.id == auth.userId or auth.options.accessLevel %}
             <a href="/article/modify/{{ article.id }}" class="pure-button pure-button-primary">Modifier</a>
         {% endif %}
+
+        <hr/>
+        <form method="POST" action="/article/comment/{{ article.id }}"
+              class="pure-form pure-form-aligned conversation-creation">
+            <div class="pure-control-group">
+                <label for="title">Commentaire</label>
+                <textarea required id="message" name="message"
+                          placeholder="Un commentaire constructif, sans trolls."></textarea>
+            </div>
+
+            <div class="pure-controls">
+                <input type="submit" value="Commenter !" name="submit"
+                       class="pure-button pure-button-primary"/>
+            </div>
+        </form>
+
         <hr/>
         <div>
             <ul>
                 {% for comment in comments %}
                     <li>
-                        <b>Par {{ comment.authorFullName }} le {{ comment.date }}</b>
+                        <b>Par {{ comment.authorFullName }} le {{ comment.postdate }}</b>
 
                         <p>
                             {{ comment.message }}
