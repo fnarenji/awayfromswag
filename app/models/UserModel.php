@@ -266,6 +266,7 @@ SQL;
 
         return DatabaseProvider::connection()->query($sql, array($user, $user));
     }
+
     public function count()
     {
         $sql = <<<SQL

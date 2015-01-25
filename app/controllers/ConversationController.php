@@ -112,4 +112,36 @@ class ConversationController extends Controller
         $this->conversationModel->newMessage($newConversationId, $message);
         $this->getView()->redirect('/conversation/show/' . $newConversationId);
     }
+
+    public function add()
+    {
+        $this->getView()->redirect('/conversation');
+    }
+
+    public function addPOST()
+    {
+        if (empty($this->getParams(true)))
+            $this->getView()->redirect('/conversation');
+
+        $conversationId = (int)$this->getParams()[0];
+
+        $userModel = $this->loadModel('User');
+
+        foreach (explode(', ', Input::post('participations')) as $participation) {
+            $userId = $userModel->getUserFullNameLike($participation)['id'];
+
+            $this->conversationModel->addUserToConversation($conversationId, $userId);
+        }
+        $this->getView()->redirect('/conversation/show/' . $conversationId);
+    }
+
+    public function quit()
+    {
+        if (empty($this->getParams(true)))
+            $this->getView()->redirect('/conversation');
+
+        $conversationId = (int)$this->getParams()[0];
+        $this->conversationModel->removeFromConversation($conversationId);
+        $this->getView()->redirect('/conversation');
+    }
 }

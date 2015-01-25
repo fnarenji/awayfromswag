@@ -23,6 +23,7 @@ class ConversationModel extends Model
     const CREATE_CONVERSATION = "INSERT INTO conversation (user, title) VALUES (?, ?);";
     const GET_ALL_CONVERSATIONS = "SELECT conversation_user.id, username FROM conversation_user,user WHERE user.id = conversation_user.user";
     const UPDATE_LAST_READ = "UPDATE conversation_user SET lastread = NOW() WHERE id = ? AND user = ?";
+    const QUIT_CONVERSATION = 'DELETE FROM conversation_user WHERE id = ? AND user = ?';
 
     const UPDATE_MESSAGE_POSTED = <<<SQL
 UPDATE conversation_user, conversation
@@ -40,6 +41,7 @@ JOIN conversation ON conversation_user.id = conversation.id
 WHERE conversation_user.user = ?
 ORDER BY lastmessagetime DESC
 SQL;
+
     const GET_CONVERSATION = <<<'SQL'
 SELECT conversation.id, conversation.title,
   CONCAT(creator.username, ' (', creator.firstname, ' ', creator.lastname, ')') creator,
@@ -53,6 +55,7 @@ JOIN conversation_user ON conversation_user.id = conversation.id
 WHERE conversation.id = :conversation
   AND conversation_user.user = :user
 SQL;
+
     const GET_CONVERSATION_SEEN = <<<SQL
 SELECT CONCAT(username, ' (', firstname, ' ', lastname, ')') fullname
 FROM conversation
@@ -259,5 +262,10 @@ SQL;
 
         $id = DatabaseProvider::connection()->selectFirst($sql);
         return $id ? $id['id'] : null;
+    }
+
+    public function removeFromConversation($conversationId)
+    {
+        return DatabaseProvider::connection()->execute(self::QUIT_CONVERSATION, [$conversationId, Authentication::getInstance()->getUserId()]);
     }
 }

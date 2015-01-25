@@ -1,3 +1,4 @@
+
 {% extends "layout/default" %}
 {% block content %}
     <article>
@@ -28,8 +29,28 @@
             </div>
 
             <div class="pure-controls">
-                <input type="submit" value="Valider !" name="submit" class="pure-button pure-button-primary"/>
+                <input type="submit" value="Nouveau message !" name="submit" class="pure-button pure-button-primary"/>
             </div>
         </form>
+
+        <hr/>
+
+        <form method="POST" action="/conversation/add/{{ conversation.id }}"
+              class="pure-form pure-form-aligned conversation-creation">
+            <div class="pure-control-group">
+                <label for="title">Participants</label>
+                <textarea required id="participations" name="participations" placeholder="Toto">{{ dest }}</textarea>
+            </div>
+
+            <div class="pure-controls">
+                <input type="submit" value="Ajouter à la conversation !" name="submit"
+                       class="pure-button pure-button-primary"/>
+            </div>
+        </form>
+
+        <hr/>
+
+        <a href="/conversation/quit/{{ conversation.id }}" class="pure-button pure-button-primary">Quitter cette
+            conversation</a>
     </article>
 {% endblock %}
