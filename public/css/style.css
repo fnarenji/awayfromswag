@@ -569,6 +569,16 @@ a.partner-link
 {
     width: 200px;
     height: 200px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.article-subtitle
+{
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
 }
 
 td img {display: table;}
@@ -577,6 +587,14 @@ td a {display: block;}
 .td-reduced {width: 20px;}
 .tr-reduced {height: 50px;}
 table.centered {margin:auto; width: 150px;}
+
+img.article-img
+{
+    display: inline-block;
+    width: 300px;
+    height: auto;
+    float: left;
+}
 
 /* WOW MEDIA QUERIES, SUCH RESPONSIVE, MUCH SKILLS */
 @media only screen and (min-width: 780px) {
