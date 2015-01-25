@@ -16,7 +16,6 @@ use app\exceptions\NotParticipateEventException;
 use app\exceptions\NotYourEventException;
 use app\models\EventModel;
 use app\models\UserModel;
-use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Form\Field\InputField;
 use SwagFramework\Form\Form;
 use SwagFramework\Helpers\Authentication;
@@ -46,15 +45,22 @@ class EventController extends Controller
 
     public function index()
     {
-        $events = $this->eventModel->getAll();
+        $page = 0;
+        if (!empty($this->getParams(true))) {
+            $page = (int)$this->getParams()[0] - 1;
+        }
+
+        $total = $this->eventModel->count()['nb'];
+        $total = (int)ceil($total / 10);
+
+        $events = $this->eventModel->getAll($page * 10, 10);
 
         foreach ($events as &$event) {
             $event = $this->getInfos($event);
         }
 
-        $this->getView()->render('event/index', array(
-            'events' => $events
-        ));
+        $this->getView()->render('event/index',
+            ['events' => $events, 'page' => ['actual' => $page + 1, 'total' => $total]]);
     }
 
     private function getInfos($event)

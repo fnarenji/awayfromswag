@@ -539,6 +539,10 @@ ul#events li a h1 {
     font-size: 1.3rem;
 }
 
+.pure-paginator {
+    text-align: center;
+}
+
 tr th
 {
     /* It was at this moment Thomas knew : he fucked up*/

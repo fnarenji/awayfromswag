@@ -288,7 +288,10 @@ class UserController extends Controller
     {
         $page = 0;
         if (!empty($this->getParams(true)))
-            $page = (int)$this->getParams()[0];
+            $page = (int)$this->getParams()[0] - 1;
+
+        $total = $this->userModel->count()['nb'];
+        $total = (int)ceil($total / 10);
 
         $userList = $this->userModel->getAllUsers($page * 10, 10);
         $userFriendList = $this->userModel->getAllFriends();
@@ -309,7 +312,8 @@ class UserController extends Controller
                 $userList[$key]['addFriend'] = true;
         }
 
-        $this->getView()->render('user/all', ['users' => $userList ]);
+        $this->getView()->render('user/all',
+            ['users' => $userList, 'page' => ['actual' => $page + 1, 'total' => $total]]);
     }
 
     public function add()
