@@ -23,7 +23,7 @@ class LittleModel extends Model
     {
         $sql = 'SELECT COUNT(*) AS COUNT FROM cpt_connectes WHERE ip=\'' . $_SERVER['REMOTE_ADDR'] . '\'';
         $data = DatabaseProvider::connection()->query($sql);
-        
+
         if ($data[0]['COUNT'] == 0) {
             $sql = 'INSERT INTO cpt_connectes VALUES(\'' . $_SERVER['REMOTE_ADDR'] . '\', ' . time() . ')';
             DatabaseProvider::connection()->execute($sql);
