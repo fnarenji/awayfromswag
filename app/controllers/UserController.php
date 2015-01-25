@@ -296,8 +296,6 @@ class UserController extends Controller
         $userList = $this->userModel->getAllUsers($page * 10, 10);
         $userFriendList = $this->userModel->getAllFriends();
 
-        //var_dump($userFriendList);
-        //var_dump($userList);
         foreach($userList as $key => $value)
         {
             foreach($userFriendList as $relation)
