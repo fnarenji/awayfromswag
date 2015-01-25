@@ -418,7 +418,7 @@ class UserController extends Controller
         $this->userModel->setReset($user['id'], $token);
 
         $message = 'Cliquez ici pour changer votre mot de passe : ';
-        $message .= CR . 'https://srv0.sknz.info:3735/user/resetpasswd/' . $token;
+        $message .= CR . 'https://srv0.sknz.info:3735/user/passwd/' . $token;
 
         MailUtil::send($user['mail'], 'AwayFromSecurity : RESET PASSWORD', $message);
 
