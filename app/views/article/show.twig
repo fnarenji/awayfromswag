@@ -1,6 +1,11 @@
 {% extends "layout/default" %}
 {% block content %}
     <article>
+        {%  if article.image != empty %}
+            <div class="imgArticle">
+                <img src="{{ article.image }}"></img>
+            </div>
+        {%  endif  %}
         <h1>{{ article.title }}</h1>
 
         <span class="mini-text">ajouté le {{ article.postdate }}, </span>

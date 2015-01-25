@@ -147,7 +147,9 @@ class UserController extends Controller
             'mailnotifications' => Input::post('mailnotifications', true) == 'on' ? 1 : 0,
             'accesslevel' => 0
         ];
-
+        $birthday = new \DateTime($user['birthday'] . '00:00:00');
+        $user['birthday'] = $birthday->format('Y-m-d h-i-s');
+        
         // LES FLAGS C TROP SWAG
         $privacySettings = ['birthday', 'mail', 'phonenumber', 'twitter', 'skype', 'facebookuri', 'website', 'job'];
         for ($i = 0; $i < sizeof($privacySettings); ++$i)
@@ -155,6 +157,7 @@ class UserController extends Controller
                 $user['privacy'] |= 0b000000000000001 << $i;
 
         $errors = [];
+
         try {
             $this->userModel->insertUser($user);
         } catch (\PDOException $e) {
