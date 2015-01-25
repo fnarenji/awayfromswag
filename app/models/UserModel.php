@@ -8,7 +8,8 @@
 
 namespace app\models;
 
-use \app\helpers\MailUtil;
+use app\helpers\MailUtil;
+use SebastianBergmann\Exporter\Exception;
 use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\mvc\Model;
@@ -23,7 +24,6 @@ class UserModel extends Model
     const SEARCH = "SELECT user.* FROM user WHERE MATCH(username, firstname, lastname, description) AGAINST (:query) OR id = :query";
     const SELECT_BY_USERNAME_LIKE = 'SELECT id, username, firstname, lastname FROM user WHERE username LIKE ? ';
     const INSERT_FRIEND = 'INSERT INTO user_friend VALUES (?, ?, ?)';
-    const DELETE_BY_USERNAME = 'DELETE FROM user WHERE username = ?';
     const GET_ALL_FRIENDS = 'SELECT user1, user2 FROM user_friend WHERE user1 = :user1 OR user2 = :user2';
 
     const COUNT = <<<SQL
@@ -190,7 +190,28 @@ TEXT;
      */
     public function deleteUser($id)
     {
-        return DatabaseProvider::connection()->execute(self::DELETE_BY_USERNAME, [$id]);
+        try {
+            DatabaseProvider::connection()->beginTransaction();
+
+            $sql = 'DELETE FROM user WHERE username = ?;';
+            $article = 'UPDATE article SET user=-1 WHERE user=?';
+            $comment = 'UPDATE comment SET user=-1 WHERE user=?';
+            $conversation = 'UPDATE conversation_user SET user=-1 WHERE user=?';
+            $event = 'UPDATE event SET user=-1 WHERE user=?';
+            $event_user = 'UPDATE event_user SET user=-1 WHERE user=?';
+
+            DatabaseProvider::connection()->execute($article, [$id]);
+            DatabaseProvider::connection()->execute($comment, [$id]);
+            DatabaseProvider::connection()->execute($conversation, [$id]);
+            DatabaseProvider::connection()->execute($event, [$id]);
+            DatabaseProvider::connection()->execute($event_user, [$id]);
+
+            DatabaseProvider::connection()->commit();
+
+            return DatabaseProvider::connection()->execute($sql, [$id]);
+        } catch (Exception $e) {
+            DatabaseProvider::connection()->rollBack();
+        }
     }
 
     /**
