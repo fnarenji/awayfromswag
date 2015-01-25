@@ -59,8 +59,8 @@ SQL;
             DatabaseProvider::connection()->beginTransaction();
 
             $sql = <<<SQL
-INSERT INTO event (name, user, description, address, eventtime, money, personsmax)
-        VALUES (:name, :user, :description, :address, :eventtime, :money, :personsmax);
+INSERT INTO event (name, user, description, address, eventtime, money, personsmax, image)
+        VALUES (:name, :user, :description, :address, :eventtime, :money, :personsmax, :image);
 SQL;
 
             $state = DatabaseProvider::connection()->execute($sql, $params);

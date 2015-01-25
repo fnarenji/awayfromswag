@@ -140,7 +140,8 @@ class EventController extends Controller
             'address' => 'Adresse',
             'eventtime' => 'Date de l\'évènement',
             'money' => 'Prix',
-            'personsmax' => 'Nombre maximum de participants'
+            'personsmax' => 'Nombre maximum de participants',
+            'image' => 'Image'
         ]);
 
         $this->getView()->render('event/add', ['form' => $html]);
@@ -166,7 +167,8 @@ class EventController extends Controller
             'address' => 'Adresse',
             'eventtime' => 'Date de l\'évènement',
             'money' => 'Prix',
-            'personsmax' => 'Nombre maximum de participants'
+            'personsmax' => 'Nombre maximum de participants',
+            'image' => 'Image'
         ]);
 
         $result['user'] = Authentication::getInstance()->getUserId();
@@ -202,6 +204,7 @@ class EventController extends Controller
 
         $form->getField('id')->addAttribute('value', $event['id']);
         $form->getField('name')->addAttribute('value', $event['name']);
+        $form->getField('image')->addAttribute('value', $event['image']);
         $form->getField('description')->setContent($event['description']);
         $form->getField('address')->setContent($event['address']);
 
@@ -218,7 +221,8 @@ class EventController extends Controller
             'address' => 'Adresse',
             'eventtime' => 'Date de l\'évènement',
             'money' => 'Prix',
-            'personsmax' => 'Nombre maximum de participants'
+            'personsmax' => 'Nombre maximum de participants',
+            'image' => 'Image'
         ]);
 
         $formDelete = new Form('/event/delete');
@@ -246,7 +250,8 @@ class EventController extends Controller
             'address' => 'Adresse',
             'eventtime' => 'Date de l\'évènement',
             'money' => 'Prix',
-            'personsmax' => 'Nombre maximum de participants'
+            'personsmax' => 'Nombre maximum de participants',
+            'image' => 'Image'
         ]);
 
         $id = $result['id'];
