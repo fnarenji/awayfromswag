@@ -1,27 +1,36 @@
 {% extends "layout/default" %}
 {% block content %}
     <article>
-        <ul id="events">
-            <li>
-                <h1>{{ article.title }}</h1>
+        <h1>{{ article.title }}</h1>
 
-                <span class="mini-text">ajouté le {{ article.postdate }}, </span>
-                <span class="mini-text">par :
-                    <a href="/user/profile/{{ article.user.username }}">
-                        {{ article.user.firstname ~ ' ' ~ article.user.lastname }}
-                    </a>,
-                </span>
-                <span class="mini-text">Catégorie : {{ article.category.name }}</span>
+        <span class="mini-text">ajouté le {{ article.postdate }}, </span>
+        <span class="mini-text">par
+            <a href="/user/profile/{{ article.user.username }}">
+                {{ article.user.firstname ~ ' ' ~ article.user.lastname }}
+            </a>,
+        </span>
+        <span class="mini-text">Catégorie : {{ article.category.name }}</span>
 
-                <p>
-                    {{ article.text }}
-                </p>
+        <p>
+            {{ article.text }}
+        </p>
 
-                {% if article.user.id == auth.userId or auth.options.accessLevel %}
-                    <a href="/article/modify/{{ article.id }}" class="pure-button pure-button-primary">Modifier</a>
-                {% endif %}
+        {% if article.user.id == auth.userId or auth.options.accessLevel %}
+            <a href="/article/modify/{{ article.id }}" class="pure-button pure-button-primary">Modifier</a>
+        {% endif %}
+        <hr/>
+        <div>
+            <ul>
+                {% for comment in comments %}
+                    <li>
+                        <b>Par {{ comment.authorFullName }} le {{ comment.date }}</b>
 
-            </li>
-        </ul>
+                        <p>
+                            {{ comment.message }}
+                        </p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </article>
 {% endblock %}

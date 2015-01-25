@@ -37,15 +37,15 @@ class CommentsArticleModel extends Model
     public function getCommentArticle($id)
     {
         $sql = <<<SQL
-SELECT comment.id, article.id, article.title, text, username
-FROM user, comment_article, comment, article
-WHERE comment_article.article = ?
-  AND comment_article.id = comment.id
-  AND user.id = comment.user ;
+SELECT comment.id, comment.message, comment.postdate, comment.editdate,
+        CONCAT(user.username, ' (', user.firstname, ' ', user.lastname, ')')
+FROM comment
+JOIN comment_article ON comment_article.id = comment.id
+JOIN user ON user.id = comment.user
+WHERE comment_article.article = ?;
 SQL;
 
         return DatabaseProvider::connection()->query($sql, [$id]);
-
     }
 
     /**
