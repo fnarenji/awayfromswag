@@ -213,10 +213,15 @@ TEXT;
             DatabaseProvider::connection()->execute($event_user, [$id]);
 
             DatabaseProvider::connection()->commit();
+            DatabaseProvider::connection()->execute($sql, [$id]);
 
-            return DatabaseProvider::connection()->execute($sql, [$id]);
+            DatabaseProvider::connection()->commit();
+
+            return true;
         } catch (Exception $e) {
             DatabaseProvider::connection()->rollBack();
+
+            return false;
         }
     }
 
