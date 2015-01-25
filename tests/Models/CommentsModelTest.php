@@ -38,7 +38,7 @@ class CommentsModelTest extends \PHPUnit_Framework_TestCase {
         $state = $this->modelEvent->insertCommentEvent($array);
         $this->assertEquals(true,$state);
 
-        $array = $this->modelEvent->getCommentEvent(2);
+        $array = $this->modelEvent->getCommentsForEvent(2);
         $this->assertNotEmpty($array);
 
         $state = $this->modelEvent->deleteCommentEvent(0);
