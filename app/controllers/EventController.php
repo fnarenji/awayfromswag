@@ -262,7 +262,7 @@ class EventController extends Controller
             throw new EventNotFoundException($id);
         }
 
-        if ($event['personsnow'] == $event['personsmax']) {
+        if ($event['personsnow'] == 0) {
             throw new EventFullException($id);
         }
 
