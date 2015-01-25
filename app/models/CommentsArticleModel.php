@@ -21,7 +21,9 @@ class CommentsArticleModel extends Model
     const DELETE_COMMENT = "DELETE FROM comment WHERE id = ? ";
 
     const GET_COMMENTS_FOR_ARTICLE = <<<SQL
-SELECT comment.id, comment.message, comment.postdate, comment.editdate,
+SELECT comment.id, comment.message,
+        DATE_FORMAT(comment.postdate, '%d/%m/%Y %H:%i:%s') postdate,
+        DATE_FORMAT(comment.editdate, '%d/%m/%Y %H:%i:%s') editdate,
         CONCAT(user.username, ' (', user.firstname, ' ', user.lastname, ')') authorFullName
 FROM comment
 JOIN comment_article ON comment_article.id = comment.id

@@ -10,11 +10,13 @@ namespace app\controllers;
 
 
 use app\exceptions\AlreadyParticipateEventException;
+use app\exceptions\EventFullException;
 use app\exceptions\EventNotFoundException;
 use app\exceptions\NotAuthenticatedException;
 use app\exceptions\NotParticipateEventException;
 use app\exceptions\NotYourEventException;
 use app\models\EventModel;
+use app\models\ParticipateModel;
 use app\models\UserModel;
 use SwagFramework\Form\Field\InputField;
 use SwagFramework\Form\Form;
@@ -36,10 +38,16 @@ class EventController extends Controller
      */
     private $userModel;
 
+    /**
+     * @var ParticipateModel
+     */
+    private $participateModel;
+
     function __construct()
     {
         $this->eventModel = new EventModel();
         $this->userModel = new UserModel();
+        $this->participateModel = new ParticipateModel();
         parent::__construct();
     }
 
@@ -254,13 +262,17 @@ class EventController extends Controller
             throw new EventNotFoundException($id);
         }
 
+        if ($event['personsnow'] == $event['personsmax']) {
+            throw new EventFullException($id);
+        }
+
         $participate = $this->eventModel->getParticipateUser($id, Authentication::getInstance()->getUserId());
 
-        if (empty($participate)) {
+        if (!empty($participate)) {
             throw new AlreadyParticipateEventException($id, Authentication::getInstance()->getUserId());
         }
 
-        $this->eventModel->participate($id, Authentication::getInstance()->getUserId());
+        $this->participateModel->insertEventParticipation($id, Authentication::getInstance()->getUserId());
 
         $this->getView()->redirect('/event/show/' . $id);
     }
@@ -281,11 +293,11 @@ class EventController extends Controller
 
         $participate = $this->eventModel->getParticipateUser($id, Authentication::getInstance()->getUserId());
 
-        if (!empty($participate)) {
+        if (empty($participate)) {
             throw new NotParticipateEventException($id, Authentication::getInstance()->getUserId());
         }
 
-        $this->eventModel->unparticipate($id, Authentication::getInstance()->getUserId());
+        $this->participateModel->deleteEventParticipation($id, Authentication::getInstance()->getUserId());
 
         $this->getView()->redirect('/event/show/' . $id);
     }

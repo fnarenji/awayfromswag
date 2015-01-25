@@ -198,26 +198,6 @@ SQL;
     }
 
     /**
-     * create participation of the user $userId at the event $id
-     * @param $id string event id
-     * @param $userId string user
-     */
-    public function participate($id, $userId)
-    {
-        //TODO
-    }
-
-    /**
-     * remove participation of the user $userId at the event $id
-     * @param $id string event id
-     * @param $userId string user id
-     */
-    public function unparticipate($id, $userId)
-    {
-        //TODO
-    }
-
-    /**
      * get events with max participation
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */

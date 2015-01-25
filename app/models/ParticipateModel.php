@@ -57,17 +57,17 @@ class ParticipateModel extends Model
      * @param $joindate
      * @return bool
      */
-    public function insertEventParticipation($params)
+    public function insertEventParticipation($id, $user)
     {
         try {
 
             DatabaseProvider::connection()->beginTransaction();
 
             $sql = <<<SQL
-INSERT INTO event_user VALUES (:id,:user,:joindate);
+INSERT INTO event_user (id, user, joindate) VALUES (?, ?, NOW());
 SQL;
 
-            DatabaseProvider::connection()->execute($sql, $params);
+            DatabaseProvider::connection()->execute($sql, [$id, $user]);
 
             DatabaseProvider::connection()->commit();
 
