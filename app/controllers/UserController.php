@@ -9,7 +9,6 @@
 namespace app\controllers;
 
 use app\exceptions\PasswordNotSameExceptionException;
-use app\helpers\MailUtil;
 use app\helpers\PrivacyCalculator;
 use app\models\EventModel;
 use app\models\FriendModel;
@@ -22,6 +21,7 @@ use SwagFramework\Form\Field\LabelField;
 use SwagFramework\Form\Form;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\Input;
+use SwagFramework\Helpers\MailUtil;
 use SwagFramework\mvc\Controller;
 
 class UserController extends Controller

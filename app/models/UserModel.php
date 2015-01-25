@@ -344,4 +344,13 @@ SQL;
 
         return DatabaseProvider::connection()->execute($sql, [$passwd, self::SALT, $id]);
     }
+
+    public function getUserByMail($mail)
+    {
+        $sql = <<<SQL
+SELECT * FROM user WHERE mail=?;
+SQL;
+
+        return DatabaseProvider::connection()->selectFirst($sql, [$mail]);
+    }
 }
