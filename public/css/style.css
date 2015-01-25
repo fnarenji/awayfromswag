@@ -533,7 +533,18 @@ ul#events li a h1 {
     font-size: 1.3rem;
 }
 
+tr th
+{
+    /* It was at this moment Thomas knew : he fucked up*/
+    color: #000!important;
+}
 
+td img {display: table;}
+td a {display: block;}
+.td-wide {width: 90px;}
+.td-reduced {width: 20px;}
+.tr-reduced {height: 50px;}
+table.centered {margin:auto; width: 150px;}
 /* WOW MEDIA QUERIES, SUCH RESPONSIVE, MUCH SKILLS */
 
 @media only screen and (min-width: 780px) {
@@ -650,6 +661,7 @@ ul#events li a h1 {
     {
         width: 60%;
     }
+    table.centered {width: 100%;}
 
 }
 

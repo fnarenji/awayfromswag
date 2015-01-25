@@ -3,23 +3,23 @@
     <article>
         <h1>Annuaire des utilisateurs</h1>
 
-        <table class="pure-table pure-table-horizontal pure-table-striped">
+        <table class="pure-table pure-table-horizontal pure-table-striped centered">
             <thead>
             <tr>
-                <th>#</th>
+                <th class="td-reduced">#</th>
                 <th>Avatar</th>
                 <th>Pseudo</th>
                 <th>Prénom</th>
                 <th>Nom</th>
                 <th>Inscrit depuis</th>
-                <th>Actions</th>
+                <th class="td-wide">Actions</th>
             </tr>
             </thead>
 
             <tbody>
             {% for user in users %}
-                <tr>
-                    <td>{{ user.id }}</td>
+                <tr class="tr-reduced">
+                    <td class="td-reduced">{{ user.id }}</td>
                     <td>
                         <a href="/user/profile/{{ user.username }}">
                             <img src="https://www.gravatar.com/avatar/{{ user.mailhash }}.png" alt="avatar"/>
@@ -35,7 +35,8 @@
                     <td>{{ user.registerdate }}</td>
                     <td>
                         <a href="/conversation/create/{{ user.id }}">Envoyer MP</a><br/>
-                        <a href="/user/profile/{{ user.id }}">Voir profile</a>
+                        <a href="/user/profile/{{ user.id }}">Voir profil</a>
+                        <a href="/user/add/{{ user.id }}">Ajouter</a>
                     </td>
                 </tr>
             {% endfor %}
