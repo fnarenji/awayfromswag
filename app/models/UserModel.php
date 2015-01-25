@@ -202,7 +202,7 @@ TEXT;
         try {
             DatabaseProvider::connection()->beginTransaction();
 
-            $user = 'DELETE FROM user WHERE username = ?;';
+            $user = 'DELETE FROM user WHERE id = ?;';
             $article = 'UPDATE article SET user = -1 WHERE user = ?';
             $comment = 'UPDATE comment SET user = -1 WHERE user = ?';
             $conversation = 'UPDATE conversation_user SET user = -1 WHERE user = ?';
