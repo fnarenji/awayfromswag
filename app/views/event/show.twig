@@ -3,6 +3,9 @@
     <article class="event-show">
         <h1>{{ event.name }}</h1>
 
+        {% if event.image is not empty %}
+            <img src="{{ event.image }}" alt="{{ event.name }}" class="event-img"/>
+        {% endif %}
         <span class="mini-text"><b>Prix</b> : {{ event.money }}€ </span>
         <span class="mini-text"><b>le</b> {{ event.eventtime }} </span>
         <span class="mini-text"><b>ajouté le </b>{{ event.createtime }}, </span>
@@ -12,10 +15,6 @@
         <h6>Adresse : {{ event.address }}</h6>
         <h6>Participants maximum : {{ event.personsmax }}</h6>
         <h6>Places restantes : {{ event.personsnow }}</h6>
-
-        {% if event.image is not empty %}
-            <img src="{{ event.image }}" alt="{{ event.name }}" class="article-img"/>
-        {% endif %}
 
         <h6>Description : </h6>
 
