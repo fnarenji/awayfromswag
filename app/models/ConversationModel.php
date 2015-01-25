@@ -39,7 +39,7 @@ FROM conversation_user
 JOIN user ON conversation_user.user = user.id
 JOIN conversation ON conversation_user.id = conversation.id
 WHERE conversation_user.user = ?
-ORDER BY lastmessagetime DESC
+ORDER BY lastmessagetime ASC
 SQL;
 
     const GET_CONVERSATION = <<<'SQL'
