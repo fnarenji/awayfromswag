@@ -133,19 +133,19 @@ SQL;
 
             foreach($params as $key=>$value){
                 if($key != 'id'){
-                    $str .= ''.$key.' = \''.$value.'\' ,';
+                    $str .= '' . $key . ' = \':' . $key . '\' ,';
                 }
             }
 
             $str  = substr($str, 0, -1);
 
             $sql = 'UPDATE event '
-                . 'SET '. $str . ' WHERE name = ?';
+                . 'SET ' . $str . ' WHERE name = :name';
 
             var_dump($sql);
             var_dump($params);
 
-            $state = DatabaseProvider::connection()->execute($sql, [$params['name']]);
+            $state = DatabaseProvider::connection()->execute($sql, $params);
 
             DatabaseProvider::connection()->commit();
 
