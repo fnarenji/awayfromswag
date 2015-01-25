@@ -10,6 +10,8 @@ use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\BaseViewContextProvider;
 
+die($_SERVER['HTTP_X_FORWARDED_FOR']);
+
 session_start();
 
 define('CR', "\n");
