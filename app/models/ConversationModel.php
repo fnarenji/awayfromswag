@@ -34,7 +34,7 @@ WHERE conversation.id = :conversation
 SQL;
 
     const GET_CONVERSATIONS_FOR_USER = <<<SQL
-SELECT conversation.id, conversation.title, lastmessagesnippet, lastmessagetime
+SELECT conversation.id, conversation.title, lastmessagesnippet, lastmessagetime, lastread, lastmessagetime > lastread notread
 FROM conversation_user
 JOIN user ON conversation_user.user = user.id
 JOIN conversation ON conversation_user.id = conversation.id
