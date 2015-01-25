@@ -616,7 +616,11 @@ img.article-img
     display: block;
     margin-bottom: 5px;
 }
-
+.article-comment-message
+{
+    display: block;
+    max-width: 1000px;
+}
 #article-modify textarea
 {
     width: 360px;
