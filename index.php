@@ -10,7 +10,7 @@ use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\BaseViewContextProvider;
 
-var_dump($_SERVER);
+php_info();
 die();
 
 session_start();
