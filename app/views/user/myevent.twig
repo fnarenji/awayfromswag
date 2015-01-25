@@ -1,0 +1,27 @@
+{% extends "layout/default" %}
+{% block content %}
+    <article>
+        <h1>Évènements</h1>
+
+        {% if auth.valid %}
+            <a href="/event/add" class="pure-button add-event">Ajouter un évènement</a>
+        {% endif %}
+
+        {% if events is empty %}
+            <p>Il n'y a pas d'évènements.</p>
+        {% else %}
+            <ul id="events">
+                {% for event in events %}
+                    <li>
+                        <a href="/event/show/{{ event.id }}"><h1>{{ event.name }}</h1>, </a>
+                        <span class="mini-text">le {{ event.eventtime }}, </span>
+                        <span class="mini-text">Prix : {{ event.money }}€</span>
+                        <p>
+                            {{ event.description }}
+                        </p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </article>
+{% endblock %}

@@ -352,4 +352,11 @@ class UserController extends Controller
         $this->friendModel->deleteFriend(Authentication::getInstance()->getUserId(),$id2);
         $this->friends();
     }
+
+    public function myevent()
+    {
+        $model = new EventModel();
+        $myevent = $model->getEventsForUser(Authentication::getInstance()->getUserId());
+        $this->getView()->render('user/myevent',['events' => $myevent]);
+    }
 }
