@@ -9,6 +9,7 @@
 namespace app\controllers;
 
 use app\helpers\PrivacyCalculator;
+use app\models\EventModel;
 use app\models\UserModel;
 use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\MissingParamsException;
@@ -56,7 +57,15 @@ class UserController extends Controller
             $user['registerDateFormat'] = $registerDate->format('d/m/Y');
 
             $user = array_merge($user, PrivacyCalculator::calculate($user['id']));
-            $this->getView()->render('user/profile', ['profile' => $user]);
+
+            $model = new EventModel();
+            $events = $model->getEventsForUser($user['id']);
+
+            foreach($events as $key => $value){
+                $events[$key]['eventtime'] = substr($events[$key]['eventtime'], 0, 10);
+            }
+
+            $this->getView()->render('user/profile', ['profile' => $user, 'events' => $events ]);
 
         } catch (MissingParamsException $e) {
             // TODO POPUP
@@ -275,6 +284,40 @@ class UserController extends Controller
         if (!empty($this->getParams(true)))
             $page = (int)$this->getParams()[0];
 
-        $this->getView()->render('user/all', ['users' => $this->userModel->getAllUsers($page * 10, 10)]);
+        $userList = $this->userModel->getAllUsers($page * 10, 10);
+        $userFriendList = $this->userModel->getAllFriends();
+
+        //var_dump($userFriendList);
+        //var_dump($userList);
+        foreach($userList as $key => $value)
+        {
+            foreach($userFriendList as $relation)
+            {
+                if(in_array($value['id'], $relation))
+                {
+                    $userList[$key]['addFriend'] = false;
+                    break;
+                }
+            }
+            if(!isset($userList[$key]['addFriend']))
+                $userList[$key]['addFriend'] = true;
+        }
+
+        $this->getView()->render('user/all', ['users' => $userList ]);
+    }
+
+    public function add()
+    {
+        try
+        {
+            $id = $this->getParams()[0];
+            var_dump($id);
+            $this->userModel->addToFriend($id);
+            $this->getView()->redirect('/');
+        }
+        catch(MissingParamsException $e)
+        {
+            $e->getMessage();
+        }
     }
 }

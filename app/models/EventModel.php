@@ -162,9 +162,9 @@ SQL;
      */
     public function deleteEventId($id)
     {
-        $sql = "DELETE FROM event WHERE id = ?";
+        $sql = 'DELETE FROM event WHERE id = ' . $id;
 
-        DatabaseProvider::connection()->execute($sql, [$id]);
+        DatabaseProvider::connection()->execute($sql);
 
         return true;
     }
@@ -183,9 +183,10 @@ SQL;
     }
 
     /**
-     * get if the user participate at the event $id
-     * @param $id string event id
-     * @param $userId string user id
+     * @param $id
+     * @param $userId
+     * @return array
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function getParticipateUser($id, $userId)
     {
@@ -247,6 +248,26 @@ SQL;
     }
 
     /**
+     * Get the last events of an user (with min and max)
+     * @param $id
+     * @param int $min
+     * @param int $max
+     * @return array
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    public function getEventsForUser($id, $min = 0, $max = 5)
+    {
+        $sql = 'SELECT event.id, name, eventtime FROM event ' .
+            'LEFT JOIN event_user ' .
+            'ON event_user.id = event.id '.
+            'WHERE event.user = ? ' .
+            'OR event_user.user = ? ' .
+            'ORDER BY event.id ' .
+            'LIMIT ' . $min . ','. $max . '';
+
+        return DatabaseProvider::connection()->query($sql, array($id, $id));
+    }
+    /**
      * @param int $year
      * @return array
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
@@ -264,6 +285,19 @@ SQL;
         $user = Authentication::getInstance()->getUserId();
 
         return DatabaseProvider::connection()->query($sql, array($user, $year, $user, $year));
+    }
+
+    /**
+     * Returns the creator or an event
+     * @param $id
+     * @return array
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     */
+    public function getCreatorId($id)
+    {
+        $sql = 'SELECT user FROM event WHERE id = ?';
+
+        return DatabaseProvider::connection()->query($sql, array($id));
     }
 
     public function count()

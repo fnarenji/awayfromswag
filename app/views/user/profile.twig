@@ -66,5 +66,12 @@
                 </span>
             {% endif %}
         </div>
+        <div class="profile-group">
+            <h5>Derniers évènements</h5>
+            {% for event in events %}
+                <span class="profile-line"><b class="profile-label">- <a href="/event/show/{{ event.id }}">{{ event.name }}</a></b> (le {{ event.eventtime }})</span>
+            {% endfor %}
+            
+        </div>
     </article>
 {% endblock %}
