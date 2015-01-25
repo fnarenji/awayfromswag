@@ -16,7 +16,6 @@ use app\exceptions\NotParticipateEventException;
 use app\exceptions\NotYourEventException;
 use app\models\EventModel;
 use app\models\UserModel;
-use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Form\Field\InputField;
 use SwagFramework\Form\Form;
 use SwagFramework\Helpers\Authentication;
@@ -118,6 +117,9 @@ class EventController extends Controller
         if (!Authentication::getInstance()->isAuthenticated()) {
             throw new NotAuthenticatedException();
         }
+
+        if (!isset($_POST['money']))
+            $_POST['money'] = 0;
 
         $form = FormHelper::generate('event', '/event/add');
         $form->setClass('pure-form pure-form-aligned centered');

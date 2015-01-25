@@ -31,9 +31,8 @@ class SearchController extends Controller
         $results = [];
         if (!empty($query)) {
             $results['users'] = $this->userModel->search($query);
-            $results['article'] = $this->articleModel->search($query);
-            var_dump($results);
-            die();
+            $results['articles'] = $this->articleModel->search($query);
+            $results['events'] = $this->eventModel->search($query);
         }
         $this->getView()->render('search/index', $results);
     }

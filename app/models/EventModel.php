@@ -312,9 +312,11 @@ SQL;
     public function search($query)
     {
         $sql = <<<SQL
-SELECT *
+SELECT event.*
 FROM event
-WHERE MATCH(name, description, address) AGAINST (:query)
+JOIN user ON event.user = user.id
+WHERE MATCH(event.name, event.description, event.address) AGAINST (:query)
+   OR MATCH(user.username, user.firstname, user.lastname) AGAINST (:query)
 SQL;
 
         return DatabaseProvider::connection()->query($sql, ['query' => $query]);
