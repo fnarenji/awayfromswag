@@ -125,6 +125,9 @@ class EventController extends Controller
             throw new NotAuthenticatedException();
         }
 
+        if (!isset($_POST['money']))
+            $_POST['money'] = 0;
+
         $form = FormHelper::generate('event', '/event/add');
         $form->setClass('pure-form pure-form-aligned centered');
 

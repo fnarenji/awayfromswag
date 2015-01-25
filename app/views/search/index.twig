@@ -3,6 +3,54 @@
     <article>
         <h1>Recherche</h1>
 
+    <h4>Utilisateurs</h4>
+    <div>
+    <ul>
+    {% if not users %}
+        Aucun utilisateurs.
+        {% end if %}
 
+        {% for user in users %}
+            <li>
+                <a href="/user/profile/{{ user.username }}">
+                    {{ user.username }} ({{ user.firstname }} {{ user.lastname }})
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+        </div>
+
+        <h4>Article</h4>
+        <div>
+        <ul>
+        {% if not articles %}
+            Aucun articles.
+            {% end if %}
+
+            {% for article in articles %}
+                <li>
+                    <a href="/article/show/{{ article.id }}">
+                        {{ article.title }}
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+            </div>
+
+            <h4>Evenements</h4>
+            <div>
+            <ul>
+            {% if not events %}
+                Aucun évènements.
+                {% end if %}
+                {% for event in events %}
+                    <li>
+                        <a href="/event/show/{{ event.id }}">
+                            {{ event.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+                </div>
     </article>
 {% endblock %}

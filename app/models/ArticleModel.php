@@ -14,7 +14,7 @@ use SwagFramework\mvc\Model;
 class ArticleModel extends Model
 {
     const SEARCH_ARTICLE = <<<SQL
-SELECT *
+SELECT article.*
 FROM article
 JOIN user ON article.user = user.id
 JOIN article_category ON article.category = article_category.id
@@ -71,12 +71,10 @@ SQL;
     }
 
     /**
-     * Insert new article in D
-     * @param $author
-     * @param $content
-     * @param $date
-     * @param $categorie
+     * @param $infos
      * @return bool
+     * @throws \Exception
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function insertNews($infos)
     {
@@ -96,9 +94,10 @@ SQL;
     }
 
     /**
-     * Delete a article
      * @param $id
      * @return bool
+     * @throws \Exception
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function deleteNewsById($id)
     {
