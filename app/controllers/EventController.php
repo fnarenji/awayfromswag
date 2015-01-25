@@ -16,10 +16,12 @@ use app\exceptions\NotParticipateEventException;
 use app\exceptions\NotYourEventException;
 use app\models\EventModel;
 use app\models\UserModel;
+use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Form\Field\InputField;
 use SwagFramework\Form\Form;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\FormHelper;
+use SwagFramework\Helpers\Input;
 use SwagFramework\mvc\Controller;
 
 class EventController extends Controller
@@ -154,7 +156,7 @@ class EventController extends Controller
             throw new EventNotFoundException($id);
         }
 
-        if ($event['user'] != Authentication::getInstance()->getUserId() && !Authentication::getInstance()->getAccessLevel()) {
+        if ($event['user'] != Authentication::getInstance()->getUserId() && !Authentication::getInstance()->getOptionOr('accessLevel', 0)) {
             throw new NotYourEventException($id);
         }
 
@@ -277,5 +279,20 @@ class EventController extends Controller
         $this->eventModel->unparticipate($id, Authentication::getInstance()->getUserId());
 
         $this->getView()->redirect('/event/show/' . $id);
+    }
+
+    public function delete(){}
+    public function deletePOST(){
+        $input = new Input();
+        $eventId = $input->post('id');
+
+        $creatorId = $this->eventModel->getCreatorId($eventId);
+
+        if(Authentication::getInstance()->getUserId() == $creatorId || Authentication::getInstance()->getOptionOr('accessLevel', 0) == 1)
+        {
+            $this->eventModel->deleteEventId($eventId);
+        }
+
+        $this->getView()->redirect('/');
     }
 }
