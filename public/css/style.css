@@ -621,13 +621,13 @@ img.article-img
     display: block;
     max-width: 1000px;
 }
-#article-modify textarea
+.article-modify textarea
 {
     width: 360px;
     height: 360px;
 }
 
-#article-modify input[type="text"]
+.article-modify input[type="text"]
 {
     width: 360px;
 }
@@ -640,7 +640,7 @@ img.article-img
         margin-right: 15px;
     }
 
-    #article-modify textarea
+    .article-modify textarea
     {
         width: 700px;
         height: 500px;
@@ -671,7 +671,7 @@ img.article-img
     {
         margin-left: 200px;
     }
-    #article-modify input[type="text"]
+    .article-modify input[type="text"]
     {
         width: 800px;
     }
@@ -691,7 +691,7 @@ img.article-img
         margin-right: auto;
         margin-left: 100px;
     }
-    #article-modify input[type="text"]
+    .article-modify input[type="text"]
     {
         width: 600px;
     }
@@ -700,9 +700,7 @@ img.article-img
 {
     .wrapper_menu {display:none;}
 
-
-
-    #article-modify textarea
+    .article-modify textarea
     {
         width: 900px;
         height: 500px;
