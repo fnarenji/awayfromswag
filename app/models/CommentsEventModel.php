@@ -13,6 +13,9 @@ use SwagFramework\mvc\Model;
 
 class CommentsEventModel extends Model
 {
+    const INSERT_COMMENT = "INSERT INTO comment (user, message) VALUES (:iduser, :message);";
+    const INSERT_COMMENT_FOR_ARTICLE = "INSERT INTO comment_article (id, article) VALUES (:idcomment, :idarticle);";
+
     const SELECT_ALL_COMMENTS = <<<'SQL'
 SELECT comment.id AS commid, comment.message, user.id AS useid, user.username, event.name
 FROM comment
@@ -66,27 +69,34 @@ SQL;
     }
 
     /**
-     * Insert in DB a comment for an event.
-     * @param $params
+     * Insert a new comment on article
+     * @param $iduser int user id
+     * @param $idarticle int article id
+     * @param $message string comment
      * @return bool
      * @throws \Exception
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function insertCommentEvent($params)
+    public function insertCommentArticle($iduser, $idarticle, $message)
     {
         try {
             DatabaseProvider::connection()->beginTransaction();
 
-            $result = DatabaseProvider::connection()->execute(self::NEW_COMMENT, [$params['iduser'], $params['contents']]);
+            $success = DatabaseProvider::connection()->execute(self::INSERT_COMMENT, [
+                'iduser' => $iduser,
+                'message' => $message
+            ]);
 
-            $tmp = DatabaseProvider::connection()->lastInsertId();
+            $newCommentId = DatabaseProvider::connection()->lastInsertId();
+            $success = $success && DatabaseProvider::connection()->execute(self::INSERT_COMMENT_FOR_ARTICLE, [
+                    'idcomment' => $newCommentId,
+                    'idarticle' => $idarticle
+                ]);
 
-            $result = $result && DatabaseProvider::connection()->execute(self::INSERT_COMMENT_EVENT, [$tmp, $params['idevent']]);
+            DatabaseProvider::connection()->commit();
 
-            if ($result)
-                DatabaseProvider::connection()->commit();
+            return $success;
 
-            return $result;
         } catch (\Exception $e) {
             DatabaseProvider::connection()->rollBack();
             throw $e;
