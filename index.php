@@ -2,6 +2,7 @@
 
 require 'vendor/autoload.php';
 use app\helpers\ClassRouting;
+use app\models\ConversationModel;
 use app\models\EventModel;
 use app\models\UserModel;
 use SwagFramework\Database\DatabaseProvider;
@@ -34,10 +35,15 @@ function main()
 {
     DatabaseProvider::connect("app/config/database.json");
     BaseViewContextProvider::setProvider(function () {
-        $count['event'] = (new EventModel())->count()['nb'];
-        $count['user'] = (new UserModel())->count()['nb'];
-
-        return ['count' => $count];
+        return [
+            'count' => [
+                'event' => (new EventModel())->count()['nb'],
+                'user' => (new UserModel())->count()['nb']
+            ],
+            'newmessage' => Authentication::getInstance()->isAuthenticated()
+                ? (new ConversationModel())->countUnreadMessages()
+                : 0,
+        ];
     });
 
     $router = new \SwagFramework\Routing\Router();

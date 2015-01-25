@@ -65,8 +65,15 @@ WHERE conversation.id = ?
   AND lastread > lastmessagetime;
 SQL;
 
-    private $conversationFolder;
+    const COUNT_NEW_MESSAGES = <<<SQL
+SELECT COUNT(*)
+FROM conversation_user
+JOIN conversation ON conversation.id = conversation_user.id
+WHERE conversation_user.user = ?
+  AND lastmessagetime > conversation_user.lastread;
+SQL;
 
+    private $conversationFolder;
     public function __construct()
     {
         $config = new ConfigFileParser(FSROOT . '/app/config/conversation.json');
@@ -267,5 +274,10 @@ SQL;
     public function removeFromConversation($conversationId)
     {
         return DatabaseProvider::connection()->execute(self::QUIT_CONVERSATION, [$conversationId, Authentication::getInstance()->getUserId()]);
+    }
+
+    public function countUnreadMessages()
+    {
+        return DatabaseProvider::connection()->execute(self::COUNT_NEW_MESSAGES, [Authentication::getInstance()->getUserId()]);
     }
 }
