@@ -61,7 +61,7 @@ class HomeController extends Controller
             $art['text'] .=  ' ... ';
             $art = $this->getInfos($art);
         }
-        
+
         $this->getView()->render('home/index', ['events' => $events, 'article' => $article]);
     }
 
