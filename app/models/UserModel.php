@@ -59,6 +59,7 @@ class UserModel extends Model
         $sql = <<<SQL
 SELECT *, MD5(mail) mailhash, DATE_FORMAT(registerdate, '%d/%m/%Y') registerdate
 FROM user
+ORDER BY username
 LIMIT $start, $end;
 SQL;
 

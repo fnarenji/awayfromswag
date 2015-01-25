@@ -25,7 +25,7 @@ WHERE MATCH(article.title, article.text) AGAINST (:query)
 SQL;
 
     const INSERT_ARTICLE = <<<SQL
-INSERT INTO article (user,title,text,image,postdate,category) VALUES (:user, :title, :text, :image, :postdate, :category);
+INSERT INTO article (user,title,text,image,postdate,category) VALUES (:user, :title, :text, :image, NOW(), :category);
 SQL;
     const DELETE_ARTICLE = 'DELETE FROM article WHERE id = ?';
     const DELETE_ARTICLE_BY_NAME = 'DELETE FROM article WHERE title = ?';
@@ -84,12 +84,10 @@ SQL;
     }
 
     /**
-     * Insert new article in D
-     * @param $author
-     * @param $content
-     * @param $date
-     * @param $categorie
+     * @param $infos
      * @return bool
+     * @throws \Exception
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function insertNews($infos)
     {
@@ -97,9 +95,10 @@ SQL;
     }
 
     /**
-     * Delete a article
      * @param $id
      * @return bool
+     * @throws \Exception
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function deleteNewsById($id)
     {

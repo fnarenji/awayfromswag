@@ -19,10 +19,12 @@ class EventModel extends Model
      * @return array
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function getAll()
+    public function getAll($start = 0, $end = 10)
     {
-        $sql = "SELECT * " .
-            "FROM event ";
+        $sql = <<<SQL
+SELECT * FROM event
+  LIMIT $start, $end;
+SQL;
 
         return DatabaseProvider::connection()->query($sql);
 

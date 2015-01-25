@@ -54,7 +54,11 @@ class HomeController extends Controller
         $article['last'] = $modelArticle->getLast();
 
         $article['top'] = $this->getInfos($article['top']);
+        $article['top']['text'] = substr($article['top']['text'], 0, strpos($article['top']['text'], ' ', 600));
+
         foreach ($article['last'] as &$art) {
+            $art['text'] = substr($art['text'], 0, strpos($art['text'], ' ', 70));
+            $art['text'] .=  ' ... ';
             $art = $this->getInfos($art);
         }
 

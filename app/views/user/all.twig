@@ -44,5 +44,17 @@
             {% endfor %}
             </tbody>
         </table>
+
+        <ul class="pure-paginator">
+            <li><a class="pure-button prev {{ page.actual == 1 ? 'pure-button-disabled' }}"
+                   href="/user/all/{{ page.actual > 1 ? page.actual - 1 : page.actual }}">&#171;</a></li>
+            {% for nb in 1..page.total %}
+                <li><a class="pure-button {{ nb == page.actual ? 'pure-button-active' : '' }}"
+                       href="/user/all/{{ nb }}">{{ nb }}</a></li>
+            {% endfor %}
+            <li><a class="pure-button next {{ page.actual == page.total ? 'pure-button-disabled' }}"
+                   href="/user/all/{{ page.actual < page.total ? page.actual + 1 : page.actual }}">&#187;</a></li>
+        </ul>
+
     </article>
 {% endblock %}

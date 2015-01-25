@@ -121,7 +121,11 @@ class ArticleController extends Controller
             'text' => 'Contenu'
         ]);
 
+
         $result['user'] = Authentication::getInstance()->getUserId();
+
+        // HARDCODE IS BAD
+        $result['category'] = 1;
 
         $this->articleModel->insertNews($result);
 
