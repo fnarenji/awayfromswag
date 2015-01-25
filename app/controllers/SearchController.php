@@ -8,12 +8,33 @@
 
 namespace app\controllers;
 
+use SwagFramework\Helpers\Input;
 use SwagFramework\mvc\Controller;
 
 class SearchController extends Controller
 {
+    private $userModel;
+    private $articleModel;
+    private $eventModel;
+
+    public function __construct()
+    {
+        $this->userModel = $this->loadModel('User');
+        $this->articleModel = $this->loadModel('Article');
+        $this->eventModel = $this->loadModel('Event');
+        parent::__construct();
+    }
+
     public function index()
     {
-        $this->getView()->render('search/index');
+        $query = Input::get('query', true);
+        $results = [];
+        if (!empty($query)) {
+            $results['users'] = $this->userModel->search($query);
+            $results['article'] = $this->articleModel->search($query);
+            var_dump($results);
+            die();
+        }
+        $this->getView()->render('search/index', $results);
     }
 }

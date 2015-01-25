@@ -308,4 +308,15 @@ SQL;
 
         return DatabaseProvider::connection()->selectFirst($sql, []);
     }
+
+    public function search($query)
+    {
+        $sql = <<<SQL
+SELECT *
+FROM event
+WHERE MATCH(name, description, address) AGAINST (:query)
+SQL;
+
+        return DatabaseProvider::connection()->query($sql, ['query' => $query]);
+    }
 }

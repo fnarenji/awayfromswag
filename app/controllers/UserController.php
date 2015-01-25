@@ -174,7 +174,7 @@ class UserController extends Controller
         if (!empty($errors))
             $this->getView()->render('user/register', ['user' => $user, 'errors' => $errors]);
         else {
-            //$this->getView()->redirect('/');
+            $this->getView()->redirect('/');
         }
     }
 
