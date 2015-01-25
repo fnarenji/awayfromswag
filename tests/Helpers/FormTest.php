@@ -9,12 +9,18 @@
 namespace tests\Helpers;
 
 
+use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Helpers\FormHelper;
 
 class FormTest extends \PHPUnit_Framework_TestCase
 {
     function __construct()
     {
+    }
+
+    public static function setUpBeforeClass()
+    {
+        DatabaseProvider::connect('tests/Database/testdatabase.json');
     }
 
     public function testForm()

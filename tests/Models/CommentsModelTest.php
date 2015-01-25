@@ -34,11 +34,10 @@ class CommentsModelTest extends \PHPUnit_Framework_TestCase {
     {
         $this->modelEvent = new CommentsEventModel();
 
-        $array = ['idevent'=>2,'iduser'=>1,'contents'=>'Trop SWAG'];
-        $state = $this->modelEvent->insertCommentEvent($array);
+        $state = $this->modelEvent->insertCommentEvent(1, 1, 'Trop SWAG');
         $this->assertEquals(true,$state);
 
-        $array = $this->modelEvent->getCommentsForEvent(2);
+        $array = $this->modelEvent->getCommentsForEvent(1);
         $this->assertNotEmpty($array);
 
         $state = $this->modelEvent->deleteCommentEvent(0);
@@ -50,24 +49,20 @@ class CommentsModelTest extends \PHPUnit_Framework_TestCase {
     {
         $this->modelArticle = new CommentsArticleModel();
         $state = $this->modelArticle->getAllCommentsArticle();
-        $this->assertEmpty($state);
+        $this->assertNotEmpty($state);
     }
 
     public function testAllArticle()
     {
         $this->modelArticle = new CommentsArticleModel();
 
-        $state = $this->modelArticle->insertCommentArticle(46, 1, 'Trop SWAG');
+        $state = $this->modelArticle->insertCommentArticle(1, 87, 'Trop SWAG');
         $this->assertEquals(true,$state);
 
-        $state = $this->modelArticle->getCommentsForArticle(46);
+        $state = $this->modelArticle->getCommentsForArticle(87);
         $this->assertNotEmpty($state);
 
         $state = $this->modelArticle->deleteCommentArticle(0);
         $this->assertEquals(true,$state);
     }
-
-
-
-
 }

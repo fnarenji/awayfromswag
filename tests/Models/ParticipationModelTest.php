@@ -22,15 +22,14 @@ class ParticipationModelTest extends \PHPUnit_Framework_TestCase{
 
         $state = $this->model->getEventsParticipations();
 
-        $this->assertEmpty($state);
+        $this->assertNotEmpty($state);
     }
 
     public function testAll()
     {
         $this->model = new ParticipateModel();
 
-        $array  = ['id'=>1,'user'=>1,'joindate'=>date('Y-m-d G:i:s')];
-        $state = $this->model->insertEventParticipation($array);
+        $state = $this->model->insertEventParticipation(1, 1);
         $this->assertEquals(true,$state);
 
         $state = $this->model->getEventParticipation(1);
