@@ -23,7 +23,7 @@ class UserModel extends Model
     const SELECT_BY_USERNAME_LIKE = 'SELECT id, username, firstname, lastname FROM user WHERE username LIKE ? ';
     const INSERT_FRIEND = 'INSERT INTO user_friend VALUES (?, ?, ?)';
     const DELETE_BY_USERNAME = 'DELETE FROM user WHERE username = ?';
-    const GET_ALL_FRIENDS = 'SELECT user1, user2 FROM user_friend WHERE user1 = ? OR user2 = ?';
+    const GET_ALL_FRIENDS = 'SELECT user1, user2 FROM user_friend WHERE user1 = :user1 OR user2 = :user2';
 
     const COUNT = <<<SQL
 SELECT COUNT(id) AS nb FROM user;
@@ -220,7 +220,10 @@ SQL;
 
     public function getAllFriends()
     {
-        return DatabaseProvider::connection()->query(self::GET_ALL_FRIENDS, ['user' => Authentication::getInstance()->getUserId()]);
+        return DatabaseProvider::connection()->query(self::GET_ALL_FRIENDS, [
+            'user1' => Authentication::getInstance()->getUserId(),
+            'user2' => Authentication::getInstance()->getUserId()
+        ]);
     }
 
     public function count()
