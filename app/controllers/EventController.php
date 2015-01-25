@@ -144,7 +144,10 @@ class EventController extends Controller
         }
 
         if (!isset($_POST['money']))
+        {
             $_POST['money'] = 0;
+            echo 'lol';
+        }
 
         $form = FormHelper::generate('event', '/event/add');
         $form->setClass('pure-form pure-form-aligned centered');
