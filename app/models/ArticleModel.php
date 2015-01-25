@@ -13,6 +13,12 @@ use SwagFramework\mvc\Model;
 
 class ArticleModel extends Model
 {
+    const INSERT_ARTICLE = "INSERT INTO article (user,title,text,image,postdate,category) VALUES (:user, :title, :text, :image, NOW(), :category);";
+    const DELETE_ARTICLE = 'DELETE FROM article WHERE id = ?';
+    const DELETE_ARTICLE_BY_NAME = 'DELETE FROM article WHERE title = ?';
+    const UPDATE_ARTICLE_TEXT = 'UPDATE article SET text=:text, title=:title WHERE id=:id';
+    const UPDATE_ARTICLE_TEXT_BY_NAME = 'UPDATE article SET text = ?, postdate = ? WHERE title = ?';
+
     const SEARCH_ARTICLE = <<<SQL
 SELECT article.*
 FROM article
@@ -24,21 +30,36 @@ WHERE MATCH(article.title, article.text) AGAINST (:query)
   OR MATCH(article_category.name) AGAINST (:query)
 SQL;
 
-    const INSERT_ARTICLE = <<<SQL
-INSERT INTO article (user,title,text,image,postdate,category) VALUES (:user, :title, :text, :image, NOW(), :category);
+    const SELECT_ARTICLE = <<<SQL
+SELECT article.*, CONCAT(user.username, ' (', user.firstname, ' ', user.lastname, ')') as authorFullName
+FROM article
+JOIN user ON user.id = article.user
+WHERE id = ?
 SQL;
-    const DELETE_ARTICLE = 'DELETE FROM article WHERE id = ?';
-    const DELETE_ARTICLE_BY_NAME = 'DELETE FROM article WHERE title = ?';
-    const UPDATE_ARTICLE_TEXT = 'UPDATE article SET text=:text, title=:title WHERE id=:id';
-    const UPDATE_ARTICLE_TEXT_BY_NAME = 'UPDATE article SET text = ?, postdate = ? WHERE title = ?';
+
     const GET_CATEGORY = <<<SQL
 SELECT * FROM article_category WHERE id=?;
 SQL;
+
     const SELECT_TOP_ARTICLES = <<<SQL
-SELECT * FROM article ORDER BY postdate DESC LIMIT 1;
+SELECT article.*, CONCAT(user.username, ' (', user.firstname, ' ', user.lastname, ')') AS authorFullName
+FROM article
+JOIN user ON user.id = article.user
+ORDER BY postdateDESC
+LIMIT 1;
 SQL;
+
     const SELECT_LATEST_ARTICLES = <<<SQL
-SELECT * FROM article ORDER BY postdate DESC LIMIT 3;
+SELECT article.*, CONCAT(user.username, ' (', user.firstname, ' ', user.lastname, ')') AS authorFullName
+FROM article
+JOIN user ON user.id = article.user
+ORDER BY postdate DESC
+LIMIT 3;
+SQL;
+    const SELECT_ARTICLES = <<<SQL
+SELECT article.*, CONCAT(user.username, ' (', user.firstname, ' ', user.lastname, ')') AS authorFullName
+FROM article
+JOIN user ON user.id = article.user
 SQL;
 
     /**
@@ -48,11 +69,7 @@ SQL;
      */
     public function getOneNewsById($id)
     {
-        $sql = "SELECT * " .
-            "FROM article " .
-            "WHERE id=?";
-
-        return DatabaseProvider::connection()->selectFirst($sql, [$id]);
+        return DatabaseProvider::connection()->selectFirst(self::SELECT_ARTICLE, [$id]);
     }
 
     /**
@@ -77,10 +94,7 @@ SQL;
      */
     public function getNews()
     {
-        $sql = "SELECT * " .
-            "FROM article";
-
-        return DatabaseProvider::connection()->query($sql);
+        return DatabaseProvider::connection()->query(self::SELECT_ARTICLES);
     }
 
     /**

@@ -15,7 +15,8 @@
                     <li>
                         <a href="/article/show/{{ article.id }}"><h1>{{ article.title }}</h1>, </a>
                         <span class="mini-text">le {{ article.postdate }}, </span>
-                        <span class="mini-text">Catégorie : {{ article.category.name }}</span>
+                        <span class="mini-text">par {{ article.authorFullName }} </span>
+                        <span class="mini-text">dans la catégorie {{ article.category.name }}</span>
 
                         <p>
                             {{ article.text }}
