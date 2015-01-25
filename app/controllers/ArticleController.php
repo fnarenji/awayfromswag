@@ -145,7 +145,7 @@ class ArticleController extends Controller
             throw new ArticleNotFoundException($id);
         }
 
-        if ($article['user'] != Authentication::getInstance()->getUserId()) {
+        if ($article['user'] != Authentication::getInstance()->getUserId() && !(Authentication::getInstance()->getOptionOr('accessLevel', 0) == 1)) {
             throw new NotYourArticleException($id);
         }
 
@@ -154,9 +154,11 @@ class ArticleController extends Controller
         $form->getField('id')->addAttribute('value', $article['id']);
         $form->getField('title')->addAttribute('value', $article['title']);
         $form->getField('text')->setContent($article['text']);
+        $form->getField('image')->setContent($article['image']);
 
         $html = $form->getFormHTML([
             'title' => 'Titre de l\'Actualité',
+            'image' => 'URL Image',
             'text' => 'Contenu'
         ]);
 
@@ -182,7 +184,7 @@ class ArticleController extends Controller
             throw new ArticleNotFoundException($result['id']);
         }
 
-        if ($article['user'] != Authentication::getInstance()->getUserId()) {
+        if ($article['user'] != Authentication::getInstance()->getUserId() && !(Authentication::getInstance()->getOptionOr('accessLevel', 0) == 1)) {
             throw new NotYourArticleException($result['id']);
         }
 
