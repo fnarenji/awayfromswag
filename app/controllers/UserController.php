@@ -39,7 +39,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $this->getView()->render('user/index');
+        $this->getView()->redirect('/');
     }
 
     public function profile()
