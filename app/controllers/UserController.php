@@ -112,7 +112,7 @@ class UserController extends Controller
                 $this->getView()->redirect('/');
             }
         } catch (InputNotSetException $e) {
-            throw $e;
+            //throw $e;
         }
     }
 
@@ -147,6 +147,7 @@ class UserController extends Controller
             'mailnotifications' => Input::post('mailnotifications', true) == 'on' ? 1 : 0,
             'accesslevel' => 0
         ];
+
         $birthday = new \DateTime($user['birthday'] . '00:00:00');
         $user['birthday'] = $birthday->format('Y-m-d h-i-s');
 
