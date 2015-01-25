@@ -39,6 +39,7 @@ class Input
      */
     private static function quote_smart($value)
     {
+        // PDO makes this a bit useless, so commented because not tested
 //        $value = utf8_encode($value);
 //
 //        // Protection concernant Stripslashes

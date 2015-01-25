@@ -80,6 +80,8 @@ class EventController extends Controller
 
     private function getInfos($event)
     {
+        if (Authentication::getInstance()->isAuthenticated())
+            $event['participating'] = $this->eventModel->getParticipateUser($event['id'], Authentication::getInstance()->getUserId());
         $event['user'] = $this->userModel->getUser($event['user']);
 
         $createtime = new \DateTime($event['createtime']);
