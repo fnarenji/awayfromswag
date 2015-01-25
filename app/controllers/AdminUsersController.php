@@ -9,6 +9,7 @@
 namespace app\controllers;
 
 use app\helpers\PrivacyCalculator;
+use app\models\ConversationModel;
 use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Exceptions\NoUserFoundException;
@@ -72,12 +73,18 @@ class AdminUsersController extends Controller
 
     public function delete()
     {
-        $iduser = (int)$this->getParams()[0];
-        $this->model->deleteUser($iduser);
+        $this->userModel = $this->loadModel('User');
+        $iduser = $this->getParams()[0];
+        $this->userModel->deleteUser($iduser);
+        $conversationModel = new ConversationModel();
+        $conversationModel;
+        $this->index();
     }
 
     public function update()
     {
+
+        $this->userModel = $this->loadModel('User');
 
         $iduser = (int)$this->getParams()[0];
         $username = Input::get('username');
@@ -86,7 +93,7 @@ class AdminUsersController extends Controller
         $mail = Input::get('mail');
         $password = sha1(Input::get('password'));
 
-        $this->model->updateAdminUser($iduser, [
+        $this->userModel->updateAdminUser($iduser, [
             'username' => $username,
             'firstname' => $firstname,
             'lastname' => $lastname,
