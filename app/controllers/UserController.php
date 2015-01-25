@@ -39,7 +39,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $this->getView()->render('user/index');
+        $this->getView()->redirect('/');
     }
 
     public function profile()
@@ -359,10 +359,5 @@ class UserController extends Controller
         $model = new EventModel();
         $myevent = $model->getEventsForUser(Authentication::getInstance()->getUserId());
         $this->getView()->render('user/myevent',['events' => $myevent]);
-    }
-
-    public function getserver()
-    {
-        include 'server.php';
     }
 }
