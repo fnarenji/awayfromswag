@@ -8,7 +8,7 @@
     <li><a href="/user/calendar"><i class="fa fa-calendar"></i>Calendrier</a></li>
     <li><a href="/user/friends"><i class="fa fa-users"></i>Mes amis</a></li>
     <li><a href="/conversation"><i
-                    class="fa fa-comments-o"></i>Messagerie{% if newmessages %}({{ newmessages }}){% endif %}</a></li>
+                    class="fa fa-comments-o"></i>Messagerie{% if newmessages %} ({{ newmessages }}){% endif %}</a></li>
     {% if auth.options.accessLevel %}
         <li><a href="/adminusers"><i class="fa fa-lock"></i>Gestion des utilisateurs</a></li>
         <li><a href="/adminevents"><i class="fa fa-lock"></i>Gestion des évènements</a></li>
