@@ -31,9 +31,9 @@ class Input
     }
 
     /**
-     * get var $_POST
      * @param $key
-     * @return mixed
+     * @param bool $optional
+     * @return null
      * @throws InputNotSetException
      */
     public static function post($key, $optional = false)
@@ -49,7 +49,8 @@ class Input
 
     /**
      * @param $key
-     * @return mixed
+     * @param bool $optional
+     * @return null
      * @throws InputNotSetException
      */
     public static function session($key, $optional = false)
