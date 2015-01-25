@@ -44,8 +44,8 @@ $dates = $date->getAll($year);
                             <?php echo $date->days[$w - 1]; ?> <?php echo $d; ?>  <?php echo $date->months[$m-1]; ?>
                         </div>
                         <ul class="events">
-                            <?php if(isset($events[$time])): foreach($events[$time] as $e): ?>
-                                <li><?php echo $e; ?></li>
+                            <?php if(isset($events[$time])): foreach($events[$time] as $key => $e): ?>
+                                <li><a href="/event/show/<?= $key ?>"><?= $e ?></a></li>
                             <?php endforeach; endif;  ?>
                         </ul>
                     </td>
