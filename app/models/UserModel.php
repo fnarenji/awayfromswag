@@ -161,7 +161,7 @@ SQL;
 Bonjour,
 
 Votre inscription sur Away From Security est en attente de validation.
-Veuillez ouvrir https://srv0.sknz.info:3735/validate/$token.
+Veuillez ouvrir https://srv0.sknz.info:3735/user/validate/$token.
 
 Cordialement,
 #HCS
@@ -253,8 +253,7 @@ TEXT;
         $sql = 'UPDATE user '
             . 'SET ' . $str . ' WHERE id = :id;';
 
-        var_dump($infos);
-        var_dump($sql);
+        $infos = array_filter($infos);
 
         return DatabaseProvider::connection()->execute($sql, $infos);
     }
