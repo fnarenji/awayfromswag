@@ -418,14 +418,14 @@ class UserController extends Controller
         $this->userModel->setReset($user['id'], $token);
 
         $message = 'Cliquez ici pour changer votre mot de passe : ';
-        $message .= CR . 'http://srv0.sknz.info/user/resetpasswd/' . $token;
+        $message .= CR . 'https://srv0.sknz.info:3735/user/resetpasswd/' . $token;
 
         MailUtil::send($user['mail'], 'AwayFromSecurity : RESET PASSWORD', $message);
 
         $this->getView()->redirect('/');
     }
 
-    public function resetpasswd()
+    public function passwd()
     {
         $token = $this->getParams()[0];
 
@@ -435,7 +435,7 @@ class UserController extends Controller
             throw new NoUserFoundException($token);
         }
 
-        $form = new Form('/user/resetpasswd');
+        $form = new Form('/user/passwd');
         $form->addField(new LabelField('passwd1'));
         $form->addField(new LabelField('passwd2'));
         $form->addField(new InputField('passwd1', ['type' => 'password']));
@@ -447,10 +447,10 @@ class UserController extends Controller
             'passwd2' => 'Confirmier le mot de passe'
         ]);
 
-        $this->getView()->render('user/resetpasswd', ['form' => $html]);
+        $this->getView()->render('user/passwd', ['form' => $html]);
     }
 
-    public function resetpasswdPOST()
+    public function passwdPOST()
     {
         $token = $this->getParams()[0];
 
