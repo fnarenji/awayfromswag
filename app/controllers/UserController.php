@@ -438,11 +438,13 @@ class UserController extends Controller
         $form = new Form('/user/passwd');
         $form->addField(new LabelField('passwd1'));
         $form->addField(new LabelField('passwd2'));
+        $form->addField(new InputField('id', ['type' => 'hidden', 'value' => $id]));
         $form->addField(new InputField('passwd1', ['type' => 'password']));
         $form->addField(new InputField('passwd2', ['type' => 'password']));
         $form->addField(new InputField('submit', ['type' => 'submit']));
 
         $html = $form->getFormHTML([
+            'id' => '',
             'passwd1' => 'Nouveau mot de passe',
             'passwd2' => 'Confirmier le mot de passe'
         ]);
@@ -452,12 +454,6 @@ class UserController extends Controller
 
     public function passwdPOST()
     {
-        $id = $this->userModel->getReset($token);
-
-        if (empty($id)) {
-            throw new NoUserFoundException($token);
-        }
-
         $form = new Form('/user/resetpasswd');
         $form->addField(new LabelField('passwd1'));
         $form->addField(new LabelField('passwd2'));
@@ -466,6 +462,7 @@ class UserController extends Controller
         $form->addField(new InputField('submit', ['type' => 'submit']));
 
         $result = $form->validate([
+            'id' => '',
             'passwd1' => 'Nouveau mot de passe',
             'passwd2' => 'Confirmer le mot de passe'
         ]);
@@ -474,7 +471,7 @@ class UserController extends Controller
             throw new PasswordNotSameExceptionException();
         }
 
-        $this->userModel->updatePassword($id, $result['passwd1']);
+        $this->userModel->updatePassword($result['id'], $result['passwd1']);
 
         $this->getView()->redirect('/');
     }
