@@ -34,14 +34,14 @@ SQL;
 SELECT article.*, CONCAT(user.username, ' (', user.firstname, ' ', user.lastname, ')') as authorFullName
 FROM article
 JOIN user ON user.id = article.user
-WHERE id = ?
+WHERE article.id = ?
 SQL;
 
     const GET_CATEGORY = <<<SQL
 SELECT * FROM article_category WHERE id=?;
 SQL;
 
-    const SELECT_TOP_ARTICLES = <<<SQL
+    const SELECT_TOP_ARTICLE = <<<SQL
 SELECT article.*, CONCAT(user.username, ' (', user.firstname, ' ', user.lastname, ')') AS authorFullName
 FROM article
 JOIN user ON user.id = article.user
@@ -54,7 +54,7 @@ SELECT article.*, CONCAT(user.username, ' (', user.firstname, ' ', user.lastname
 FROM article
 JOIN user ON user.id = article.user
 ORDER BY postdate DESC
-LIMIT 3;
+LIMIT 1,4;
 SQL;
     const SELECT_ARTICLES = <<<SQL
 SELECT article.*, CONCAT(user.username, ' (', user.firstname, ' ', user.lastname, ')') AS authorFullName
@@ -155,7 +155,7 @@ SQL;
 
     public function getTop()
     {
-        return DatabaseProvider::connection()->selectFirst(self::SELECT_TOP_ARTICLES);
+        return DatabaseProvider::connection()->selectFirst(self::SELECT_TOP_ARTICLE);
     }
 
     public function getLast()

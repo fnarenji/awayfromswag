@@ -20,6 +20,30 @@ class UserModel extends Model
     const GET_ALL_USER_FULL_NAME = 'SELECT CONCAT(username, \' (\', firstname, \' \', UPPER(lastname), \')\') AS userFullName FROM user';
     const GET_USER_FULL_NAME = 'SELECT CONCAT(username, \' (\', firstname, \' \', UPPER(lastname), \')\') AS userFullName FROM user WHERE id = ?';
     const SEARCH = "SELECT user.* FROM user WHERE MATCH(username, firstname, lastname, description) AGAINST (:query) OR id = :query";
+    const SELECT_BY_USERNAME_LIKE = 'SELECT id, username, firstname, lastname FROM user WHERE username LIKE ? ';
+    const INSERT_FRIEND = 'INSERT INTO user_friend VALUES (?, ?, ?)';
+    const DELETE_BY_USERNAME = 'DELETE FROM user WHERE username = ?';
+    const GET_ALL_FRIENDS = 'SELECT user1, user2 FROM user_friend WHERE user1 = ? OR user2 = ?';
+
+    const COUNT = <<<SQL
+SELECT COUNT(id) AS nb FROM user;
+SQL;
+
+    const UPDATE_ADMIN_USER = 'UPDATE user SET username = :username, firstname = :firstname, lastname = :lastname, mail = :mail, password = SHA1(CONCAT(:password, :salt)), birthday = :birthday,
+                phonenumber = :phonenumber,twitter = :twitter, skype = :skype, facebookuri = :facebookuri, website = :website, job = :job, description = :description,
+                privacy = :privacy, mailnotifications = :mailnotifications, accesslevel = :accesslevel WHERE id = ?';
+
+    const INSERT_USER = <<<SQL
+INSERT INTO user (username, firstname, lastname, mail, password, birthday,phonenumber, twitter, skype, facebookuri, website, job, description, privacy, mailnotifications, accesslevel)
+        VALUES (:username, CONCAT(UCASE(LEFT(:username, 1)), SUBSTRING(:username, 2)), UPPER(:lastname), :mail, SHA1(CONCAT(:password, :salt)), :birthday, :phonenumber, :twitter, :skype, :facebookuri, :website, :job, :description, :privacy, :mailnotifications, :accesslevel)
+SQL;
+
+    const VALIDATE_AUTH = <<<SQL
+SELECT id, firstname, lastname, MD5(mail) mailHash, accesslevel
+FROM user
+WHERE username = :username
+  AND password = SHA1(CONCAT(:password, :salt))
+SQL;
 
     /**
      *  Return all information with the id
@@ -51,7 +75,10 @@ class UserModel extends Model
 
     /**
      * Return all information for all users
+     * @param int $start lower bound of list
+     * @param int $end upper bound of list
      * @return array
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function getAllUsers($start = 0, $end = 10)
     {
@@ -100,16 +127,11 @@ SQL;
      */
     public function validateAuthentication($username, $password)
     {
-        $salt = self::SALT;
-
-        $sql = <<<SQL
-SELECT id, firstname, lastname, MD5(mail) mailHash, accesslevel
-FROM user
-WHERE username = ?
-  AND password = SHA1(CONCAT(?, '$salt'))
-SQL;
-
-        return DatabaseProvider::connection()->selectFirst($sql, [$username, $password]);
+        return DatabaseProvider::connection()->selectFirst(self::VALIDATE_AUTH, [
+            'username' => $username,
+            'password' => $password,
+            'salt' => self::SALT
+        ]);
     }
 
     /**
@@ -120,25 +142,8 @@ SQL;
      */
     public function insertUser(array $infos)
     {
-        try {
-            DatabaseProvider::connection()->beginTransaction();
-
-            $salt = self::SALT;
-
-            $sql = <<<SQL
-INSERT INTO user (username, firstname, lastname, mail, password, birthday,phonenumber, twitter, skype, facebookuri, website, job, description, privacy, mailnotifications, accesslevel)
-        VALUES (:username, :firstname, :lastname, :mail, SHA1(CONCAT(:password, '$salt')), :birthday, :phonenumber, :twitter, :skype, :facebookuri, :website, :job, :description, :privacy, :mailnotifications, :accesslevel)
-SQL;
-
-            $success = DatabaseProvider::connection()->execute($sql, $infos);
-            DatabaseProvider::connection()->commit();
-
-            return $success;
-
-        } catch (\PDOException $e) {
-            DatabaseProvider::connection()->rollBack();
-            throw $e;
-        }
+        $infos = array_merge($infos, ['salt' => self::SALT]);
+        return DatabaseProvider::connection()->execute(self::INSERT_USER, $infos);
     }
 
     /**
@@ -149,22 +154,7 @@ SQL;
      */
     public function deleteUser($id)
     {
-        try {
-
-            DatabaseProvider::connection()->beginTransaction();
-
-            $sql = 'DELETE FROM user WHERE username = ?';
-
-            $state = DatabaseProvider::connection()->execute($sql, [$id]);
-
-            DatabaseProvider::connection()->commit();
-
-            return $state;
-
-        } catch (\Exception $e) {
-            DatabaseProvider::connection()->rollBack();
-            throw $e;
-        }
+        return DatabaseProvider::connection()->execute(self::DELETE_BY_USERNAME, [$id]);
     }
 
     /**
@@ -175,33 +165,19 @@ SQL;
      */
     public function updateUser($infos)
     {
-        try {
+        $str = '';
 
-            DatabaseProvider::connection()->beginTransaction();
-
-            $str = '';
-
-            foreach($infos as $key=>$value){
-                if($key != 'id'){
-                    $str .= ''.$key.' = \''.$value.'\' ,';
-                }
+        foreach ($infos as $key => $value) {
+            if ($key != 'id') {
+                $str .= '' . $key . ' = \'' . $value . '\' ,';
             }
-
-            $str  = substr($str, 0, -1);
-
-            $sql = 'UPDATE user '
-                . 'SET '.$str.' WHERE id= ?;';
-            $state = DatabaseProvider::connection()->execute($sql, [$infos['id']]);
-
-            DatabaseProvider::connection()->commit();
-
-            return $state;
-
-
-        } catch (\Exception $e) {
-            DatabaseProvider::connection()->rollBack();
-            throw $e;
         }
+
+        $str = substr($str, 0, -1);
+
+        $sql = 'UPDATE user '
+            . 'SET ' . $str . ' WHERE id= ?;';
+        return DatabaseProvider::connection()->execute($sql, [$infos['id']]);
     }
 
     /**
@@ -212,21 +188,8 @@ SQL;
      */
     public function updateAdminUser($infos)
     {
-        try {
-
-            DatabaseProvider::connection()->beginTransaction();
-            $sql = 'UPDATE user SET username = :username, firstname = :firstname, lastname = :lastname, mail = :mail, password = SHA1(CONCAT(:password, \'' . self::SALT . '\')), birthday = :birthday,
-                    phonenumber = :phonenumber,twitter = :twitter, skype = :skype, facebookuri = :facebookuri, website = :website, job = :job, description = :description,
-                    privacy = :privacy, mailnotifications = :mailnotifications, accesslevel = :accesslevel WHERE id = ?';
-
-            $state = DatabaseProvider::connection()->execute($sql, $infos);
-            DatabaseProvider::connection()->commit();
-            return $state;
-
-        } catch (\Exception $e) {
-            DatabaseProvider::connection()->rollBack();
-            throw $e;
-        }
+        $infos = array_merge($infos, ['salt' => self::SALT]);
+        return DatabaseProvider::connection()->execute(self::UPDATE_ADMIN_USER, $infos);
     }
 
     /**
@@ -236,12 +199,9 @@ SQL;
      */
     public function getUserLike($name)
     {
-
         $name = '%' . $name . '%';
 
-        $sql = 'SELECT id, username, firstname, lastname FROM user WHERE username LIKE ? ';
-
-        return DatabaseProvider::connection()->query($sql, [$name]);
+        return DatabaseProvider::connection()->query(self::SELECT_BY_USERNAME_LIKE, [$name]);
     }
 
     public function getUserFullNameLike($fullName)
@@ -253,29 +213,19 @@ SQL;
 
     public function addToFriend($id)
     {
-        $sql = 'INSERT INTO user_friend VALUES (?, ?, 0)';
-
         $user2 = Authentication::getInstance()->getUserId();
 
-        return DatabaseProvider::connection()->execute($sql, array($user2, $id));
+        return DatabaseProvider::connection()->execute(self::INSERT_FRIEND, array($user2, $id));
     }
 
     public function getAllFriends()
     {
-        $sql = 'SELECT user1, user2 FROM user_friend WHERE user1 = ? OR user2 = ?';
-
-        $user = Authentication::getInstance()->getUserId();
-
-        return DatabaseProvider::connection()->query($sql, array($user, $user));
+        return DatabaseProvider::connection()->query(self::GET_ALL_FRIENDS, ['user' => Authentication::getInstance()->getUserId()]);
     }
 
     public function count()
     {
-        $sql = <<<SQL
-SELECT COUNT(id) as nb FROM user;
-SQL;
-
-        return DatabaseProvider::connection()->selectFirst($sql, []);
+        return DatabaseProvider::connection()->selectFirst(self::COUNT, []);
     }
 
     public function search($query)

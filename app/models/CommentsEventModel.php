@@ -21,7 +21,7 @@ JOIN comment_event  ON comment.id = comment_event.id
 JOIN event          ON event.id = comment_event.event
 SQL;
     const GET_COMMENT_FOR_EVENT = <<<SQL
-SELECT comment.id AS commid, comment.message, user.id AS useid, user.username, event.name
+SELECT comment.id, comment.message, user.id, user.username, event.name
 FROM comment
 JOIN user           ON comment.user = user.id
 JOIN comment_event  ON comment.id = comment_event.id
