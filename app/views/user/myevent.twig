@@ -14,11 +14,8 @@
                 {% for event in events %}
                     <li>
                         <a href="/event/show/{{ event.id }}"><h1>{{ event.name }}</h1>, </a>
-                        <span class="mini-text">le {{ event.eventtime }}, </span>
-                        <span class="mini-text">Prix : {{ event.money }}€</span>
+                        <span class="mini-text">le {{ event.eventtime }} </span>
                         <p>
-                            {{ event.description }}
-                        </p>
                     </li>
                 {% endfor %}
             </ul>
