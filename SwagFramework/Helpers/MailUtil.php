@@ -17,6 +17,7 @@ namespace app\helpers;
 
 class MailUtil
 {
+    private static $config;
     private function __construct()
     {
 
@@ -24,15 +25,20 @@ class MailUtil
 
     public static function send($to, $subject, $message)
     {
-        $config = new ConfigFileParser("app/config/mail.json");
-        $transporter = Swift_SmtpTransport::newInstance($config->getEntry('host'), (int)$config->getEntry('port'), $config->getEntry('security'))
-            ->setUsername($config->getEntry('username'))
-            ->setPassword($config->getEntry('password'));
+        if (is_null(self::$config))
+            self::$config = new ConfigFileParser("app/config/mail.json");
+
+        $transporter = Swift_SmtpTransport::newInstance()
+            ->setHost(self::$config->getEntry('host'))
+            ->setPort((int)self::$config->getEntry('port'))
+            ->setEncryption(self::$config->getEntry('security'))
+            ->setUsername(self::$config->getEntry('username'))
+            ->setPassword(self::$config->getEntry('password'));
 
         $mailer = Swift_Mailer::newInstance($transporter);
         $message = Swift_Message::newInstance($subject, $message)
             ->addTo($to)
-            ->setSender($config->getEntry('sender'));
+            ->setSender(self::$config->getEntry('sender'));
         $mailer->send($message);
     }
 

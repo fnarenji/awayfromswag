@@ -27,7 +27,29 @@ class Input
             return null;
         }
         //TODO: Protect input $_GET
-        return $_GET[$key];
+        return self::quote_smart($_GET[$key]);
+    }
+
+    /**
+     * Fonction qui protège la variable passée en paramètre des injections SQL
+     * et des caractères spéciaux.
+     *
+     * @author Mickaël Martin Nevot
+     * http://mickael-martin-nevot.com/iut-informatique/programmation-web-c%C3%B4t%C3%A9-serveur/s24-cm2-php-interm%C3%A9diaire.pdf
+     */
+    private static function quote_smart($value)
+    {
+//        $value = utf8_encode($value);
+//
+//        // Protection concernant Stripslashes
+//        if (get_magic_quotes_gpc()) {
+//            $value = stripslashes($value);
+//        }
+//        // Protection si ce n'est pas une valeur numérique ou une chaîne numérique
+//        if (!is_numeric($value)) {
+//            $value = '\'' . @mysql_real_escape_string($value) . '\'';
+//        }
+        return $value;
     }
 
     /**
@@ -38,13 +60,13 @@ class Input
      */
     public static function post($key, $optional = false)
     {
-        if ((!isset($_POST[$key]) || empty($_POST[$key])) && ($_POST['key'] != 0)) {
+        if (isset($_POST[$key]) && !empty($_POST[$key])) {
             if (!$optional)
                 throw new InputNotSetException('$_POST', $key);
             return null;
         }
         //TODO: Protect input $_GET
-        return $_POST[$key];
+        return self::quote_smart($_POST[$key]);
     }
 
     /**
@@ -61,7 +83,7 @@ class Input
             return null;
         }
 
-        return $_SESSION[$key];
+        return self::quote_smart($_SESSION[$key]);
     }
 
     public static function getPost()
