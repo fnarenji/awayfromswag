@@ -594,7 +594,29 @@ img.article-img
     width: 300px;
     height: auto;
     float: left;
+    margin-right: 5px;
+    margin-bottom: -2px;
 }
+.article-content
+{
+    display: table;
+    float:none;
+    line-height: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.article-comment
+{
+    display: block;
+    margin-bottom: 10px;
+}
+
+.article-comment-author
+{
+    display: block;
+    margin-bottom: 5px;
+}
+
 
 /* WOW MEDIA QUERIES, SUCH RESPONSIVE, MUCH SKILLS */
 @media only screen and (min-width: 780px) {
