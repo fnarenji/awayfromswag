@@ -33,7 +33,6 @@ $(document).ready(function () {
     //$('#scroll').hide();
 
     $(window).scroll(function() {
-        console.log($(this).scrollTop());
         if ($(this).scrollTop() > 200) $('#scroll').fadeIn();
         else $('#scroll').fadeOut();
     });
