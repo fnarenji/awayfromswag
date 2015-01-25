@@ -205,15 +205,21 @@ TEXT;
             $user = 'DELETE FROM user WHERE id = ?;';
             $article = 'UPDATE article SET user = -1 WHERE user = ?';
             $comment = 'UPDATE comment SET user = -1 WHERE user = ?';
-            $conversation = 'UPDATE conversation_user SET user = -1 WHERE user = ?';
+            $conversation = 'UPDATE conversation SET user = -1 WHERE user = ?';
+            $conversationUser = 'DELETE FROM conversation_user WHERE user = ?';
             $event = 'UPDATE event SET user = -1 WHERE user = ?';
-            $event_user = 'UPDATE event_user SET user = -1 WHERE user = ?';
+            $event_user = 'DELETE FROM event_user WHERE user = ?';
+            $user_validation = 'DELETE FROM user_validation WHERE id = ?';
+            $user_friend = 'DELETE FROM user_friend WHERE user1 = ? OR user2 = ?';
 
             $success = DatabaseProvider::connection()->execute($article, [$id]);
             $success = $success && DatabaseProvider::connection()->execute($comment, [$id]);
             $success = $success && DatabaseProvider::connection()->execute($conversation, [$id]);
+            $success = $success && DatabaseProvider::connection()->execute($conversationUser, [$id]);
             $success = $success && DatabaseProvider::connection()->execute($event, [$id]);
             $success = $success && DatabaseProvider::connection()->execute($event_user, [$id]);
+            $success = $success && DatabaseProvider::connection()->execute($user_validation, [$id]);
+            $success = $success && DatabaseProvider::connection()->execute($user_friend, [$id, $id]);
             $success = $success && DatabaseProvider::connection()->execute($user, [$id]);
 
             DatabaseProvider::connection()->commit();
