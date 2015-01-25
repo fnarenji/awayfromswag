@@ -310,13 +310,18 @@ TEXT;
     public function setReset($id, $token)
     {
         $sql = <<<SQL
-INSERT INTO user_reset (id, token)
+INSERT INTO user_reset (id, token) VALUES (?, ?);
 SQL;
 
+        return DatabaseProvider::connection()->execute($sql, [$id, $token]);
     }
 
     public function getReset($id)
     {
+        $sql = <<<SQL
+DELETE FROM user_reset WHERE id=?;
+SQL;
 
+        return DatabaseProvider::connection()->execute($sql, [$id]);
     }
 }
