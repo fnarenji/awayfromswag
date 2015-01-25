@@ -469,7 +469,7 @@ class UserController extends Controller
 
         $result = $form->validate([
             'passwd1' => 'Nouveau mot de passe',
-            'passwd2' => 'Confirmier le mot de passe'
+            'passwd2' => 'Confirmer le mot de passe'
         ]);
 
         if ($result['passwd1'] != $result['passwd2']) {
