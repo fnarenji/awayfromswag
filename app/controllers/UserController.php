@@ -418,7 +418,7 @@ class UserController extends Controller
         $this->userModel->setReset($user['id'], $token);
 
         $message = 'Cliquez ici pour changer votre mot de passe : ';
-        $message .= CR . 'https://srv0.sknz.info:3735/user/resetpasswd/' . $token;
+        $message .= CR . 'https://srv0.sknz.info:3735/user/passwd/' . $token;
 
         MailUtil::send($user['mail'], 'AwayFromSecurity : RESET PASSWORD', $message);
 
@@ -438,7 +438,7 @@ class UserController extends Controller
         $form = new Form('/user/passwd');
         $form->addField(new LabelField('passwd1'));
         $form->addField(new LabelField('passwd2'));
-        $form->addField(new InputField('id', ['type' => 'hidden', 'value' => $id]));
+        $form->addField(new InputField('id', ['type' => 'hidden', 'value' => $id['id']]));
         $form->addField(new InputField('passwd1', ['type' => 'password']));
         $form->addField(new InputField('passwd2', ['type' => 'password']));
         $form->addField(new InputField('submit', ['type' => 'submit']));
@@ -471,6 +471,7 @@ class UserController extends Controller
             throw new PasswordNotSameExceptionException();
         }
 
+        $this->userModel->deleteReset($result['id']);
         $this->userModel->updatePassword($result['id'], $result['passwd1']);
 
         $this->getView()->redirect('/');

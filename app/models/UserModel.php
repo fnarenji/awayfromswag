@@ -352,4 +352,13 @@ SQL;
 
         return DatabaseProvider::connection()->selectFirst($sql, [$mail]);
     }
+
+    public function deleteReset($id)
+    {
+        $sql = <<<SQL
+DELETE FROM user_reset WHERE id=?;
+SQL;
+
+        return DatabaseProvider::connection()->execute($sql, [$id]);
+    }
 }
