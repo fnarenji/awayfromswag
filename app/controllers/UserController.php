@@ -11,6 +11,7 @@ namespace app\controllers;
 use app\helpers\PrivacyCalculator;
 use app\models\EventModel;
 use app\models\UserModel;
+use app\models\FriendModel;
 use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Exceptions\NoUserFoundException;
@@ -24,6 +25,11 @@ class UserController extends Controller
      * @var UserModel the user model duh
      */
     private $userModel;
+
+    /**
+     * @var FriendModel the user model duh
+     */
+    private $friendModel;
 
     public function __construct()
     {
@@ -324,5 +330,26 @@ class UserController extends Controller
     public function requestReset()
     {
         $this->getView()->render('user/requestReset');
+    }
+
+    public function friends()
+    {
+        $this->friendModel = $this->loadModel('Friend');
+        $user = $this->friendModel->getAllFriendById(Authentication::getInstance()->getUserId());
+        $this->getView()->render('user/friend',['users' => $user]);
+    }
+
+    public function updateFriend(){
+        $id2 = $this->getParams()[0];
+        $this->friendModel = $this->loadModel('Friend');
+        $this->friendModel->updateFriend(Authentication::getInstance()->getUserId(),$id2);
+        $this->friends();
+    }
+
+    public function deleteFriend(){
+        $id2 = $this->getParams()[0];
+        $this->friendModel = $this->loadModel('Friend');
+        $this->friendModel->deleteFriend(Authentication::getInstance()->getUserId(),$id2);
+        $this->friends();
     }
 }

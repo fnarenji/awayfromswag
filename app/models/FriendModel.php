@@ -23,7 +23,7 @@ class FriendModel extends Model {
      */
     public function getAllFriendById($id){
 
-        $sql = 'SELECT user2, user.username FROM user_friend, user WHERE user_friend.user2 = user.id AND user_friend.user1 = ?';
+        $sql = 'SELECT user2, user.username, valid FROM user_friend, user WHERE user_friend.user2 = user.id AND user_friend.user1 = ?';
 
         return DatabaseProvider::connection()->query($sql,[$id]);
     }

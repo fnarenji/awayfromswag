@@ -36,8 +36,8 @@ class LittleModel extends Model
         $sql = 'DELETE FROM cpt_connectes WHERE timestamp < ' . $timestamp_5min;
 
         $sql = 'SELECT COUNT(*) FROM cpt_connectes';
-        $data = DatabaseProvider::connection()->query($sql);
-        return $data[0];
+        $data2 = DatabaseProvider::connection()->query($sql);
+        return $data2[0];
     }
 
 }
