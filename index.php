@@ -54,6 +54,7 @@ function main()
     $classRouting->addClass('User');
     $classRouting->addClass('Event');
     $classRouting->addClass('Article');
+    $classRouting->addClass('Parteners');
     $classRouting->addClass('Search');
 
     if(Authentication::getInstance()->isAuthenticated())
