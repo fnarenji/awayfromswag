@@ -22,7 +22,7 @@
         {% endfor %}
 
         {% if auth.valid %}
-            {% if participate is empty and event.personsnow != 0 %}
+            {% if participate is empty and event.personsnow != 0 and not event.mine %}
                 <a href="/event/participate/{{ event.id }}" class="pure-button button-success">Participer</a>
             {% elseif participate is not empty and not event.mine %}
                 <a href="/event/unparticipate/{{ event.id }}" class="pure-button button-error">Annuler Participation</a>
