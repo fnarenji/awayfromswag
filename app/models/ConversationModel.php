@@ -66,7 +66,7 @@ WHERE conversation.id = ?
 SQL;
 
     const COUNT_NEW_MESSAGES = <<<SQL
-SELECT COUNT(*)
+SELECT COUNT(*) as nb
 FROM conversation_user
 JOIN conversation ON conversation.id = conversation_user.id
 WHERE conversation_user.user = ?
@@ -278,6 +278,6 @@ SQL;
 
     public function countUnreadMessages()
     {
-        return DatabaseProvider::connection()->execute(self::COUNT_NEW_MESSAGES, [Authentication::getInstance()->getUserId()]);
+        return DatabaseProvider::connection()->selectFirst(self::COUNT_NEW_MESSAGES, [Authentication::getInstance()->getUserId()])['nb'];
     }
 }
