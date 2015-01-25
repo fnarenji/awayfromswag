@@ -220,10 +220,13 @@ SQL;
 
     public function getAllFriends()
     {
-        return DatabaseProvider::connection()->query(self::GET_ALL_FRIENDS, [
-            'user1' => Authentication::getInstance()->getUserId(),
-            'user2' => Authentication::getInstance()->getUserId()
-        ]);
+        if (Authentication::getInstance()->isAuthenticated()) {
+            return DatabaseProvider::connection()->query(self::GET_ALL_FRIENDS, [
+                'user1' => Authentication::getInstance()->getUserId(),
+                'user2' => Authentication::getInstance()->getUserId()
+            ]);
+        }
+        return [];
     }
 
     public function count()
