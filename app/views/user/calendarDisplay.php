@@ -80,5 +80,9 @@ $dates = $date->getAll($year);
             }
             return false;
         });
+        $('td').on('click', function(){
+            $('.selected').removeClass();
+            $(this).addClass('selected');
+        });
     });
 </script>
