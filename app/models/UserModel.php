@@ -310,7 +310,7 @@ TEXT;
     public function setReset($id, $token)
     {
         $sql = <<<SQL
-INSERT INTO user_reset (id, )
+INSERT INTO user_reset (id, token)
 SQL;
 
     }
