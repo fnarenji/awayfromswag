@@ -52,12 +52,11 @@
                 {% if events.top is empty %}
                     <p>Il n'y a pas d'évènement populaire.</p>
                 {% else %}
-                    {% for event in events.top %}
-                        <li>
-                            <h5><a href="/event/show/{{ event.id }}">{{ event.name }}</a></h5>
-
-                            <p>{{ event.description|raw }}</p>
-                        </li>
+                     {% for event in events.top %}
+                            <li>
+                                <h5><a href="/event/show/{{ event.id }}">{{ event.name }}</a></h5>
+                                <p>{{ event.description }}</p>
+                            </li>
                     {% endfor %}
                 {% endif %}
             </ul>

@@ -76,9 +76,9 @@ SQL;
     }
 
     /**
-     * Update an event
      * @param $params
      * @return bool
+     * @throws \Exception
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function updateEventById($params)
@@ -204,12 +204,13 @@ SQL;
     public function getTop()
     {
         $sql = <<<SQL
-SELECT *
-        FROM event
-        WHERE id IN (SELECT DISTINCT id
-                      FROM event_user)
-        LIMIT 3;
+ SELECT * FROM event
+ JOIN event_user ON event.id = event_user.id
+ GROUP BY event.id
+ ORDER BY personsnow DESC
+ LIMIT 3
 SQL;
+
 
         return DatabaseProvider::connection()->query($sql);
     }
