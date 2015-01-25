@@ -9,6 +9,7 @@
 namespace app\models;
 
 use SwagFramework\Database\DatabaseProvider;
+use SwagFramework\Helpers\Authentication;
 use SwagFramework\mvc\Model;
 
 class UserModel extends Model
@@ -248,6 +249,23 @@ SQL;
         return DatabaseProvider::connection()->execute(self::GET_USER_FULL_NAME_LIKE, [$fullName]);
     }
 
+    public function addToFriend($id)
+    {
+        $sql = 'INSERT INTO user_friend VALUES (?, ?, 0)';
+
+        $user2 = Authentication::getInstance()->getUserId();
+
+        return DatabaseProvider::connection()->execute($sql, array($user2, $id));
+    }
+
+    public function getAllFriends()
+    {
+        $sql = 'SELECT user1, user2 FROM user_friend WHERE user1 = ? OR user2 = ?';
+
+        $user = Authentication::getInstance()->getUserId();
+
+        return DatabaseProvider::connection()->query($sql, array($user, $user));
+    }
     public function count()
     {
         $sql = <<<SQL

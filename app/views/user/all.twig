@@ -36,7 +36,9 @@
                     <td>
                         <a href="/conversation/create/{{ user.id }}">Envoyer MP</a><br/>
                         <a href="/user/profile/{{ user.id }}">Voir profil</a>
-                        <a href="/user/add/{{ user.id }}">Ajouter</a>
+                        {% if user.addFriend %}
+                            <a href="/user/add/{{ user.id }}">Ajouter</a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

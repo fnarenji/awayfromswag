@@ -284,6 +284,40 @@ class UserController extends Controller
         if (!empty($this->getParams(true)))
             $page = (int)$this->getParams()[0];
 
-        $this->getView()->render('user/all', ['users' => $this->userModel->getAllUsers($page * 10, 10)]);
+        $userList = $this->userModel->getAllUsers($page * 10, 10);
+        $userFriendList = $this->userModel->getAllFriends();
+
+        //var_dump($userFriendList);
+        //var_dump($userList);
+        foreach($userList as $key => $value)
+        {
+            foreach($userFriendList as $relation)
+            {
+                if(in_array($value['id'], $relation))
+                {
+                    $userList[$key]['addFriend'] = false;
+                    break;
+                }
+            }
+            if(!isset($userList[$key]['addFriend']))
+                $userList[$key]['addFriend'] = true;
+        }
+
+        $this->getView()->render('user/all', ['users' => $userList ]);
+    }
+
+    public function add()
+    {
+        try
+        {
+            $id = $this->getParams()[0];
+            var_dump($id);
+            $this->userModel->addToFriend($id);
+            $this->getView()->redirect('/');
+        }
+        catch(MissingParamsException $e)
+        {
+            $e->getMessage();
+        }
     }
 }
