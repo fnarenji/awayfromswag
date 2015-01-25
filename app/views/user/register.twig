@@ -12,109 +12,109 @@
 
         <form method="POST" action="/user/register" class="pure-form pure-form-aligned centered">
             <div class="pure-control-group">
-                <label for="username">Nom d'utilisateur</label>
-                <input required name="username" placeholder="Nom d'utilisateur"/>
+                <label for="username" >Nom d'utilisateur</label>
+                <input required name="username" id="username" placeholder="Nom d'utilisateur"/>
             </div>
 
             <div class="pure-control-group">
                 <label for="password">Mot de passe</label>
-                <input required type="password" name="password" placeholder="Mot de passe"/>
+                <input required type="password" id="password" name="password" placeholder="Mot de passe"/>
             </div>
 
             <div class="pure-control-group">
                 <label for="firstname">Prénom</label>
-                <input required name="firstname" placeholder="Jean"/>
+                <input required name="firstname" id="firstname" placeholder="Jean"/>
             </div>
 
             <div class="pure-control-group">
                 <label for="lastname">Nom</label>
-                <input required name="lastname" placeholder="Dupont"/>
+                <input required name="lastname" id="lastname" placeholder="Dupont"/>
             </div>
 
             <div class="pure-control-group">
                 <label for="birthday">Date de naissance</label>
-                <input required class="datepicker" name="birthday" placeholder="01/01/1970"/>
+                <input required class="datepicker" id="birthday" name="birthday" placeholder="01/01/1970"/>
 
                 <label for="birthdayPrivate" class="pure-checkbox">
                     Privé
-                    <input type="checkbox" name="birthdayPrivate"/>
+                    <input type="checkbox" id="birthdayPrivate" name="birthdayPrivate"/>
                 </label>
             </div>
 
             <div class="pure-control-group">
                 <label for="mail">Mail</label>
-                <input required type="email" name="mail" placeholder="jean.dupont@mail.ex"/>
+                <input required type="email" id="mail" name="mail" placeholder="jean.dupont@mail.ex"/>
 
                 <label for="mailPrivate" class="pure-checkbox">
                     Privé
-                    <input type="checkbox" name="mailPrivate"/>
+                    <input type="checkbox" id="mailPrivate" name="mailPrivate"/>
                 </label>
             </div>
 
             <div class="pure-control-group">
                 <label for="phonenumber">Numéro de téléphone</label>
-                <input type="tel" name="phonenumber" placeholder="0707070707"/>
+                <input type="tel" name="phonenumber" id="phonenumber" placeholder="0707070707"/>
 
                 <label for="phonenumberPrivate" class="pure-checkbox">
                     Privé
-                    <input type="checkbox" name="phonenumberPrivate"/>
+                    <input type="checkbox" id="phonenumberPrivate" name="phonenumberPrivate"/>
                 </label>
             </div>
 
             <div class="pure-control-group">
                 <label for="twitter">Twitter</label>
-                <input name="twitter" placeholder="@JeanDupontSWAG">
+                <input name="twitter" id="twitter" placeholder="@JeanDupontSWAG">
 
                 <label for="twitterPrivate" class="pure-checkbox">Privé
-                    <input type="checkbox" name="twitterPrivate"/>
+                    <input type="checkbox" id="twitterPrivate" name="twitterPrivate"/>
                 </label>
             </div>
 
             <div class="pure-control-group">
                 <label for="skype">Skype</label>
-                <input name="skype" placeholder="jean.dupont"/>
+                <input name="skype" id="skype" placeholder="jean.dupont"/>
 
                 <label for="skypePrivate" class="pure-checkbox">Privé
-                    <input type="checkbox" name="skypePrivate"/>
+                    <input type="checkbox" id="skypePrivate" name="skypePrivate"/>
                 </label>
             </div>
 
             <div class="pure-control-group">
                 <label for="facebookuri">Facebook</label>
-                <input type="url" name="facebookuri" placeholder="https://facebook.com/jean.dupont"/>
+                <input type="url" name="facebookuri" id="facebookuri" placeholder="https://facebook.com/jean.dupont"/>
 
                 <label for="facebookuriPrivate" class="pure-checkbox">Privé
-                    <input type="checkbox" name="facebookuriPrivate"/>
+                    <input type="checkbox" id="facebookuriPrivate" name="facebookuriPrivate"/>
                 </label>
             </div>
 
             <div class="pure-control-group">
                 <label for="website">Site web</label>
-                <input type="url" name="website" placeholder="http://jeandupont.fr"/>
+                <input type="url" name="website" id="website" placeholder="http://jeandupont.fr"/>
 
                 <label for="websitePrivate" class="pure-checkbox">Privé
-                    <input type="checkbox" name="websitePrivate"/>
+                    <input type="checkbox" id="websitePrivate" name="websitePrivate"/>
                 </label>
             </div>
 
             <div class="pure-control-group">
                 <label for="job">Activité</label>
-                <input name="job" required placeholder="Trader rich as fuck"/>
+                <input name="job" required id="job" placeholder="Trader rich as fuck"/>
 
                 <label for="jobPrivate" class="pure-checkbox">Privé
-                    <input type="checkbox" name="jobPrivate"/>
+                    <input type="checkbox" id="jobPrivate" name="jobPrivate"/>
                 </label>
             </div>
 
             <div class="pure-control-group">
                 <label for="description">Description</label>
-                <textarea required name="description"
+                <textarea required name="description" id="description"
                           placeholder="Une brève description textuelle de votre beauté physique et intellectuelle... ou pas."></textarea>
             </div>
 
             <div class="pure-controls">
                 <label for="mailnotifications" class="pure-checkbox">
-                    <input name="mailnotifications" type="checkbox"/>
+                    <input name="mailnotifications" id="mailnotifications" type="checkbox"/>
                     Recevoir du spam de NedSeb
                 </label>
 
