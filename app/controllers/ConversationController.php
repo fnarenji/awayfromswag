@@ -10,7 +10,6 @@ namespace app\controllers;
 
 use app\exceptions\NotAuthenticatedException;
 use app\models\ConversationModel;
-use SwagFramework\Config\ConversationConfig;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\Input;
 use SwagFramework\mvc\Controller;
@@ -75,24 +74,40 @@ class ConversationController extends Controller
 
     public function create()
     {
-        $this->getView()->render('conversation/create');
+        $dest = null;
+        if (!empty($this->getParams(true))) {
+            $dest = $this->getParams()[0];
+            $userModel = $this->loadModel('User');
+            $dest = $userModel->getUserFullName($dest) . ', ';
+        }
+        $this->getView()->render('conversation/create', ['dest' => $dest]);
     }
 
     public function createPOST()
     {
         $message = Input::post('message');
 
-        $newConversationId = $this->conversationModel->createConversation(Input::post('title'));
-
-        $this->conversationModel->addUserToConversation($newConversationId, Authentication::getInstance()->getUserId());
-
         $userModel = $this->loadModel('User');
+        $participationIds = [];
 
         foreach (explode(', ', Input::post('participations')) as $participation) {
-            $userId = $userModel->getUserFullNameLike($participation);
+            $userId = $userModel->getUserFullNameLike($participation)['id'];
 
-            $this->conversationModel->addUserToConversation($newConversationId, $userId);
+            $participationIds[] = (int)$userId;
         }
+
+        if ($existingConversationId = $this->conversationModel->conversationExistsBetween($participationIds)) {
+            $this->conversationModel->newMessage($existingConversationId, $message);
+            $this->getView()->redirect('/conversation/show/' . $existingConversationId);
+            die();
+        }
+
+        $newConversationId = $this->conversationModel->createConversation(Input::post('title'));
+
+        foreach ($participationIds as $participationId)
+            $this->conversationModel->addUserToConversation($newConversationId, $participationId);
+
+        $this->conversationModel->addUserToConversation($newConversationId, Authentication::getInstance()->getUserId());
 
         $this->conversationModel->newMessage($newConversationId, $message);
         $this->getView()->redirect('/conversation/show/' . $newConversationId);

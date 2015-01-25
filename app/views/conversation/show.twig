@@ -6,7 +6,8 @@
         <p class="subtitle">
             Crée par <b>{{ conversation.creator }}</b> le <b>{{ conversation.createtime }}</b><br/>
             Dernier message posté par <b>{{ conversation.lastmessageauthor }}</b> le
-            <b>{{ conversation.lastmessagetime }}</b>.
+            <b>{{ conversation.lastmessagetime }}</b>.<br/>
+            Vu par <b>{{ conversation.seen }}</b>
         </p>
 
         {% for message in conversation.messages %}

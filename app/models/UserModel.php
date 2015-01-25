@@ -246,7 +246,7 @@ SQL;
     {
         $fullName = '%' . $fullName . '%';
 
-        return DatabaseProvider::connection()->execute(self::GET_USER_FULL_NAME_LIKE, [$fullName]);
+        return DatabaseProvider::connection()->selectFirst(self::GET_USER_FULL_NAME_LIKE, [$fullName]);
     }
 
     public function addToFriend($id)
