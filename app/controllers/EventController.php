@@ -106,12 +106,21 @@ class EventController extends Controller
             Authentication::getInstance()->getUserId()) : null;
         $event['mine'] = (Authentication::getInstance()->isAuthenticated()) ? $event['user']['id'] == Authentication::getInstance()->getUserId() : false;
 
+        $participateModel = new ParticipateModel();
+        $userParticipating = $participateModel->getEventParticipation($id);
+
         $comments = $this->eventCommentModel->getCommentsForEvent($id);
 
+        $userList = array();
+
+        foreach($userParticipating as $key => $value){
+            $userList[] = $value['username'];
+        }
         $this->getView()->render('event/show', array(
             'event' => $event,
             'participate' => $participate,
-            'comments' => $comments
+            'comments' => $comments,
+            'users' => $userList
         ));
     }
 

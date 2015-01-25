@@ -273,6 +273,10 @@ aside .submit-button
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
     -webkit-appearance: none;
     -webkit-appearance: button;
     cursor: pointer;
@@ -627,10 +631,12 @@ img.article-img
     height: 360px;
 }
 
-.article-modify input[type="text"]
-{
-    width: 360px;
-}
+.article-modify input[type="text"] {width: 360px;}
+.event-show h6, .event-show .mini-text {margin-bottom: 5px;}
+.event-show p {margin-bottom: 10px;}
+.event-show .mini-text b {font-weight: bold;}
+.event-show .mini-text {display: block;}
+.event-show .pure-button {margin-right: 5px;}
 
 /* WOW MEDIA QUERIES, SUCH RESPONSIVE, MUCH SKILLS */
 @media only screen and (min-width: 780px) {

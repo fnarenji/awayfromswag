@@ -1,23 +1,28 @@
 {% extends "layout/default" %}
 {% block content %}
-    <article>
+    <article class="event-show">
         <h1>{{ event.name }}</h1>
 
-        <span class="mini-text">Prix : {{ event.money }}€, </span>
-        <span class="mini-text">le {{ event.eventtime }}, </span>
-        <span class="mini-text">ajouté le {{ event.createtime }}, </span>
-        <span class="mini-text">par : <a
+        <span class="mini-text"><b>Prix</b> : {{ event.money }}€ </span>
+        <span class="mini-text"><b>le</b> {{ event.eventtime }} </span>
+        <span class="mini-text"><b>ajouté le </b>{{ event.createtime }}, </span>
+        <span class="mini-text"><b>par : </b><a
                     href="/user/profile/{{ event.user.username }}">{{ event.user.firstname ~ ' ' ~ event.user.lastname }}</a></span>
 
                 <h6>Adresse : {{ event.address }}</h6>
                 <h6>Participants maximum : {{ event.personsmax }}</h6>
                 <h6>Places restantes : {{ event.personsnow }}</h6>
+                <h6>Description : </h6>
                 <p>
                     {{ event.description }}
                 </p>
+        <h5>Utilisateurs inscrit</h5>
+        {% for user in users %}
+            <h6>- {{ user }}</h6>
+        {% endfor %}
 
         {% if auth.valid %}
-            {% if participate is empty and event.personsnow != 0 %}
+            {% if participate is empty and event.personsnow != 0 and not event.mine %}
                 <a href="/event/participate/{{ event.id }}" class="pure-button button-success">Participer</a>
             {% elseif participate is not empty and not event.mine %}
                 <a href="/event/unparticipate/{{ event.id }}" class="pure-button button-error">Annuler Participation</a>
@@ -44,12 +49,13 @@
             </ul>
         </div>
 
+        {% if auth.valid %}
         <hr/>
         <div>
             <form method="POST" action="/event/comment/{{ event.id }}"
                   class="pure-form pure-form-aligned conversation-creation">
                 <div class="pure-control-group">
-                    <label for="title">Commentaire</label>
+                    <label for="message">Commentaire</label>
                     <textarea required id="message" name="message"
                               placeholder="Un commentaire constructif, sans trolls."></textarea>
                 </div>
@@ -60,5 +66,6 @@
                 </div>
             </form>
         </div>
+        {% endif %}
     </article>
 {% endblock %}
