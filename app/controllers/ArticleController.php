@@ -114,7 +114,6 @@ class ArticleController extends Controller
 
         // HARDCODE IS BAD
         $result['category'] = 1;
-        $result['postdate'] = time();
 
         $this->articleModel->insertNews($result);
 

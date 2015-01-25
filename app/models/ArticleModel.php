@@ -25,7 +25,7 @@ WHERE MATCH(article.title, article.text) AGAINST (:query)
 SQL;
 
     const INSERT_ARTICLE = <<<SQL
-INSERT INTO article (user,title,text,postdate,category) VALUES (:user, :title, :text, :postdate, :category);
+INSERT INTO article (user,title,text,postdate,category) VALUES (:user, :title, :text, NOW(), :category);
 SQL;
 
     /**
