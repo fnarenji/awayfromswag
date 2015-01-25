@@ -1,4 +1,10 @@
 <?php
+namespace app\helpers;
+
+use SwagFramework\Config\ConfigFileParser;
+use Swift_Mailer;
+use Swift_Message;
+use Swift_SmtpTransport;
 
 /**
  * Created by PhpStorm.
@@ -15,11 +21,16 @@ class MailUtil
 
     public static function send($to, $subject, $message)
     {
-        $transporter = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, 'ssl')
-            ->setUsername()
-            ->setPassword();
+        $config = new ConfigFileParser("app/config/mail.json");
+        $transporter = Swift_SmtpTransport::newInstance($config->getEntry('host'), (int)$config->getEntry('port'), $config->getEntry('security'))
+            ->setUsername($config->getEntry('username'))
+            ->setPassword($config->getEntry('password'));
 
         $mailer = Swift_Mailer::newInstance($transporter);
+        $message = Swift_Message::newInstance($subject, $message)
+            ->addTo($to)
+            ->setSender($config->getEntry('sender'));
+        $mailer->send($message);
     }
 
     private function __clone()

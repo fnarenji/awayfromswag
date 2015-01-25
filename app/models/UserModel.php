@@ -267,7 +267,7 @@ TEXT;
 
     public function count()
     {
-        return DatabaseProvider::connection()->selectFirst(self::COUNT, []);
+        return DatabaseProvider::connection()->selectFirst(self::COUNT);
     }
 
     public function search($query)

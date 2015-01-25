@@ -2,6 +2,7 @@
   "host": "smtp.gmail.com",
   "port": "465",
   "security": "ssl",
-  "username": "afs",
-  "password": "3306"
+  "username": "awayfromswag@gmail.com",
+  "password": "lolazerty123",
+  "sender": "awayfromswag@gmail.com"
 }
