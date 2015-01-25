@@ -268,7 +268,7 @@ class EventController extends Controller
 
         $participate = $this->eventModel->getParticipateUser($id, Authentication::getInstance()->getUserId());
 
-        if (empty($participate)) {
+        if (!empty($participate)) {
             throw new AlreadyParticipateEventException($id, Authentication::getInstance()->getUserId());
         }
 
@@ -293,11 +293,11 @@ class EventController extends Controller
 
         $participate = $this->eventModel->getParticipateUser($id, Authentication::getInstance()->getUserId());
 
-        if (!empty($participate)) {
+        if (empty($participate)) {
             throw new NotParticipateEventException($id, Authentication::getInstance()->getUserId());
         }
 
-        $this->eventModel->unparticipate($id, Authentication::getInstance()->getUserId());
+        $this->participateModel->deleteEventParticipation($id, Authentication::getInstance()->getUserId());
 
         $this->getView()->redirect('/event/show/' . $id);
     }
