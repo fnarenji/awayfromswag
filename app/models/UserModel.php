@@ -236,8 +236,9 @@ TEXT;
         $str = '';
 
         foreach ($infos as $key => $value) {
+            if(empty($value)) continue;
             if ($key != 'id') {
-                $str .= '' . $key . ' = \'' . $value . '\' ,';
+                $str .= '' . $key . ' = "' . $value . '" ,';
             }
         }
 
@@ -245,7 +246,8 @@ TEXT;
 
         $sql = 'UPDATE user '
             . 'SET ' . $str . ' WHERE id= ?;';
-        return DatabaseProvider::connection()->execute($sql, [$infos['id']]);
+
+        return DatabaseProvider::connection()->execute($sql, array($infos['id']));
     }
 
     /**
