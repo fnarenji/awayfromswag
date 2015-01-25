@@ -23,6 +23,7 @@ class EventModel extends Model
     {
         $sql = <<<SQL
 SELECT * FROM event
+  ORDER BY id DESC
   LIMIT $start, $end;
 SQL;
 
