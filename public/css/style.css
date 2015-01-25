@@ -631,6 +631,14 @@ img.article-img
     height: 360px;
 }
 
+.event-img
+{
+    float:right;
+    width: auto;
+    height:200px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+}
 .article-modify input[type="text"] {width: 360px;}
 .event-show h6, .event-show .mini-text {margin-bottom: 5px;}
 .event-show p {margin-bottom: 10px;}
