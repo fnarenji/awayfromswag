@@ -19,7 +19,7 @@ class UserModel extends Model
 
     const GET_ALL_USER_FULL_NAME = 'SELECT CONCAT(username, \' (\', firstname, \' \', UPPER(lastname), \')\') AS userFullName FROM user';
     const GET_USER_FULL_NAME = 'SELECT CONCAT(username, \' (\', firstname, \' \', UPPER(lastname), \')\') AS userFullName FROM user WHERE id = ?';
-    const SEARCH = "SELECT * FROM user WHERE MATCH(username, firstname, lastname, description) AGAINST (:query) OR id = :query";
+    const SEARCH = "SELECT user.* FROM user WHERE MATCH(username, firstname, lastname, description) AGAINST (:query) OR id = :query";
 
     /**
      *  Return all information with the id

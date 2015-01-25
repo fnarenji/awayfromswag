@@ -14,7 +14,7 @@ use SwagFramework\mvc\Model;
 class ArticleModel extends Model
 {
     const SEARCH_ARTICLE = <<<SQL
-SELECT *
+SELECT article.*
 FROM article
 JOIN user ON article.user = user.id
 JOIN article_category ON article.category = article_category.id
