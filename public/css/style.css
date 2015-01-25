@@ -787,3 +787,31 @@ img.article-img
     }
     table.centered {margin:auto; width: 100%;}
 }
+
+/* Bouton de scroll top */
+.scroll
+{
+    float: left;
+    width: 100px;
+    position: fixed;
+    bottom:50px;
+    margin-left: 90%;
+}
+.scroll a
+{
+    display: block;
+    background: gray;
+    opacity: 0.6;
+    height: 50px;
+    width: 100px;
+    border-radius:10px;
+    color:#FFF;
+    font-weight: bold;
+    text-align: center;
+    line-height: 50px;
+}
+.scroll a:hover
+{
+    opacity:1;
+    transition-duration:300ms;
+}

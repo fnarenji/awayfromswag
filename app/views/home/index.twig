@@ -85,11 +85,9 @@
             {{ helpers.assets.img('amis.png', 'Derniers inscrits') }}
             <h4>Les derniers inscrits</h4>
             <ul>
-                <li><h5><a href="#">Loïc</a></h5></li>
-                <li><h5><a href="#">Thomas</a></h5></li>
-                <li><h5><a href="#">Loïck</a></h5></li>
-                <li><h5><a href="#">Floran</a></h5></li>
-                <li><h5><a href="#">Sasha</a></h5></li>
+                {% for user in lastUsers %}
+                    <li><h5>- <a href="/user/profile/{{ user.username }}">{{ user.username }}</a></h5></li>
+                {% endfor %}
             </ul>
         </div>
     </article>

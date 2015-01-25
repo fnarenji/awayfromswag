@@ -65,6 +65,8 @@ class HomeController extends Controller
 
         }
 
+        $lastUser = $this->userModel->getLastUser();
+
         // ARTICLE
         $modelArticle = new ArticleModel();
         $article['top'] = $modelArticle->getTop();
@@ -80,7 +82,7 @@ class HomeController extends Controller
             $art = $this->getInfos($art);
         }
 
-        $this->getView()->render('home/index', ['events' => $events, 'article' => $article]);
+        $this->getView()->render('home/index', ['events' => $events, 'article' => $article, 'lastUsers' => $lastUser]);
     }
 
     private function getInfos($article)

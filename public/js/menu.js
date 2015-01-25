@@ -30,4 +30,18 @@ $(document).ready(function () {
                 $('#calendar-to-display').html(data);
             })
     }
+    //$('#scroll').hide();
+
+    $(window).scroll(function() {
+        if ($(this).scrollTop() > 200) $('#scroll').fadeIn();
+        else $('#scroll').fadeOut();
+    });
+
+    $('#scroll a').click(function() {
+        $('body,html').animate({
+            scrollTop: 0
+        }, 300);
+        return false;
+    });
+
 });

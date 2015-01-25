@@ -138,9 +138,9 @@ SQL;
     }
 
     /**
-     * Insert in database a new user
-     * @param $infos array each field name with its value
-     * @return bool return success
+     * @param array $infos
+     * @return bool
+     * @throws \Exception
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function insertUser(array $infos)
@@ -182,6 +182,12 @@ TEXT;
         return DatabaseProvider::connection()->execute(self::VALIDATE_USER, [$token]);
     }
 
+    public function getLastUser()
+    {
+        $sql = "SELECT * FROM user ORDER BY id DESC LIMIT 5";
+
+        return DatabaseProvider::connection()->query($sql);
+    }
     /**
      * @param $id
      * @return bool
