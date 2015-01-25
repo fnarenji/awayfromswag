@@ -14,7 +14,7 @@ use SwagFramework\mvc\Model;
 class CommentsEventModel extends Model
 {
     const INSERT_COMMENT = "INSERT INTO comment (user, message) VALUES (:iduser, :message);";
-    const INSERT_COMMENT_FOR_ARTICLE = "INSERT INTO comment_article (id, article) VALUES (:idcomment, :idarticle);";
+    const INSERT_COMMENT_FOR_EVENT = "INSERT INTO comment_event (id, event) VALUES (:idcomment, :idevent);";
 
     const SELECT_ALL_COMMENTS = <<<'SQL'
 SELECT comment.id AS commid, comment.message, user.id AS useid, user.username, event.name
@@ -52,7 +52,7 @@ SQL;
      * @param $id
      * @return array
      */
-    public function getCommentEvent($id)
+    public function getCommentsForEvent($id)
     {
         return DatabaseProvider::connection()->query(self::GET_COMMENT_FOR_EVENT, [$id]);
     }
@@ -71,13 +71,13 @@ SQL;
     /**
      * Insert a new comment on article
      * @param $iduser int user id
-     * @param $idarticle int article id
+     * @param $idevent int event id
      * @param $message string comment
      * @return bool
      * @throws \Exception
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function insertCommentArticle($iduser, $idarticle, $message)
+    public function insertCommentArticle($iduser, $idevent, $message)
     {
         try {
             DatabaseProvider::connection()->beginTransaction();
@@ -88,9 +88,9 @@ SQL;
             ]);
 
             $newCommentId = DatabaseProvider::connection()->lastInsertId();
-            $success = $success && DatabaseProvider::connection()->execute(self::INSERT_COMMENT_FOR_ARTICLE, [
+            $success = $success && DatabaseProvider::connection()->execute(self::INSERT_COMMENT_FOR_EVENT, [
                     'idcomment' => $newCommentId,
-                    'idarticle' => $idarticle
+                    'idevent' => $idevent
                 ]);
 
             DatabaseProvider::connection()->commit();

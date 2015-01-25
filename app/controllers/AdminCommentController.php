@@ -29,7 +29,7 @@ class AdminCommentController extends Controller
         $id = (int)$this->getParams()[0];
         $this->modelComment = $this->loadModel('CommentsEvent');
 
-        $comment = $this->modelComment->getCommentEvent($id);
+        $comment = $this->modelComment->getCommentsForEvent($id);
         print_r($comment)[0];
         //$this->getView()->render('admin/comment', array('comments' => $comment));
     }

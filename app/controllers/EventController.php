@@ -106,9 +106,12 @@ class EventController extends Controller
             Authentication::getInstance()->getUserId()) : null;
         $event['mine'] = (Authentication::getInstance()->isAuthenticated()) ? $event['user']['id'] == Authentication::getInstance()->getUserId() : false;
 
+        $comments = $this->eventCommentModel->getCommentsForEvent($id);
+
         $this->getView()->render('event/show', array(
             'event' => $event,
-            'participate' => $participate
+            'participate' => $participate,
+            'comments' => $comments
         ));
     }
 
@@ -168,7 +171,7 @@ class EventController extends Controller
 
     public function modify()
     {
-        if (!Authentication::getInstance()->isAuthenticated() && !Authentication::getInstance()->getAccessLevel()) {
+        if (!Authentication::getInstance()->isAuthenticated() && !Authentication::getInstance()->getOptionOr('accessLevel', 0)) {
             throw new NotAuthenticatedException();
         }
 
