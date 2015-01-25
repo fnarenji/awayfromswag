@@ -48,21 +48,19 @@ class HomeController extends Controller
         $events['last'] = $this->modelEvent->getLast();
         $events['nbConnect'] = (int)$tmp['COUNT(*)'];
 
-        foreach($events['top'] as $key => $value)
-        {
-            if(strlen($events['top'][$key]['description']) > 200)
-            {
-                $events['top'][$key]['description'] = substr($events['top'][$key]['description'], 0, strpos($events['top'][$key]['description'], ' ', 200));
-                $events['top'][$key]['description'] .=  ' ... ';
+        foreach ($events['top'] as $key => $value) {
+            if (strlen($events['top'][$key]['description']) > 200) {
+                $events['top'][$key]['description'] = substr($events['top'][$key]['description'], 0,
+                    strpos($events['top'][$key]['description'], ' ', 200));
+                $events['top'][$key]['description'] .= ' ... ';
             }
         }
 
-        foreach($events['last'] as $key => $value)
-        {
-            if(strlen($events['last'][$key]['description']) > 200)
-            {
-                $events['last'][$key]['description'] = substr($events['last'][$key]['description'], 0, strpos($events['last'][$key]['description'], ' ', 200));
-                $events['last'][$key]['description'] .=  ' ... ';
+        foreach ($events['last'] as $key => $value) {
+            if (strlen($events['last'][$key]['description']) > 200) {
+                $events['last'][$key]['description'] = substr($events['last'][$key]['description'], 0,
+                    strpos($events['last'][$key]['description'], ' ', 200));
+                $events['last'][$key]['description'] .= ' ... ';
             }
 
         }

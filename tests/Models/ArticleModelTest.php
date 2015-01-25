@@ -29,7 +29,13 @@ class ArticleModelTest extends \PHPUnit_Framework_TestCase {
     {
         $this->model = new ArticleModel();
 
-        $array = ['user' => '1', 'title' => 'plop', 'text' => 'test', 'image' => 'http://lol.com/lol.png', 'category' => '1'];
+        $array = [
+            'user' => '1',
+            'title' => 'plop',
+            'text' => 'test',
+            'image' => 'http://lol.com/lol.png',
+            'category' => '1'
+        ];
         $state = $this->model->insertNews($array);
         $this->assertEquals(true,$state);
 

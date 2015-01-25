@@ -143,8 +143,7 @@ class EventController extends Controller
             throw new NotAuthenticatedException();
         }
 
-        if (!isset($_POST['money']))
-        {
+        if (!isset($_POST['money'])) {
             $_POST['money'] = 0;
             echo 'lol';
         }
@@ -352,7 +351,8 @@ class EventController extends Controller
 
         $id = (int)$this->getParams()[0];
 
-        $this->eventCommentModel->insertCommentEvent(Authentication::getInstance()->getUserId(), $id, Input::post('message'));
+        $this->eventCommentModel->insertCommentEvent(Authentication::getInstance()->getUserId(), $id,
+            Input::post('message'));
 
         $this->getView()->redirect('/event/show/' . $id);
     }
