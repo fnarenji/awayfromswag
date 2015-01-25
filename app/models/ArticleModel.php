@@ -45,7 +45,7 @@ SQL;
 SELECT article.*, CONCAT(user.username, ' (', user.firstname, ' ', user.lastname, ')') AS authorFullName
 FROM article
 JOIN user ON user.id = article.user
-ORDER BY postdateDESC
+ORDER BY postdate DESC
 LIMIT 1;
 SQL;
 
