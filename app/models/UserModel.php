@@ -202,29 +202,26 @@ TEXT;
         try {
             DatabaseProvider::connection()->beginTransaction();
 
-            $sql = 'DELETE FROM user WHERE username = ?;';
-            $article = 'UPDATE article SET user=-1 WHERE user=?';
-            $comment = 'UPDATE comment SET user=-1 WHERE user=?';
-            $conversation = 'UPDATE conversation_user SET user=-1 WHERE user=?';
-            $event = 'UPDATE event SET user=-1 WHERE user=?';
-            $event_user = 'UPDATE event_user SET user=-1 WHERE user=?';
+            $user = 'DELETE FROM user WHERE id = ?;';
+            $article = 'UPDATE article SET user = -1 WHERE user = ?';
+            $comment = 'UPDATE comment SET user = -1 WHERE user = ?';
+            $conversation = 'UPDATE conversation_user SET user = -1 WHERE user = ?';
+            $event = 'UPDATE event SET user = -1 WHERE user = ?';
+            $event_user = 'UPDATE event_user SET user = -1 WHERE user = ?';
 
-            DatabaseProvider::connection()->execute($article, [$id]);
-            DatabaseProvider::connection()->execute($comment, [$id]);
-            DatabaseProvider::connection()->execute($conversation, [$id]);
-            DatabaseProvider::connection()->execute($event, [$id]);
-            DatabaseProvider::connection()->execute($event_user, [$id]);
-
-            DatabaseProvider::connection()->commit();
-            DatabaseProvider::connection()->execute($sql, [$id]);
+            $success = DatabaseProvider::connection()->execute($article, [$id]);
+            $success = $success && DatabaseProvider::connection()->execute($comment, [$id]);
+            $success = $success && DatabaseProvider::connection()->execute($conversation, [$id]);
+            $success = $success && DatabaseProvider::connection()->execute($event, [$id]);
+            $success = $success && DatabaseProvider::connection()->execute($event_user, [$id]);
+            $success = $success && DatabaseProvider::connection()->execute($user, [$id]);
 
             DatabaseProvider::connection()->commit();
 
-            return true;
+            return $success;
         } catch (Exception $e) {
             DatabaseProvider::connection()->rollBack();
-
-            return false;
+            throw $e;
         }
     }
 

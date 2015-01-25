@@ -9,11 +9,8 @@
 namespace app\controllers;
 
 use app\helpers\PrivacyCalculator;
-use app\models\ConversationModel;
-use SwagFramework\Exceptions\InputNotSetException;
 use SwagFramework\Exceptions\MissingParamsException;
 use SwagFramework\Exceptions\NoUserFoundException;
-use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\Input;
 use SwagFramework\mvc\Controller;
 
@@ -24,15 +21,6 @@ class AdminUsersController extends Controller
      * @var \app\models\UserModel
      */
     private $userModel;
-
-    public function index()
-    {
-        $this->userModel = $this->loadModel('User');
-        $allUser = $this->userModel->getAllUsers();
-        $input = new Input();
-
-        $this->getView()->render('admin/users', ['users' => $allUser]);
-    }
 
     public function user()
     {
@@ -68,17 +56,25 @@ class AdminUsersController extends Controller
     }
 
     public function userPOST(){
-        
+
     }
 
     public function delete()
     {
         $this->userModel = $this->loadModel('User');
-        $iduser = $this->getParams()[0];
+        $iduser = $this->userModel->getUserByUserName($this->getParams()[0])['id'];
+
         $this->userModel->deleteUser($iduser);
-        $conversationModel = new ConversationModel();
-        $conversationModel;
-        $this->index();
+        $this->getView()->redirect('/adminusers');
+    }
+
+    public function index()
+    {
+        $this->userModel = $this->loadModel('User');
+        $allUser = $this->userModel->getAllUsers();
+        $input = new Input();
+
+        $this->getView()->render('admin/users', ['users' => $allUser]);
     }
 
     public function update()

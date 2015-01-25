@@ -92,7 +92,7 @@ SQL;
 
             foreach($params as $key=>$value){
                 if($key != 'id'){
-                    $str .= ''.$key.' = \''.$value.'\' ,';
+                    $str .= ''.$key.' = "'.$value.'" ,';
                 }
             }
 
