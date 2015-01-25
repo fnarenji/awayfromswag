@@ -149,7 +149,7 @@ class UserController extends Controller
         ];
         $birthday = new \DateTime($user['birthday'] . '00:00:00');
         $user['birthday'] = $birthday->format('Y-m-d h-i-s');
-        
+
         // LES FLAGS C TROP SWAG
         $privacySettings = ['birthday', 'mail', 'phonenumber', 'twitter', 'skype', 'facebookuri', 'website', 'job'];
         for ($i = 0; $i < sizeof($privacySettings); ++$i)
