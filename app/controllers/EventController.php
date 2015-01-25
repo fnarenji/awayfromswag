@@ -263,7 +263,7 @@ class EventController extends Controller
             throw new EventNotFoundException($id);
         }
 
-        if ($event['user'] != Authentication::getInstance()->getUserId()) {
+        if (!Authentication::getInstance()->getOptionOr('accessLevel', 0) && $event['user'] != Authentication::getInstance()->getUserId()) {
             throw new NotYourEventException($id);
         }
 

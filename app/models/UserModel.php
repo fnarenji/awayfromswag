@@ -161,7 +161,7 @@ SQL;
 Bonjour,
 
 Votre inscription sur Away From Security est en attente de validation.
-Veuillez cliquer ici afin de valider celle-ci.
+Veuillez ouvrir https://srv0.sknz.info:3735/validate/$token.
 
 Cordialement,
 #HCS
@@ -244,16 +244,19 @@ TEXT;
         foreach ($infos as $key => $value) {
             if(empty($value)) continue;
             if ($key != 'id') {
-                $str .= '' . $key . ' = "' . $value . '" ,';
+                $str .= '' . $key . ' = :' . $key . ', ';
             }
         }
 
-        $str = substr($str, 0, -1);
+        $str = substr($str, 0, -2);
 
         $sql = 'UPDATE user '
-            . 'SET ' . $str . ' WHERE id= ?;';
+            . 'SET ' . $str . ' WHERE id = :id;';
 
-        return DatabaseProvider::connection()->execute($sql, array($infos['id']));
+        var_dump($infos);
+        var_dump($sql);
+
+        return DatabaseProvider::connection()->execute($sql, $infos);
     }
 
     /**
