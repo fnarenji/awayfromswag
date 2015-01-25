@@ -29,6 +29,7 @@ WHERE MATCH(article.title, article.text) AGAINST (:query)
   OR article.id = :query
   OR MATCH(article_category.name) AGAINST (:query)
 SQL;
+
     const SELECT_ARTICLE = <<<SQL
 SELECT article.*, CONCAT(user.username, ' (', user.firstname, ' ', user.lastname, ')') as authorFullName
 FROM article
@@ -39,11 +40,26 @@ SQL;
     const GET_CATEGORY = <<<SQL
 SELECT * FROM article_category WHERE id=?;
 SQL;
+
     const SELECT_TOP_ARTICLES = <<<SQL
-SELECT * FROM article ORDER BY postdate DESC LIMIT 1;
+SELECT article.*, CONCAT(user.username, ' (', user.firstname, ' ', user.lastname, ')') AS authorFullName
+FROM article
+JOIN user ON user.id = article.user
+ORDER BY postdateDESC
+LIMIT 1;
 SQL;
+
     const SELECT_LATEST_ARTICLES = <<<SQL
-SELECT * FROM article ORDER BY postdate DESC LIMIT 3;
+SELECT article.*, CONCAT(user.username, ' (', user.firstname, ' ', user.lastname, ')') AS authorFullName
+FROM article
+JOIN user ON user.id = article.user
+ORDER BY postdate DESC
+LIMIT 3;
+SQL;
+    const SELECT_ARTICLES = <<<SQL
+SELECT article.*, CONCAT(user.username, ' (', user.firstname, ' ', user.lastname, ')') AS authorFullName
+FROM article
+JOIN user ON user.id = article.user
 SQL;
 
     /**
@@ -78,10 +94,7 @@ SQL;
      */
     public function getNews()
     {
-        $sql = "SELECT * " .
-            "FROM article";
-
-        return DatabaseProvider::connection()->query($sql);
+        return DatabaseProvider::connection()->query(self::SELECT_ARTICLES);
     }
 
     /**
