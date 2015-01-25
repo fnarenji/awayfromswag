@@ -31,10 +31,10 @@
                 {% for art in article.last %}
                 <div class="litle-news">
                     <span class="mini-text">{{ art.postdate }}</span>
-                    <span class="mini-text"><a href="#">{{ art.category.name }}</a></span>
-                    <span class="mini-text"><a href="#">{{ art.user.firstname }}</a></span>
-                    <span class="mini-title"><a href="#">{{ art.title }}</a></span>
-                    <span class="little-news-text"><a href="#">{{ art.text }}</a></span>
+                    <span class="mini-text">{{ art.category.name }}</span>
+                    <span class="mini-text"><a href="/user/profile/{{ art.user.username }}">{{ art.user.username }}</a></span>
+                    <span class="mini-title"><a href="/article/show/{{ art.id }}">{{ art.title }}</a></span>
+                    <span class="little-news-text"><a href="/article/show/{{ art.id }}">{{ art.text }}</a></span>
                 </div>
                 {% endfor %}
             </div>
