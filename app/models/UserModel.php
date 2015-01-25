@@ -306,4 +306,17 @@ TEXT;
     {
         return DatabaseProvider::connection()->query(self::SEARCH, ['query' => $query]);
     }
+
+    public function setReset($id, $token)
+    {
+        $sql = <<<SQL
+INSERT INTO user_reset (id, )
+SQL;
+
+    }
+
+    public function getReset($id)
+    {
+
+    }
 }
