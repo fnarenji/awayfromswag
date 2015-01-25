@@ -16,6 +16,10 @@
                 <p>
                     {{ event.description }}
                 </p>
+        <h5>Utilisateurs inscrit</h5>
+        {% for user in users %}
+            <h6>- {{ user }}</h6>
+        {% endfor %}
 
         {% if auth.valid %}
             {% if participate is empty and event.personsnow != 0 %}
