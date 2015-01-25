@@ -320,4 +320,9 @@ class UserController extends Controller
             $e->getMessage();
         }
     }
+
+    public function requestReset()
+    {
+        $this->getView()->render('user/requestReset');
+    }
 }
