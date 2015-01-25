@@ -1,17 +1,18 @@
 {% extends "layout/default" %}
 {% block content %}
-    <article>
+    <article class="event-show">
         <h1>{{ event.name }}</h1>
 
-        <span class="mini-text">Prix : {{ event.money }}€, </span>
-        <span class="mini-text">le {{ event.eventtime }}, </span>
-        <span class="mini-text">ajouté le {{ event.createtime }}, </span>
-        <span class="mini-text">par : <a
+        <span class="mini-text"><b>Prix</b> : {{ event.money }}€ </span>
+        <span class="mini-text"><b>le</b> {{ event.eventtime }} </span>
+        <span class="mini-text"><b>ajouté le </b>{{ event.createtime }}, </span>
+        <span class="mini-text"><b>par : </b><a
                     href="/user/profile/{{ event.user.username }}">{{ event.user.firstname ~ ' ' ~ event.user.lastname }}</a></span>
 
                 <h6>Adresse : {{ event.address }}</h6>
                 <h6>Participants maximum : {{ event.personsmax }}</h6>
                 <h6>Places restantes : {{ event.personsnow }}</h6>
+                <h6>Description : </h6>
                 <p>
                     {{ event.description }}
                 </p>
