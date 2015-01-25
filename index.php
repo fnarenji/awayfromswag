@@ -10,9 +10,6 @@ use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\Helpers\BaseViewContextProvider;
 
-phpinfo();
-die();
-
 session_start();
 
 define('CR', "\n");
