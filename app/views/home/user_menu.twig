@@ -7,10 +7,11 @@
     <li><a href="/user/myevent"><i class="fa fa-bicycle"></i>Mes évènements</a></li>
     <li><a href="/user/calendar"><i class="fa fa-calendar"></i>Calendrier</a></li>
     <li><a href="/user/friends"><i class="fa fa-users"></i>Mes amis</a></li>
-    <li><a href="/conversation"><i class="fa fa-comments-o"></i>Messagerie</a></li>
+    <li><a href="/conversation"><i
+                    class="fa fa-comments-o"></i>Messagerie{% if newmessages %}({{ newmessages }}){% endif %}</a></li>
     {% if auth.options.accessLevel %}
-        <li><a href="/adminusers">Gestion des utilisateurs</a></li>
-        <li><a href="/adminevents">Gestion des évènements</a></li>
+        <li><a href="/adminusers"><i class="fa fa-lock"></i>Gestion des utilisateurs</a></li>
+        <li><a href="/adminevents"><i class="fa fa-lock"></i>Gestion des évènements</a></li>
     {% endif %}
     <li><a href="/user/disconnect"><i class="fa fa-power-off"></i>Se déconnecter</a></li>
 </ul>

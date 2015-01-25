@@ -22,7 +22,7 @@ $(document).ready(function () {
         })
         .autocomplete({
             source: function (request, response) {
-                $.getJSON("/user/search", {
+                $.getJSON("/user/json_list", {
                     term: extractLast(request.term)
                 }, response);
             },

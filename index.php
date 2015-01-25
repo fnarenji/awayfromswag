@@ -2,8 +2,11 @@
 
 require 'vendor/autoload.php';
 use app\helpers\ClassRouting;
+use app\models\EventModel;
+use app\models\UserModel;
 use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Helpers\Authentication;
+use SwagFramework\Helpers\BaseViewContextProvider;
 
 session_start();
 
@@ -30,6 +33,12 @@ if (DEBUG) {
 function main()
 {
     DatabaseProvider::connect("app/config/database.json");
+    BaseViewContextProvider::setProvider(function () {
+        $count['event'] = (new EventModel())->count()['nb'];
+        $count['user'] = (new UserModel())->count()['nb'];
+
+        return ['count' => $count];
+    });
 
     $router = new \SwagFramework\Routing\Router();
 
