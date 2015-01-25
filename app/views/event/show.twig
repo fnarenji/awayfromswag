@@ -44,6 +44,7 @@
             </ul>
         </div>
 
+        {% if auth.valid %}
         <hr/>
         <div>
             <form method="POST" action="/event/comment/{{ event.id }}"
@@ -60,5 +61,6 @@
                 </div>
             </form>
         </div>
+        {% endif %}
     </article>
 {% endblock %}
