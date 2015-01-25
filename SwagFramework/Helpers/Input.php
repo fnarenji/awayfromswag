@@ -60,7 +60,7 @@ class Input
      */
     public static function post($key, $optional = false)
     {
-        if (isset($_POST[$key]) && !empty($_POST[$key])) {
+        if (!isset($_POST[$key]) || empty($_POST[$key])) {
             if (!$optional)
                 throw new InputNotSetException('$_POST', $key);
             return null;
