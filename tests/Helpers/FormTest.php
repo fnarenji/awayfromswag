@@ -16,6 +16,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
 {
     function __construct()
     {
+        DatabaseProvider::connect('tests/Database/testdatabase.json');
     }
 
     public static function setUpBeforeClass()
