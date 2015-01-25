@@ -40,7 +40,7 @@ function main()
                 'event' => (new EventModel())->count()['nb'],
                 'user' => (new UserModel())->count()['nb']
             ],
-            'newmessage' => Authentication::getInstance()->isAuthenticated()
+            'newmessages' => Authentication::getInstance()->isAuthenticated()
                 ? (new ConversationModel())->countUnreadMessages()
                 : 0,
         ];
