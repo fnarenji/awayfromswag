@@ -80,6 +80,8 @@ class EventController extends Controller
 
     private function getInfos($event)
     {
+        if (Authentication::getInstance()->isAuthenticated())
+            $event['participating'] = $this->eventModel->getParticipateUser($event['id'], Authentication::getInstance()->getUserId());
         $event['user'] = $this->userModel->getUser($event['user']);
 
         $createtime = new \DateTime($event['createtime']);
@@ -261,7 +263,7 @@ class EventController extends Controller
             throw new EventNotFoundException($id);
         }
 
-        if ($event['user'] != Authentication::getInstance()->getUserId()) {
+        if (!Authentication::getInstance()->getOptionOr('accessLevel', 0) && $event['user'] != Authentication::getInstance()->getUserId()) {
             throw new NotYourEventException($id);
         }
 

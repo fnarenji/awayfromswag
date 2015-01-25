@@ -118,6 +118,7 @@ class UserController extends Controller
             }
         } catch (InputNotSetException $e) {
             //throw $e;
+            $this->getView()->redirect('/');
         }
     }
 
@@ -152,9 +153,6 @@ class UserController extends Controller
             'mailnotifications' => Input::post('mailnotifications', true) == 'on' ? 1 : 0,
             'accesslevel' => 0
         ];
-
-        $birthday = new \DateTime($user['birthday'] . '00:00:00');
-        $user['birthday'] = $birthday->format('Y-m-d h-i-s');
 
         // LES FLAGS C TROP SWAG
         $privacySettings = ['birthday', 'mail', 'phonenumber', 'twitter', 'skype', 'facebookuri', 'website', 'job'];
@@ -381,6 +379,7 @@ class UserController extends Controller
 
         $token = $this->getParams()[0];
         $this->userModel->validateToken($token);
+        $this->getView()->redirect('/');
     }
 
     public function reset()

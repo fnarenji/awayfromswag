@@ -12,7 +12,7 @@
         {% else %}
         <ul id="events">
             {% for event in events %}
-            <li>
+                <li {% if event.participating %}class="event-highlight"{% endif %}>
                 <a href="/event/show/{{ event.id }}"><h1>{{ event.name }}</h1>, </a>
                 <span class="mini-text">le {{ event.eventtime }}, </span>
                 <span class="mini-text">Prix : {{ event.money }}€</span>
@@ -26,13 +26,13 @@
 
         <ul class="pure-paginator">
             <li><a class="pure-button prev {{ page.actual == 1 ? 'pure-button-disabled' }}"
-                   href="/user/all/{{ page.actual > 1 ? page.actual - 1 : page.actual }}">&#171;</a></li>
+                   href="/event/index/{{ page.actual > 1 ? page.actual - 1 : page.actual }}">&#171;</a></li>
             {% for nb in 1..page.total %}
                 <li><a class="pure-button {{ nb == page.actual ? 'pure-button-active' : '' }}"
-                       href="/user/all/{{ nb }}">{{ nb }}</a></li>
+                       href="/event/index/{{ nb }}">{{ nb }}</a></li>
             {% endfor %}
             <li><a class="pure-button next {{ page.actual == page.total ? 'pure-button-disabled' }}"
-                   href="/user/all/{{ page.actual < page.total ? page.actual + 1 : page.actual }}">&#187;</a></li>
+                   href="/event/index/{{ page.actual < page.total ? page.actual + 1 : page.actual }}">&#187;</a></li>
         </ul>
     </article>
 {% endblock %}

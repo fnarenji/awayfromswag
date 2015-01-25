@@ -39,6 +39,7 @@ class Input
      */
     private static function quote_smart($value)
     {
+        // PDO makes this a bit useless, so commented because not tested
 //        $value = utf8_encode($value);
 //
 //        // Protection concernant Stripslashes
@@ -60,7 +61,7 @@ class Input
      */
     public static function post($key, $optional = false)
     {
-        if (!isset($_POST[$key]) || empty($_POST[$key])) {
+        if (!isset($_POST[$key])) {
             if (!$optional)
                 throw new InputNotSetException('$_POST', $key);
             return null;
@@ -77,7 +78,7 @@ class Input
      */
     public static function session($key, $optional = false)
     {
-        if (!isset($_SESSION[$key]) || empty($_SESSION[$key])) {
+        if (!isset($_SESSION[$key])) {
             if (!$optional)
                 throw new InputNotSetException('$_SESSION', $key);
             return null;

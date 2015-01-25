@@ -23,6 +23,7 @@ class EventModel extends Model
     {
         $sql = <<<SQL
 SELECT * FROM event
+  ORDER BY id DESC
   LIMIT $start, $end;
 SQL;
 
@@ -92,19 +93,16 @@ SQL;
 
             foreach($params as $key=>$value){
                 if($key != 'id'){
-                    $str .= ''.$key.' = \''.$value.'\' ,';
+                    $str .= '' . $key . ' = :' . $key . ', ';
                 }
             }
 
-            $str  = substr($str, 0, -1);
+            $str = substr($str, 0, -2);
 
             $sql = 'UPDATE event '
-                . 'SET '. $str . ' WHERE id = ?';
+                . 'SET ' . $str . ' WHERE id = :id';
 
-            var_dump($sql);
-            var_dump($params);
-
-            $state = DatabaseProvider::connection()->execute($sql, [$params['id']]);
+            $state = DatabaseProvider::connection()->execute($sql, $params);
 
             DatabaseProvider::connection()->commit();
 
@@ -257,7 +255,7 @@ SQL;
      * @return array
      * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
-    public function getEventsByYear($year = 2015)
+    public function getEventsByYear($year)
     {
         $sql = 'SELECT event.id, name, eventtime FROM event ' .
                'LEFT JOIN event_user ' .
