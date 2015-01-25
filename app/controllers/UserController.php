@@ -452,8 +452,6 @@ class UserController extends Controller
 
     public function passwdPOST()
     {
-        $token = $this->getParams()[0];
-
         $id = $this->userModel->getReset($token);
 
         if (empty($id)) {
