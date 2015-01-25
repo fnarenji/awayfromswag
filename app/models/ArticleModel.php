@@ -71,12 +71,10 @@ SQL;
     }
 
     /**
-     * Insert new article in D
-     * @param $author
-     * @param $content
-     * @param $date
-     * @param $categorie
+     * @param $infos
      * @return bool
+     * @throws \Exception
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function insertNews($infos)
     {
@@ -96,9 +94,10 @@ SQL;
     }
 
     /**
-     * Delete a article
      * @param $id
      * @return bool
+     * @throws \Exception
+     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
      */
     public function deleteNewsById($id)
     {

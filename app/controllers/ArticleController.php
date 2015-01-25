@@ -109,11 +109,16 @@ class ArticleController extends Controller
             'text' => 'Contenu'
         ]);
 
+
         $result['user'] = Authentication::getInstance()->getUserId();
+
+        // HARDCODE IS BAD
+        $result['category'] = 1;
+        $result['postdate'] = time();
 
         $this->articleModel->insertNews($result);
 
-        $this->getView()->redirect('/event');
+        $this->getView()->redirect('/article');
     }
 
     public function modify()
