@@ -34,10 +34,10 @@
                     <td>{{ user.lastname }}</td>
                     <td>{{ user.registerdate }}</td>
                     <td>
-                        <a href="/conversation/create/{{ user.id }}">Envoyer MP</a><br/>
-                        <a href="/user/profile/{{ user.id }}">Voir profil</a>
+                        <a href="/conversation/create/{{ user.username }}">Envoyer MP</a><br/>
+                        <a href="/user/profile/{{ user.username }}">Voir profil</a>
                         {% if user.addFriend %}
-                            <a href="/user/add/{{ user.id }}">Ajouter</a>
+                            <a href="/user/add/{{ user.id }}">Demander en ami</a>
                         {% endif %}
                     </td>
                 </tr>
