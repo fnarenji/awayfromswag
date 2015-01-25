@@ -13,6 +13,20 @@ use SwagFramework\mvc\Model;
 
 class ArticleModel extends Model
 {
+    const SEARCH_ARTICLE = <<<SQL
+SELECT *
+FROM article
+JOIN user ON article.user = user.id
+JOIN article_category ON article.category = article_category.id
+WHERE MATCH(article.title, article.text) AGAINST (:query)
+  OR MATCH(user.username, user.firstname, user.lastname) AGAINST (:query)
+  OR article.id = :query
+  OR MATCH(article_category.name) AGAINST (:query)
+SQL;
+
+    const INSERT_ARTICLE = <<<SQL
+INSERT INTO article (user,title,text,postdate,category) VALUES (:user, :title, :text, :postdate, :category);
+SQL;
 
     /**
      * Return a article
@@ -69,11 +83,7 @@ class ArticleModel extends Model
         try {
 
             DatabaseProvider::connection()->beginTransaction();
-            $sql = <<<SQL
-INSERT INTO article (user,title,text,postdate,category) VALUES (:user, :title, :text, :postdate, :category);
-SQL;
-
-            DatabaseProvider::connection()->execute($sql, $infos);
+            DatabaseProvider::connection()->execute(self::INSERT_ARTICLE, $infos);
 
             DatabaseProvider::connection()->commit();
 
@@ -200,5 +210,10 @@ SELECT * FROM article ORDER BY postdate DESC LIMIT 3;
 SQL;
 
         return DatabaseProvider::connection()->query($sql, []);
+    }
+
+    public function search($query)
+    {
+        return DatabaseProvider::connection()->query(self::SEARCH_ARTICLE, ['query' => $query]);
     }
 } 
