@@ -8,7 +8,7 @@
 
 namespace app\models;
 
-use MailUtil;
+use \app\helpers\MailUtil;
 use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Helpers\Authentication;
 use SwagFramework\mvc\Model;

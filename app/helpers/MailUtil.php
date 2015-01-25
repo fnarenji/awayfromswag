@@ -6,6 +6,9 @@
  * Date: 1/25/15
  * Time: 8:06 PM
  */
+
+namespace app\helpers;
+
 class MailUtil
 {
     private function __construct()
