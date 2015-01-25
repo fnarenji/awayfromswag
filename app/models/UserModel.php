@@ -8,10 +8,9 @@
 
 namespace app\models;
 
-use app\helpers\MailUtil;
-use SebastianBergmann\Exporter\Exception;
 use SwagFramework\Database\DatabaseProvider;
 use SwagFramework\Helpers\Authentication;
+use SwagFramework\Helpers\MailUtil;
 use SwagFramework\mvc\Model;
 
 class UserModel extends Model
@@ -24,6 +23,7 @@ class UserModel extends Model
     const SEARCH = "SELECT user.* FROM user WHERE MATCH(username, firstname, lastname, description) AGAINST (:query) OR id = :query";
     const SELECT_BY_USERNAME_LIKE = 'SELECT id, username, firstname, lastname FROM user WHERE username LIKE ? ';
     const INSERT_FRIEND = 'INSERT INTO user_friend VALUES (?, ?, ?)';
+    const DELETE_BY_USERNAME = 'DELETE FROM user WHERE username = ?';
     const GET_ALL_FRIENDS = 'SELECT user1, user2 FROM user_friend WHERE user1 = :user1 OR user2 = :user2';
 
     const COUNT = <<<SQL
@@ -36,14 +36,17 @@ SQL;
 
     const INSERT_USER = <<<SQL
 INSERT INTO user (username, firstname, lastname, mail, password, birthday,phonenumber, twitter, skype, facebookuri, website, job, description, privacy, mailnotifications, accesslevel)
-        VALUES (:username, CONCAT(UCASE(LEFT(:username, 1)), SUBSTRING(:username, 2)), UPPER(:lastname), :mail, SHA1(CONCAT(:password, :salt)), :birthday, :phonenumber, :twitter, :skype, :facebookuri, :website, :job, :description, :privacy, :mailnotifications, :accesslevel)
+        VALUES (:username, CONCAT(UCASE(LEFT(:username, 1)), SUBSTRING(:username, 2)), UPPER(:lastname), :mail, SHA1(CONCAT(:password, :salt)), STR_TO_DATE(:birthday, '%d/%m/%Y'), :phonenumber, :twitter, :skype, :facebookuri, :website, :job, :description, :privacy, :mailnotifications, :accesslevel)
 SQL;
 
     const VALIDATE_AUTH = <<<SQL
 SELECT id, firstname, lastname, MD5(mail) mailHash, accesslevel
-FROM user
+FROM user u
 WHERE username = :username
   AND password = SHA1(CONCAT(:password, :salt))
+  AND NOT EXISTS (SELECT *
+                  FROM user_validation
+                  WHERE user_validation.id = u.id)
 SQL;
     const INSERT_USER_VALIDATION = 'INSERT INTO user_validation VALUES (?, ?)';
     const VALIDATE_USER = 'DELETE FROM user_validation WHERE token = ?';
@@ -152,13 +155,13 @@ SQL;
             $userId = DatabaseProvider::connection()->lastInsertId();
 
             $token = str_shuffle(sha1(microtime() + mt_rand()));
+
+            // Est-ce qu'on en parle des URLS hardcodées dégueulasses ?
             $mailContent = <<<TEXT
 Bonjour,
 
 Votre inscription sur Away From Security est en attente de validation.
-Veuillez cliquer <a href="https://srv0.sknz.info:3735/user/valid/$token">ici</a> afin de valider celle-ci.
-
-Si vous ne pouvez cliquer, veuillez accéder à l'adresse suivante: https://srv0.sknz.info:3735/user/valid/$token
+Veuillez cliquer ici afin de valider celle-ci.
 
 Cordialement,
 #HCS

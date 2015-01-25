@@ -148,9 +148,6 @@ class UserController extends Controller
             'accesslevel' => 0
         ];
 
-        $birthday = new \DateTime($user['birthday'] . '00:00:00');
-        $user['birthday'] = $birthday->format('Y-m-d h-i-s');
-
         // LES FLAGS C TROP SWAG
         $privacySettings = ['birthday', 'mail', 'phonenumber', 'twitter', 'skype', 'facebookuri', 'website', 'job'];
         for ($i = 0; $i < sizeof($privacySettings); ++$i)
@@ -376,5 +373,6 @@ class UserController extends Controller
 
         $token = $this->getParams()[0];
         $this->userModel->validateToken($token);
+        $this->getView()->redirect('/');
     }
 }

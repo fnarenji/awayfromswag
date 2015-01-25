@@ -1,5 +1,5 @@
 <?php
-namespace app\helpers;
+namespace SwagFramework\Helpers;
 
 use SwagFramework\Config\ConfigFileParser;
 use Swift_Mailer;
@@ -12,8 +12,6 @@ use Swift_SmtpTransport;
  * Date: 1/25/15
  * Time: 8:06 PM
  */
-
-namespace app\helpers;
 
 class MailUtil
 {
