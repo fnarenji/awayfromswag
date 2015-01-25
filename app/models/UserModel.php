@@ -8,7 +8,9 @@
 
 namespace app\models;
 
+use MailUtil;
 use SwagFramework\Database\DatabaseProvider;
+use SwagFramework\Helpers\Authentication;
 use SwagFramework\mvc\Model;
 
 class UserModel extends Model
@@ -162,7 +164,7 @@ Cordialement,
 #HCS
 TEXT;
             if ($success)
-                mail($infos['mail'], 'Validation de votre compte AFS', $mailContent);
+                MailUtil::send($infos['mail'], 'Validation de votre compte AFS', $mailContent);
 
             $success = $success && DatabaseProvider::connection()->execute(self::INSERT_USER_VALIDATION, [$userId, $token]);
 
