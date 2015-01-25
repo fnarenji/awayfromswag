@@ -30,5 +30,4 @@ $(document).ready(function () {
                 $('#calendar-to-display').html(data);
             })
     }
-
 });

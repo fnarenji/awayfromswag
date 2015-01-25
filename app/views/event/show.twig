@@ -9,13 +9,20 @@
         <span class="mini-text">par : <a
                     href="/user/profile/{{ event.user.username }}">{{ event.user.firstname ~ ' ' ~ event.user.lastname }}</a></span>
 
-        <h6>Adresse : {{ event.address }}</h6>
-        <h6>Participants : {{ event.personsnow }}</h6>
-        <h6>Participants Maximum : {{ event.personsmax }}</h6>
+                <h6>Adresse : {{ event.address }}</h6>
+                <h6>Participants maximum : {{ event.personsmax }}</h6>
+                <h6>Places restantes : {{ event.personsnow }}</h6>
+                <p>
+                    {{ event.description }}
+                </p>
 
-        <p>
-            {{ event.description }}
-        </p>
+                {% if auth.valid  %}
+                    {% if participate is empty and event.personsnow != 0 %}
+                    <a href="/event/participate/{{ event.id }}" class="pure-button button-success">Participer</a>
+                {% elseif participate is not empty and not event.mine %}
+                    <a href="/event/unparticipate/{{ event.id }}" class="pure-button button-error">Annuler Participation</a>
+                {% endif %}
+                {% endif %}
 
         {% if auth.valid %}
             {% if participate is empty and not event.mine and event.personsnow < event.personsmax %}
