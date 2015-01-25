@@ -112,7 +112,7 @@ class UserController extends Controller
                 $this->getView()->redirect('/');
             }
         } catch (InputNotSetException $e) {
-            throw $e;
+            //throw $e;
         }
     }
 
@@ -147,6 +147,7 @@ class UserController extends Controller
             'mailnotifications' => Input::post('mailnotifications', true) == 'on' ? 1 : 0,
             'accesslevel' => 0
         ];
+
         $birthday = new \DateTime($user['birthday'] . '00:00:00');
         $user['birthday'] = $birthday->format('Y-m-d h-i-s');
 
@@ -322,7 +323,7 @@ class UserController extends Controller
         try
         {
             $id = $this->getParams()[0];
-            var_dump($id);
+
             $this->userModel->addToFriend($id);
             $this->getView()->redirect('/');
         }
@@ -361,8 +362,19 @@ class UserController extends Controller
 
     public function myevent()
     {
-        $model = new EventModel();
+        $model = $this->loadModel('Event');
         $myevent = $model->getEventsForUser(Authentication::getInstance()->getUserId());
         $this->getView()->render('user/myevent',['events' => $myevent]);
+    }
+
+    public function validate()
+    {
+        if (empty($this->getParams(true))) {
+            $this->getView()->redirect('/');
+            die();
+        }
+
+        $token = $this->getParams()[0];
+        $this->userModel->validateToken($token);
     }
 }

@@ -53,14 +53,11 @@
                     <span>Il n'y a pas d'évènement populaire.</span>
                 {% else %}
                     {% for event in events.top %}
-                <li>
-                    <h5><a href="#">Évènement A</a></h5>
+                        <li>
+                            <h5><a href="/event/show/{{ event.id }}">{{ event.name }}</a></h5>
 
-                    <p>
-                        She also liked to shut up! If rubbin' frozen dirt
-                        in your crotch is wrong, hey I don't wanna be right.
-                    </p>
-                </li>
+                            <p>{{ event.description }}</p>
+                        </li>
                     {% endfor %}
                 {% endif %}
             </ul>
@@ -73,11 +70,11 @@
                     <p>Il n'y a pas d'évènements récents.</p>
                 {% else %}
                     {% for event in events.last %}
-                <li>
-                    <h5><a href="/event/show/{{ event.id }}">{{ event.name }}</a></h5>
+                        <li>
+                            <h5><a href="/event/show/{{ event.id }}">{{ event.name }}</a></h5>
 
-                    <p>{{ event.description }}</p>
-                </li>
+                            <p>{{ event.description|raw }}</p>
+                        </li>
                     {% endfor %}
                 {% endif %}
             </ul>

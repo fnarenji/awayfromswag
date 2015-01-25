@@ -9,7 +9,6 @@
 namespace app\models;
 
 use SwagFramework\Database\DatabaseProvider;
-use SwagFramework\Helpers\Authentication;
 use SwagFramework\mvc\Model;
 
 class UserModel extends Model
@@ -44,6 +43,8 @@ FROM user
 WHERE username = :username
   AND password = SHA1(CONCAT(:password, :salt))
 SQL;
+    const INSERT_USER_VALIDATION = 'INSERT INTO user_validation VALUES (?, ?)';
+    const VALIDATE_USER = 'DELETE FROM user_validation WHERE token = ?';
 
     /**
      *  Return all information with the id
@@ -142,15 +143,48 @@ SQL;
      */
     public function insertUser(array $infos)
     {
-        $infos = array_merge($infos, ['salt' => self::SALT]);
-        return DatabaseProvider::connection()->execute(self::INSERT_USER, $infos);
+        try {
+            DatabaseProvider::connection()->beginTransaction();
+            $infos = array_merge($infos, ['salt' => self::SALT]);
+            $success = DatabaseProvider::connection()->execute(self::INSERT_USER, $infos);
+            $userId = DatabaseProvider::connection()->lastInsertId();
+
+            $token = str_shuffle(sha1(microtime() + mt_rand()));
+            $mailContent = <<<TEXT
+Bonjour,
+
+Votre inscription sur Away From Security est en attente de validation.
+Veuillez cliquer <a href="https://srv0.sknz.info:3735/user/valid/$token">ici</a> afin de valider celle-ci.
+
+Si vous ne pouvez cliquer, veuillez accéder à l'adresse suivante: https://srv0.sknz.info:3735/user/valid/$token
+
+Cordialement,
+#HCS
+TEXT;
+            if ($success)
+                mail($infos['mail'], 'Validation de votre compte AFS', $mailContent);
+
+            $success = $success && DatabaseProvider::connection()->execute(self::INSERT_USER_VALIDATION, [$userId, $token]);
+
+            DatabaseProvider::connection()->commit();
+
+            return $success;
+        } catch (\Exception $e) {
+            DatabaseProvider::connection()->rollBack();
+            throw $e;
+        }
+    }
+
+    public function validateToken($token)
+    {
+        return DatabaseProvider::connection()->execute(self::VALIDATE_USER, [$token]);
     }
 
     /**
      * @param $id
      * @return bool
-     * @throws \Exception
-     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     * @throws \\Exception
+     * @throws \\SwagFramework\\Exceptions\\DatabaseConfigurationNotLoadedException
      */
     public function deleteUser($id)
     {
@@ -160,8 +194,8 @@ SQL;
     /**
      * @param $infos
      * @return bool
-     * @throws \Exception
-     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     * @throws \\Exception
+     * @throws \\SwagFramework\\Exceptions\\DatabaseConfigurationNotLoadedException
      */
     public function updateUser($infos)
     {
@@ -183,8 +217,8 @@ SQL;
     /**
      * @param $infos
      * @return bool
-     * @throws \Exception
-     * @throws \SwagFramework\Exceptions\DatabaseConfigurationNotLoadedException
+     * @throws \\Exception
+     * @throws \\SwagFramework\\Exceptions\\DatabaseConfigurationNotLoadedException
      */
     public function updateAdminUser($infos)
     {
@@ -220,10 +254,13 @@ SQL;
 
     public function getAllFriends()
     {
-        return DatabaseProvider::connection()->query(self::GET_ALL_FRIENDS, [
-            'user1' => Authentication::getInstance()->getUserId(),
-            'user2' => Authentication::getInstance()->getUserId()
-        ]);
+        if (Authentication::getInstance()->isAuthenticated()) {
+            return DatabaseProvider::connection()->query(self::GET_ALL_FRIENDS, [
+                'user1' => Authentication::getInstance()->getUserId(),
+                'user2' => Authentication::getInstance()->getUserId()
+            ]);
+        }
+        return [];
     }
 
     public function count()
@@ -235,4 +272,4 @@ SQL;
     {
         return DatabaseProvider::connection()->query(self::SEARCH, ['query' => $query]);
     }
-} 
+}
