@@ -569,11 +569,15 @@ a.partner-link
 {
     width: 200px;
     height: 200px;
+    margin-right: 5px;
+    margin-bottom: 5px;
 }
 
 .article-subtitle
 {
-
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
     margin-bottom: 10px;
 }
 

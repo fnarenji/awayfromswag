@@ -294,9 +294,9 @@ class UserController extends Controller
             $page = (int)$this->getParams()[0] - 1;
 
         $total = $this->userModel->count()['nb'];
-        $total = (int)ceil($total / 10);
+        $total = (int)ceil($total / 5);
 
-        $userList = $this->userModel->getAllUsers($page * 10, 10);
+        $userList = $this->userModel->getAllUsers($page * 5, 5);
         $userFriendList = $this->userModel->getAllFriends();
 
         foreach($userList as $key => $value)
