@@ -113,6 +113,7 @@ class UserController extends Controller
             }
         } catch (InputNotSetException $e) {
             //throw $e;
+            $this->getView()->redirect('/');
         }
     }
 
