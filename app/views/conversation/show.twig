@@ -12,9 +12,9 @@
         </p>
 
         {% for message in conversation.messages %}
-        <div class="">
-            <b>{{ message.authorName }}</b> le {{ message.date }}
-            <p>
+        <div class="article-comment">
+            <b class="article-comment-author">{{ message.authorName }} le {{ message.date }}</b>
+            <p class="article-comment-message">
                 {{ message.content }}
             </p>
         </div>
