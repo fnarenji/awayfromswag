@@ -293,7 +293,7 @@ TEXT;
     {
         $user2 = Authentication::getInstance()->getUserId();
 
-        return DatabaseProvider::connection()->execute(self::INSERT_FRIEND, array($user2, $id));
+        return DatabaseProvider::connection()->execute(self::INSERT_FRIEND, array($user2, $id, $id));
     }
 
     public function getAllFriends()
