@@ -14,6 +14,6 @@ Ce projet a été réalisé par:
 Divers warnings:
 - Les accès de base de données fournis dans la configuration correspondent à une BD hébergée sur un de nos dédiés personnels. Le système de messagerie utilise celle-ci pour les métadonnées des conversations, mais repose sur des fichiers locaux (app/converations/) pour le stockage des messages mêmes. Il est donc normal qu'une exception soit levée si le fichier n'est pas présent (par exemple si vous créez une conversation sur votre copie locale sur site et qu'un autre enseignant tente de l'ouvrir sur une autre machine)
 
-Le site est visible en ligne à l'adresse https://srv0.sknz.info:3735.
+Le site est visible en ligne à l'adresse https://srv0.sknz.info/afs/.
 
 WHERE IS THE SWAG ?
